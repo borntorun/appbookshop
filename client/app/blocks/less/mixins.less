@@ -1,0 +1,52 @@
+.a_no-decor() {
+  a, a:visited, a:hover, a:focus {
+    text-decoration: none !important;
+    outline: none !important;
+  }
+}
+
+.icon-social(@image-low, @image-phone, @image-desktop) {
+  content: url(@image-low);
+  @media screen and (min-width: @screen-phone) {
+    content: url(@image-phone);
+  }
+  @media screen and (min-width: @screen-desktop) {
+    content: url(@image-desktop);
+  }
+}
+
+/*
+Converte px para em|%
+e aplica tag (estilo) enviado
+*/
+#convert-px(@unit; @style; @px: @main-textsize-px; @context: @main-textsize-px; @important:~'') {
+  .calc(@px; @multiply; @context) {
+    @ret-convert-px: (@px/@context)*@multiply;
+  }
+  .apply-style(@tag; @px; @context; @multiply; @sufix) {
+    .calc(@px, @multiply, @context);
+    @{tag}: @ret-convert-px + @sufix @important;
+  }
+  .apply-unit(to_em; @style; @px; @context) {
+    .apply-style(@style, @px, @context, 1, 0em);
+  }
+  .apply-unit(to_percent; @style; @px; @context) {
+    .apply-style(@style, @px, @context, 100, 0%);
+  }
+  .apply-unit(@unit, @style, @px, @context);
+}
+
+/*
+Torna mais escuro ou mais claro uma cor
+e aplica a tag (estilo) enviado (ex:color|background-color)
+*/
+#refactcolor (@percent; @switch; @tag; @color; @important:~'') {
+  // this is always included
+  .refact (@percent; maisescuro; @tag; @color) {
+    @{tag}: darken(@color, @percent) @important;
+  }
+  .refact (@percent; maisclaro; @tag; @color) {
+    @{tag}: lighten(@color, @percent) @important;
+  }
+  .refact(@percent, @switch, @tag, @color)
+}

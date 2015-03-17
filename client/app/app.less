@@ -1,0 +1,100 @@
+@import 'bootstrap/less/bootstrap.less';
+@import 'font-awesome/less/font-awesome.less';
+
+@icon-font-path: '/bower_components/bootstrap/fonts/';
+@fa-font-path: '../assets/fonts';
+
+/**
+* App-wide Styles
+*/
+.apphidden {
+  display: none !important;
+  visibility: hidden !important;
+}
+.appabsolute {
+  position: absolute;
+}
+.a_no-decor();
+
+.nopaddings {
+  #convert-px(to_em, padding, 0);
+}
+
+.nomargins {
+  #convert-px(to_em, margin, 0);
+}
+
+.nomarg-padd {
+  #convert-px(to_em, padding, 0);
+  #convert-px(to_em, margin, 0);
+}
+
+.noborders {
+  border: 0px;
+}
+
+/* typeahead.js styles*/
+.typeahead,
+.tt-query,
+.tt-hint {
+  width: 220px;
+  height: 30px;
+  padding: 8px 12px;
+  font-size: 12px;
+  line-height: 15px;
+  border: 2px solid #ccc;
+  -webkit-border-radius: 8px;
+  -moz-border-radius: 8px;
+  border-radius: 8px;
+  outline: none;
+}
+.typeahead {
+  background-color: #fff;
+}
+.typeahead:focus {
+  border: 2px solid #0097cf;
+}
+.tt-query {
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+}
+.tt-hint {
+  color: #999
+}
+
+.tt-dropdown-menu {
+  min-width: 220px;
+  margin-top: 0px;
+  padding: 8px 0;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  -webkit-border-radius: 8px;
+  -moz-border-radius: 8px;
+  border-radius: 8px;
+  -webkit-box-shadow: 0 5px 10px rgba(0,0,0,.2);
+  -moz-box-shadow: 0 5px 10px rgba(0,0,0,.2);
+  box-shadow: 0 5px 10px rgba(0,0,0,.2);
+}
+.tt-suggestion {
+  padding: 3px 20px;
+  font-size: 12px;
+  line-height: 15px;
+}
+.tt-suggestion.tt-cursor {
+  color: #fff;
+  background-color: #0097cf;
+
+}
+.tt-suggestion p {
+  margin: 0;
+}
+
+// injector
+@import 'blocks/less/mixins.less';
+@import 'blocks/less/var.less';
+@import 'main/main.less';
+@import 'bookdetail/less/bookdetail.less';
+@import 'booksearch/less/booksearch.less';
+// endinjector

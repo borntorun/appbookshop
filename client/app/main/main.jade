@@ -1,0 +1,18 @@
+.container-fluid(id="maincontent")
+
+    .row
+        .col-sm-2.col-md-2.hidden-xs
+            ng-include(src="'app/navbar/left/layout.html'")
+        .col-xs-12.col-sm-10.col-md-8
+            .row
+            //main view for this template
+            .row(ui-view="").app-anima.slide
+        .col-sm-2.col-md-2.hidden-xs
+            ng-include(src="'app/navbar/right/layout.html'")
+
+
+
+
+
+//ui dialog comentado
+//include ../../components/books/manager/bookRecordForm

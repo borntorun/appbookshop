@@ -1,0 +1,10 @@
+//Ctrl:Filter cats
+//(ng-controller="BookSearchFilterCategoriesCtrl as vm")
+.col-xs-12.panel.panel-default.panel-filtercat
+    .row
+        warp-autocomplete-typeaheadjs.col-xs-12.col-sm-3(id="panel-filtercat-dropdown-menu", classinput="input-filtercat", datasource="categories", placeholder="filtrar por categorias", onselected="vm.onSelected", remote="{{vm.urlRemote}}")
+    .row
+        .col-xs-12.panel-filtercatlabel-group
+            div.panel-filtercat-label(ng-repeat="item in vm.filtro")
+                | {{item}}
+                span.badge.labelcat-badge(ng-click="vm.removeCat(item)") x

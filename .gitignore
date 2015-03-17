@@ -1,0 +1,10 @@
+node_modules
+public
+.tmp
+.idea
+client/bower_components
+dist
+*.sublime-*
+TODO
+npm*.log
+./*.log

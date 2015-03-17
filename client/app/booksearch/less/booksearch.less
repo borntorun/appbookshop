@@ -1,0 +1,84 @@
+/* ********** Booksearchform Results ********** */
+.panelresultsbody {
+  max-height: 9999px;
+  min-height: 600px;
+  /*overflow-y: auto;
+  min-height: 600px;*/
+}
+.dynamic-layout-item {
+  padding: 4px;
+  width: 237px;
+}
+.move-items-animation{
+  position: absolute!important;
+  transition-property: left, top;
+  transition-duration: 0.5s;
+  transition-timing-function: ease-in-out;
+}
+.dynamic-layout-item-parent.ng-enter{
+  transition: 0.5s ease-in-out; //tempo que demora a aparecer
+  opacity:0;
+}
+.dynamic-layout-item-parent.ng-enter.ng-enter-active{
+  opacity:1;
+}
+.dynamic-layout-item-parent.ng-leave{
+  transition: 0.5s ease-in-out; //tempo que demora a desaparecer
+  opacity:1;
+}
+.dynamic-layout-item-parent.ng-leave.ng-leave-active{
+  opacity:0;
+}
+.dynamic-layout-item-parent {
+  //position: relative!important;
+  float: left!important;
+}
+
+.dynamic-layout-item {
+  box-shadow: 0px 2px 8px hsl(0, 0%, 0%);
+  border-bottom-right-radius: 0px;
+  border-bottom-left-radius: 0px;
+  border-top-right-radius: 8px;
+  border-top-left-radius: 8px;
+}
+[dynamic-layout]{
+  position: relative;
+  margin: 0px !important;
+  padding: 0px !important;
+  width: 100% !important;
+}
+
+.element-item {
+  float: left;
+  margin: 5px;
+  padding: 12px;
+  box-shadow: 0 1px 6px hsl(0, 0%, 0%);
+}
+.element-item > * {
+  margin: 0;
+  padding: 0;
+}
+.element-item > div > div.thumbnail {
+  margin-bottom: 5px;
+}
+.element-item-title {
+  font-size: 14px;
+}
+.element-item-author::before {
+  content: "["
+}
+.element-item-author::after {
+  content: "]"
+}
+.element-item-author {
+  font-size: 12px;
+}
+.element-item-price {
+  font-size: 13px;
+  font-weight: bold;
+  padding: 2px;
+  background-color: hsl(0, 0%, 96%);
+  border: 1px solid hsl(0, 0%, 89%);
+  border-radius: 4px;
+  box-shadow: inset 0 1px 9px hsl(246, 15%, 61%);
+}

@@ -1,0 +1,143 @@
+.row
+    .col-xs-12.panel.panel-default
+        .row
+            .col-xs-12.col-sm-2
+                carousel.carousel(interval="0")
+                    slide(ng-repeat="foto in vm.book.images")
+                        img(ng-src="{{foto}}", style="/*margin:auto;height:160px;width:140px;display: block;*/")
+
+            .col-xs-12.col-sm-8.panel.panel-default.nopaddings
+                div.panel-heading
+                    strong.panel-title {{vm.book.title}}
+                    div
+                        em.small {{vm.book.subtitle}}
+                    div.small
+                        span(ng-repeat="author in vm.book.authors").bookdetail-authorname {{author}}
+                        span.small &nbsp;({{vm.bookconfiglabels['authors']}})
+                div.panel-body
+                    strong.bookdetail-price {{vm.book.price}} €&nbsp;
+                    .button.btn.btn-default Comprar
+        .row
+            .col-xs-12.col-sm-offset-2.col-sm-8.bookdetail-panelinfo
+                .row
+                    .col-xs-12.col-sm-4
+                        div.panel.panel-default
+                            div.panel-heading {{vm.book.editionNumber}}&nbsp;Edição,&nbsp;{{vm.book.editionYear}}
+                            ul.list-group
+                                li.list-group-item {{vm.book.editionCountry}}
+                                li.list-group-item
+                                    strong {{vm.bookconfiglabels['editionPublisher']}}:
+                                    |{{vm.book.editionPublisher}}
+                                li.list-group-item
+                                    strong {{vm.bookconfiglabels['editionLanguage']}}:
+                                    |{{vm.book.editionLanguage}}
+                                li.list-group-item
+                                    strong {{vm.bookconfiglabels['workmanship']}}:
+                                    |{{vm.book.workmanship}}
+                                li.list-group-item
+                                    strong {{vm.bookconfiglabels['circulation']}}:
+                                    | {{vm.book.circulation}}
+                                li.list-group-item
+                                    strong {{vm.bookconfiglabels['legalDeposit']}}:
+                                    | {{vm.book.legalDeposit}}
+                    .col-xs-12.col-sm-4
+                        div.panel.panel-default
+                            div.panel-heading
+                                | Informações
+                            ul.list-group
+                                li.list-group-item
+                                    strong {{vm.bookconfiglabels['pagesNum']}}:
+                                    |{{vm.book.pagesNum}}
+                                li.list-group-item
+                                    strong {{vm.bookconfiglabels['editionISBN']}}:
+                                    | {{vm.book.isbn}}
+                                li.list-group-item
+                                    strong {{vm.bookconfiglabels['dimensions']}}:
+                                    | {{vm.book.dimensions}}
+                                li.list-group-item
+                                    strong {{vm.bookconfiglabels['weight']}}:
+                                    | {{vm.book.weight}}
+                                li.list-group-item
+                                    strong {{vm.bookconfiglabels['numVolume']}}:
+                                    | {{vm.book.numVolume}}
+                                li.list-group-item
+                                    strong {{vm.bookconfiglabels['condition']}}:
+                                    | {{vm.book.condition}}
+                    .col-xs-12.col-sm-4
+                        div.panel.panel-default
+                            div.panel-heading
+                                | Tradução
+                            ul.list-group
+                                li.list-group-item
+                                    span(ng-repeat="author in vm.book.translators") {{author}}
+                                li.list-group-item
+                                    strong {{vm.bookconfiglabels['editionTranslatedLanguage']}}:
+                                    |{{vm.book.editionTranslatedLanguage}}
+                            div.panel-heading
+                                | Edição Original: {{vm.book.originalYearFirstEdition}}
+                            ul.list-group
+                                li.list-group-item
+                                    strong {{vm.bookconfiglabels['originalTitle']}}:
+                                    |{{vm.book.originalTitle}}
+                                li.list-group-item
+                                    strong {{vm.bookconfiglabels['originalLanguage']}}:
+                                    |{{vm.book.originalLanguage}}
+                                li.list-group-item
+                                    strong {{vm.bookconfiglabels['originalPublisher']}}:
+                                    |{{vm.book.originalPublisher}}
+        .row
+            .col-xs-12.col-sm-offset-2.col-sm-8.nopaddings
+                div(role="tabpanel")
+                    ul.nav.nav-tabs(role="tablist")
+                        li.active(role="presentation")
+                            a(data-target="#bookdetail-tabinfo" aria-controls="bookdetail-tabinfo" role="tab" data-toggle="tab") + Informações
+                        li(role="presentation")
+                            a(data-target="#bookdetail-tabobs" aria-controls="bookdetail-tabobs" role="tab" data-toggle="tab") Observações
+                    div.panel.panel-default.bookdetail-panelinfo-tabs
+                        div.panel-body.tab-content
+                            .col-xs-12(role="tabpanel" id="bookdetail-tabinfo").tab-pane.active.nopaddings
+                                .row.nomargins
+                                    .col-xs-12.col-sm-3
+                                        ul.list-group
+                                            li.list-group-item
+                                                strong {{vm.bookconfiglabels['nameCollection']}}:
+                                                |{{vm.book.nameCollection}}
+                                            li.list-group-item
+                                                strong {{vm.bookconfiglabels['numCollection']}}:
+                                                |{{vm.book.numCollection}}
+                                            li.list-group-item
+                                                strong {{vm.bookconfiglabels['graphicalPrint']}}:
+                                                |{{vm.book.graphicalPrint}}
+                                            li.list-group-item
+                                                strong {{vm.bookconfiglabels['cover']}}:
+                                                |{{vm.book.cover}}
+                                    .col-xs-12.col-sm-4
+                                        ul.list-group
+                                            li.list-group-item
+                                                strong {{vm.bookconfiglabels['prefaceBy']}}:
+                                                span(ng-repeat="author in vm.book.prefaceBy") {{author}}
+                                            li.list-group-item
+                                                strong {{vm.bookconfiglabels['postfaceBy']}}:
+                                                span(ng-repeat="author in vm.book.postfaceBy") {{author}}
+                                            li.list-group-item
+                                                strong {{vm.bookconfiglabels['corrector']}}:
+                                                span(ng-repeat="author in vm.book.postfaceBy") {{author}}
+                                    .col-xs-12.col-sm-5
+                                        ul.list-group
+                                            li.list-group-item
+                                                strong {{vm.bookconfiglabels['subject']}}:
+                                                |{{vm.book.subject}}
+                            .col-xs-12(role="tabpanel" id="bookdetail-tabobs").tab-pane.nopaddings
+                                .row.nomargins
+                                    .col-xs-12
+                                        ul.list-group
+                                            li.list-group-item(ng-repeat="item in vm.book.obs")
+                                                span {{item}}
+
+
+    //.col-xs-12.col-sm-2.table-bordered.bg-success
+
+        .span.pull-right
+            ul
+                li(ng-repeat="cat in vm.book.categories")
+                    | {{cat}}

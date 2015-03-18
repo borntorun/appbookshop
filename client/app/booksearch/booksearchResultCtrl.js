@@ -12,10 +12,11 @@
     console.log($rootScope.$stateParams.term);*/
     vm.filters = null;
     vm.rankers = null;
-    BookSearch.search(getSearchInput()).then(function (data) {
+
+    BookSearch.search(getSearchInput(),getSearchLimit()).then(function (data) {
       //notifier.info('Procura Ok');
-      vm.results = data;
       applyFilterCategories(BookSearch.getFilterCategories());
+      vm.results = data;
     }, function (error) {
       notifier.error('Erro procura');
     });
@@ -24,6 +25,9 @@
     });
     function getSearchInput() {
       return BookSearch.data.isinit ? $rootScope.$stateParams.term || BookSearch.data.inputsearchDefault : $rootScope.$stateParams.term === undefined ? BookSearch.data.inputsearchDefault : $rootScope.$stateParams.term;
+    }
+    function getSearchLimit() {
+      return BookSearch.data.isinit ? $rootScope.$stateParams.limit || BookSearch.data.limitDefault : $rootScope.$stateParams.limit === undefined ? BookSearch.data.limitDefault : $rootScope.$stateParams.limit;
     }
 
     function applyFilterCategories(filter) {
@@ -36,7 +40,7 @@
           ]);
         });
         vm.filters = aCategories;
-      }, 5);
+      }, 1);
     }
 
     $scope.$on('$destroy', function(){

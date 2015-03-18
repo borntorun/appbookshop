@@ -13,6 +13,8 @@
   function BookSearch($rootScope, $http, $q, exception, notifier) {
     var serviceData = {
       inputsearchDefault: 'german',
+      limitDefault: 25,
+      limit: 25,
       inputsearch: '',
       results: [],
       categoriesFilter: [],
@@ -22,6 +24,7 @@
     var service = {
       data: serviceData,
       getSearchterm: getSearchterm,
+      getSearchlimit: getSearchlimit,
       search: search,
       setFilterCategories: setFilterCategories,
       getFilterCategories: getFilterCategories
@@ -29,12 +32,13 @@
     };
     return service;
     /////////
-    function search(input) {
+    function search(input, limit) {
       var deferred = $q.defer();
 
       serviceData.inputsearch = input;
+      serviceData.limit = limit;
 
-      $http.get('/api/books/search/' + (input || ''), {cache: true})
+      $http.get('/api/books/search/' + limit  + '/' + (input || ''), {cache: true})
         .then(function(resp, status, headers, conf){
           serviceData.isinit = false;
           serviceData.results = resp.data;
@@ -61,6 +65,9 @@
 
     function getSearchterm() {
       return serviceData.isinit? serviceData.inputsearchDefault: serviceData.inputsearch;
+    }
+    function getSearchlimit() {
+      return serviceData.isinit? serviceData.limitDefault: serviceData.limit;
     }
     function setFilterCategories(filter) {
       serviceData.categoriesFilter = filter;

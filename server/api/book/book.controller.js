@@ -21,6 +21,11 @@ function bookListResults(res) {
     return res.json(200, Books);
   };
 }
+function bookListLimit(limit) {
+  var value = Number(limit);
+  return value===0 || value>100? 100: value;
+}
+
 
 // Get list of Books
 exports.read = function(req, res) {
@@ -31,8 +36,9 @@ exports.search = function(req, res) {
   //Book.find((req.params.filter && JSON.parse(req.params.filter)) || {}).limit(req.params.limit || 10).exec(function(err, Books) {
   //Book.find({"$or" : [{"title" : /Blue/}, {"yearEdition" : 1930}]}).limit(req.params.limit || 100).exec(function(err, Books) {
   //console.log(require("./book.search.lib").filter(req.params.filter));
+
   Book.find(require("./book.search.lib").filter(req.params.filter), BookFields.storeSearch )
-    .limit(req.params.limit || 25)
+    .limit(bookListLimit(req.params.limit))
     .exec(bookListResults(res)/*function(err, Books) {
       if (err) {
         return handleError(res, err);
@@ -42,7 +48,7 @@ exports.search = function(req, res) {
 };
 exports.advancedSearch = function(req, res) {
   Book.find(require("./book.search.lib").advfilter(req.params), BookFields.storeSearch )
-    .limit(req.params.limit || 25)
+    .limit(bookListLimit(req.params.limit))
     .exec(bookListResults(res));
 };
 

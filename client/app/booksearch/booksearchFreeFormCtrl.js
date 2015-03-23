@@ -3,20 +3,19 @@
  */
 (function () {
   'use strict';
-  angular.module('appBookShop.booksearch').controller('BookSearchFormCtrl', BookSearchFormCtrl);
+  angular.module('appBookShop.booksearch').controller('BookSearchFreeFormCtrl', BookSearchFreeFormCtrl);
   /* @ngInject */
-  function BookSearchFormCtrl($rootScope, $scope, BookSearch, notifier) {
+  function BookSearchFreeFormCtrl($rootScope, $scope, BookSearch, notifier) {
     /*jshint validthis: true */
     var vm = this;
     //notifier.info('Procura Livros Activa');
-    var onstateChangeSuccess = $scope.$on('$stateChangeSuccess', setInputSearch)
+    //var onstateChangeSuccess = $scope.$on('$stateChangeSuccess', setInputSearch)
 
     vm.inputsearch = BookSearch.getSearchterm();//data.inputsearch;
     vm.limit = BookSearch.getSearchlimit();
 
     vm.search = function search() {
       $rootScope.$state.go('main.search.results',{limit: vm.limit , term:vm.inputsearch});
-      //main.search.results({term:vm.inputsearch})
     }
 
     function setInputSearch (event, toState, toParams, fromState, fromParams) {

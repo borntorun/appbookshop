@@ -45,7 +45,10 @@
 
 
   /* @ngInject */
-  function configure ( $logProvider, $urlRouterProvider, $locationProvider, exceptionHandlerProvider, appconfigHandlerProvider)  {
+  function configure ( $logProvider, $urlRouterProvider, $locationProvider,$animateProvider, exceptionHandlerProvider, appconfigHandlerProvider)  {
+
+    $animateProvider.classNameFilter(/(carousel|dynamic-layout|app-anima)/);//feature do ngAnimate...
+
     // turn debugging off/on (no info or warn)
     if ($logProvider.debugEnabled) {
       $logProvider.debugEnabled(true);

@@ -22,8 +22,7 @@
       url: 'livro/{bookid}',
       /* Views affected by this url */
       views: {
-        '': {templateUrl: 'app/bookdetail/jade/bookdetailPageLayout.html',controller: 'BookDetailPageCtrl as vm'},
-        'booksearch-form@main': {templateUrl: 'app/booksearch/jade/booksearchForm.html', controller: 'BookSearchFormCtrl as vm'},
+        '': {templateUrl: 'app/bookdetail/jade/bookdetailPageLayout.html',controller: 'BookDetailPageCtrl as vm'}
         /*,
         'navbarleft-books': {
           templateUrl: 'components/books/detail/bookDetailFeatured.html'

@@ -1,11 +1,12 @@
 //Ctrl:Results from search
 //(ng-controller="BookSearchResultCtrl as vm")
-.col-xs-12
-    div.well
-        h3.panel-title Livros em Destaque
-    //div.panel.panel-default.bootcards-summary
-        //div.panel-heading
-            h3.panel-title Livros existentes
-    div.panel-body.panelresultsbody(dynamic-layout items="vm.results",filters="vm.filters",rankers="vm.rankers",defaulttemplate="'app/booksearch/jade/booksearchResultItem.html'")
-    ////    //div.panel-footer
-    ////        small ....
+.row
+    .col-xs-12
+        div.panel.panel-default
+            div.panel-heading
+                h4 Livros em Destaque
+            div.panel-body
+                ng-include(src="'app/booksearch/jade/booksearchFilterCatForm.html'")
+.row
+    .col-xs-12
+        div.panel-body.panelresultsbody(dynamic-layout items="vm.results",filters="vm.filters",rankers="vm.rankers",defaulttemplate="'app/booksearch/jade/booksearchResultItem.html'")

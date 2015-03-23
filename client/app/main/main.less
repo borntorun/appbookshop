@@ -10,7 +10,10 @@ body {
   #convert-px(to_em, padding-top, 70);
 
 }
-
+h4, .h4, h5, .h5, h6, .h6 {
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
 a {
   color: hsl(240, 4%, 39%);
 }
@@ -33,8 +36,26 @@ a:hover {
 .pointer {
   cursor: pointer;
 }
-
-
+//======bootstrap changes
+.panel-heading {
+  padding-top: 1px;
+  padding-bottom: 1px;
+  padding-right: 5px;
+}
+.panel-group {
+  margin-bottom: 5px;
+}
+.form-group {
+  margin-bottom: 5px;
+}
+.panel-body {
+  padding: 10px;
+}
+.btn {
+  margin-right: 2px;
+  margin-left: 2px;
+}
+//======
 
 .nav-barra-topo {
   background-color: hsl(248, 11%, 90%);
@@ -56,9 +77,9 @@ a:hover {
 
 
 
-/* ********** Booksearchform ********** */
+/* ********** booksearchfreeform ********** */
 
-#booksearchform-inputsearch {
+#booksearchfreeform-inputsearch {
   #convert-px(to_em, padding-top, 8);
   #convert-px(to_em, padding-right, 12);
   #convert-px(to_em, font-size, 12);
@@ -72,14 +93,14 @@ a:hover {
   border-radius: 8px 0 0 8px;*/
   outline: none;
 }
-#booksearchform-inputsearch:focus {
+#booksearchfreeform-inputsearch:focus {
   border-color: hsl(196, 100%, 41%);
 }
-.input-group-btn.booksearchform:last-child > .btn {
+.input-group-btn.booksearchfreeform:last-child > .btn {
   margin-left: 0px;
 }
 
-/* ********** Booksearchform - Filter Categorias ********** */
+/* ********** booksearchfreeform - Filter Categorias ********** */
 
 .input-filtercat {
   border: 1px solid hsl(0, 0%, 80%);
@@ -258,3 +279,12 @@ a:hover {
 
 
 
+.testeimage {
+  width: 50px;
+  height: 50px;
+  float: left;
+  //margin-left: -21px;
+  position: relative;
+  //top: 6px;
+  background: url("assets/images/test1.png") no-repeat;
+}

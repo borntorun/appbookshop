@@ -1,31 +1,36 @@
 .col-xs-12(ng-controller="BookSearchAdvancedFormCtrl as vm")
-    form(id="booksearchAdvancedForm" name="booksearchAdvancedForm" role="search", ng-submit="vm.search()")
     .row
-        .col-xs-12.col-sm-6
-            //div.testeimage
-            .form-group
-                div.input-group
-                    span.input-group-addon(id="titulo") Título
-                    input.form-control(type="text" placeholder="pesquisar título" aria-describedby="titulo")
-            .form-group
-                div.input-group
-                    span.input-group-addon(id="autor") Autor
-                    input.form-control(type="text" placeholder="pesquisar autor" aria-describedby="autor")
-            .form-group
-                div.input-group
-                    span.input-group-addon(id="asunto") Assunto
-                    input.form-control(type="text" placeholder="pesquisar assunto" aria-describedby="titulo")
-                    //span.input-group-addon(id="pesquisa-livre") Pesquisa Livre:
-                    //input(id="booksearchfreeform-inputsearch" type="text",aria-describedby="pesquisa-livre", placeholder="procurar no título, autor, assunto, idioma ou palavras-chave...",data-ng-model="vm.inputsearch").form-control
-                    //span.input-group-btn.booksearchfreeform
-                    //    //ui-sref="main.search.results({term:vm.inputsearch})"
-                    //    .button(type="button", ng-click="vm.search()").btn.btn-primary
-                    //        | Procurar
-        .col-xs-12.col-sm-6
-            .form-group
-                div.checkbox
-                    label
-                        input(type="checkbox")
-                        | 1ªs Edições
-            span.pull-right.bottom
-                input.btn.btn-primary(type="submit" value="Procurar")
+        form(id="booksearchAdvancedForm", name="booksearchAdvancedForm", role="search", novalidate, ng-submit="vm.search(booksearchAdvancedForm)")
+            .col-xs-12.col-sm-6
+                //div.testeimage
+                .form-group
+                    div.input-group
+                        span.input-group-addon(id="titulo") Título
+                        input.form-control(type="text" placeholder="pesquisar título" aria-describedby="titulo", ng-model="vm.criteria.title")
+                .form-group
+                    div.input-group
+                        span.input-group-addon(id="autor") Autor
+                        input.form-control(type="text" placeholder="pesquisar autor" aria-describedby="autor", ng-model="vm.criteria.authors")
+                .form-group
+                    div.input-group
+                        span.input-group-addon(id="asunto") Assunto
+                        input.form-control(type="text" placeholder="pesquisar assunto" aria-describedby="subject", ng-model="vm.criteria.subject")
+            .col-xs-12.col-sm-6
+                .form-group
+                    div.input-group
+                        span.input-group-addon(id="collection") Colecção
+                        input.form-control(type="text" placeholder="pesquisar por colecção" aria-describedby="collection", ng-model="vm.criteria.collection")
+                .form-group
+                    div.input-group
+                        span.input-group-addon(id="categoria") Categoria
+                        //thengmodel=vm.criteria.categories",
+                        warp-autocomplete-typeaheadjs(id="panel-searchcat-dropdown-menu", model="vm.criteria.categories" donotclearvalue="true", classinput="input-searchcat", datasource="categories", placeholder="filtrar por categorias", onselected="vm.onSelected",onclosed="vm.onClosed", remote="{{vm.urlRemote}}")
+                        //input.form-control(type="text" placeholder="pesquisar por categoria" aria-describedby="categoria")
+                .form-group
+                    div.checkbox
+                        label
+                            input(type="checkbox", ng-model="vm.firstEdition")
+                            | 1ªs Edições
+                span.pull-right.bottom
+                    button.btn.btn-primary(type="submit", ng-disabled="vm.empty(booksearchAdvancedForm)")
+                        | Procurar

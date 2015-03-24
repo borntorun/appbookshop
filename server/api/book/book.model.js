@@ -59,7 +59,7 @@ var BookSchema = new Schema({
   qtSold: { type: Number },
   discounts: { type: [Schema.Types.Mixed] },
   taxes: { type: [Schema.Types.Mixed] },
-  template: { type: String },
+  template: { type: String }
 
 });
 

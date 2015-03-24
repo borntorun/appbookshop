@@ -4,8 +4,8 @@ var express = require('express');
 var router = express.Router();
 var bookCtrl = require('./book.controller');
 
-router.get('/advanced/search/:title/:authors/:subject', bookCtrl.advancedSearch);
-router.get('/search/:limit([0-9]+)/:filter?', bookCtrl.search);
+router.get('/search/advanced/:limit([0-9]+)/:title/:authors/:subject/:collection/:categories/:edition', bookCtrl.advancedSearch);
+router.get('/search/free/:limit([0-9]+)/:filter?', bookCtrl.search);
 router.get('/store/:id', bookCtrl.store);
 
 module.exports = require('../apirouter')(router, bookCtrl, []);

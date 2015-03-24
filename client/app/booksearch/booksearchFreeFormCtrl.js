@@ -1,5 +1,8 @@
 /**
- * Created by Joao Carvalho on 12-03-2015.
+ * Controller appBookShop.booksearch BookSearchFreeFormCtrl
+ * (João Carvalho, 12-03-2015)
+ *
+ * Descrição: Controla pesquisa livre de livros
  */
 (function () {
   'use strict';
@@ -9,19 +12,19 @@
     /*jshint validthis: true */
     var vm = this;
     //notifier.info('Procura Livros Activa');
-    //var onstateChangeSuccess = $scope.$on('$stateChangeSuccess', setInputSearch)
+    var onstateChangeSuccess = $scope.$on('$stateChangeSuccess', setInputSearch)
 
-    vm.inputsearch = BookSearch.getSearchterm();//data.inputsearch;
-    vm.limit = BookSearch.getSearchlimit();
+    vm.inputsearch = BookSearch.getSearchTerm();//data.inputsearch;
+    vm.limit = BookSearch.getSearchLimit();
 
     vm.search = function search() {
-      $rootScope.$state.go('main.search.results',{limit: vm.limit , term:vm.inputsearch});
+      $rootScope.$state.go('main.search.results',{type: "free", limit: vm.limit , term:vm.inputsearch});
     }
 
     function setInputSearch (event, toState, toParams, fromState, fromParams) {
       if (toState.name === 'main.search') {
-        vm.inputsearch = BookSearch.data.inputsearchDefault;
-        vm.limit = BookSearch.data.limit;
+        vm.inputsearch = BookSearch.getSearchInputDefault();
+        vm.limit = BookSearch.getSearchLimit();
         event.preventDefault();
       }
       else if (toState.name === 'main.search.results' && (toState.name !== fromState.name || (toParams.term!==undefined && fromParams.term!==undefined && toParams.term !== fromParams.term)) ) {
@@ -29,16 +32,11 @@
         vm.limit = toParams.limit;
         event.preventDefault();
       }
-
-      /*console.log(fromState);
-      console.log(fromParams);
-      console.log(toState);
-      console.log(toParams);*/
     }
 
-    /*$scope.$on('$destroy', function(){
+    $scope.$on('$destroy', function(){
       onstateChangeSuccess(); //unregister the listenner 'onstateChangeSuccess'
-    });*/
+    });
   }
 }());
 

@@ -1,34 +1,57 @@
 /**
- * Created by Joao Carvalho on 12-03-2015.
+ * Controller appBookShop.booksearch BookSearchResultCtrl
+ * (João Carvalho, 12-03-2015)
+ *
+ * Descrição: Controla resultados da pesquisa de livros
  */
 (function () {
   'use strict';
-  angular.module('appBookShop.booksearch').controller('BookSearchResultCtrl', BookSearchResultCtrl);
+  angular.module('appBookShop.booksearch')
+    .controller('BookSearchResultCtrl', BookSearchResultCtrl)
+    .directive('bookSearchFormLayout', BookSearchFormLayout );
+
   /* @ngInject */
-  function BookSearchResultCtrl($timeout, $rootScope, $scope, notifier, BookSearch) {
+  function BookSearchResultCtrl($rootScope, $scope, $timeout, BookSearch, notifier) {
     /*jshint validthis: true */
     var vm = this;
-    /*console.log($rootScope.$state);
-    console.log($rootScope.$stateParams.term);*/
+
     vm.filters = null;
     vm.rankers = null;
 
-    BookSearch.search(getSearchInput(),getSearchLimit()).then(function (data) {
-      //notifier.info('Procura Ok');
-      applyFilterCategories(BookSearch.getFilterCategories());
-      vm.results = data;
-    }, function (error) {
-      notifier.error('Erro procura');
-    });
+    $rootScope.$stateParams.type = ($rootScope.$stateParams.type || "free").toLowerCase();
+
+    if ($rootScope.$stateParams.type==="free") {
+      BookSearch.search($rootScope.$stateParams.term,$rootScope.$stateParams.limit).then(function (data) {
+        //notifier.info('Procura Ok');
+        applyFilterCategories(BookSearch.getFilterCategories());
+        vm.results = data;
+      }, function (error) {
+        notifier.error('Erro procura');
+      });
+    }
+    if ($rootScope.$stateParams.type==="advanced") {
+      var inputObj = {
+        title: $rootScope.$stateParams.title,
+        authors: $rootScope.$stateParams.authors,
+        subject: $rootScope.$stateParams.subject,
+        collection: $rootScope.$stateParams.collection,
+        categories: $rootScope.$stateParams.categories,
+        edition: $rootScope.$stateParams.edition
+      };
+
+      BookSearch.searchAdvanced(inputObj,$rootScope.$stateParams.limit).then(function (data) {
+        //notifier.info('Procura Ok');
+        applyFilterCategories(BookSearch.getFilterCategories());
+        vm.results = data;
+      }, function (error) {
+        notifier.error('Erro procura');
+      });
+    }
+
+
     var onBookSearchFilterCatChange = $rootScope.$on('BookSearchFilterCatChange', function (event, filter) {
       applyFilterCategories(filter);
     });
-    function getSearchInput() {
-      return BookSearch.data.isinit ? $rootScope.$stateParams.term || BookSearch.data.inputsearchDefault : $rootScope.$stateParams.term === undefined ? BookSearch.data.inputsearchDefault : $rootScope.$stateParams.term;
-    }
-    function getSearchLimit() {
-      return BookSearch.data.isinit ? $rootScope.$stateParams.limit || BookSearch.data.limitDefault : $rootScope.$stateParams.limit === undefined ? BookSearch.data.limitDefault : $rootScope.$stateParams.limit;
-    }
 
     function applyFilterCategories(filter) {
       $timeout(function () {
@@ -48,5 +71,45 @@
     });
 
     //notifier.info('View Resultados');
+  }
+
+  /**
+   * Directive appBookShop.booksearch BookSearchFormLayout
+   * (João Carvalho, 12-03-2015)
+   *
+   * Descrição: - responsável por gerir accordion em booksearchLayout.jade consoante o state
+   */
+  /* @ngInject */
+  function BookSearchFormLayout($rootScope) {
+    var directive = {
+      restrict: 'A',
+      link: linkfunction
+    };
+    return directive;
+    ////////////////
+    function linkfunction(scope, element, attrs) {
+      var onstateChangeSuccess = scope.$on('$stateChangeSuccess', changeLayout)
+
+      function setLayout(name) {
+        if (name === "main.search.advresults" && $("#toggleAdvSearch").attr("aria-expanded")=="false") {
+          $("#toggleAdvSearch").click();
+        }
+        if (name === "main.search.results" && $("#toggleFreeSearch").attr("aria-expanded")=="false") {
+          $("#toggleFreeSearch").click();
+        }
+      }
+
+      function changeLayout(event, toState, toParams, fromState, fromParams) {
+        if (fromState.name!=="main.search" && toState.name!==fromState.name) {
+          setLayout(toState.name);
+        }
+      }
+      setLayout($rootScope.$state.current.name);
+
+      scope.$on('$destroy', function () {
+        onstateChangeSuccess();
+      });
+
+    }
   }
 }());

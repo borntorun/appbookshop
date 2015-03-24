@@ -58,6 +58,9 @@ search.advfilter = function (filter){
   setadvFilter(objFilter, "title", filter.title);
   setadvFilter(objFilter, "authors", filter.authors);
   setadvFilter(objFilter, "subject", filter.subject);
+  setadvFilter(objFilter, "nameCollection", filter.collection);
+  setadvFilter(objFilter, "categories", filter.categories);
+  setadvFilter(objFilter, "editionNumber", filter.edition);
 
 
 

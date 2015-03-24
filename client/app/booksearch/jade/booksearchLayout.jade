@@ -1,9 +1,9 @@
-.col-xs-12.panel-group(id="accordion" role="tablist" aria-multiselectable="false")
+.col-xs-12.panel-group(id="searchformaccordion" role="tablist" aria-multiselectable="false", book-search-form-layout)
     div.panel.panel-default
         div.panel-heading(role="tab" id="headingOne")
             h6
-                button.btn.btn-default(type="button" data-toggle="collapse" data-parent="#accordion" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne") Pesquisa Livre
-                button.btn.btn-default(type="button" data-toggle="collapse" data-parent="#accordion" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo") Pesquisa Avançada
+                button.btn.btn-default(id="toggleFreeSearch", type="button" data-toggle="collapse" data-parent="#searchformaccordion" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne") Pesquisa Livre
+                button.btn.btn-default(id="toggleAdvSearch",type="button" data-toggle="collapse" data-parent="#searchformaccordion" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo") Pesquisa Avançada
         div.panel-collapse.collapse(id="collapseOne" role="tabpanel" aria-labelledby="headingOne")
             div.panel-body
                 .row

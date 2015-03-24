@@ -1,8 +1,6 @@
 /**
  * Controller appBookShop.bookdetail BookDetailPage
  * (João Carvalho, 16-03-2015)
- * Criado com base em angular design style de John Papa
- * (https://github.com/johnpapa/angular-styleguide)
  *
  * Descrição: Book Detail Controller - Detalhe de livro mode view page
 */

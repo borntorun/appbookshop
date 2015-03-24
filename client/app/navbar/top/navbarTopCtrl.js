@@ -1,8 +1,6 @@
 /**
  * Controller appBookShop.navbar NavBarTop
  * (João Carvalho, 16-03-2015)
- * Criado com base em angular design style de John Papa
- * (https://github.com/johnpapa/angular-styleguide)
  *
  * Descrição: Controller para barra de navegação no topo
 */

@@ -1,14 +1,27 @@
 /**
  * Directive appBookShop.components warp-autocomplete-typeaheadjs
  * (João Carvalho, 13-03-2015)
- * Criado com base em angular design style de John Papa
- * (https://github.com/johnpapa/angular-styleguide)
  *
  * Descrição: Directive/component to support typeahead.js autocomplete library (https://twitter.github.io/typeahead.js/)
  * with Bloodhound Integration (https://github.com/twitter/typeahead.js/blob/master/doc/bloodhound.md)
  *
- * Attri
- * id="panel-filtercat-dropdown-menu",onselected="vm.onSelected", datasource="categories", key="name", limit="25", remote="/api/categories/search/"
+ * Attributtes:
+ * Required:
+ * id="id of directive html element",
+ * key="key-for-datasource-model",
+ * onselected="function to call on item selected",
+ * remote="remote url for datasource"
+ *
+ * Optional:
+ * ?model           "model to bind the input"
+ * ?onclosed        "function to call on input lost focus"
+ * ?datasource      "name-for-css (deafult=datasource)"
+ * ?limit           "max-items-to-show-on-dropdown (default=25)"
+ * ?donotclearvalue "specifies if value on input must not be clered on selection (default=false)"
+ * ?minlensugestion "minimum lenght for trigger dropdown (default=3)"
+ * ?placeholder     "placeholder text"
+ * ?classinput      "css class for input"
+ *
  */
 (function () {
   'use strict';
@@ -26,31 +39,50 @@
         remote: '@',
         datasource: '@?',
         onselected: '&',
+        onclosed: '&?',
         donotclearvalue: '@?',
         minlensugestion: '@?',
         limit: '@?',
         placeholder: '@?',
-        classinput: '@?'
+        classinput: '@?',
+        model: '=?'
       },
-      template: '<input type="text" placeholder="{{placeholder}}" class="typeahead {{classinput}}"/>',
+      template: '<input type="text" ng-model="model" placeholder="{{placeholder}}" class="typeahead {{classinput}}"/>',
       link: linkfunction
     };
     return directive;
     ////////////////
-    function linkfunction(scope, element, attrs) {
+    function linkfunction(scope, element, attrs, ctrl) {
       var inputElem = $('#' + attrs.id + ' .typeahead');
       var onselectedIsFunction = true;
+      var onclosedIsFunction = true;
       scope.minlensugestion = scope.minlensugestion || 3;
       scope.key = scope.key || 'name';
       scope.limit = scope.limit || 25;
+
       if (!(!scope.onselected? false : (!testIsFunction(scope.onselected)? false: testIsFunction(scope.onselected())))) {
         onselectedIsFunction = false;
-        $log.error('\'onselected\' is not defined or is not a function. (autocompleteTypeaheadjs:id:' + attrs.id + ')');
+        logerror('\'onselected\' is not defined or is not a function.');
+      }
+      if (!(!scope.onclosed? false : (!testIsFunction(scope.onclosed)? false: testIsFunction(scope.onclosed())))) {
+        onclosedIsFunction = false;
+        logwarn('\'onclosed\' is not defined or is not a function.');
       }
 
       configTypeaheadBloodhound();
 
       element.on('typeahead:selected', OnSelected);
+      element.on('typeahead:closed', OnClosed);
+
+      /*element.on('typeahead:opened', function() {
+        console.log('opened');
+      });
+      element.on('typeahead:selected', function() {
+        console.log('selected');
+      });
+      element.on('typeahead:cursorchanged', function() {
+        console.log('cursorchanged');
+      });*/
 
       scope.$on('$destroy', function () {
         element.typeahead('destroy');
@@ -58,13 +90,21 @@
 
       function OnSelected(objquery, item, array) {
         if (onselectedIsFunction) {
-          scope.onselected()(item);//{item: item});
+          scope.onselected()(item);
         }
         else {
-            $log.warn('\'onselected\' not called: Is not defined or is not a function. (autocompleteTypeaheadjs:id:' + attrs.id + ')');
+            logwarn('\'onselected\' not called: Is not defined or is not a function.');
         }
         if (scope.donotclearvalue===undefined || scope.donotclearvalue==='false') {
           inputElem.typeahead('val', '');
+        }
+      }
+      function OnClosed(objquery, item, array) {
+        if (onclosedIsFunction) {
+          scope.onclosed()({name: inputElem.typeahead('val')});
+        }
+        else {
+          logwarn('\'onclosed\' not called: Is not defined or is not a function.');
         }
       }
       function configTypeaheadBloodhound() {
@@ -90,12 +130,12 @@
             }, {
               name: scope.datasource,
               displayKey: scope.key,
-              source: objectSource.ttAdapter()/*,
-          templates: {
-            empty: '<small>Categorias não encontradas</small>',
-            footer: '<hr>',
-            header: '<small><strong>Categorias:</strong></small>'
-          }*/
+              source: objectSource.ttAdapter()
+              /*,templates: {
+                empty: '',
+                footer: '',
+                header: ''
+              }*/
             });
           });
         }
@@ -105,10 +145,10 @@
         return {}.toString.call(f) === '[object Function]';
       }
       function logwarn(message) {
-        $log.warn(message + '([appBookShop.components][warpAutocompleteTypeaheadjs]:id:' + attrs.id + ')');
+        $log.warn(message + '([warpAutocompleteTypeaheadjs]:id:' + attrs.id + ')');
       }
       function logerror(message) {
-        $log.error(message + '([appBookShop.components][warpAutocompleteTypeaheadjs]:id:' + attrs.id + ')');
+        $log.error(message + '([warpAutocompleteTypeaheadjs]:id:' + attrs.id + ')');
       }
     };
 

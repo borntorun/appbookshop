@@ -23,7 +23,9 @@ module.exports = function (app) {
   };
   app.route('/').get(funcIndexHtml);
 
-  app.route('/search/([0-9]+)/*').get(funcIndexHtml);
+  app.route('/search/advanced/([0-9]+)/*').get(funcIndexHtml);
+
+  app.route('/search/free/([0-9]+)/*').get(funcIndexHtml);
 
   app.route('/livro/:id').get(funcIndexHtml);
   //

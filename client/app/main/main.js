@@ -9,7 +9,7 @@
     .controller('Main', Main);
 
   /* @ngInject */
-  function Main(notifier, bookconfig) {
+  function Main($scope, notifier, bookconfig) {
     /*jshint validthis: true */
     var vm = this;
 

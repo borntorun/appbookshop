@@ -1,8 +1,6 @@
 /**
  * Controller appBookShop.booksearch BookSearchFilterCategories
  * (João Carvalho, 13-03-2015)
- * Criado com base em angular design style de John Papa
- * (https://github.com/johnpapa/angular-styleguide)
  *
  * Descrição: Controla filtro de categorias no form de search
  */

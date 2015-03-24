@@ -23,7 +23,7 @@ Book.find({}).remove(function () {
     {"title": "The Little Prince", "authors": ["Antoine de Saint-Exupéry"], "editionYear": "1943", "editionLanguage": "French"},
     {"title": "Man's Fate", "authors": ["André Malraux"], "editionYear": "1933", "editionLanguage": "French"},
     {"title": "Journey to the End of the Night", "authors": ["Louis-Ferdinand Céline"], "editionYear": "1932", "editionLanguage": "French"},
-    {"title": "The Grapes of Wrath", "authors": ["John Steinbeck"], "editionYear": "1939", "editionLanguage": "English", "categories": [
+    {"title": "The Grapes of Wrath", "authors": ["John Steinbeck"], "editionYear": "1939", "editionNumber": "1", "editionLanguage": "English", "categories": [
       "Ensaio", "Psicologia", "Filosofia"
     ]},
     {"title": "For Whom the Bell Tolls", "authors": ["Ernest Hemingway"], "editionYear": "1940", "editionLanguage": "English"},
@@ -34,7 +34,7 @@ Book.find({}).remove(function () {
       "categories": [
         "Ensaio", "Teatro"
     ]},
-    {"title": "Being and Nothingness", "authors": ["Jean-Paul Sartre"], "editionYear": "1943", "editionLanguage": "French", "categories": [
+    {"title": "Being and \"Nothingness", "authors": ["Jean-Paul Sartre"], "editionYear": "1943", "editionLanguage": "French", "categories": [
       "Ensaio", "Filosofia"
     ]},
     {"title": "The Name of the Rose", "authors": ["Umberto Eco"], "editionYear": "1980", "editionLanguage": "Italian"},

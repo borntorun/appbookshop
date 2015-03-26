@@ -29,7 +29,7 @@
       vm.criteria.categories = item.name;
     };
     vm.search = function search() {
-      console.log(vm.criteria);
+      //console.log(vm.criteria);
       vm.criteria.edition = vm.firstEdition ? "1" : "";
       $rootScope.$state.go('main.search.advresults', {
         type: "advanced",

@@ -10,7 +10,7 @@
   /* @ngInject */
   function BookSearch($rootScope, $http, $q, exception, notifier) {
     var serviceData = {
-      inputsearchDefault: 'german',
+      inputsearchDefault: 'freud,musil,outsider,proust,buc',
       inputsearch: '',
       inputsearchObjDefault: {title: '-', authors: '-', subject: '-', collection: '-', categories: '-', edition: '-'},
       inputsearchObj: {title: '', authors: '', subject: '', collection: '', categories: '', edition: ''},

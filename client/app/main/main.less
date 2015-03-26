@@ -4,7 +4,7 @@ html {
 
 body {
   font-family: @main-font;
-  font-size: 1em;
+  #convert-px(to_em, font-size, @main-textsize-px);
   color: @main-textcolor;
   //min-height: 2000px;
   #convert-px(to_em, padding-top, 70);
@@ -21,7 +21,7 @@ a, a:visited, a:hover, a:focus {
   color: hsl(240, 4%, 39%);
 }
 a:hover {
-  text-decoration: underline !important;
+  text-decoration: no-underline !important;
 }
 .toast-success {
   //#refactcolor(10%, maisescuro, background-color, @hsl-secondary-2-2, @important:~'!important');
@@ -226,12 +226,7 @@ a:hover {
 .bookdetail-panelinfo-tablist {
   border: 1px solid hsl(0, 0%, 89%);
 }
-.bookdetail-panelinfo-tabs {
-  border-top-width: 0px;
-  border-radius: 0px;
-  #convert-px(to_em, font-size, 12);
 
-}
 
 
 .carousel-control {

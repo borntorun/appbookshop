@@ -1,0 +1,162 @@
+
+
+.bookdetail .carousel-inner > .item > img {
+  display: inline!important;
+}
+.bookdetail .carousel-indicators {
+  bottom: -31px;
+}
+.bookdetail-image {
+  width:  100px!important;
+  height: auto!important;//169px;
+  border-top-right-radius: 8px;
+  border-top-left-radius: 8px;
+  box-shadow: 0px 1px 6px hsl(0, 0%, 0%);
+  @media (min-width: 768px) {
+    width:  130px!important;
+    //height: 219px;
+  }
+  @media (min-width: 992px) {
+    width:  168px!important;
+    //height: 284px;
+  }
+  @media (min-width: 1200px) {
+    width:  203px!important;
+    //height: 284px;
+  }
+}
+.bookdetail-panel {
+  padding: 12px;
+  box-shadow: 0 1px 6px hsl(0, 0%, 0%);
+  border-bottom-right-radius: 0px;
+  border-bottom-left-radius: 0px;
+  border-top-right-radius: 8px;
+  border-top-left-radius: 8px;
+}
+.bookdetail-panel-left{
+//  background-image: url("/assets/images/border1.png");
+//  background-repeat-x: no-repeat;
+//  background-position: right top;
+  border: 1px;
+  border-color: hsl(235, 7%, 86%);
+  border-style: dashed;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+}
+.bookdetail-panel-right {
+  @media (max-width: 767px) {
+    padding: 0px;
+  }
+
+}
+
+.bookdetail .boxprice {
+  position: absolute;
+  //bottom: 5px;
+  right: 0px;
+}
+.bookdetail .boxedicao {
+  width: 155px;
+  @media (min-width: 360px) {
+    width: 190px;
+  }
+  @media (min-width: 480px) {
+    width: auto;
+  }
+//  @media (max-width: 351px) {
+//    max-width: 160px;
+//  }
+//  @media (max-width: 321px) {
+//    max-width: 140px;
+//  }
+}
+
+@booktitlesize: 20;
+@bookauthorsize: 12;
+@booklabelsize: 11;
+
+.bookdetail ul li {
+  padding: 5px 5px;
+}
+.bookdetail ul li span{
+  #convert-px(to_em, font-size, @booklabelsize);
+}
+
+.bookdetail ul li span:first-of-type{
+  font-weight: bold;
+  margin-right: 2px;
+}
+.bookdetail .nav-pills > li {
+  cursor: pointer;
+}
+
+.bookdetail .nav-pills > li > a {
+  padding: 5px 5px;
+  cursor: pointer;
+  text-decoration: no-underline;
+}
+.bookdetail .nav-pills > li.active > a,
+.bookdetail .nav-pills > li.active > a:hover,
+.bookdetail .nav-pills > li.active > a:focus {
+  color: hsl(0, 100%, 100%);
+  background-color: hsl(0, 0%, 49%);
+}
+
+
+//abaixo de
+@media (max-width: 767px) {
+  .bookdetail .nav-pills > li + li {
+    margin-top: 2px;
+    margin-left: 0;
+  }
+  .bookdetail .nav-pills > li {
+    float: none;
+  }
+}
+
+
+
+
+.bookdetail .panel-heading {
+  #convert-px(to_em, font-size, @booklabelsize + 1);
+}
+.bookdetail .booktitle {
+  #convert-px(to_em, font-size, @booktitlesize);
+  @media (min-width: 768px) {
+    #convert-px(to_em, font-size, @booktitlesize + 2);
+  }
+  @media (min-width: 992px) {
+    #convert-px(to_em, font-size, @booktitlesize + 4);
+  }
+  @media (min-width: 1200px) {
+    #convert-px(to_em, font-size, @booktitlesize + 6);
+  }
+}
+.bookdetail .bookauthor {
+  #convert-px(to_em, font-size, @bookauthorsize);
+
+  @media (min-width: 768px) {
+    #convert-px(to_em, font-size, @bookauthorsize + 2);
+  }
+  @media (min-width: 992px) {
+    #convert-px(to_em, font-size, @bookauthorsize + 4);
+  }
+  @media (min-width: 1200px) {
+    #convert-px(to_em, font-size, @bookauthorsize + 6);
+  }
+}
+.fielditem::before {
+  content: "[";
+  font-size: 80%;
+}
+.fielditem::after {
+  content: "] ";
+  font-size: 80%;
+}
+.bookauthor::after {
+  content: "] (autor)";
+  font-size: 80%;
+}
+
+

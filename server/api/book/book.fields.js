@@ -40,6 +40,7 @@ var fields = {
     "originalTitle": 1,
     "originalPublisher": 1,
     "originalYearFirstEdition": 1,
+    "originalCountryEdition": 1,
     "nameCollection": 1,
     "numCollection": 1,
     "translators": 1,

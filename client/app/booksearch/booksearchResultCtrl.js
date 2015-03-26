@@ -7,8 +7,7 @@
 (function () {
   'use strict';
   angular.module('appBookShop.booksearch')
-    .controller('BookSearchResultCtrl', BookSearchResultCtrl)
-    .directive('bookSearchFormLayout', BookSearchFormLayout );
+    .controller('BookSearchResultCtrl', BookSearchResultCtrl);
 
   /* @ngInject */
   function BookSearchResultCtrl($rootScope, $scope, $timeout, BookSearch, notifier) {
@@ -71,45 +70,5 @@
     });
 
     //notifier.info('View Resultados');
-  }
-
-  /**
-   * Directive appBookShop.booksearch BookSearchFormLayout
-   * (João Carvalho, 12-03-2015)
-   *
-   * Descrição: - responsável por gerir accordion em booksearchLayout.jade consoante o state
-   */
-  /* @ngInject */
-  function BookSearchFormLayout($rootScope) {
-    var directive = {
-      restrict: 'A',
-      link: linkfunction
-    };
-    return directive;
-    ////////////////
-    function linkfunction(scope, element, attrs) {
-      var onstateChangeSuccess = scope.$on('$stateChangeSuccess', changeLayout)
-
-      function setLayout(name) {
-        if (name === "main.search.advresults" && $("#toggleAdvSearch").attr("aria-expanded")=="false") {
-          $("#toggleAdvSearch").click();
-        }
-        if (name === "main.search.results" && $("#toggleFreeSearch").attr("aria-expanded")=="false") {
-          $("#toggleFreeSearch").click();
-        }
-      }
-
-      function changeLayout(event, toState, toParams, fromState, fromParams) {
-        if (fromState.name!=="main.search" && toState.name!==fromState.name) {
-          setLayout(toState.name);
-        }
-      }
-      setLayout($rootScope.$state.current.name);
-
-      scope.$on('$destroy', function () {
-        onstateChangeSuccess();
-      });
-
-    }
   }
 }());

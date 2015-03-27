@@ -7,7 +7,7 @@ body {
   #convert-px(to_em, font-size, @main-textsize-px);
   color: @main-textcolor;
   //min-height: 2000px;
-  #convert-px(to_em, padding-top, 70);
+  #convert-px(to_em, padding-top, 51);
 
 }
 h4, .h4, h5, .h5, h6, .h6 {
@@ -23,39 +23,10 @@ a, a:visited, a:hover, a:focus {
 a:hover {
   text-decoration: no-underline !important;
 }
-.toast-success {
-  //#refactcolor(10%, maisescuro, background-color, @hsl-secondary-2-2, @important:~'!important');
-  background-color: #51a351;
+
+.navbar {
+  margin-bottom: 0px!important;
 }
-#toast-container > div.toast-success {
-  color: @branco !important;
-}
-.zindex100 {
-  z-index: 100;
-}
-.pointer {
-  cursor: pointer;
-}
-//======bootstrap changes
-.panel-heading {
-  padding-top: 1px;
-  padding-bottom: 1px;
-  padding-right: 5px;
-}
-.panel-group {
-  margin-bottom: 5px;
-}
-.form-group {
-  margin-bottom: 5px;
-}
-.panel-body {
-  padding: 10px;
-}
-.btn {
-  margin-right: 2px;
-  margin-left: 2px;
-}
-//======
 
 .nav-barra-topo {
   background-color: hsl(248, 11%, 90%);
@@ -190,58 +161,14 @@ a:hover {
   display: block!important;
 }
 
-
-
-
-
-.dialog-addbook{
-  background-color: #765423;
-}
-
-/* book detail */
-.bookdetail-panelinfo {
-  #convert-px(to_em, font-size, 12);
-  //#convert-px(to_em, margin-top, -50);
-}
-.bookdetail-panelinfo > .row > .panel {
-  #convert-px(to_em, margin-right, 4);
-}
-.panel-default > .panel-heading {
-  background-color: hsla(250, 17%, 74%, 0.39);
-}
-.bookdetail-authorname {
-  font-weight: bold;
-  padding: 2px;
-  margin-bottom: 20px;
-}
-.bookdetail-price {
-  font-size: 11px;
-  font-weight: bold;
-  padding: 2px;
-  background-color: hsl(0, 0%, 96%);
-  border: 1px solid hsl(0, 0%, 89%);
-  border-radius: 4px;
-  box-shadow: inset 0 1px 9px hsl(246, 15%, 61%);
-}
-.bookdetail-panelinfo-tablist {
-  border: 1px solid hsl(0, 0%, 89%);
-}
-
-
-
 .carousel-control {
   display: none;
 }
-/*
-.carousel-indicators {
-  bottom: -32px !important;
-}*/
 .carousel-indicators li {
   border: 1px solid hsl(0, 10%, 20%);
   background-color: #000;
   background-color: hsla(0, 5%, 7%, 0.16);
 }
-
 .slide.ng-leave {
   position: relative;
 }
@@ -267,13 +194,6 @@ a:hover {
   opacity: 1;
 }
 
-
-
-
-
-
-
-
 .testeimage {
   width: 50px;
   height: 50px;
@@ -282,4 +202,45 @@ a:hover {
   position: relative;
   //top: 6px;
   background: url("assets/images/test1.png") no-repeat;
+}
+
+/*
+* Toastr Changes
+*/
+.toast-success {
+  //#refactcolor(10%, maisescuro, background-color, @hsl-secondary-2-2, @important:~'!important');
+  background-color: #51a351;
+}
+#toast-container > div.toast-success {
+  color: @branco !important;
+}
+.zindex100 {
+  z-index: 100;
+}
+.pointer {
+  cursor: pointer;
+}
+/*
+* Bootstrap Changes
+*/
+.panel-default > .panel-heading {
+  background-color: hsla(250, 17%, 74%, 0.39);
+}
+.panel-heading {
+  padding-top: 1px;
+  padding-bottom: 1px;
+  padding-right: 5px;
+}
+.panel-group {
+  margin-bottom: 5px;
+}
+.form-group {
+  margin-bottom: 5px;
+}
+.panel-body {
+  padding: 10px;
+}
+.btn {
+  margin-right: 2px;
+  margin-left: 2px;
 }

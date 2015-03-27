@@ -1,14 +1,26 @@
-.col-xs-12.panel-group.nopaddings(book-search-form-layout, id="searchformaccordion" role="tablist" aria-multiselectable="false")
-    div.panel.panel-default
-        div.panel-heading(role="tab" id="headingOne")
-            h6
-                button.btn.btn-default(id="toggleFreeSearch", type="button" data-toggle="collapse" data-parent="#searchformaccordion" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne") Pesquisa Livre
-                button.btn.btn-default(id="toggleAdvSearch",type="button" data-toggle="collapse" data-parent="#searchformaccordion" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo") Pesquisa Avançada
-        div.panel-collapse.collapse(id="collapseOne" role="tabpanel" aria-labelledby="headingOne")
-            div.panel-body
-                .row
+.col-xs-12
+    //.panel.panel-default
+
+
+    div.panel-group(id="searchformaccordion" role="tablist" aria-multiselectable="false", book-search-form-layout)
+        div.panel.booksearch
+            //.panel-heading
+            div
+                span(role="tab")
+                    button.btn.btn-default(id="toggleFreeSearch", type="button" data-toggle="collapse" data-parent="#searchformaccordion" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne") Pesquisa Livre
+                    button.btn.btn-default(id="toggleAdvSearch",type="button" data-toggle="collapse" data-parent="#searchformaccordion" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo") Pesquisa Avançada
+                span(role="tab")
+                    //button.btn.btn-default teste
+                    button.btn.btn-default(id="toggleFilterSearch",type="button" data-toggle="collapse" data-parent="#searchfilteraccordion" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree") Filtrar Resultados
+            div.panel-collapse.collapse(id="collapseOne" role="tabpanel" aria-labelledby="toggleFreeSearch")
+                div.row.nomargins.layout-tab
                     ng-include(src="'app/booksearch/jade/booksearchFreeForm.html'")
-        div.panel-collapse.collapse(id="collapseTwo" role="tabpanel" aria-labelledby="headingTwo")
-            div.panel-body
-                .row
+            div.panel-collapse.collapse(id="collapseTwo" role="tabpanel" aria-labelledby="toggleAdvSearch")
+                div.row.nomargins.layout-tab
                     ng-include(src="'app/booksearch/jade/booksearchAdvancedForm.html'")
+    div.panel-group(id="searchfilteraccordion" role="tablist" aria-multiselectable="false")
+        div.panel.booksearch
+            div.panel-collapse.collapse(id="collapseThree" role="tabpanel" aria-labelledby="toggleFilterSearch")
+                div.row.nomargins.layout-tab
+                    ng-include(src="'app/booksearch/jade/booksearchFilterCatForm.html'")
+

@@ -1,28 +1,24 @@
 .row.dynamic-layout-item.element-item
+    div 25 €
     div.panel.panel-default
         div.panel-heading
             a(ui-sref="main.bookdetail({bookid:it._id})")
                 strong.panel-title.element-item-title {{::it.title}}
             div.element-item-authors
                 span(ng-repeat="author in ::it.authors").element-item-author {{::author}}
-        div.panel-footer.small(ng-class="{'apphidden': !it.editionPublisher && !it.editionISBN && !it.price}")
-            div(ng-class="{'apphidden': !it.editionPublisher}")
-                span {{::it.editionPublisher}}
-            div(ng-class="{'apphidden': !it.editionISBN}")
-                span ISBN:{{::it.editionISBN}}
-            div(ng-class="{'apphidden': !it.price}")
-                span.element-item-price {{::it.price}} €
-    div
-        carousel.carousel(interval="0")
-            slide(ng-repeat="foto in ::it.images")
-                a(ui-sref="main.bookdetail({bookid:it._id})")
-                    img(ng-src="{{::foto}}")
-    div.panel.panel-default
         div.panel-body.small
-            span {{::it.editionNumber}} Edição,&nbsp;{{::it.editionYear}}
-            span(ng-class="{'apphidden': !it.nameCollection}")
-                br
-                | {{::it.nameCollection}}&nbsp;Nº&nbsp;{{::it.numCollection}}
-            div
-                span(ng-class="{'apphidden': !it.workmanship}") {{::it.workmanship}}&nbsp;
-                span(ng-class="{'apphidden': !it.condition}") {{::it.condition}}
+            ul.list-group
+                li.list-group-item.boxedicao
+                    span
+                    span {{::it.editionNumber}}&nbsp;Edição,&nbsp;
+                    span {{::it.editionYear}},&nbsp;
+                    span {{::it.editionCountry}}
+                    br
+                    span {{::it.editionPublisher}}
+                    br
+                    span ISBN:{{::it.editionISBN}}
+            carousel.carousel(interval="0")
+                slide(ng-repeat="foto in ::it.images")
+                    a(ui-sref="main.bookdetail({bookid:it._id})")
+                        img(ng-src="{{::foto}}")
+

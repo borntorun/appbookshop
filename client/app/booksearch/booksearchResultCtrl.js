@@ -17,6 +17,8 @@
     vm.filters = null;
     vm.rankers = null;
 
+
+
     $rootScope.$stateParams.type = ($rootScope.$stateParams.type || "free").toLowerCase();
 
     if ($rootScope.$stateParams.type==="free") {

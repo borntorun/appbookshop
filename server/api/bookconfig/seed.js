@@ -9,6 +9,10 @@ console.log('seeding book config...');
 Book.find({}).remove(function () {
   Book.create(
     {
+      search: {
+        limitDefault: 50,
+        limitFeatured: 8
+      },
       labels: {
         title: "Título",
         authors: "Autor",
@@ -56,7 +60,9 @@ Book.find({}).remove(function () {
         numVolume: "Nº de Volumes",
         qt: "Quantidade",
         categories: "Categorias",
-        template: "Template"
+        template: "Template",
+        dateResgistration: "Data de Registo",
+        dateUpdate: "Data de Modificação"
       }
     }
   );

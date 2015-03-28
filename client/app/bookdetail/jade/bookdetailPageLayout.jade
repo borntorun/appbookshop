@@ -13,9 +13,9 @@ div.col-xs-12.bookdetail
                 div.panel-heading(ng-class="{'hidden': vm.bookflags.nocategories}")
                     | Catalogado em:
                 ul.list-group(ng-class="{'hidden': vm.bookflags.nocategories}")
-                    li.list-group-item(ng-repeat="item in vm.book.categories", ng-click="vm.searchCategoria(item)")
+                    li.list-group-item(ng-repeat="item in vm.book.categories")
                         span
-                        span {{item}}
+                        span(ng-click="vm.searchCategoria(item)").appbooklink {{item}}
 
         div.col-xs-12.col-sm-8.col-md-8.col-lg-8.bookdetail-panel-right
             div.row
@@ -24,8 +24,12 @@ div.col-xs-12.bookdetail
                         span.booktitle {{vm.book.title}}
                         div
                             em {{vm.book.subtitle}}
-                        div
-                            span.bookauthor.fielditem(ng-repeat="author in vm.book.authors") {{author}}
+                        div.bookauthor
+                            span(ng-repeat="author in vm.book.authors")
+                                a.fielditem.appbooklink(ui-sref="main.search.advresults({type:\"advanced\",limit:25,title:\"-\",authors:author,subject:\"-\",collection:\"-\",categories:\"-\",edition: \"-\"})")
+                                    | {{::author}}
+
+
                             //span ({{vm.bookconfiglabels['authors']}})
                     div.pull-left
                         ul.list-group

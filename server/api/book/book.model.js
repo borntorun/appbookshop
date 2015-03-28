@@ -60,10 +60,25 @@ var BookSchema = new Schema({
   discounts: { type: [Schema.Types.Mixed] },
   taxes: { type: [Schema.Types.Mixed] },
   obsInternal: { type: [String] },
-  template: { type: String }
+  template: { type: String },
+  dateResgistration: { type: Date, default: Date.now },
+  dateUpdate: { type: Date, default: Date.now }
 
 });
 
 BookSchema.path('title').required(true, 'Título é obrigatório.');
 
 module.exports = config.mongo.books.connection.model('Book', BookSchema);
+
+
+//em destaque à entrada no site
+//  isFeatured: true
+
+//novidades
+//  isNewBook: true && dateResgistration > Date.Now - 30dias
+
+//disponivel para compra no site
+//  sellOnline: true
+
+//disponivel para encomenda para compra presencial
+//  sellPresencial: true

@@ -57,6 +57,7 @@
         edition: "-"
       });
     };
+
     //notifier.info(bookconfig);
 
   }

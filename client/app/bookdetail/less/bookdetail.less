@@ -1,5 +1,3 @@
-
-
 .bookdetail .carousel-inner > .item > img {
   display: inline!important;
 }
@@ -27,6 +25,9 @@
   box-shadow: 0 1px 6px hsl(0, 0%, 0%);
   border-radius: 0px 8px 0px 8px;
 }
+
+
+
 .blockimage-panel-parent{
   border: 1px hsl(235, 7%, 86%) dashed;
   padding-top: 10px;
@@ -34,8 +35,12 @@
   margin-bottom: 20px;
 }
 .bookdetail-panel-right {
+
   @media (max-width: 767px) {
     padding: 0px;
+  }
+  @media (min-width: 768px) {
+    box-shadow: 0 1px 6px hsl(0, 0%, 0%);
   }
 }
 
@@ -44,9 +49,10 @@
   right: 0px;
 }
 .bookdetail .boxedicao {
-  width: 155px;
+  #convert-px(to_em, margin-top, @margin-normal);
+  #convert-px(to_em, width, 155);
   @media (min-width: 360px) {
-    width: 190px;
+    #convert-px(to_em, width, 190);
   }
   @media (min-width: 480px) {
     width: auto;
@@ -134,7 +140,7 @@
   font-size: 80%;
 }
 .bookdetail .bookauthor::after {
-  content: "] (autor)";
+  content: "(autor)";
   font-size: 80%;
 }
 
@@ -153,20 +159,24 @@
   background-color: hsl(0, 5%, 79%);
   color: hsl(0, 0%, 0%);
   opacity: 0.8;
+  @media (min-width: 480px) {
+    top: 36px;
+    right: -7px;
+  }
   @media (min-width: 768px) {
     #convert-px(to_em, font-size, @fontsm, @fontsm);
-    top: 2px;
-    right: -22px;
+    top: 66px;
+    right: -11px;
   }
   @media (min-width: 992px) {
     #convert-px(to_em, font-size, @fontmd, @fontmd);
-    top: 2px;
-    right: -22px;
+    top: 66px;
+    right: -11px;
   }
   @media (min-width: 1200px) {
     #convert-px(to_em, font-size, @fontlg, @fontlg);
-    top: 2px;
-    right: -22px;
+    top: 50px;
+    right: -11px;
   }
 
 }
@@ -179,19 +189,23 @@
   width: 10px;
   height: 10px;
   background-position: -1px -1px;
-  z-index: -2;
+  z-index: 5;
 
+  @media (min-width: 480px) {
+    top: 61px;
+    right: -7px;
+  }
   @media (min-width: 768px) {
-    top: 27px;
-    right: -22px;
+    top: 91px;
+    right: -11px;
   }
   @media (min-width: 992px) {
-    top: 27px;
-    right: -22px;
+    top: 91px;
+    right: -11px;
   }
   @media (min-width: 1200px) {
-    top: 27px;
-    right: -22px;
+    top: 75px;
+    right: -11px;
   }
 }
 

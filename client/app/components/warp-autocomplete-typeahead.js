@@ -32,6 +32,7 @@
 
   /* @ngInject */
   function warpautocompletetypeaheadjs($log) {
+    var tpl = "<input type=\"text\" ng-model=\"model\" placeholder=\"{{placeholder}}\" class=\"typeahead {{classinput}}\"/>";
     var directive = {
       // use as element: <warp-autocomplete-typeaheadjs .../>
       restrict: 'E',
@@ -46,8 +47,13 @@
         placeholder: '@?',
         classinput: '@?',
         model: '=?'
+        //,tpl: '=?'
       },
       template: '<input type="text" ng-model="model" placeholder="{{placeholder}}" class="typeahead {{classinput}}"/>',
+      /*template:
+        function(elem, attrs) {
+          return attrs.tpl || tpl;
+        },*/
       link: linkfunction
     };
     return directive;

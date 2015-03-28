@@ -2,7 +2,7 @@
     form(id="booksearchFreeForm" name="booksearchFreeForm" role="search", ng-submit="vm.search()")
         .form-group
             div.input-group
-                span.input-group-addon(id="pesquisa-livre") Pesquisa Livre:
+                span.input-group-addon(id="pesquisa-livre")
                 input(id="booksearchfreeform-inputsearch" type="text",aria-describedby="pesquisa-livre", placeholder="procurar no título, autor, assunto, idioma ou palavras-chave...",data-ng-model="vm.inputsearch").form-control
                 span.input-group-btn.booksearchfreeform
                     //ui-sref="main.search.results({term:vm.inputsearch})"

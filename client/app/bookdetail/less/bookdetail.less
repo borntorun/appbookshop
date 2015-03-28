@@ -6,7 +6,7 @@
 .bookdetail .carousel-indicators {
   bottom: -31px;
 }
-.bookdetail-image {
+.bookdetail .block-image {
   width:  100px!important;
   height: auto!important;//169px;
   border-top-right-radius: 8px;
@@ -14,32 +14,21 @@
   box-shadow: 0px 1px 6px hsl(0, 0%, 0%);
   @media (min-width: 768px) {
     width:  130px!important;
-    //height: 219px;
   }
   @media (min-width: 992px) {
     width:  168px!important;
-    //height: 284px;
   }
   @media (min-width: 1200px) {
     width:  203px!important;
-    //height: 284px;
   }
 }
 .bookdetail-panel {
   padding: 12px;
   box-shadow: 0 1px 6px hsl(0, 0%, 0%);
-  border-bottom-right-radius: 0px;
-  border-bottom-left-radius: 0px;
-  border-top-right-radius: 8px;
-  border-top-left-radius: 8px;
+  border-radius: 0px 8px 0px 8px;
 }
-.bookdetail-panel-left{
-//  background-image: url("/assets/images/border1.png");
-//  background-repeat-x: no-repeat;
-//  background-position: right top;
-  border: 1px;
-  border-color: hsl(235, 7%, 86%);
-  border-style: dashed;
+.blockimage-panel-parent{
+  border: 1px hsl(235, 7%, 86%) dashed;
   padding-top: 10px;
   padding-bottom: 10px;
   margin-bottom: 20px;
@@ -48,12 +37,10 @@
   @media (max-width: 767px) {
     padding: 0px;
   }
-
 }
 
 .bookdetail .boxprice {
   position: absolute;
-  //bottom: 5px;
   right: 0px;
 }
 .bookdetail .boxedicao {
@@ -64,18 +51,16 @@
   @media (min-width: 480px) {
     width: auto;
   }
-//  @media (max-width: 351px) {
-//    max-width: 160px;
-//  }
-//  @media (max-width: 321px) {
-//    max-width: 140px;
-//  }
 }
 
 @booktitlesize: 20;
 @bookauthorsize: 12;
 @booklabelsize: 11;
 
+.bookdetail .tab-content ul {
+  margin-left: 5px;
+  margin-right: 5px;
+}
 .bookdetail ul li {
   padding: 5px 5px;
 }
@@ -102,9 +87,6 @@
   color: hsl(0, 100%, 100%);
   background-color: hsl(0, 0%, 49%);
 }
-
-
-//abaixo de
 @media (max-width: 767px) {
   .bookdetail .nav-pills > li + li {
     margin-top: 2px;
@@ -114,9 +96,6 @@
     float: none;
   }
 }
-
-
-
 
 .bookdetail .panel-heading {
   #convert-px(to_em, font-size, @booklabelsize + 1);
@@ -154,9 +133,65 @@
   content: "] ";
   font-size: 80%;
 }
-.bookauthor::after {
+.bookdetail .bookauthor::after {
   content: "] (autor)";
   font-size: 80%;
 }
 
+
+.bookdetail .block-price {
+  position: absolute;
+  top: 46px;
+  right: -7px;
+  border: 1px solid hsl(0, 2%, 50%);
+  padding: 2px 6px 2px 6px;
+  border-top-left-radius: 6px;
+  box-shadow: 0 2px 7px hsl(0, 6%, 57%);
+  z-index: 90;
+  font-weight: bold;
+  #convert-px(to_em, font-size, @fontxs, @fontxs);
+  background-color: hsl(0, 5%, 79%);
+  color: hsl(0, 0%, 0%);
+  opacity: 0.8;
+  @media (min-width: 768px) {
+    #convert-px(to_em, font-size, @fontsm, @fontsm);
+    top: 2px;
+    right: -22px;
+  }
+  @media (min-width: 992px) {
+    #convert-px(to_em, font-size, @fontmd, @fontmd);
+    top: 2px;
+    right: -22px;
+  }
+  @media (min-width: 1200px) {
+    #convert-px(to_em, font-size, @fontlg, @fontlg);
+    top: 2px;
+    right: -22px;
+  }
+
+}
+
+.bookdetail .block-price-icons-triangshadow{
+  position: absolute;
+  background-image: url("/assets/images/icons.png");
+  top: 71px;
+  right: -7px;
+  width: 10px;
+  height: 10px;
+  background-position: -1px -1px;
+  z-index: -2;
+
+  @media (min-width: 768px) {
+    top: 27px;
+    right: -22px;
+  }
+  @media (min-width: 992px) {
+    top: 27px;
+    right: -22px;
+  }
+  @media (min-width: 1200px) {
+    top: 27px;
+    right: -22px;
+  }
+}
 

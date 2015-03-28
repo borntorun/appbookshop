@@ -1,15 +1,17 @@
 html {
-  #convert-px(to_em, font-size, @main-textsize-px, @main-textsize-px);
+  #convert-px(to_em, font-size, @main-textsize-px, 16);
 }
 
 body {
   font-family: @main-font;
-  #convert-px(to_em, font-size, @main-textsize-px);
+  //#convert-px(to_em, font-size, @main-textsize-px);
   color: @main-textcolor;
   //min-height: 2000px;
   #convert-px(to_em, padding-top, 51);
 
 }
+
+
 h4, .h4, h5, .h5, h6, .h6 {
   margin-top: 5px;
   margin-bottom: 5px;
@@ -148,7 +150,7 @@ a:hover {
 .carousel-indicators {
   bottom: -10px;
 }
-.carousel-inner > .item > a > img {
+/*.carousel-inner > .item > a > img {
   max-width: 210px!important;
   width: auto!important;
   height: 220px!important;
@@ -159,7 +161,7 @@ a:hover {
   //width: auto!important;
   margin:auto!important;
   display: block!important;
-}
+}*/
 
 .carousel-control {
   display: none;
@@ -238,7 +240,7 @@ a:hover {
   margin-bottom: 5px;
 }
 .panel-body {
-  padding: 10px;
+  padding: 5px;
 }
 .btn {
   margin-right: 2px;

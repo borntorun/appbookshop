@@ -3,11 +3,10 @@
 div.col-xs-12.bookdetail
     div.row.panel.panel-default.nomargins.bookdetail-panel
         div.col-xs-12.col-sm-4.col-md-4.col-lg-4
-            div.text-center.bookdetail-panel-left
-
+            div.text-center.blockimage-panel-parent
                 carousel.carousel(interval="0")
                     slide(ng-repeat="foto in vm.book.images")
-                        img.bookdetail-image(ng-src="{{foto}}")
+                        img.block-image(ng-src="{{foto}}")
                         //img.bookdetail-image(ng-src="{{vm.book.images[0]}}")
                         //img(ng-src="{{foto}}", style="/*margin:auto;height:160px;width:140px;display: block;*/")
             div.panel.panel-default.hidden-xs
@@ -37,12 +36,20 @@ div.col-xs-12.bookdetail
                                 span {{vm.book.editionNumber}}ª&nbsp;Edição,&nbsp;
                                 span {{vm.book.editionYear}},&nbsp;
                                 span {{vm.book.editionCountry}}
-                    div.boxprice
-                        button.btn.btn-default
-                            | {{vm.book.price}} €&nbsp;
-                            br
-                            strong
-                                | Comprar
+                    div.block-price
+                        | {{vm.book.price}} €
+                    button.boxprice.btn.btn-default
+                        strong
+                            | Comprar
+
+
+                    div.block-price-icons-triangshadow
+                    //div.boxprice
+                    //    button.btn.btn-default
+                    //        | {{vm.book.price}} €&nbsp;
+                    //        br
+                    //        strong
+                    //            | Comprar
 
                     //div.pull-right
                         span {{vm.book.price}} €&nbsp;

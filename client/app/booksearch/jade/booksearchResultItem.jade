@@ -1,24 +1,24 @@
 .row.dynamic-layout-item.element-item
-    div 25 €
+    div.block-price {{::it.price}} €
+    div.block-price-icons-triangshadow
     div.panel.panel-default
-        div.panel-heading
+        div.panel-heading.block-title
             a(ui-sref="main.bookdetail({bookid:it._id})")
-                strong.panel-title.element-item-title {{::it.title}}
-            div.element-item-authors
-                span(ng-repeat="author in ::it.authors").element-item-author {{::author}}
-        div.panel-body.small
-            ul.list-group
-                li.list-group-item.boxedicao
+                span.title {{::it.title}}
+            div
+                span.fielditem(ng-repeat="author in ::it.authors") {{::author}}
+        div.panel-body
+            ul.list-group.block-edicao-container
+                li.list-group-item.block-edicao
                     span
-                    span {{::it.editionNumber}}&nbsp;Edição,&nbsp;
-                    span {{::it.editionYear}},&nbsp;
-                    span {{::it.editionCountry}}
+                    span {{::it.editionNumber}} Edição,
+                    span {{::it.editionYear}} {{::it.editionCountry}}
                     br
                     span {{::it.editionPublisher}}
-                    br
-                    span ISBN:{{::it.editionISBN}}
+                    br.hidden-xs
+                    span.hidden-xs ISBN:{{::it.editionISBN}}
             carousel.carousel(interval="0")
                 slide(ng-repeat="foto in ::it.images")
                     a(ui-sref="main.bookdetail({bookid:it._id})")
-                        img(ng-src="{{::foto}}")
+                        img.block-image(ng-src="{{::foto}}")
 

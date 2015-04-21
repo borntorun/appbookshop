@@ -22,21 +22,20 @@
 * Filter Categories
 * ********************************
 */
-.input-filtercat {
+
+input.typeahead.searchfiltercat {
   border: 1px solid hsl(0, 0%, 80%);
 }
-.input-filtercat:focus {
+input.typeahead.searchfiltercat:focus {
   border: 1px solid hsl(196, 100%, 41%);
 }
 .panel-filtercat {
   border: none;
 }
-.panelfiltercat-input > ul.dropdown-menu {
-  max-height: 240px;
-  overflow: auto;
-  min-width: 212px;
-  margin-top: 0px;
-}
+
+
+
+
 .panel-filtercat-label {
   display: inline-block;
   padding: 0.5em 1.0em;
@@ -49,14 +48,6 @@
   text-shadow: 0 1px white;
   cursor: pointer;
 }
-/*.panel-filtercatlabel-group {
-  margin-top: 2px;
-}
-.panel-filtercatlabel-group:after {
-  content: '';
-  display: block;
-  clear: both;
-}*/
 .panel-filtercatlabel-group .panel-filtercat-label {
   float: left;
   border-radius: 0;
@@ -84,10 +75,7 @@
   border: 1px;
   border-style: inset;
 }
-#panel-filtercat-dropdown-menu .tt-dropdown-menu {
-  max-height: 150px;
-  overflow-y: auto;
-}
+
 
 
 /*
@@ -278,24 +266,29 @@
   margin-top: 5px;
 }
 
+.tt-dataset-categories {
+  //background-color: #abdcab;
+}
+
 .tt-dataset-categories .tt-suggestion {
   @media (max-width: 992px) {
     font-size:13px;
     line-height: 18px;
   }
 }
-
-#panel-searchcat-dropdown-menu > span {
-  width: 100%;
-}
-.input-searchcat {
+input.typeahead.searchadvcat {
   border-radius: 0px 4px 4px 0px!important;
   border: 1px solid hsl(0, 0%, 80%)!important;
   width: 100%!important;
 }
-.input-searchcat:focus {
+input.typeahead.searchadvcat:focus {
   border-color: hsl(207, 75%, 66%)!important;
   outline: 0;
   box-shadow: inset 0 1px 1px hsla(0, 0%, 0%, 0.075), 0 0 8px hsla(207, 75%, 66%, 0.6);
 }
 
+span.tt-dropdown-menu {
+  background-color: #c5c5c5;
+  max-height: 150px;
+  overflow-y: auto;
+}

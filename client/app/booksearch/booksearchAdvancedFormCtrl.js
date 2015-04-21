@@ -17,17 +17,28 @@
     //notifier.info('Procura Livros Activa');
 
     vm.criteria = {};
-    vm.urlRemote = '/api/categories/search/';
+    vm.urlRemote = '/api/categories/search/%QUERY';
+    vm.urlPrefetch = '/assets/data/categories.json';
     vm.limit = BookSearch.getSearchLimit();
 
     setFields(BookSearch.getSearchAdvancedTerm());
 
-    vm.onSelected = function (item) {
+    /*vm.onSelected = function (item) {
       vm.criteria.categories = item.name;
     };
     vm.onClosed = function (item) {
       vm.criteria.categories = item.name;
     };
+
+    $scope.$on('typeahead:opened', function(event, data) {
+      alert('on scope opened');
+      vm.onSelected(data);
+    });
+    $scope.$on('typeahead:closed', function(event, data) {
+      alert('on scope closed');
+      vm.onClosed(data);
+    });*/
+
     vm.search = function search() {
       //console.log(vm.criteria);
       vm.criteria.edition = vm.firstEdition ? "1" : "";
@@ -68,7 +79,9 @@
         event.preventDefault();
       }
     }
-
+//    $scope.$on('typeahead:opened', function(event, data) {
+//      alert(data);
+//    });
     $scope.$on('$destroy', function () {
       onstateChangeSuccess(); //unregister the listenner 'onstateChangeSuccess'
     });

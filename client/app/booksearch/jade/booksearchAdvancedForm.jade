@@ -1,4 +1,8 @@
 .col-xs-12(ng-controller="BookSearchAdvancedFormCtrl as vm")
+    //.row
+        .col-xs-12
+            | aqui
+            angular-typeaheadjs(onselected="vm.onSelected", remote="{{vm.urlRemote}}" cssinput="searchfiltercat", placeholder="search categories")
     .row
         form(id="booksearchAdvancedForm", name="booksearchAdvancedForm", role="search", novalidate, ng-submit="vm.search(booksearchAdvancedForm)")
             .col-xs-12.col-sm-6
@@ -21,10 +25,20 @@
                         input.form-control(type="text" placeholder="pesquisar por colecção", ng-model="vm.criteria.collection")
                 .form-group
                     div.input-group
+                        //| {{vm.criteria.categories}}
                         span.input-group-addon(id="categoria")
-                        //tpl="'<span id=\"categoria\" class=\"input-group-addon\"></span><input type=\"text\" ng-model=\"model\" placeholder=\"{{placeholder}}\" class=\"typeahead form-control {{classinput}}\"/>'",
-                        warp-autocomplete-typeaheadjs(id="panel-searchcat-dropdown-menu", model="vm.criteria.categories" donotclearvalue="true", classinput="input-searchcat", datasource="categories", placeholder="pesquisar por categoria", onselected="vm.onSelected",onclosed="vm.onClosed", remote="{{vm.urlRemote}}")
-                        //input.form-control(type="text" placeholder="pesquisar por categoria" aria-describedby="categoria")
+                        angular-typeaheadjs(
+                        remote="{{vm.urlRemote}}",
+                        prefetch="{{vm.urlPrefetch}}",
+                        cssinput="searchadvcat",
+                        model="vm.criteria.categories",
+                        clearvalue="false",
+                        classinput="input-searchcat",
+                        datasource="categories",
+                        placeholder="pesquisar por categoria",
+                        onselected="vm.onSelected",
+                        onclosed="vm.onClosed")
+
                 .form-group
                     div.checkbox
                         label

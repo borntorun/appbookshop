@@ -1,6 +1,7 @@
 // Generated on 2015-01-24 using generator-angular-fullstack 2.0.13
 'use strict';
 module.exports = function (grunt) {
+  console.log(__dirname);
   var localConfig;
   try {
     localConfig = require('./server/config/local.env');
@@ -54,7 +55,6 @@ module.exports = function (grunt) {
       }
     },
     watch: {
-
       injectJS: {
         files: [
           '<%= yeoman.client %>/{app,components}/**/*.module.js',
@@ -321,6 +321,7 @@ module.exports = function (grunt) {
     },
     // Allow the use of non-minsafe AngularJS files. Automatically makes it
     // minsafe compatible so Uglify does not destroy the ng references
+    //https://github.com/mzgol/grunt-ng-annotate
     ngAnnotate: {
       dist: {
         files: [
@@ -380,7 +381,13 @@ module.exports = function (grunt) {
             cwd: '<%= yeoman.client %>',
             dest: '<%= yeoman.dist %>/public',
             src: [
-              '*.{ico,png,txt}', '.htaccess', 'bower_components/**/*', 'assets/images/{,*/}*.{webp}', 'assets/fonts/**/*', 'assets/data/**/*', 'index.html'
+              '*.{ico,png,txt}',
+              '.htaccess',
+              //'bower_components/**/*',
+              'assets/images/{,*/}*.{webp}',
+              'assets/fonts/**/*',
+              'assets/data/**/*',
+              'index.html'
             ]
           },
           {
@@ -581,11 +588,15 @@ module.exports = function (grunt) {
       }
     },
     // Clean unused css (added João Carvalho)
+    //https://github.com/addyosmani/grunt-uncss
+    // wrapper para
+    //https://github.com/giakki/uncss (ver opções aqui)
     uncss: {
       dist: {
         options: {
+          htmlroot: __dirname,
           ignoreSheets: [/fonts.googleapis/],
-          stylesheets: ['../app.css']
+          stylesheets: ['/.tmp/app/app.css']
         },
         files: {
           '.tmp/app/app.css': ['.tmp/**/*.html']

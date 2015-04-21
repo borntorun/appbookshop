@@ -38,7 +38,7 @@
           freeIsOpen = $("#toggleFreeSearch").attr("aria-expanded")==="true",
           filterIsOpen = $("#toggleFilterSearch").attr("aria-expanded")==="true",
 
-
+          filterhide = (name === "main.bookdetail"),
           filterChange = (name === "main.bookdetail" && filterIsOpen),
           advChange = (name === "main.search.advresults" && !advIsOpen),
           freeChange = (name === "main.search.results" && !freeIsOpen);
@@ -47,6 +47,12 @@
         advChange = advChange || (name === "main.bookdetail" && advIsOpen);
         freeChange = freeChange || (name === "main.bookdetail" && freeIsOpen);
 
+
+        if (filterhide) {
+          $("span:has(#toggleFilterSearch)").hide();
+        } else {
+          $("span:has(#toggleFilterSearch)").show();
+        }
         if (filterChange) {
           $("#toggleFilterSearch").click();
         }

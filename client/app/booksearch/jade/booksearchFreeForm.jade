@@ -1,5 +1,5 @@
 .col-xs-12(ng-controller="BookSearchFreeFormCtrl as vm")
-    form(id="booksearchFreeForm" name="booksearchFreeForm" role="search", ng-submit="vm.search()")
+    form(id="booksearchFreeForm" name="booksearchFreeForm" role="search", ng-submit="vm.search()", ng-model-options="{ debounce: 150 }")
         .form-group
             div.input-group
                 span.input-group-addon(id="pesquisa-livre")

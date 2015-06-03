@@ -15,7 +15,7 @@
   function NavBarTopCtrl($scope, exception, notifier) {
     /*jshint validthis: true */
     var vm = this;
-    notifier.info('NavBar top loaded');
+    //notifier.info('NavBar top loaded');
 
   }
 }());

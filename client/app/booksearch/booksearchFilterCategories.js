@@ -14,13 +14,27 @@
         /*jshint validthis: true */
         var vm = this;
         vm.filtro = BookSearch.getFilterCategories();//[];
-        vm.urlRemote = '/api/categories/search/%QUERY';
-        vm.urlPrefetch = '/assets/data/categories.json';
+
+        vm.options = {
+            showLog: true,
+            clear: true,
+            selectOnAutocomplete: true
+        }
+        vm.ttoptions = {
+            name: 'categories',
+            remote: '/api/categories/search/%QUERY',
+            prefetch: '/assets/data/categories.json'
+        }
+
+//        vm.urlRemote = '/api/categories/search/%QUERY';
+//        vm.urlPrefetch = '/assets/data/categories.json';
         vm.removeCat = function (item) {
             removeIfExists(item);
             $rootScope.$broadcast('BookSearchFilterCatChange', vm.filtro);
         }
-        vm.onSelected = function (item) {
+
+
+        vm.onSelected = function (ev, item) {
             vm.filtro = vm.filtro || [];
             removeIfExists(item.name);
             vm.filtro.push(item.name);

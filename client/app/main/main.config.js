@@ -17,7 +17,7 @@
       abstract: true,
       url: '/',
       templateUrl: 'app/main/main.html',
-      controller: 'Main',
+      controller: 'Main as vm',
       resolve: {
         bookconfig: ['appconfig', function (appconfig) {
           return appconfig.getConfig('bookconfig');

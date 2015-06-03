@@ -8,7 +8,7 @@
   'use strict';
   angular.module('appBookShop.booksearch').factory('BookSearch', BookSearch);
   /* @ngInject */
-  function BookSearch($rootScope, $http, $q, exception, notifier) {
+  function BookSearch($rootScope, $http, $q, exception, SignalsService, notifier) {
     var serviceData = {
       inputsearchDefault: 'freud,musil,outsider,proust,buc',
       inputsearch: '',
@@ -21,6 +21,11 @@
       results: [],
       categoriesFilter: []
     };
+
+    SignalsService.searched.listen(function(data){
+      notifier.info('Search clicked', data, 'Searched Signal');
+    });
+
 
     /**
      * Public interface

@@ -8,7 +8,7 @@
   'use strict';
   angular.module('appBookShop.booksearch').controller('BookSearchFreeFormCtrl', BookSearchFreeFormCtrl);
   /* @ngInject */
-  function BookSearchFreeFormCtrl($rootScope, $scope, BookSearch, notifier) {
+  function BookSearchFreeFormCtrl($rootScope, $scope, BookSearch, SignalsService, notifier) {
     /*jshint validthis: true */
     var vm = this;
     //notifier.info('Procura Livros Activa');
@@ -19,6 +19,7 @@
 
     vm.search = function search() {
       $rootScope.$state.go('main.search.results',{type: "free", limit: vm.limit , term:vm.inputsearch});
+      SignalsService.searched.emit(vm.inputsearch);
     }
 
     function setInputSearch (event, toState, toParams, fromState, fromParams) {

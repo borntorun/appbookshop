@@ -39,6 +39,7 @@
    */
   core.config(configureAngularProviders);
   core.config(configureOtherProviders);
+//  core.config(configTest);
   /* @ngInject */
   function configureAngularProviders( $httpProvider, $logProvider, $urlRouterProvider, $locationProvider, $animateProvider ) {
     $httpProvider.useApplyAsync(true);
@@ -55,6 +56,7 @@
     });
   }
 
+  /* @ngInject */
   function configureOtherProviders( exceptionHandlerProvider, appconfigHandlerProvider, SignalsServiceProvider ) {
     // Configure the common exception handler
     exceptionHandlerProvider.configure(config.appErrorPrefix);
@@ -69,6 +71,65 @@
       }
     });
   }
+
+//  /* @ngInject */
+//  function configTest( lfDriver, simpleBasket ) {
+//    lfDriver
+//      .create(lfDriver.STORAGE.LOCALSTORAGE, {name: 'livrariaTorres', storeName: 'livros', key: 'basketshop'})
+//      .then(function( value ) {
+//
+//        var basket = simpleBasket.create();
+//        basket.implements(basket.ISTORAGE, value);
+//        console.log('count=', basket.count());
+//        basket.load()
+//          .then(function(){
+//            console.log('count in=', basket.count());
+//          });
+//        console.log('count out=', basket.count());
+//        /*basket.add({key:1, titulo:'teste'},{key:2, titulo:'teste 2'});
+//
+//        console.log('count=',basket.count());
+//        console.log('basket before save=',basket.getAll());
+//
+//        basket.save()
+//          .then(function( data ) {
+//            console.log('save=',data);
+//          })
+//          .catch(function( error ) {
+//            console.log('save error=',error);
+//          });
+//
+//        console.log('count before remove=',basket.count());
+//        console.log('basket before remove=',basket.getAll());
+//
+//        basket.removeAll();
+//
+//        console.log('count after remove=',basket.count());
+//        console.log('basket before remove=',basket.getAll());
+//
+//        basket.load()
+//          .then(function( data ) {
+//            console.log('count after 1 load=',basket.count());
+//            console.log('basket after 1 load=',basket.getAll());
+//            return basket.clear();
+//          })
+//          .then(function( data ) {
+//            return basket.load();
+//          })
+//          .then(function( data ) {
+//            console.log('count after 2 load=',basket.count());
+//            console.log('basket after 2 load=',basket.getAll());
+//            basket.add({key:1000, titulo:'teste'},{key:2000, titulo:'teste 2'});
+//            basket.save();
+//
+//
+//          })
+//          .catch(function( error ) {
+//            console.log('load error=',error);
+//          });*/
+//
+//      });
+//  }
 
   core.run(run);
   /* @ngInject */

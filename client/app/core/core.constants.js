@@ -9,5 +9,8 @@
     .constant('toastr', toastr)
     .constant('moment', moment)
     .constant('_lodash', window._)
-    .constant('$', window.$);
+    .constant('$', window.$)
+    .constant('lfDriver', window.localforageDriver)
+    .constant('simpleBasket', window.simplebasket);
+
 }());

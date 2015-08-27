@@ -34,7 +34,7 @@ module.exports = function (app) {
   if ('development' === env || 'test' === env) {
     app.use(require('connect-livereload')({
       port: 35729,
-      src: "http://192.168.40.20:35729/livereload.js?snipver=1"
+      src: "http://192.168.40.25:35729/livereload.js?snipver=1"
     }));
     app.use(express.static(path.join(config.root, '.tmp')));
     app.use(express.static(path.join(config.root, config.appPath)));

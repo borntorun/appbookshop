@@ -10,7 +10,8 @@
   "resolutions": {
     "angular": "~1.3.15",
     "angular-animate": "~1.3.14",
-    "bootstrap": "~3.3.2"
+    "bootstrap": "~3.3.2",
+    "api-check": "^7.0.0"
   },
   "dependencies": {
     "angular": "~1.3.14",
@@ -46,10 +47,7 @@
   "overrides": {
     "angular-dynamic-layout": {
       "main": [
-        "src/dynamic-layout.js",
-        "src/services/filter.js",
-        "src/services/position.js",
-        "src/services/ranker.js"
+        "dist/angular-dynamic-layout.js"
       ]
     },
     "angular.jquery": {
@@ -60,9 +58,6 @@
         "jquery-ui.js",
         "themes/smoothness/jquery-ui.css"
       ]
-    },
-    "api-check": {
-      "main": "dist/apiCheck.js"
     },
     "simple-basket": {
       "main": [

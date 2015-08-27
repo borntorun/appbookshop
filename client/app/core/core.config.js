@@ -132,6 +132,7 @@
 //  }
 
   core.run(run);
+  core.run(runStateChangeError);
   /* @ngInject */
   function run( $rootScope, $state, $stateParams ) {
     $rootScope.$state = $state;
@@ -140,6 +141,12 @@
     //$rootScope.$ = window.$;
   }
 
+  /* @ngInject */
+  function runStateChangeError($rootScope, notifier) {
+    $rootScope.$on('$stateChangeError', function(event, toState, toParams, fromState, fromParams, error){
+      notifier.error('Erro ao carregar: ' + toState.name);
+    });
+  }
   //  function configure ($logProvider, $routeProvider, routehelperConfigProvider, exceptionHandlerProvider) {
   //    // turn debugging off/on (no info or warn)
   //    if ($logProvider.debugEnabled) {

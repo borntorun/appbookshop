@@ -30,7 +30,7 @@ module.exports = function (grunt) {
       // configurable paths
       client: require('./bower.json').appPath || 'client',
       dist: 'dist',
-      ip: '192.168.40.20',
+      ip: '192.168.40.25',
       port: '12999'
     },
     express: {
@@ -197,7 +197,7 @@ module.exports = function (grunt) {
     'node-inspector': {
       custom: {
         options: {
-          'web-host': '192.168.40.20',
+          'web-host': '192.168.40.25',
           'hidden': ['node_modules'],
           'debug-brk': ''
         }

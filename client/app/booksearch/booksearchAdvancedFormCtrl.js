@@ -13,6 +13,11 @@
         var
             vm = this,
             onstateChangeSuccess = $scope.$on('$stateChangeSuccess', setInputSearch);
+
+
+
+
+
         //notifier.info('Procura Livros Activa');
         vm.criteria = {};
 //        vm.urlRemote = '/api/categories/search/%QUERY';

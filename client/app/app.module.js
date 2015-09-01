@@ -23,7 +23,8 @@
         'appBookShop.main',
         'appBookShop.navbar',
         'appBookShop.booksearch',
-        'appBookShop.bookdetail'
+        'appBookShop.bookdetail',
+        'appBookShop.bookrecord'
 
     ])
 }());

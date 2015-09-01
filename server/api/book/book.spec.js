@@ -1,3 +1,4 @@
+/*
 'use strict';
 var should = require('should');
 var app = require('../../app');
@@ -97,6 +98,7 @@ describe('GET /api/books/search/german/1', function () {
     });
   });
 });
+*/
 /*
 describe('GET /api/books/search/The Man Without Qualities', function () {
   it('should respond with JSON array and 1 book equal to The Man Without Qualities ', function (done) {
@@ -135,5 +137,7 @@ describe('GET /api/books/search/steinbeck,musil', function () {
     });
   });
 });
-*/
+*//*
 
+
+*/

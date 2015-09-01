@@ -1,13 +1,14 @@
 /**
- * Module appBookShop.bookdetail Configuration
+ * Module appBookShop.bookrecord Configuration
  * (João Carvalho, 16-03-2015)
  *
- * Descrição: Configura modulo appBookShop.bookdetail
+ * Descrição: Configura modulo appBookShop.bookrecord
  */
 (function() {
   'use strict';
 
-  var core = angular.module('appBookShop.bookdetail');
+  var core = angular.module('appBookShop.bookrecord');
+
 
   core.config(moduleConfig);
 
@@ -15,18 +16,21 @@
   function moduleConfig($stateProvider, _lodash) {
     var states = {}
 
-    states["main.bookdetail"] = {
+    states["main.bookrecord"] = {
       /* Detail view for book */
       /* ATENÇÃO: NÃO COLOCAR / NO INÍCIO ... CHILD VIEW */
-      url: 'livro/{bookid}',
+      url: 'admin/livro/{bookid}',
       /* Views affected by this url */
       views: {
-        '': {templateUrl: 'app/bookdetail/jade/bookdetailPageLayout.html',controller: 'BookDetailPageCtrl as vm'}
+        '': {
+          templateUrl: 'app/bookrecord/views/bookrecord.html',
+          controller: 'BookrecordCtrl as model'}
         /*,
         'navbarleft-books': {
-          templateUrl: 'components/books/detail/bookDetailFeatured.html'
-        },
-        *//* View existente na main view / no index.html *//*
+          templateUrl: 'app/bookrecord/views/bookrecordFotoLayout.html'
+        }*/
+        /* View existente na main view / no index.html *//*
+        ,
         'hint@': {
           template: 'teste xpto'
         }*/
@@ -40,7 +44,6 @@
     _lodash.forEach(states, function(state, key) {
       $stateProvider.state(key, state);
     });
-
   }
 
 }());

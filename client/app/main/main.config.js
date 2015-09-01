@@ -12,11 +12,12 @@
   function moduleConfig($stateProvider, _lodash) {
     var states = {}
 
+
     states["main"] = {
       /* Main view da aplicação */
       abstract: true,
       url: '/',
-      templateUrl: 'app/main/main.html',
+      templateUrl: 'app/main/views/main.html',
       controller: 'Main as vm',
       resolve: {
         bookconfig: ['appconfig', function (appconfig) {

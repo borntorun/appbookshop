@@ -10,6 +10,7 @@
     .constant('moment', moment)
     .constant('_lodash', window._)
     .constant('$', window.$)
+    .constant('Q', window.Q)
     .constant('lfDriver', window.localforageDriver)
     .constant('simpleBasket', window.simplebasket);
 

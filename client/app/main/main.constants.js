@@ -6,6 +6,6 @@
 
   angular
     .module('appBookShop.main')
-    .constant('_lodash', window._)
-    .constant('$', window.$);
+    /*.constant('_lodash', window._)
+    .constant('$', window.$)*/;
 }());

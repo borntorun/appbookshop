@@ -14,7 +14,11 @@
      * Our reusable cross app code modules
      */
     //'blocks.exception', 'blocks.logger', 'blocks.router',
-    'blocks.notifier', 'blocks.exception', 'blocks.appconfig', 'appBookShop.components',
+    'blocks.notifier',
+    'blocks.exception',
+    'blocks.forms',
+    'blocks.appconfig',
+    'appBookShop.components',
     /*
      * 3rd Party modules
      */

@@ -28,6 +28,9 @@ module.exports = function (app) {
   app.route('/search/free/([0-9]+)/*').get(funcIndexHtml);
 
   app.route('/livro/:id').get(funcIndexHtml);
+
+  app.route('/admin/livro/:id').get(funcIndexHtml);
+
   //
   app.route('/about').get(function (req, res) {
     res.sendfile(app.get('appPath') + '/index.html');

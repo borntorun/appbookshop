@@ -21,6 +21,7 @@
       noinformation: false
     };
 
+
     vm.bookconfiglabels = bookconfig.data.labels;
 
     BookDetail.get($rootScope.$stateParams.bookid).then(function(data){

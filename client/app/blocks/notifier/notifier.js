@@ -42,7 +42,7 @@
     }
 
     function info(message, data, title) {
-      verifyBottomPosition()
+      //verifyBottomPosition()
       toastr.info(message, title);
       $log.info('Info: ' + message, data);
     }

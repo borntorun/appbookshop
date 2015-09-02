@@ -9,8 +9,8 @@
   /* @ngInject */
   function formsMng(notifier) {
     var messages = {
-      SUBMIT: 'Pretende gravar as alterações?',
-      CLEAR: 'Perderá os dados do formulário.\n(o registo na base de dados não será afectado)\n\nConfirma?'
+      SAVE: 'Pretende gravar as alterações efectuadas?',
+      CLEAR: 'Perderá os dados do formulário.\n(o registo na base de dados não será afectado)'
     };
     var service = {
       MESSAGES: messages,

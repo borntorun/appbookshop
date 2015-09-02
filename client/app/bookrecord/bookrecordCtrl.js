@@ -12,7 +12,7 @@
     .controller('BookrecordCtrl', BookrecordCtrl);
 
   /* @ngInject */
-  function BookrecordCtrl( $scope, $rootScope, bookconfig, formsMng, isbnIsvalid, exception, notifier ) {
+  function BookrecordCtrl( $modal, $scope, $rootScope, bookconfig, formsMng, isbnIsvalid, exception, notifier, modalpopup ) {
     /*jshint validthis: true */
     var model = this;
 
@@ -23,7 +23,20 @@
     model.anoActual = new Date().getFullYear();
 
     model.clearForm = function() {
-      notifier.info('clear', '', 'accao:');
+      modalpopup.confirm(formsMng.MESSAGES.CLEAR, 'Limpar formulário')
+        .then(function() {
+          model.book = {};
+          notifier.info('form cleared', '', 'Book Record');
+          return modalpopup.confirm(formsMng.MESSAGES.SAVE, 'Gravar Alterações')
+
+        })
+        .then(function(){
+          notifier.info('form saved', '', 'Book Record');
+        })
+        .catch(function(){
+          notifier.info('no done', '', 'Book Record');
+        });
+
     }
     model.submitForm = function() {
       notifier.info('submit', '', 'accao:');
@@ -32,7 +45,6 @@
     model.newForm = function() {
       notifier.info('novo', '', 'accao:');
     }
-
 
     model.book = {
       title: '',

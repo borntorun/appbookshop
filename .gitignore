@@ -8,5 +8,8 @@ dist
 TODO
 npm*.log
 ./*.log
-temp
+.temp
+.old
 old
+temp
+tmp

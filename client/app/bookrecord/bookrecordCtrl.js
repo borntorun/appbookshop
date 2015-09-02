@@ -53,8 +53,7 @@
         'Sophia de Mello Breyner Andersen'
       ],
       translators: [
-        'Vera San Payo de Lemos',
-        'João lourenço'
+        'Vera San Payo de Lemos'
       ],
       categories: [
         'Poesia',
@@ -89,6 +88,15 @@
         }
       },
       categories: {
+        options: {showLog: true, selectOnAutocomplete: true},
+        ttoptions: {
+          name: 'categories',
+          limit: 4,
+          remote: '/api/categories/search/%QUERY',
+          prefetch: '/assets/data/categories.json'
+        }
+      },
+     translators: {
         options: {showLog: true, selectOnAutocomplete: true},
         ttoptions: {
           name: 'categories',

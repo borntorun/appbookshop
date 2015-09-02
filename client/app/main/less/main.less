@@ -186,7 +186,7 @@ form div label.label-items {
 form div label.label-items span.item {
   display: inline-block;
   padding: 3px;
-  border: 1px dotted;
+  //border: 1px dotted;
   border-radius: 0;
   margin-left: 0;
   margin-right: 3px;
@@ -194,7 +194,7 @@ form div label.label-items span.item {
 
   //background-image: linear-gradient( to bottom, hsla(0, 0%, 0%, 0), hsla(0, 0%, 0%, 0.2) );
   color: #939393;
-  font-size: 12px;
+  font-size: 10px;
   //#vertical-center-align();
 }
 
@@ -239,6 +239,7 @@ label input.typeahead .tt-hint {
   line-height: 27px;
 }
 
+
 label input.ng-dirty.ng-invalid,
 label input.typeahead.ng-dirty.ng-invalid {
   border-left: 4px solid #DA1010;
@@ -248,7 +249,6 @@ label input.typeahead.ng-dirty.ng-invalid {
   background-color: #F5F5F5!important;
   opacity: 1!important;
 }
-
 
 label textarea {
   width: 100%;
@@ -276,10 +276,8 @@ label input.typeahead:focus {
   font-size: 20px;
 }
 
-label input:focus, label textarea:focus {
-  opacity: .6;
-}
-
+label input:focus,
+label textarea:focus,
 label input.typeahead:focus {
   opacity: .6;
 }
@@ -328,6 +326,25 @@ form div label.checkbox {
 form .form-buttons {
   float: right;
 }
+
+div label.inline {
+  display: inline-block;
+}
+div label.inline {
+  margin-right: 1%;
+}
+//div label:last-child {
+//  margin-right: 0px;
+//}
+.width79per {
+  width: 79%
+}
+.width19per {
+  width: 19%
+}
+
+
+
 
 /* *************************************** */
 /* tooltip */

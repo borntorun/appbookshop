@@ -68,7 +68,9 @@
         'Guerra',
         'Fascismo',
         '1ª Guerra Mundial'
-      ]
+      ],
+      obs: ['linha 1', 'linha2'].join('\n'),
+      obsInternal: ['internal linha 1\ninternal  linha2']
     };
 
     model.book.author = model.book.authors.length == 1 ? model.book.authors[0] : '';

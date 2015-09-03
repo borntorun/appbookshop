@@ -30,10 +30,10 @@
           return modalpopup.confirm(formsMng.MESSAGES.SAVE, 'Gravar Alterações')
 
         })
-        .then(function(){
+        .then(function() {
           notifier.info('form saved', '', 'Book Record');
         })
-        .catch(function(){
+        .catch(function() {
           notifier.info('no done', '', 'Book Record');
         });
 
@@ -96,7 +96,7 @@
           prefetch: '/assets/data/categories.json'
         }
       },
-     translators: {
+      translators: {
         options: {showLog: true, selectOnAutocomplete: true},
         ttoptions: {
           name: 'categories',
@@ -123,6 +123,9 @@
 
     notifier.info('BookRecordCtrl', '', 'Controller');
 
+    model.removeItem = function() {
+      notifier('removey','','teste');
+    }
   }
 
 }());

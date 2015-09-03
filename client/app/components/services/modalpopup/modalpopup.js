@@ -30,7 +30,7 @@
     }
     //ModalPopup Private Interface
     var options = {
-      templateUrl: '/app/components/modalpopup/templates/confirm.html',
+      templateUrl: '/app/components/services/modalpopup/templates/confirm.html',
       controller: modalCtrl,
       controllerAs: 'model'/*,
         windowClass:"positionModal"*/

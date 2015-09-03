@@ -2,6 +2,7 @@
 var config = require('../../config/environment');
 var Schema = require('mongoose').Schema;
 var BookSchema = new Schema({
+  reference: { type: Number },
   title: { type: String },
   authors: { type: [String] },
   subject: { type: String },

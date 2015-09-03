@@ -10,9 +10,9 @@
         .row.margin-bottom20
             .col-sm-12
                 .row
-                    .col-sm-3.col-md-3
-                        label.inline(for="reference") Reference
-                            input(value="00456/03876")
+                    .col-xs-5.col-sm-3
+                        label(for="reference") {{::model.bookconfig.labels.reference}}
+                            input(value="{{::model.book.reference}}", disabled, id="reference", name="reference")
                         //{{::model.bookconfig.labels.reference}}
                 .row
                     .col-sm-12

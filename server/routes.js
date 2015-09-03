@@ -9,6 +9,8 @@ module.exports = function (app) {
   // Insert routes below
   app.use('/api/things', require('./api/thing'));
 
+  app.use('/api/counters', require('./api/counters'));
+
   app.use('/api/bookconfig', require('./api/bookconfig'));
 
   app.use('/api/books', require('./api/book'));

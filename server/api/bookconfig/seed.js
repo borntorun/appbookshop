@@ -14,6 +14,7 @@ Book.find({}).remove(function () {
         limitFeatured: 8
       },
       placeholders: {
+        reference: "referência",
         title: "título do livro",
         authors: "autor ou autores do livro",
         subject: "assunto",
@@ -65,6 +66,7 @@ Book.find({}).remove(function () {
         dateUpdate: "Data de Modificação"
       },
       labels: {
+        reference: "Nº / Refª",
         title: "Título",
         authors: "Autor",
         subject: "Assunto",

@@ -47,6 +47,7 @@
     }
 
     model.book = {
+      reference: '0000554',
       title: '',
       subtitle: '',
       authors: [

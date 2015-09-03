@@ -52,7 +52,7 @@ var fields = {
     "workmanship": 1,
     "pagesNum": 1,
     "price": 1,
-    "legalDeposit": 1,
+    "editionLegalDeposit": 1,
     "circulation": 1,
     "condition": 1,
     "obs": 1,

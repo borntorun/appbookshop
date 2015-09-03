@@ -10,10 +10,16 @@
         .row.margin-bottom20
             .col-sm-12
                 .row
+                    .col-sm-3.col-md-3
+                        label.inline(for="reference") Reference
+                            input(value="00456/03876")
+                        //{{::model.bookconfig.labels.reference}}
+                .row
                     .col-sm-12
                         label(for="title") {{::model.bookconfig.labels.title}}
                             input.font-major(type=text, tabindex="100", name="title", ng-model="model.book.title", autofocus required aria-label="{{::model.bookconfig.placeholders.title}}", placeholder="{{::model.bookconfig.placeholders.title}}")
                             div.tool-tip.bottom(ng-show="model.formsMng.isErrorRequired(bookrecordForm, 'title')") {{::model.bookconfig.valMessages.title.required}}
+
                 .row
                     .col-sm-12
                         label(for="subtitle") {{::model.bookconfig.labels.subtitle}}
@@ -70,7 +76,7 @@
                     input(type=text, tabindex="1200", name="editionISBN", ng-model="model.book.editionISBN", aria-label="{{::model.bookconfig.placeholders.editionISBN}}", placeholder="{{::model.bookconfig.placeholders.editionISBN}}")
                     div.tool-tip.bottom(ng-hide="model.isbnIsvalid(model.book.editionISBN)") {{::model.bookconfig.valMessages.editionISBN.invalid}}
             .col-sm-3
-                label(for="editionLegalDeposit") Depósito Legal {{::model.bookconfig.labels.editionLegalDeposit}}
+                label(for="editionLegalDeposit") {{::model.bookconfig.labels.editionLegalDeposit}}
                     input(type=text, tabindex="1300", name="editionLegalDeposit", ng-model="model.book.editionLegalDeposit", aria-label="{{::model.bookconfig.placeholders.editionLegalDeposit}}", placeholder="{{::model.bookconfig.placeholders.editionLegalDeposit}}")
         .row.margin-bottom20
             .col-sm-3(ng-show="model.book.translators.length>1")

@@ -33,7 +33,7 @@ var BookSchema = new Schema({
   priceCost: { type: Number },
   price: { type: Number },
   buyAt: { type: String },
-  legalDeposit: { type: String },
+  editionLegalDeposit: { type: String },
   circulation: { type: Number },
   keywords: { type: [String] },
   archive: { type: String },

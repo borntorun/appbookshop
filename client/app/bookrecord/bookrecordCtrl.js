@@ -52,6 +52,7 @@
       authors: [
         'Sophia de Mello Breyner Andersen'
       ],
+      editionLegalDeposit: '1234',
       translators: [
         'Vera San Payo de Lemos'
       ],

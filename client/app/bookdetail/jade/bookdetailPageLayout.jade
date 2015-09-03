@@ -157,9 +157,9 @@ div.col-xs-12.bookdetail
                                         li.list-group-item(ng-class="{'hidden': !vm.book.circulation}")
                                             span {{vm.bookconfiglabels['circulation']}}:
                                             span {{vm.book.circulation}}
-                                        li.list-group-item(ng-class="{'hidden': !vm.book.legalDeposit}")
-                                            span {{vm.bookconfiglabels['legalDeposit']}}:
-                                            span {{vm.book.legalDeposit}}
+                                        li.list-group-item(ng-class="{'hidden': !vm.book.editionLegalDeposit}")
+                                            span {{vm.bookconfiglabels['editionLegalDeposit']}}:
+                                            span {{vm.book.editionLegalDeposit}}
                                         li.list-group-item(ng-class="{'hidden': !vm.book.graphicalPrint}")
                                             span {{vm.bookconfiglabels['graphicalPrint']}}:
                                             span {{vm.book.graphicalPrint}}
@@ -199,8 +199,8 @@ div.col-xs-12.bookdetail
                             strong {{vm.bookconfiglabels['circulation']}}:
                             | {{vm.book.circulation}}
                         li.list-group-item
-                            strong {{vm.bookconfiglabels['legalDeposit']}}:
-                            | {{vm.book.legalDeposit}}
+                            strong {{vm.bookconfiglabels['editionLegalDeposit']}}:
+                            | {{vm.book.editionLegalDeposit}}
             .col-xs-12.col-sm-4
                 div.panel.panel-default
                     div.panel-heading

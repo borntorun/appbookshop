@@ -35,7 +35,7 @@
       vm.bookflags.nopostfaceBy= !vm.book.postfaceBy || vm.book.postfaceBy.length===0;
       vm.bookflags.nocorrector= !vm.book.corrector || vm.book.corrector.length===0;
 
-      vm.bookflags.hasinformation = vm.book.circulation || vm.book.legalDeposit || vm.book.graphicalPrint || vm.book.cover
+      vm.bookflags.hasinformation = vm.book.circulation || vm.book.editionLegalDeposit || vm.book.graphicalPrint || vm.book.cover
         || !vm.bookflags.noprefaceBy
         || !vm.bookflags.nopostfaceBy
         || !vm.bookflags.nocorrector;

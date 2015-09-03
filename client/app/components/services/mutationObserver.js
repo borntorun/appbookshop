@@ -12,32 +12,8 @@
     .module('appBookShop.components')
     .factory('mutationObserver', mutationObserver);
 
-
-  if (!Array.prototype.find) {
-    Array.prototype.find = function(predicate) {
-      if (this == null) {
-        throw new TypeError('Array.prototype.find called on null or undefined');
-      }
-      if (typeof predicate !== 'function') {
-        throw new TypeError('predicate must be a function');
-      }
-      var list = Object(this);
-      var length = list.length >>> 0;
-      var thisArg = arguments[1];
-      var value;
-
-      for (var i = 0; i < length; i++) {
-        value = list[i];
-        if (predicate.call(thisArg, value, i, list)) {
-          return value;
-        }
-      }
-      return undefined;
-    };
-  }
-
   /* @ngInject */
-  function mutationObserver() {
+  function mutationObserver(_lodash) {
     var observers = [],
       id = 0;
 
@@ -76,15 +52,10 @@
 
     function disconnect(id) {
 
-      var observer = observers.find(function(el, index, oarray){
-        if (el.id === id) {
-          oarray.splice(index,1);
-          return true;
-        }
-        return false
-      });
-      if (observer && observer.observer && observer.observer.disconnect) {
-        observer.observer.disconnect();
+      var observer = _lodash.result(_lodash.find(users, { 'id': id}), 'observer');
+
+      if (observer && observer.disconnect) {
+        observer.disconnect();
       }
     }
   }

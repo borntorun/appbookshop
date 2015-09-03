@@ -64,7 +64,6 @@ var BookSchema = new Schema({
   template: { type: String },
   dateResgistration: { type: Date, default: Date.now },
   dateUpdate: { type: Date, default: Date.now }
-
 });
 
 BookSchema.path('title').required(true, 'Título é obrigatório.');

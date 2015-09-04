@@ -29,7 +29,11 @@
           template: 'views navbarleft-books (main.jade)'
         },
         'main-right@main': {
-          template: 'view main-right (main.jade)'
+          templateUrl: 'app/bookrecord/views/bookrecordNavRight.html'
+        },
+        'bookrecord-store@main.bookrecord': {
+          templateUrl: 'app/bookrecord/views/bookrecordStore.html',
+          controller: 'BookrecordStoreCtrl as model'
         },
         'main-content-bottom@main': {
           template: 'view main-content-bottom (main.jade)'

@@ -1,0 +1,101 @@
+form.enter-as-tab.on-focus(id="bookrecordStoreForm", name="bookrecordStoreForm",  ng-submit="model.submitForm()", ng-model-options="{ debounce: 0 }")
+    .row
+
+        .col-sm-12.padding20
+            label(for="dateResgistration") {{::model.labels.dateResgistration}}
+                input(value="{{::model.book.dateResgistration}}", disabled)
+
+            label(for="dateUpdate") {{::model.labels.dateUpdate}}
+                    input(value="{{::model.book.dateUpdate}}", disabled)
+
+            label(for="price") {{::model.labels.price}}
+                input(type="number",lang="pt-PT", step="0.01", tabindex="200", name="price",
+                    ng-model="model.book.price",
+                    aria-label="{{::model.placeholders.price}}",
+                    placeholder="{{::model.placeholders.price}}")
+
+            label(for="priceInitial") {{::model.labels.priceInitial}}
+                input(type="number",lang="pt-PT", step="0.01", tabindex="200", name="priceInitial",
+                ng-model="model.book.priceInitial",
+                aria-label="{{::model.placeholders.priceInitial}}",
+                placeholder="{{::model.placeholders.priceInitial}}")
+
+            label(for="priceCost") {{::model.labels.priceCost}}
+                input(type="number",lang="pt-PT", step="0.01", tabindex="200", name="priceCost",
+                ng-model="model.book.priceCost",
+                aria-label="{{::model.placeholders.priceCost}}",
+                placeholder="{{::model.placeholders.priceCost}}")
+
+            label(for="qt") {{::model.labels.qt}}
+                input(type="number",lang="pt", step="1", tabindex="200", name="qt",
+                    ng-model="model.book.qt",
+                    aria-label="{{::model.placeholders.qt}}",
+                    placeholder="{{::model.placeholders.qt}}")
+            label(for="qtSold") {{::model.labels.qtSold}}
+                input(type="number",lang="pt", step="1", tabindex="200", name="qtSold",
+                    ng-model="model.book.qtSold",
+                    aria-label="{{::model.placeholders.qtSold}}",
+                    placeholder="{{::model.placeholders.qtSold}}")
+            label(for="qtStore") {{::model.labels.qtStore}}
+                input(type="number",lang="pt", step="1", tabindex="200", name="qtStore",
+                    ng-model="model.book.qtStore",
+                    aria-label="{{::model.placeholders.qtStore}}",
+                    placeholder="{{::model.placeholders.qtStore}}")
+
+            input(type="checkbox", tabindex="200", id="sellOnline", name="sellOnline",
+                ng-model="model.book.sellOnline",
+                aria-label="{{::model.placeholders.sellOnline}}",
+                placeholder="{{::model.placeholders.sellOnline}}")
+            label(for="sellOnline") {{::model.labels.sellOnline}}
+
+            input(type="checkbox", tabindex="200", id="sellPresencial", name="sellPresencial",
+                ng-model="model.book.sellPresencial",
+                aria-label="{{::model.placeholders.sellPresencial}}",
+                placeholder="{{::model.placeholders.sellPresencial}}")
+            label(for="sellPresencial") {{::model.labels.sellPresencial}}
+
+            input(type="checkbox", tabindex="200", id="isNewBook", name="isNewBook",
+                ng-model="model.book.isNewBook",
+                aria-label="{{::model.placeholders.isNewBook}}",
+                placeholder="{{::model.placeholders.isNewBook}}")
+            label(for="isNewBook") {{::model.labels.isNewBook}}
+
+            input(type="checkbox", tabindex="200", id="isFeatured", name="isFeatured",
+                ng-model="model.book.isFeatured",
+                aria-label="{{::model.placeholders.isFeatured}}",
+                placeholder="{{::model.placeholders.isFeatured}}")
+            label(for="isFeatured") {{::model.labels.isFeatured}}
+
+            input(type="checkbox", tabindex="200", id="isPromotion", name="isPromotion",
+                ng-model="model.book.isPromotion",
+                aria-label="{{::model.placeholders.isPromotion}}",
+                placeholder="{{::model.placeholders.isPromotion}}")
+            label(for="isPromotion") {{::model.labels.isPromotion}}
+
+            input(type="checkbox", tabindex="200", id="isRare", name="isRare",
+                ng-model="model.book.isRare",
+                aria-label="{{::model.placeholders.isRare}}",
+                placeholder="{{::model.placeholders.isRare}}")
+            label(for="isRare") {{::model.labels.isRare}}
+
+            input(type="checkbox", tabindex="200", id="isUnique", name="isUnique",
+                ng-model="model.book.isUnique",
+                aria-label="{{::model.placeholders.isUnique}}",
+                placeholder="{{::model.placeholders.isUnique}}")
+            label(for="isUnique") {{::model.labels.isUnique}}
+
+            input(type="checkbox", tabindex="200", id="isValuable", name="isValuable",
+                ng-model="model.book.isValuable",
+                aria-label="{{::model.placeholders.isValuable}}",
+                placeholder="{{::model.placeholders.isValuable}}")
+            label(for="isValuable") {{::model.labels.isValuable}}
+
+
+
+
+
+    button.btn.btn-default(tabindex="9998",ng-disabled="bookrecordStoreForm.$invalid", type="submit", id="submit") Gravar
+
+
+pre {{model.book | json}}
+pre {{ bookrecordStoreForm | json }}

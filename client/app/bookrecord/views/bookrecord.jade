@@ -1,5 +1,3 @@
-
-//.col-xs-12
 form.enter-as-tab.on-focus(id="bookrecordForm", name="bookrecordForm", novalidate, ng-submit="model.submitForm()", ng-model-options="{ debounce: 0 }")
     h1 Registo de Livro
         span.form-buttons
@@ -7,29 +5,29 @@ form.enter-as-tab.on-focus(id="bookrecordForm", name="bookrecordForm", novalidat
             button.btn.btn-default(tabindex="9999",ng-show="bookrecordForm.reference.$viewValue", type="button", ng-click="model.newForm()") Novo
             button.btn.btn-default(tabindex="9998",ng-disabled="bookrecordForm.$invalid", type="submit", id="submit") Gravar
 
-    .row.margin-bottom20
+    .row.caixa
         .col-sm-12
             .row
                 .col-xs-5.col-sm-3
-                    label(for="reference") {{::model.bookconfig.labels.reference}}
+                    label(for="reference") {{::model.labels.reference}}
                         input(value="{{::model.book.reference}}", disabled, id="reference", name="reference")
-                    //{{::model.bookconfig.labels.reference}}
+                    //{{::model.labels.reference}}
             .row
                 .col-sm-12
-                    label(for="title") {{::model.bookconfig.labels.title}}
-                        input.font-major(type=text, tabindex="100", name="title", ng-model="model.book.title", autofocus required aria-label="{{::model.bookconfig.placeholders.title}}", placeholder="{{::model.bookconfig.placeholders.title}}")
-                        div.tool-tip.bottom(ng-show="model.formsMng.isErrorRequired(bookrecordForm, 'title')") {{::model.bookconfig.valMessages.title.required}}
+                    label(for="title") {{::model.labels.title}}
+                        input.font-major(type="text", tabindex="100", name="title", ng-model="model.book.title", autofocus required aria-label="{{::model.placeholders.title}}", placeholder="{{::model.placeholders.title}}")
+                        div.tool-tip.bottom(ng-show="model.formsMng.isErrorRequired(bookrecordForm, 'title')") {{::model.valMessages.title.required}}
 
             .row
                 .col-sm-12
-                    label(for="subtitle") {{::model.bookconfig.labels.subtitle}}
-                        input(type=text, tabindex="200", name="subtitle", ng-model="model.book.subtitle", aria-label="{{::model.bookconfig.placeholders.subtitle}}", placeholder="{{::model.bookconfig.placeholders.subtitle}}")
+                    label(for="subtitle") {{::model.labels.subtitle}}
+                        input(type="text", tabindex="200", name="subtitle", ng-model="model.book.subtitle", aria-label="{{::model.placeholders.subtitle}}", placeholder="{{::model.placeholders.subtitle}}")
             .row
                 .col-sm-6
-                    label(for="authors") {{::model.bookconfig.labels.authors}}
-                        //forminput-tooltip-parent="span.twitter-typeahead", forminput-tooltip="{{::model.bookconfig.valMessages.authors.required}}",
+                    label(for="authors") {{::model.labels.authors}}
+                        //forminput-tooltip-parent="span.twitter-typeahead", forminput-tooltip="{{::model.valMessages.authors.required}}",
                         span(angular-typeaheadjs,  angty-onselect="model.events.selectOption", angty-options="{{model.config.authors.options}}", angty-ttoptions="{{model.config.authors.ttoptions}}")
-                            input.typeahead(type="text", tabindex="300" name="authors", ng-model="model.book.author", aria-label="{{::model.bookconfig.placeholders.authors}}", placeholder="{{::model.bookconfig.placeholders.authors}}")
+                            input.typeahead(type="text", tabindex="300" name="authors", ng-model="model.book.author", aria-label="{{::model.placeholders.authors}}", placeholder="{{::model.placeholders.authors}}")
 
                 .col-sm-6(ng-show="model.book.authors.length>1")
                     label.label-items
@@ -38,55 +36,56 @@ form.enter-as-tab.on-focus(id="bookrecordForm", name="bookrecordForm", novalidat
                             i.fa.fa-times(ng-click="model.removeItem()")
                             | {{item}}
 
-    .row.margin-bottom20
+    .row.caixa
         .col-sm-4
-            label(for="editionPublisher") {{::model.bookconfig.labels.editionPublisher}}
+            label(for="editionPublisher") {{::model.labels.editionPublisher}}
                 angular-typeaheadjs(angty-onselect="model.events.selectOption", angty-options="{{model.config.publisher.options}}", angty-ttoptions="{{model.config.publisher.ttoptions}}")
-                    input.typeahead(type="text", tabindex="400", name="authors", ng-model="model.book.editionPublisher", aria-label="{{::model.bookconfig.placeholders.editionPublisher}}", placeholder="{{::model.bookconfig.placeholders.editionPublisher}}")
+                    input.typeahead(type="text", tabindex="400", name="authors", ng-model="model.book.editionPublisher", aria-label="{{::model.placeholders.editionPublisher}}", placeholder="{{::model.placeholders.editionPublisher}}")
         .col-sm-2
-            label(for="editionLanguage") {{::model.bookconfig.labels.editionLanguage}}
+            label(for="editionLanguage") {{::model.labels.editionLanguage}}
                 angular-typeaheadjs(angty-onselect="model.events.selectOption", angty-options="{{model.config.language.options}}", angty-ttoptions="{{model.config.language.ttoptions}}")
-                    input.typeahead(type="text", tabindex="500", name="editionLanguage", ng-model="model.book.editionLanguage", aria-label="{{::model.bookconfig.placeholders.editionLanguage}}", placeholder="{{::model.bookconfig.placeholders.editionLanguage}}")
+                    input.typeahead(type="text", tabindex="500", name="editionLanguage", ng-model="model.book.editionLanguage", aria-label="{{::model.placeholders.editionLanguage}}", placeholder="{{::model.placeholders.editionLanguage}}")
         .col-sm-2
-            label(for="editionCountry") {{::model.bookconfig.labels.editionCountry}}
+            label(for="editionCountry") {{::model.labels.editionCountry}}
                 angular-typeaheadjs(angty-onselect="model.events.selectOption", angty-options="{{model.config.country.options}}", angty-ttoptions="{{model.config.country.ttoptions}}")
-                    input.typeahead(type="text", tabindex="600", name="editionCountry", ng-model="model.book.editionCountry", aria-label="{{::model.bookconfig.placeholders.editionCountry}}", placeholder="{{::model.bookconfig.placeholders.editionCountry}}")
+                    input.typeahead(type="text", tabindex="600", name="editionCountry", ng-model="model.book.editionCountry", aria-label="{{::model.placeholders.editionCountry}}", placeholder="{{::model.placeholders.editionCountry}}")
         .col-sm-2
-            label(for="editionYear") {{::model.bookconfig.labels.editionYear}}
-                input(type="number", tabindex="700", min="1500", max="{{model.anoActual}}", maxlength="4", name="editionYear", ng-model="model.book.editionYear", aria-label="{{::model.bookconfig.placeholders.editionYear}}", placeholder="{{::model.bookconfig.placeholders.editionYear}}")
-                div.tool-tip.bottom(ng-show="model.formsMng.isErrorInvalid(bookrecordForm, 'editionYear')") {{::model.bookconfig.valMessages.editionYear.invalid}}
+            label(for="editionYear") {{::model.labels.editionYear}}
+                input(type="number", tabindex="700", min="1500", max="{{model.anoActual}}", maxlength="4", name="editionYear", ng-model="model.book.editionYear", aria-label="{{::model.placeholders.editionYear}}", placeholder="{{::model.placeholders.editionYear}}")
+                div.tool-tip.bottom(ng-show="model.formsMng.isErrorInvalid(bookrecordForm, 'editionYear')") {{::model.valMessages.editionYear.invalid}}
 
         .col-sm-2
-            label(for="editionNumber") {{::model.bookconfig.labels.editionNumber}}
-                input(type="number", tabindex="800", min="1", name="editionNumber", ng-model="model.book.editionNumber", aria-label="{{::model.bookconfig.placeholders.editionNumber}}", placeholder="{{::model.bookconfig.placeholders.editionNumber}}")
-                div.tool-tip.bottom(ng-show="model.formsMng.isErrorInvalid(bookrecordForm, 'editionNumber')") {{::model.bookconfig.valMessages.editionNumber.invalid}}
+            label(for="editionNumber") {{::model.labels.editionNumber}}
+                input(type="number", tabindex="800", min="1", name="editionNumber", ng-model="model.book.editionNumber", aria-label="{{::model.placeholders.editionNumber}}", placeholder="{{::model.placeholders.editionNumber}}")
+                div.tool-tip.bottom(ng-show="model.formsMng.isErrorInvalid(bookrecordForm, 'editionNumber')") {{::model.valMessages.editionNumber.invalid}}
 
-    .row.margin-bottom20
+    .row.caixa
         .col-sm-2
-            label(for="pagesNum") {{::model.bookconfig.labels.pagesNum}}
-                input(type=text, tabindex="900", name="pagesNum", ng-model="model.book.pagesNum", aria-label="{{::model.bookconfig.placeholders.pagesNum}}", placeholder="{{::model.bookconfig.placeholders.pagesNum}}")
+            label(for="pagesNum") {{::model.labels.pagesNum}}
+                input(type="text", tabindex="900", name="pagesNum", ng-model="model.book.pagesNum", aria-label="{{::model.placeholders.pagesNum}}", placeholder="{{::model.placeholders.pagesNum}}")
         .col-sm-5
-            label.inline.width79per(for="nameCollection") {{::model.bookconfig.labels.nameCollection}}
-                input(type=text, tabindex="1000", name="nameCollection", ng-model="model.book.nameCollection", aria-label="{{::model.bookconfig.placeholders.nameCollection}}", placeholder="{{::model.bookconfig.placeholders.nameCollection}}")
+            label.inline.width79per(for="nameCollection") {{::model.labels.nameCollection}}
+                input(type="text", tabindex="1000", name="nameCollection", ng-model="model.book.nameCollection", aria-label="{{::model.placeholders.nameCollection}}", placeholder="{{::model.placeholders.nameCollection}}")
             //.col-sm-2
-            label.inline.width19per(for="numCollection") {{::model.bookconfig.labels.numCollection}}
-                input(type=text, tabindex="1100", name="numCollection", ng-model="model.book.numCollection", aria-label="{{::model.bookconfig.placeholders.numCollection}}", placeholder="{{::model.bookconfig.placeholders.numCollection}}")
+            label.inline.width19per(for="numCollection") {{::model.labels.numCollection}}
+                input(type="text", tabindex="1100", name="numCollection", ng-model="model.book.numCollection", aria-label="{{::model.placeholders.numCollection}}", placeholder="{{::model.placeholders.numCollection}}")
         .col-sm-2
-            label(for="editionISBN") {{::model.bookconfig.labels.editionISBN}}
-                input(type=text, tabindex="1200", name="editionISBN", ng-model="model.book.editionISBN", aria-label="{{::model.bookconfig.placeholders.editionISBN}}", placeholder="{{::model.bookconfig.placeholders.editionISBN}}")
-                div.tool-tip.bottom(ng-hide="model.isbnIsvalid(model.book.editionISBN)") {{::model.bookconfig.valMessages.editionISBN.invalid}}
+            label(for="editionISBN") {{::model.labels.editionISBN}}
+                input(type="text", tabindex="1200", name="editionISBN", ng-model="model.book.editionISBN", aria-label="{{::model.placeholders.editionISBN}}", placeholder="{{::model.placeholders.editionISBN}}")
+                div.tool-tip.bottom(ng-hide="model.isbnIsvalid(model.book.editionISBN)") {{::model.valMessages.editionISBN.invalid}}
         .col-sm-3
-            label(for="editionLegalDeposit") {{::model.bookconfig.labels.editionLegalDeposit}}
-                input(type=text, tabindex="1300", name="editionLegalDeposit", ng-model="model.book.editionLegalDeposit", aria-label="{{::model.bookconfig.placeholders.editionLegalDeposit}}", placeholder="{{::model.bookconfig.placeholders.editionLegalDeposit}}")
-    .row.margin-bottom20
+            label(for="editionLegalDeposit") {{::model.labels.editionLegalDeposit}}
+                input(type="text", tabindex="1300", name="editionLegalDeposit", ng-model="model.book.editionLegalDeposit", aria-label="{{::model.placeholders.editionLegalDeposit}}", placeholder="{{::model.placeholders.editionLegalDeposit}}")
+
+    .row.caixa
         .col-sm-3(ng-show="model.book.translators.length>1")
-            label(for="translators") {{::model.bookconfig.labels.translators}}
+            label(for="translators") {{::model.labels.translators}}
                 angular-typeaheadjs(angty-onselect="model.events.selectOption", angty-options="{{model.config.translators.options}}", angty-ttoptions="{{model.config.translators.ttoptions}}")
-                    input.typeahead(type="text", tabindex="1400", name="translators", ng-model="model.book.translator", aria-label="{{::model.bookconfig.placeholders.translators}}", placeholder="{{::model.bookconfig.placeholders.translators}}")
+                    input.typeahead(type="text", tabindex="1400", name="translators", ng-model="model.book.translator", aria-label="{{::model.placeholders.translators}}", placeholder="{{::model.placeholders.translators}}")
         .col-sm-5(ng-hide="model.book.translators.length>1")
-            label(for="translators") {{::model.bookconfig.labels.translators}}
+            label(for="translators") {{::model.labels.translators}}
                 angular-typeaheadjs(angty-onselect="model.events.selectOption", angty-options="{{model.config.translators.options}}", angty-ttoptions="{{model.config.translators.ttoptions}}")
-                    input.typeahead(type="text", tabindex="1400", name="translators", ng-model="model.book.translator", aria-label="{{::model.bookconfig.placeholders.translators}}", placeholder="{{::model.bookconfig.placeholders.translators}}")
+                    input.typeahead(type="text", tabindex="1400", name="translators", ng-model="model.book.translator", aria-label="{{::model.placeholders.translators}}", placeholder="{{::model.placeholders.translators}}")
 
         .col-sm-3(ng-show="model.book.translators.length>1")
             label.label-items
@@ -94,34 +93,34 @@ form.enter-as-tab.on-focus(id="bookrecordForm", name="bookrecordForm", novalidat
                     i.fa.fa-times
                     | {{item}}
         .col-sm-2
-            label(for="editionTranslatedLanguage") {{::model.bookconfig.labels.editionTranslatedLanguage}}
+            label(for="editionTranslatedLanguage") {{::model.labels.editionTranslatedLanguage}}
                 angular-typeaheadjs(angty-onselect="model.events.selectOption", angty-options="{{model.config.language.options}}", angty-ttoptions="{{model.config.language.ttoptions}}")
-                    input.typeahead(type="text", tabindex="1500", name="editionTranslatedLanguage", ng-model="model.book.editionTranslatedLanguage", aria-label="{{::model.bookconfig.placeholders.editionTranslatedLanguage}}", placeholder="{{::model.bookconfig.placeholders.editionTranslatedLanguage}}")
+                    input.typeahead(type="text", tabindex="1500", name="editionTranslatedLanguage", ng-model="model.book.editionTranslatedLanguage", aria-label="{{::model.placeholders.editionTranslatedLanguage}}", placeholder="{{::model.placeholders.editionTranslatedLanguage}}")
 
         .col-sm-2(ng-show="model.book.translators.length>1")
-            label(for="numVolume") {{::model.bookconfig.labels.numVolume}}
-                input(type=text, tabindex="1600", name="numVolume", ng-model="model.book.numVolume", aria-label="{{::model.bookconfig.placeholders.numVolume}}", placeholder="{{::model.bookconfig.placeholders.numVolume}}")
+            label(for="numVolume") {{::model.labels.numVolume}}
+                input(type="text", tabindex="1600", name="numVolume", ng-model="model.book.numVolume", aria-label="{{::model.placeholders.numVolume}}", placeholder="{{::model.placeholders.numVolume}}")
 
         .col-sm-3(ng-hide="model.book.translators.length>1")
 
-            label(for="numVolume") {{::model.bookconfig.labels.numVolume}}
-                input(type=text, tabindex="1700", name="numVolume", ng-model="model.book.numVolume", aria-label="{{::model.bookconfig.placeholders.numVolume}}", placeholder="{{::model.bookconfig.placeholders.numVolume}}")
+            label(for="numVolume") {{::model.labels.numVolume}}
+                input(type="text", tabindex="1700", name="numVolume", ng-model="model.book.numVolume", aria-label="{{::model.placeholders.numVolume}}", placeholder="{{::model.placeholders.numVolume}}")
 
         .col-sm-2
-            label(for="circulation") {{::model.bookconfig.labels.circulation}}
-                input(type="number", tabindex="1800", min="1" name="circulation", ng-model="model.book.circulation", aria-label="{{::model.bookconfig.placeholders.circulation}}", placeholder="{{::model.bookconfig.placeholders.circulation}}")
-                div.tool-tip.bottom(ng-show="model.formsMng.isErrorInvalid(bookrecordForm, 'circulation')") {{::model.bookconfig.valMessages.circulation.invalid}}
+            label(for="circulation") {{::model.labels.circulation}}
+                input(type="number", tabindex="1800", min="1", name="circulation", ng-model="model.book.circulation", aria-label="{{::model.placeholders.circulation}}", placeholder="{{::model.placeholders.circulation}}")
+                div.tool-tip.bottom(ng-show="model.formsMng.isErrorInvalid(bookrecordForm, 'circulation')") {{::model.valMessages.circulation.invalid}}
 
 
-    .row
-        .col-sm-6.margin-bottom20
+    .row.caixa
+        .col-sm-6
             .row
-                .col-sm-6.margin-bottom20
+                .col-sm-6
                     .row
                         .col-xs-12
-                            label(for="categories") {{::model.bookconfig.labels.categories}}
+                            label(for="categories") {{::model.labels.categories}}
                                 angular-typeaheadjs(angty-onselect="model.events.selectOption", angty-options="{{model.config.categories.options}}", angty-ttoptions="{{model.config.categories.ttoptions}}")
-                                    input.typeahead(type="text", tabindex="1900", name="categories", ng-model="model.book.categorie", aria-label="{{::model.bookconfig.placeholders.categories}}", placeholder="{{::model.bookconfig.placeholders.categories}}")
+                                    input.typeahead(type="text", tabindex="1900", name="categories", ng-model="model.book.categorie", aria-label="{{::model.placeholders.categories}}", placeholder="{{::model.placeholders.categories}}")
                     .row
                         .col-xs-12
                             label.label-items
@@ -131,9 +130,9 @@ form.enter-as-tab.on-focus(id="bookrecordForm", name="bookrecordForm", novalidat
                 .col-sm-6
                     .row
                         .col-xs-12
-                            label(for="keywords") {{::model.bookconfig.labels.keywords}}
+                            label(for="keywords") {{::model.labels.keywords}}
                                 angular-typeaheadjs(angty-onselect="model.events.selectOption", angty-options="{{model.config.keywords.options}}", angty-ttoptions="{{model.config.keywords.ttoptions}}")
-                                    input.typeahead(type="text", tabindex="2000", name="keywords", ng-model="model.book.keyword", aria-label="{{::model.bookconfig.placeholders.keywords}}", placeholder="{{::model.bookconfig.placeholders.keywords}}")
+                                    input.typeahead(type="text", tabindex="2000", name="keywords", ng-model="model.book.keyword", aria-label="{{::model.placeholders.keywords}}", placeholder="{{::model.placeholders.keywords}}")
                     .row
                         .col-xs-12
                             label.label-items
@@ -141,60 +140,53 @@ form.enter-as-tab.on-focus(id="bookrecordForm", name="bookrecordForm", novalidat
                                     i.fa.fa-times
                                     | {{item}}
         .col-sm-6
-            .row.margin-bottom20
-                .col-sm-12
-                    label(for="obsInternal") {{::model.bookconfig.labels.obsInternal}}
-                        textarea(name="obsInternal", tabindex="2100", ng-model="model.book.obsInternal", aria-label="{{::model.bookconfig.placeholders.obsInternal}}", placeholder="{{::model.bookconfig.placeholders.obsInternal}}")
-            .row.margin-bottom20
-                .col-sm-12
-                    label(for="obs") {{::model.bookconfig.labels.obs}}
-                        textarea(name="obs", tabindex="2200", ng-model="model.book.obs", aria-label="{{::model.bookconfig.placeholders.obs}}", placeholder="{{::model.bookconfig.placeholders.obs}}")
-
-
-
-
-
-    //antigo
-    //.row.margin-bottom20
-        .col-sm-6
-            .row
-                .col-sm-6
-                    label(for="categories") {{::model.bookconfig.labels.categories}}
-                        angular-typeaheadjs(angty-onselect="model.events.selectOption", angty-options="{{model.config.categories.options}}", angty-ttoptions="{{model.config.categories.ttoptions}}")
-                            input.typeahead(type="text", name="categories", ng-model="model.book.categorie", aria-label="{{::model.bookconfig.placeholders.categories}}", placeholder="{{::model.bookconfig.placeholders.categories}}")
-                .col-sm-6
-                    label(for="keywords") {{::model.bookconfig.labels.keywords}}
-                        angular-typeaheadjs(angty-onselect="model.events.selectOption", angty-options="{{model.config.keywords.options}}", angty-ttoptions="{{model.config.keywords.ttoptions}}")
-                            input.typeahead(type="text", name="keywords", ng-model="model.book.keyword", aria-label="{{::model.bookconfig.placeholders.keywords}}", placeholder="{{::model.bookconfig.placeholders.keywords}}")
-            .row
-
-                .col-sm-6
-                    label.label-items
-                        span.item(ng-repeat="item in model.book.categories track by $index")
-                            i.fa.fa-times
-                            | {{item}}
-
-                .col-sm-6
-                    label.label-items
-                        span.item(ng-repeat="item in model.book.keywords track by $index")
-                            i.fa.fa-times
-                            | {{item}}
-        .col-sm-6
             .row
                 .col-sm-12
-                    label(for="obsInternal") {{::model.bookconfig.labels.obsInternal}}
-                        textarea(name="obsInternal", ng-model="model.book.obsInternal", aria-label="{{::model.bookconfig.placeholders.obsInternal}}", placeholder="{{::model.bookconfig.placeholders.obsInternal}}")
+                    label(for="obsInternal") {{::model.labels.obsInternal}}
+                        textarea(name="obsInternal", tabindex="2100", ng-model="model.book.obsInternal", aria-label="{{::model.placeholders.obsInternal}}", placeholder="{{::model.placeholders.obsInternal}}")
             .row
                 .col-sm-12
-                    label(for="obs") {{::model.bookconfig.labels.obs}}
-                        textarea(name="obs", ng-model="model.book.obs", aria-label="{{::model.bookconfig.placeholders.obs}}", placeholder="{{::model.bookconfig.placeholders.obs}}")
+                    label(for="obs") {{::model.labels.obs}}
+                        textarea(name="obs", tabindex="2200", ng-model="model.book.obs", aria-label="{{::model.placeholders.obs}}", placeholder="{{::model.placeholders.obs}}")
+    .row.caixa
+        .col-sm-3
+            label(for="condition") {{::model.labels.condition}}
+                input(type="text", tabindex="2300", name="condition", ng-model="model.book.condition",
+                    aria-label="{{::model.placeholders.condition}}", placeholder="{{::model.placeholders.condition}}")
+        .col-sm-3
+            label(for="graphicalPrint") {{::model.labels.graphicalPrint}}
+                input(type="text", tabindex="2400", name="graphicalPrint", ng-model="model.book.graphicalPrint",
+                aria-label="{{::model.placeholders.graphicalPrint}}", placeholder="{{::model.placeholders.graphicalPrint}}")
+        .col-sm-3
+            label(for="workmanship") {{::model.labels.workmanship}}
+                input(type="text", tabindex="2500", name="workmanship", ng-model="model.book.workmanship",
+                aria-label="{{::model.placeholders.workmanship}}", placeholder="{{::model.placeholders.workmanship}}")
+        .col-sm-3
+            label(for="cover") {{::model.labels.cover}}
+                input(type="text", tabindex="2600", name="cover", ng-model="model.book.cover",
+                aria-label="{{::model.placeholders.cover}}", placeholder="{{::model.placeholders.cover}}")
+    .row.caixa
+        .col-sm-2
+            label(for="dimensions") {{::model.labels.dimensions}}
+                input(type="text", tabindex="2700", name="dimensions", ng-model="model.book.dimensions",
+                aria-label="{{::model.placeholders.dimensions}}", placeholder="{{::model.placeholders.dimensions}}")
+        .col-sm-2
+            label(for="weight") {{::model.labels.weight}}
+                input(type="text", tabindex="2800", name="weight", ng-model="model.book.weight",
+                aria-label="{{::model.placeholders.weight}}", placeholder="{{::model.placeholders.weight}}")
+        .col-sm-2
+            label(for="buyAt") {{::model.labels.buyAt}}
+                input(type="text", tabindex="2900", name="buyAt", ng-model="model.book.buyAt",
+                aria-label="{{::model.placeholders.buyAt}}", placeholder="{{::model.placeholders.buyAt}}")
+        .col-sm-2
+            label(for="archive") {{::model.labels.archive}}
+                input(type="text", tabindex="3000", name="archive", ng-model="model.book.archive",
+                aria-label="{{::model.placeholders.archive}}", placeholder="{{::model.placeholders.archive}}")
+        .col-sm-4
+            label(for="lendingTo") {{::model.labels.lendingTo}}
+                input(type="text", tabindex="3100", name="lendingTo", ng-model="model.book.lendingTo",
+                aria-label="{{::model.placeholders.lendingTo}}", placeholder="{{::model.placeholders.lendingTo}}")
 
-
-
-
-
-//.col-xs-12
 pre {{ bookrecordForm | json }}
 pre {{model.book | json}}
-
-pre {{::model.bookconfig | json}}
+//pre {{::model.bookconfig | json}}

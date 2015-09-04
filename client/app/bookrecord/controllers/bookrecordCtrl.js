@@ -123,8 +123,9 @@
       noinformation: false
     };
 
-    model.bookconfig = bookconfig.data;
-
+    model.labels = bookconfig.data.labels;
+    model.placeholders = bookconfig.data.placeholders;
+    model.valMessages = bookconfig.data.valMessages;
     notifier.info('BookRecordCtrl', '', 'Controller');
 
     model.removeItem = function() {

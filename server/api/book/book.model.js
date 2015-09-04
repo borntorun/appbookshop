@@ -41,6 +41,7 @@ var BookSchema = new Schema({
   condition: { type: String },
   lendingTo: { type: String },
   obs: { type: [String] },
+  obsInternal: { type: String },
   corrector: { type: [String] },
   subtitle: { type: String },
   dimensions: { type: String },
@@ -60,7 +61,6 @@ var BookSchema = new Schema({
   qtSold: { type: Number },
   discounts: { type: [Schema.Types.Mixed] },
   taxes: { type: [Schema.Types.Mixed] },
-  obsInternal: { type: String },
   template: { type: String },
   dateResgistration: { type: Date, default: Date.now },
   dateUpdate: { type: Date, default: Date.now }

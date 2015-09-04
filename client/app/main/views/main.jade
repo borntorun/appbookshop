@@ -11,14 +11,15 @@
         .col-xs-12.col-sm-10.col-md-8
             .row
                 .col-xs-12(ui-view="")
-                    .row
-                        ng-include(src="'app/booksearch/jade/booksearchLayout.html'")
-                    .row
-                        .col-xs-12(ui-view="booksearch-results")
+                    //xxx
+                    //.row
+                    //    ng-include(src="'app/booksearch/jade/booksearchLayout.html'")
+                    //.row
+                    //    .col-xs-12(ui-view="booksearch-results")
             .row
-                .col-xs-12(ui-view="content-bottom")
+                .col-xs-12(ui-view="main-content-bottom")
 
-        .col-xs-12.col-sm-2.col-md-2.hidden-xs(ui-view="main-right")
+        .col-xs-12.col-sm-2.col-md-2(ui-view="main-right")
             //ng-include(src="'app/navbar/right/layout.html'")
 
 

@@ -25,11 +25,14 @@
           templateUrl: 'app/bookrecord/views/bookrecord.html',
           controller: 'BookrecordCtrl as model'
         },
-        'navbarleft-books@main': {
-          template: 'views navbarleft-books (main.jade): texto incluido no bookrecord config'
+        'main-left@main': {
+          template: 'views navbarleft-books (main.jade)'
         },
-        'main-bottom@main': {
-          template: 'view main-bottom (main.jade): texto incluido no bookrecord config'
+        'main-right@main': {
+          template: 'view main-right (main.jade)'
+        },
+        'main-content-bottom@main': {
+          template: 'view main-content-bottom (main.jade)'
         },
         'hint@': {
           template: 'view hint - index.html'

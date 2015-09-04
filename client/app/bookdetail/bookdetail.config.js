@@ -21,7 +21,13 @@
       url: 'livro/{bookid}',
       /* Views affected by this url */
       views: {
-        '': {templateUrl: 'app/bookdetail/jade/bookdetailPageLayout.html',controller: 'BookDetailPageCtrl as vm'}
+        '': {templateUrl: 'app/bookdetail/jade/bookdetailPageLayout.html',controller: 'BookDetailPageCtrl as vm'},
+        'navbarleft-books@main': {
+          template: 'teste1'
+        },
+        'main-bottom@main': {
+          template: 'view bottom'
+        }
         /*,
         'navbarleft-books': {
           templateUrl: 'components/books/detail/bookDetailFeatured.html'

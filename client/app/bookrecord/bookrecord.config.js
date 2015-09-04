@@ -9,22 +9,31 @@
 
   var core = angular.module('appBookShop.bookrecord');
 
-
   core.config(moduleConfig);
 
   /* @ngInject */
-  function moduleConfig($stateProvider, _lodash) {
+  function moduleConfig( $stateProvider, _lodash ) {
     var states = {}
 
     states["main.bookrecord"] = {
-      /* Detail view for book */
+      /* boorecord view for book */
       /* ATENÇÃO: NÃO COLOCAR / NO INÍCIO ... CHILD VIEW */
       url: 'admin/livro/{bookid}',
       /* Views affected by this url */
       views: {
         '': {
           templateUrl: 'app/bookrecord/views/bookrecord.html',
-          controller: 'BookrecordCtrl as model'}
+          controller: 'BookrecordCtrl as model'
+        },
+        'navbarleft-books@main': {
+          template: 'views navbarleft-books (main.jade): texto incluido no bookrecord config'
+        },
+        'main-bottom@main': {
+          template: 'view main-bottom (main.jade): texto incluido no bookrecord config'
+        },
+        'hint@': {
+          template: 'view hint - index.html'
+        }
         /*,
         'navbarleft-books': {
           templateUrl: 'app/bookrecord/views/bookrecordFotoLayout.html'
@@ -36,12 +45,12 @@
         }*/
       },
       resolve: {
-        bookconfig: [ 'bookconfig', function (bookconfig) {
+        bookconfig: [ 'bookconfig', function( bookconfig ) {
           return bookconfig;
         }]
       }
     };
-    _lodash.forEach(states, function(state, key) {
+    _lodash.forEach(states, function( state, key ) {
       $stateProvider.state(key, state);
     });
   }

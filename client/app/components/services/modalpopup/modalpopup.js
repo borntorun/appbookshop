@@ -14,21 +14,54 @@
 
   /* @ngInject */
   function modalpopupProvider() {
-    var $modal_;
 
+
+    this.config = function( config ) {
+      if ( config ) {
+      }
+    };
+
+    /* @ngInject */
+    this.$get = function($modal) {
+      $modal_ = $modal;
+      return new ModalPopupServiceFactory();
+    };
+
+    /**
+     * Service Factory
+     * @returns {{confirm: confirm}}
+     * @constructor
+     */
     function ModalPopupServiceFactory() {
 
+      /*
+      return the service
+       */
       return {
         confirm : confirm
       }
     }
-    //ModalPopup Public Interface
+
+    /*
+    Public Interface of the service
+     */
+
+    /**
+     * Show a modal confirmation
+     * @param message
+     * @param title
+     * @returns {*}
+     */
     function confirm(message, title) {
       options.message = message? message.replace(/\n/g, '<br/>'): message;
       options.title = title? title.replace(/\n/g, '<br/>'): title;
       return $modal_.open(options).result;
     }
-    //ModalPopup Private Interface
+
+    /*
+    Private Interface of the service
+     */
+    var $modal_;
     var options = {
       templateUrl: '/app/components/services/modalpopup/templates/confirm.html',
       controller: modalCtrl,
@@ -43,15 +76,6 @@
       model.message = options.message;
     }
 
-    this.config = function( config ) {
-      if ( config ) {
-      }
-    };
 
-    /* @ngInject */
-    this.$get = function($modal) {
-      $modal_ = $modal;
-      return new ModalPopupServiceFactory();
-    };
   }
 }());

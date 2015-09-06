@@ -1,6 +1,5 @@
-form.enter-as-tab.on-focus(id="bookrecordStoreForm", name="bookrecordStoreForm",  ng-submit="model.submitForm()", ng-model-options="{ debounce: 0 }")
+form.enter-as-tab.on-focus(id="bookrecordStoreForm", logic-form="bookrecord", name="bookrecordStoreForm", novalidate, ng-model-options="{ debounce: 0 }")
     .row
-
         .col-sm-12.padding20
             label(for="dateResgistration") {{::model.labels.dateResgistration}}
                 input(value="{{::model.book.dateResgistration}}", disabled)
@@ -9,7 +8,7 @@ form.enter-as-tab.on-focus(id="bookrecordStoreForm", name="bookrecordStoreForm",
                     input(value="{{::model.book.dateUpdate}}", disabled)
 
             label(for="price") {{::model.labels.price}}
-                input(type="number",lang="pt-PT", step="0.01", tabindex="200", name="price",
+                input(type="number", required, lang="pt-PT", step="0.01", tabindex="200", name="price",
                     ng-model="model.book.price",
                     aria-label="{{::model.placeholders.price}}",
                     placeholder="{{::model.placeholders.price}}")
@@ -89,12 +88,6 @@ form.enter-as-tab.on-focus(id="bookrecordStoreForm", name="bookrecordStoreForm",
                 aria-label="{{::model.placeholders.isValuable}}",
                 placeholder="{{::model.placeholders.isValuable}}")
             label(for="isValuable") {{::model.labels.isValuable}}
-
-
-
-
-
-    button.btn.btn-default(tabindex="9998",ng-disabled="bookrecordStoreForm.$invalid", type="submit", id="submit") Gravar
 
 
 pre {{model.book | json}}

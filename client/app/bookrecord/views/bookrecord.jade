@@ -1,9 +1,10 @@
-form.enter-as-tab.on-focus(id="bookrecordForm", name="bookrecordForm", novalidate, ng-submit="model.submitForm()", ng-model-options="{ debounce: 0 }")
+form.enter-as-tab.on-focus(id="bookrecordForm", logic-form="bookrecord", name="bookrecordForm", novalidate, ng-submit="model.submitForm()", ng-model-options="{ debounce: 0 }")
     h1 Registo de Livro
         span.form-buttons
-            button.btn.btn-default(tabindex="10000",ng-disabled="bookrecordForm.$pristine", type="button", ng-click="model.clearForm()") Limpar
+            button.btn.btn-default(tabindex="10000",ng-disabled="model.bookrecordLogicForm.$pristine()", type="button", ng-click="model.clearForm()") Limpar
             button.btn.btn-default(tabindex="9999",ng-show="bookrecordForm.reference.$viewValue", type="button", ng-click="model.newForm()") Novo
-            button.btn.btn-default(tabindex="9998",ng-disabled="bookrecordForm.$invalid", type="submit", id="submit") Gravar
+            button.btn.btn-default(tabindex="9998",ng-disabled="model.bookrecordLogicForm.$invalid()", type="submit", id="submit") Gravar
+
 
     .row.caixa
         .col-sm-12
@@ -15,8 +16,8 @@ form.enter-as-tab.on-focus(id="bookrecordForm", name="bookrecordForm", novalidat
             .row
                 .col-sm-12
                     label(for="title") {{::model.labels.title}}
-                        input.font-major(type="text", tabindex="100", name="title", ng-model="model.book.title", autofocus required aria-label="{{::model.placeholders.title}}", placeholder="{{::model.placeholders.title}}")
-                        div.tool-tip.bottom(ng-show="model.formsMng.isErrorRequired(bookrecordForm, 'title')") {{::model.valMessages.title.required}}
+                        input.font-major(type="text", tabindex="100", name="title", ng-model="model.book.title", autofocus, required, aria-label="{{::model.placeholders.title}}", placeholder="{{::model.placeholders.title}}")
+                        div.tool-tip.bottom(ng-show="bookrecordForm.title.$dirty && bookrecordForm.title.$error.required") {{::model.valMessages.title.required}}
 
             .row
                 .col-sm-12
@@ -25,7 +26,6 @@ form.enter-as-tab.on-focus(id="bookrecordForm", name="bookrecordForm", novalidat
             .row
                 .col-sm-6
                     label(for="authors") {{::model.labels.authors}}
-                        //forminput-tooltip-parent="span.twitter-typeahead", forminput-tooltip="{{::model.valMessages.authors.required}}",
                         span(angular-typeaheadjs,  angty-onselect="model.events.selectOption", angty-options="{{model.config.authors.options}}", angty-ttoptions="{{model.config.authors.ttoptions}}")
                             input.typeahead(type="text", tabindex="300" name="authors", ng-model="model.book.author", aria-label="{{::model.placeholders.authors}}", placeholder="{{::model.placeholders.authors}}")
 
@@ -52,12 +52,12 @@ form.enter-as-tab.on-focus(id="bookrecordForm", name="bookrecordForm", novalidat
         .col-sm-2
             label(for="editionYear") {{::model.labels.editionYear}}
                 input(type="number", tabindex="700", min="1500", max="{{model.anoActual}}", maxlength="4", name="editionYear", ng-model="model.book.editionYear", aria-label="{{::model.placeholders.editionYear}}", placeholder="{{::model.placeholders.editionYear}}")
-                div.tool-tip.bottom(ng-show="model.formsMng.isErrorInvalid(bookrecordForm, 'editionYear')") {{::model.valMessages.editionYear.invalid}}
+                div.tool-tip.bottom(ng-show="bookrecordForm.editionYear.$dirty && bookrecordForm.editionYear.$invalid") {{::model.valMessages.editionYear.invalid}}
 
         .col-sm-2
             label(for="editionNumber") {{::model.labels.editionNumber}}
                 input(type="number", tabindex="800", min="1", name="editionNumber", ng-model="model.book.editionNumber", aria-label="{{::model.placeholders.editionNumber}}", placeholder="{{::model.placeholders.editionNumber}}")
-                div.tool-tip.bottom(ng-show="model.formsMng.isErrorInvalid(bookrecordForm, 'editionNumber')") {{::model.valMessages.editionNumber.invalid}}
+                div.tool-tip.bottom(ng-show="bookrecordForm.editionNumber.$dirty && bookrecordForm.editionNumber.$invalid") {{::model.valMessages.editionNumber.invalid}}
 
     .row.caixa
         .col-sm-2
@@ -109,7 +109,7 @@ form.enter-as-tab.on-focus(id="bookrecordForm", name="bookrecordForm", novalidat
         .col-sm-2
             label(for="circulation") {{::model.labels.circulation}}
                 input(type="number", tabindex="1800", min="1", name="circulation", ng-model="model.book.circulation", aria-label="{{::model.placeholders.circulation}}", placeholder="{{::model.placeholders.circulation}}")
-                div.tool-tip.bottom(ng-show="model.formsMng.isErrorInvalid(bookrecordForm, 'circulation')") {{::model.valMessages.circulation.invalid}}
+                div.tool-tip.bottom(ng-show="bookrecordForm.circulation.$dirty && bookrecordForm.circulation.$invalid") {{::model.valMessages.circulation.invalid}}
 
 
     .row.caixa
@@ -190,3 +190,5 @@ form.enter-as-tab.on-focus(id="bookrecordForm", name="bookrecordForm", novalidat
 pre {{ bookrecordForm | json }}
 pre {{model.book | json}}
 //pre {{::model.bookconfig | json}}
+
+

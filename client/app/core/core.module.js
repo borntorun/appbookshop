@@ -16,7 +16,6 @@
     //'blocks.exception', 'blocks.logger', 'blocks.router',
     'blocks.notifier',
     'blocks.exception',
-    'blocks.forms',
     'blocks.appconfig',
     'appBookShop.components',
     /*

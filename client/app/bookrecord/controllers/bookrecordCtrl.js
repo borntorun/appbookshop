@@ -12,22 +12,39 @@
     .controller('BookrecordCtrl', BookrecordCtrl);
 
   /* @ngInject */
-  function BookrecordCtrl( $modal, $scope, $rootScope, bookconfig, formsMng, isbnIsvalid, exception, notifier, modalpopup ) {
+  function BookrecordCtrl( $scope, bookconfig, bookrecord, isbnIsvalid, notifier, modalpopup ) {
     /*jshint validthis: true */
     var model = this;
 
-    model.formsMng = formsMng;
+    model.book = bookrecord.book;
+
+    model.labels = bookconfig.data.labels;
+
+    model.placeholders = bookconfig.data.placeholders;
+
+    model.valMessages = bookconfig.data.valMessages;
 
     model.isbnIsvalid = isbnIsvalid;
 
     model.anoActual = new Date().getFullYear();
 
+    var messages = {
+      SAVE: 'Pretende gravar as alterações efectuadas?',
+      CLEAR: 'Perderá os dados do formulário.\n(o registo na base de dados não será afectado)'
+    };
+
     model.clearForm = function() {
-      modalpopup.confirm(formsMng.MESSAGES.CLEAR, 'Limpar formulário')
+      modalpopup.confirm(messages.CLEAR, 'Limpar formulário')
         .then(function() {
-          model.book = {};
+          //$scope.$apply(function(){
+//            bookrecord.book = {};
+//            model.book = bookrecord.book;
+          //});
+          bookrecord.clear();
+
+          //bookrecord.book = {};
           notifier.info('form cleared', '', 'Book Record');
-          return modalpopup.confirm(formsMng.MESSAGES.SAVE, 'Gravar Alterações')
+          return modalpopup.confirm(messages.SAVE, 'Gravar Alterações')
 
         })
         .then(function() {
@@ -45,38 +62,6 @@
     model.newForm = function() {
       notifier.info('novo', '', 'accao:');
     }
-
-    model.book = {
-      reference: '0000554',
-      title: '',
-      subtitle: '',
-      authors: [
-        'Sophia de Mello Breyner Andersen'
-      ],
-      editionLegalDeposit: '1234',
-      translators: [
-        'Vera San Payo de Lemos'
-      ],
-      categories: [
-        'Poesia',
-        'Literatura Portuguesa',
-        'África',
-        'Política',
-        'Fotografia', 'Poesia', 'Poesia Portuguesa', 'Biografias'
-      ],
-      keywords: [
-        'Guerra',
-        'Fascismo',
-        '1ª Guerra Mundial'
-      ],
-      obs: ['linha 1', 'linha2'].join('\n'),
-      obsInternal: ['internal linha 1\ninternal  linha2']
-    };
-
-    model.book.author = model.book.authors.length == 1 ? model.book.authors[0] : '';
-    model.book.translator = model.book.translators.length == 1 ? model.book.translators[0] : '';
-    model.book.categorie = model.book.categories.length == 1 ? model.book.categories[0] : '';
-    model.book.keyword = model.book.keywords.length == 1 ? model.book.keywords[0] : '';
 
     model.config = {
       authors: {
@@ -123,9 +108,7 @@
       noinformation: false
     };
 
-    model.labels = bookconfig.data.labels;
-    model.placeholders = bookconfig.data.placeholders;
-    model.valMessages = bookconfig.data.valMessages;
+
     notifier.info('BookRecordCtrl', '', 'Controller');
 
     model.removeItem = function() {

@@ -15,7 +15,12 @@ module.exports = function (app) {
 
   app.use('/api/books', require('./api/book'));
 
-  app.use('/api/categories', require('./api/category'));
+  /*app.use('/api/categories', require('./api/category'));
+
+  app.use('/api/publishers', require('./api/publisher'));*/
+
+  app.use('/api/tables', require('./api/tables'));
+
 
   // All undefined asset or api routes should return a 404
   app.route('/:url(api|auth|components|app|bower_components|assets)/*').get(errors[404]);

@@ -16,12 +16,14 @@ function sanitizeInput(input) {
   }
   return input;
 }
+
 function sanitizeInputArray(aInput) {
   aInput.forEach(function(element, index, aValues){
     aValues[index] = sanitizeInput(element);
   });
   return aInput;
 }
+
 function transformRegExpInputArray(aInput) {
   aInput.forEach(function(element, index, aValues){
     aValues[index] = new RegExp(element.trim().replace(/ +/g, ' '), 'i');

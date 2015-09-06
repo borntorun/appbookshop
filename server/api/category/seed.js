@@ -5,29 +5,47 @@
 
 'use strict';
 var Category = require('./category.model');
-console.log('seeding categories...');
-Category.find({}).remove(function () {
+
+count( function(err, num) {
+  if ( err ) {return;}
+  if (num === 0) {
+    console.log('seeding categories...');
+
+    seed(function(err) {
+      if ( err ) {return;}
+      count(function(err, num) {
+        if ( err ) {return;}
+        console.log('categories seeded: ', num);
+      });
+    });
+  }
+  console.log('categories: ', num);
+});
+
+function count(callback) {
+  Category.count({}, function( err, count ) {
+    callback(err, count);
+  });
+}
+
+function seed(callback) {
   Category.create(
-    {"name": "África"},
     {"name": "Administração Pública"},
+    {"name": "África"},
     {"name": "Agricultura E Pecuária"},
     {"name": "Almanaques"},
     {"name": "Antiguidades"},
     {"name": "Antoniana"},
     {"name": "Antropologia"},
-    {"name": "Antropologia"},
-    {"name": "Armaria"},
     {"name": "Armaria"},
     {"name": "Arqueologia"},
-    {"name": "Arqueologia"},
     {"name": "Arquitectura"},
-    {"name": "Arquitectura"},
-    {"name": "Arte"},
     {"name": "Arte"},
     {"name": "Associativismo E Corporativismo"},
     {"name": "Astrologia"},
     {"name": "Astronáutica"},
     {"name": "Astronomia"},
+    {"name": "Auto-Ajuda"},
     {"name": "Automóveis"},
     {"name": "Aviação"},
     {"name": "Banda Desenhada"},
@@ -40,6 +58,7 @@ Category.find({}).remove(function () {
     {"name": "Caça E Pesca"},
     {"name": "Caligrafia E Paleografia"},
     {"name": "Caminhos De Ferro"},
+    {"name": "Cartonismo"},
     {"name": "Casa Real"},
     {"name": "Ciência"},
     {"name": "Ciências Da Natureza"},
@@ -59,12 +78,13 @@ Category.find({}).remove(function () {
     {"name": "Dança"},
     {"name": "Descobrimentos"},
     {"name": "Descobrimentos E Cartografia"},
+    {"name": "Desenho"},
     {"name": "Design"},
     {"name": "Desporto"},
     {"name": "Desporto E Jogos"},
     {"name": "Dicionários"},
-    {"name": "Diplomática"},
     {"name": "Diplomacia"},
+    {"name": "Diplomática"},
     {"name": "Direito"},
     {"name": "Dissertações"},
     {"name": "Documentação"},
@@ -111,35 +131,38 @@ Category.find({}).remove(function () {
     {"name": "Higiene & Saúde"},
     {"name": "Hipologia"},
     {"name": "História"},
-    {"name": "História"},
     {"name": "História Natural"},
     {"name": "Hotelaria E Restauração"},
     {"name": "Humanismo"},
     {"name": "Humorismo"},
     {"name": "Iluminura"},
     {"name": "Imprensa E Jornalismo"},
-    {"name": "In-Memoriam"},
+    {"name": "Impressionismo"},
     {"name": "Indústria"},
+    {"name": "In-Memoriam"},
     {"name": "Inquisição"},
     {"name": "Jesuítica"},
     {"name": "Jornais"},
     {"name": "Judaica"},
     {"name": "Linguística"},
     {"name": "Literatura"},
+    {"name": "Literatura Alemã"},
+    {"name": "Literatura Americana"},
+    {"name": "Literatura Brasileira"},
     {"name": "Literatura Clássica"},
+    {"name": "Literatura Espanhola"},
     {"name": "Literatura Estrangeira"},
     {"name": "Literatura Infantil"},
+    {"name": "Literatura Latino Americana"},
     {"name": "Literatura Portuguesa"},
-    {"name": "Livros Do Séc Xvii"},
-    {"name": "Livros Do Séc Xviii"},
-    {"name": "Livros Quinhentistas"},
+    {"name": "Literatura Russa"},
+    {"name": "Literatura Soviética"},
     {"name": "Literatura Universal"},
-    {"name": "Música"},
-    {"name": "Música E Dança"},
-    {"name": "Maçonaria"},
+    {"name": "Livros Do Séc XVII"},
+    {"name": "Livros Do Séc XVIII"},
+    {"name": "Livros Quinhentistas"},
     {"name": "Maçonaria"},
     {"name": "Magia E Ilusionismo"},
-    {"name": "Manuscritos"},
     {"name": "Manuscritos"},
     {"name": "Mapas"},
     {"name": "Marinha"},
@@ -154,17 +177,18 @@ Category.find({}).remove(function () {
     {"name": "Misericórdias"},
     {"name": "Mitologia"},
     {"name": "Monarquia"},
-    {"name": "Monarquia"},
     {"name": "Monografias Gerais"},
     {"name": "Monografias Locais"},
     {"name": "Monografias Regionais"},
     {"name": "Moral"},
     {"name": "Museologia"},
+    {"name": "Música"},
+    {"name": "Música E Dança"},
     {"name": "Napoleónica"},
     {"name": "Numismática E Medalhística"},
     {"name": "Objectos De Museu"},
-    {"name": "Obras Públicas"},
     {"name": "Obras Por Classificar"},
+    {"name": "Obras Públicas"},
     {"name": "Ocultismo E Espiritismo"},
     {"name": "Ordens Honoríficas"},
     {"name": "Ordens Militares"},
@@ -173,7 +197,13 @@ Category.find({}).remove(function () {
     {"name": "Pedagogia"},
     {"name": "Periódicos"},
     {"name": "Pesos E Medidas"},
+    {"name": "Pintura"},
     {"name": "Poesia"},
+    {"name": "Poesia Angolana"},
+    {"name": "Poesia Brasileira"},
+    {"name": "Poesia Espanhola"},
+    {"name": "Poesia Portuguesa"},
+    {"name": "Policial"},
     {"name": "Política"},
     {"name": "Primeiras Edições"},
     {"name": "Propaganda Politica"},
@@ -186,14 +216,16 @@ Category.find({}).remove(function () {
     {"name": "Renascimento"},
     {"name": "Revistas"},
     {"name": "Revoluções"},
+    {"name": "Romance"},
+    {"name": "Romance Impressionista"},
     {"name": "Sebástica"},
     {"name": "Seguros"},
     {"name": "Sexualidade"},
     {"name": "Simbologia E Numerologia"},
     {"name": "Sociologia"},
-    {"name": "Técnicas"},
     {"name": "Tauromaquia"},
     {"name": "Teatro"},
+    {"name": "Técnicas"},
     {"name": "Tese"},
     {"name": "Tipografia"},
     {"name": "Trajo E Costumes"},
@@ -204,6 +236,7 @@ Category.find({}).remove(function () {
     {"name": "Veterinária"},
     {"name": "Viagens"},
     {"name": "Vinho"},
-    {"name": "Zoologia"}
+    {"name": "Zoologia"},
+    callback
   );
-});
+}

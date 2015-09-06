@@ -1,28 +1,25 @@
 /*
 'use strict';
 var _ = require('lodash');
-var Category = require('./category.model');
+var Publisher = require('./publisher.model.js');
 
 exports.read = function( req, res ) {
-  console.log('no read', req.params);
-  Category.find(function( err, Categories ) {
+  Publisher.find(function( err, Publishers ) {
     if ( err ) {
       return handleError(res, err);
     }
-    return res.json(200, Categories);
+    return res.json(200, Publishers);
   });
 };
 
 exports.search = function( req, res ) {
-
-  console.log('no search', req.params);
-  Category.find(require("../search.lib").filter(req.params.filter))
+  Publisher.find(require("../search.lib").filter(req.params.filter))
     .limit(req.params.limit || 100)
-    .exec(function( err, Categories ) {
+    .exec(function( err, Publishers ) {
       if ( err ) {
         return handleError(res, err);
       }
-      return res.json(200, Categories);
+      return res.json(200, Publishers);
     });
 };
 

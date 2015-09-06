@@ -21,6 +21,13 @@ if (config.seedDB) {
   //require('./api/book/seed');
   require('./api/bookconfig/seed');
   require('./api/category/seed');
+  require('./api/publisher/seed');
+  require('./api/country/seed');
+  require('./api/language/seed');
+  require('./api/keyword/seed');
+  require('./api/author/seed');
+  require('./api/translator/seed');
+
 }
 
 process.on('SIGINT', function clean() {

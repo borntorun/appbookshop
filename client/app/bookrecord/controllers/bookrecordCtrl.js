@@ -65,10 +65,46 @@
       authors: {
         options: {showLog: true, selectOnAutocomplete: true},
         ttoptions: {
-          name: 'categories',
-          limit: 4,
-          remote: '/api/categories/search/%QUERY',
-          prefetch: '/assets/data/categories.json'/*,
+          name: 'authors',
+          limit: 20,
+          remote: '/api/tables/author/search/%QUERY',
+          prefetch: '/assets/data/authors.json'/*,
+          classNames: {
+            input: ''
+          }*/
+        }
+      },
+      languages: {
+        options: {showLog: true, selectOnAutocomplete: true},
+        ttoptions: {
+          name: 'languages',
+          limit: 15,
+          remote: '/api/tables/language/search/%QUERY',
+          prefetch: '/assets/data/languages.json'/*,
+          classNames: {
+            input: ''
+          }*/
+        }
+      },
+      countries: {
+        options: {showLog: true, selectOnAutocomplete: true},
+        ttoptions: {
+          name: 'countries',
+          limit: 15,
+          remote: '/api/tables/country/search/%QUERY',
+          prefetch: '/assets/data/countries.json'/*,
+          classNames: {
+            input: ''
+          }*/
+        }
+      },
+      publishers: {
+        options: {showLog: true, selectOnAutocomplete: true},
+        ttoptions: {
+          name: 'publishers',
+          limit: 15,
+          remote: '/api/tables/publisher/search/%QUERY',
+          prefetch: '/assets/data/publishers.json'/*,
           classNames: {
             input: ''
           }*/
@@ -79,17 +115,26 @@
         ttoptions: {
           name: 'categories',
           limit: 4,
-          remote: '/api/categories/search/%QUERY',
+          remote: '/api/tables/category/search/%QUERY',
           prefetch: '/assets/data/categories.json'
+        }
+      },
+      keywords: {
+        options: {showLog: true, selectOnAutocomplete: true},
+        ttoptions: {
+          name: 'keywords',
+          limit: 4,
+          remote: '/api/tables/keyword/search/%QUERY',
+          prefetch: '/assets/data/keywords.json'
         }
       },
       translators: {
         options: {showLog: true, selectOnAutocomplete: true},
         ttoptions: {
-          name: 'categories',
+          name: 'translators',
           limit: 4,
-          remote: '/api/categories/search/%QUERY',
-          prefetch: '/assets/data/categories.json'
+          remote: '/api/tables/translator/search/%QUERY'/*,
+          prefetch: '/assets/data/categories.json'*/
         }
       }
     };
@@ -97,6 +142,7 @@
     model.events = {
       selectOption: function( item, data ) {
         $scope.$apply(function() {
+          console.log(item.currentTarget.name);
           model.book[item.currentTarget.name].push(data.name);
         });
       }

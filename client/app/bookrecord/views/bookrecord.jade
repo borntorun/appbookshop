@@ -39,15 +39,15 @@ form.enter-as-tab.on-focus(logic-form="bookrecord", id="bookrecordForm", name="b
     .row.caixa
         .col-sm-4
             label(for="editionPublisher") {{::model.labels.editionPublisher}}
-                angular-typeaheadjs(angty-onselect="model.events.selectOption", angty-options="{{model.config.publisher.options}}", angty-ttoptions="{{model.config.publisher.ttoptions}}")
-                    input.typeahead(type="text", tabindex="400", name="authors", ng-model="model.book.editionPublisher", aria-label="{{::model.placeholders.editionPublisher}}", placeholder="{{::model.placeholders.editionPublisher}}")
+                angular-typeaheadjs(angty-onselect="model.events.selectOption", angty-options="{{model.config.publishers.options}}", angty-ttoptions="{{model.config.publishers.ttoptions}}")
+                    input.typeahead(type="text", tabindex="400", name="editionPublisher", ng-model="model.book.editionPublisher", aria-label="{{::model.placeholders.editionPublisher}}", placeholder="{{::model.placeholders.editionPublisher}}")
         .col-sm-2
             label(for="editionLanguage") {{::model.labels.editionLanguage}}
-                angular-typeaheadjs(angty-onselect="model.events.selectOption", angty-options="{{model.config.language.options}}", angty-ttoptions="{{model.config.language.ttoptions}}")
+                angular-typeaheadjs(angty-onselect="model.events.selectOption", angty-options="{{model.config.languages.options}}", angty-ttoptions="{{model.config.languages.ttoptions}}")
                     input.typeahead(type="text", tabindex="500", name="editionLanguage", ng-model="model.book.editionLanguage", aria-label="{{::model.placeholders.editionLanguage}}", placeholder="{{::model.placeholders.editionLanguage}}")
         .col-sm-2
             label(for="editionCountry") {{::model.labels.editionCountry}}
-                angular-typeaheadjs(angty-onselect="model.events.selectOption", angty-options="{{model.config.country.options}}", angty-ttoptions="{{model.config.country.ttoptions}}")
+                angular-typeaheadjs(angty-onselect="model.events.selectOption", angty-options="{{model.config.countries.options}}", angty-ttoptions="{{model.config.countries.ttoptions}}")
                     input.typeahead(type="text", tabindex="600", name="editionCountry", ng-model="model.book.editionCountry", aria-label="{{::model.placeholders.editionCountry}}", placeholder="{{::model.placeholders.editionCountry}}")
         .col-sm-2
             label(for="editionYear") {{::model.labels.editionYear}}
@@ -95,7 +95,7 @@ form.enter-as-tab.on-focus(logic-form="bookrecord", id="bookrecordForm", name="b
                     | {{item}}
         .col-sm-2
             label(for="editionTranslatedLanguage") {{::model.labels.editionTranslatedLanguage}}
-                angular-typeaheadjs(angty-onselect="model.events.selectOption", angty-options="{{model.config.language.options}}", angty-ttoptions="{{model.config.language.ttoptions}}")
+                angular-typeaheadjs(angty-onselect="model.events.selectOption", angty-options="{{model.config.languages.options}}", angty-ttoptions="{{model.config.languages.ttoptions}}")
                     input.typeahead(type="text", tabindex="1500", name="editionTranslatedLanguage", ng-model="model.book.editionTranslatedLanguage", aria-label="{{::model.placeholders.editionTranslatedLanguage}}", placeholder="{{::model.placeholders.editionTranslatedLanguage}}")
 
         .col-sm-2(ng-show="model.book.translators.length>1")

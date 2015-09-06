@@ -20,37 +20,22 @@
       reference: '0000554',
       title: '',
       subtitle: '',
-      authors: [
-        'Sophia de Mello Breyner Andersen'
-      ],
-      editionLegalDeposit: '1234',
-      translators: [
-        'Vera San Payo de Lemos'
-      ],
-      categories: [
-        'Poesia',
-        'Literatura Portuguesa',
-        'África',
-        'Política',
-        'Fotografia', 'Poesia', 'Poesia Portuguesa', 'Biografias'
-      ],
-      keywords: [
-        'Guerra',
-        'Fascismo',
-        '1ª Guerra Mundial'
-      ],
-      obs: ['linha 1', 'linha2'].join('\n'),
-      obsInternal: ['internal linha 1\ninternal  linha2'],
+      authors: [],
+      editionLegalDeposit: '',
+      translators: [],
+      categories: [],
+      keywords: [],
+      obs: [].join('\n'),
+      obsInternal: [],
 
       dateResgistration: '2001-12-01',
-      dateUpdate: '',
-
-      price: 0,
-      priceInitial: 0,
-      priceCost: 0,
-      qtStore: 0,
-      qtSold: 0,
-      qt:0,
+//      dateUpdate: '',
+//      price: 0,
+//      priceInitial: 0,
+//      priceCost: 0,
+//      qtStore: 0,
+//      qtSold: 0,
+//      qt:0,
 
       sellOnline: false,
       sellPresencial: false,
@@ -62,15 +47,15 @@
       isValuable: false,
 
 
-      condition:'',
-      graphicalPrint: '',
-      workmanship: '',
-      cover: '',
-      dimensions: '',
-      weight: 0,
-      buyAt: '',
-      archive:'',
-      lendingTo:''
+//      condition:'',
+//      graphicalPrint: '',
+//      workmanship: '',
+//      cover: '',
+//      dimensions: '',
+//      weight: 0,
+//      buyAt: '',
+//      archive:'',
+//      lendingTo:''
     };
 
     bookrecord.book.author = bookrecord.book.authors.length == 1 ? bookrecord.book.authors[0] : '';

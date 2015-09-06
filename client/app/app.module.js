@@ -8,7 +8,7 @@
          * Order is not important. Angular makes a
          * pass to register all of the modules listed
          */
-        'ngCookies', 'ngResource', 'ngSanitize', 'ngAnimate', 'ui.router', 'ui.bootstrap', 'angular.jquery', 'dynamicLayout',
+        'ngCookies', 'ngResource', 'ngSanitize', 'ngAnimate', 'ui.router', 'ui.bootstrap', 'dynamicLayout',
         'angularTypeaheadjs', 'jsSignalsServiceModule',/*'testDirective',*/
         /*
          * Everybody has access to these.

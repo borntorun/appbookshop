@@ -12,7 +12,7 @@
     .controller('BookrecordCtrl', BookrecordCtrl);
 
   /* @ngInject */
-  function BookrecordCtrl( $scope, bookconfig, bookrecord, isbnIsvalid, notifier, modalpopup ) {
+  function BookrecordCtrl( $scope, bookconfig, bookrecord, notifier, modalpopup ) {
     /*jshint validthis: true */
     var model = this;
 
@@ -23,8 +23,6 @@
     model.placeholders = bookconfig.data.placeholders;
 
     model.valMessages = bookconfig.data.valMessages;
-
-    model.isbnIsvalid = isbnIsvalid;
 
     model.anoActual = new Date().getFullYear();
 

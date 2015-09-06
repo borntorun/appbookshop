@@ -1,4 +1,4 @@
-form.enter-as-tab.on-focus(id="bookrecordForm", logic-form="bookrecord", name="bookrecordForm", novalidate, ng-submit="model.submitForm()", ng-model-options="{ debounce: 0 }")
+form.enter-as-tab.on-focus(logic-form="bookrecord", id="bookrecordForm", name="bookrecordForm", novalidate, ng-submit="model.submitForm()", ng-model-options="{ debounce: 0 }")
     h1 Registo de Livro
         span.form-buttons
             button.btn.btn-default(tabindex="10000",ng-disabled="model.bookrecordLogicForm.$pristine()", type="button", ng-click="model.clearForm()") Limpar
@@ -71,8 +71,9 @@ form.enter-as-tab.on-focus(id="bookrecordForm", logic-form="bookrecord", name="b
                 input(type="text", tabindex="1100", name="numCollection", ng-model="model.book.numCollection", aria-label="{{::model.placeholders.numCollection}}", placeholder="{{::model.placeholders.numCollection}}")
         .col-sm-2
             label(for="editionISBN") {{::model.labels.editionISBN}}
-                input(type="text", tabindex="1200", name="editionISBN", ng-model="model.book.editionISBN", aria-label="{{::model.placeholders.editionISBN}}", placeholder="{{::model.placeholders.editionISBN}}")
-                div.tool-tip.bottom(ng-hide="model.isbnIsvalid(model.book.editionISBN)") {{::model.valMessages.editionISBN.invalid}}
+                input(isbn type="text", tabindex="1200", name="editionISBN", ng-model="model.book.editionISBN", aria-label="{{::model.placeholders.editionISBN}}", placeholder="{{::model.placeholders.editionISBN}}")
+                div.tool-tip.bottom(ng-show="bookrecordForm.editionISBN.$invalid") {{::model.valMessages.editionISBN.invalid}}
+
         .col-sm-3
             label(for="editionLegalDeposit") {{::model.labels.editionLegalDeposit}}
                 input(type="text", tabindex="1300", name="editionLegalDeposit", ng-model="model.book.editionLegalDeposit", aria-label="{{::model.placeholders.editionLegalDeposit}}", placeholder="{{::model.placeholders.editionLegalDeposit}}")

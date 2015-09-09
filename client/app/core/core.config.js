@@ -40,6 +40,7 @@
   core.config(configureAngularProviders);
   core.config(configureOtherProviders);
 //  core.config(configTest);
+
   /* @ngInject */
   function configureAngularProviders( $httpProvider, $logProvider, $urlRouterProvider, $locationProvider, $animateProvider ) {
     $httpProvider.useApplyAsync(true);
@@ -142,9 +143,9 @@
   }
 
   /* @ngInject */
-  function runStateChangeError($rootScope, notifier) {
+  function runStateChangeError($rootScope, err) {
     $rootScope.$on('$stateChangeError', function(event, toState, toParams, fromState, fromParams, error){
-      notifier.error('Erro ao carregar: ' + toState.name);
+      throw err('Erro ao carregar: ' + toState.name, error);//notifier.error('Erro ao carregar: ' + toState.name, error);
     });
   }
   //  function configure ($logProvider, $routeProvider, routehelperConfigProvider, exceptionHandlerProvider) {

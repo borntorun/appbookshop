@@ -11,6 +11,8 @@
     .constant('_lodash', window._)
     .constant('$', window.$)
     .constant('Q', window.Q)
+    .constant('MutationObserver', window.MutationObserver)
+
     .constant('lfDriver', window.localforageDriver)
     .constant('simpleBasket', window.simplebasket);
 

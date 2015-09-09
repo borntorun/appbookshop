@@ -12,59 +12,45 @@
     .controller('BookrecordCtrl', BookrecordCtrl);
 
   /* @ngInject */
-  function BookrecordCtrl( $scope, bookconfig, bookrecord, notifier, modalpopup ) {
+  function BookrecordCtrl( $scope, $rootScope,bookconfig, bookrecord, notifier) {
     /*jshint validthis: true */
     var model = this;
 
     model.book = bookrecord.book;
 
-    model.labels = bookconfig.data.labels;
+    model.labels = bookconfig.labels;
 
-    model.placeholders = bookconfig.data.placeholders;
+    model.placeholders = bookconfig.placeholders;
 
-    model.valMessages = bookconfig.data.valMessages;
+    model.valMessages = bookconfig.valMessages;
 
     model.anoActual = new Date().getFullYear();
 
-    var messages = {
-      SAVE: 'Pretende gravar as alterações efectuadas?',
-      CLEAR: 'Perderá os dados do formulário.\n(o registo na base de dados não será afectado)'
-    };
-
-    model.clearForm = function() {
-      modalpopup.confirm(messages.CLEAR, 'Limpar formulário')
-        .then(function() {
-          //$scope.$apply(function(){
-//            bookrecord.book = {};
-//            model.book = bookrecord.book;
-          //});
-          bookrecord.clear();
-
-          //bookrecord.book = {};
-          notifier.info('form cleared', '', 'Book Record');
-          return modalpopup.confirm(messages.SAVE, 'Gravar Alterações')
-
-        })
-        .then(function() {
-          notifier.info('form saved', '', 'Book Record');
-        })
-        .catch(function() {
-          notifier.info('no done', '', 'Book Record');
-        });
-
-    }
-    model.submitForm = function() {
-      notifier.info('submit', '', 'accao:');
+    function getFirstItemIfOne(vArray){
+      return (vArray && vArray.length == 1) ? vArray[0] : '';
     }
 
-    model.newForm = function() {
-      notifier.info('novo', '', 'accao:');
-    }
+    bookrecord.get($rootScope.$stateParams.bookid)
+      .then(function(data){
+        //treat book fields here
+
+        model.book.author = getFirstItemIfOne(model.book.authors);
+        model.book.translator = getFirstItemIfOne(model.book.translators);
+        model.book.categorie = getFirstItemIfOne(model.book.categories);
+        model.book.keyword = getFirstItemIfOne(model.book.keywords);
+        model.book.corrector = getFirstItemIfOne(model.book.correctors);
+        model.book.postface = getFirstItemIfOne(model.book.postfaceBy);
+        model.book.preface = getFirstItemIfOne(model.book.prefaceBy);
+
+      });
+
+
 
     model.config = {
       authors: {
-        options: {showLog: true, selectOnAutocomplete: true},
+        options: {showLog: true, selectOnAutocomplete: true, emitOnlyIfPresent: true},
         ttoptions: {
+          minLength: '0',
           name: 'authors',
           limit: 20,
           remote: '/api/tables/author/search/%QUERY',
@@ -142,22 +128,82 @@
     model.events = {
       selectOption: function( item, data ) {
         $scope.$apply(function() {
-          console.log(item.currentTarget.name);
-          model.book[item.currentTarget.name].push(data.name);
+          console.log('target: ', item.currentTarget.name);
+
+          var v = model.book[item.currentTarget.name];
+          if (v && isArray(v)) {
+            model.book[item.currentTarget.name].push(data.name);
+          }
+
+
         });
       }
     };
+
+    $scope.$on('typeahead:select', function() {
+      console.log('select');
+    });
+    $scope.$on('typeahead:active', function() {
+      console.log('active');
+    });
+    $scope.$on('typeahead:idle', function() {
+      console.log('idle');
+    });
+    $scope.$on('typeahead:open', function() {
+      console.log('open');
+    });
+    $scope.$on('typeahead:close', function(item, data) {
+      if (data[1].value === '' && model.book[data[1].name] && model.book[data[1].name]!=='') {
+        $scope.$digest();
+      }
+    });
+    $scope.$on('typeahead:change', function() {
+      console.log('change');
+    });
+    $scope.$on('typeahead:render', function() {
+      console.log('render');
+    });
+/*
+    $scope.$on('typeahead:select', function() {
+      console.log('select');
+    });
+    $scope.$on('typeahead:autocomplete', function() {
+      console.log('select');
+    });
+    $scope.$on('typeahead:cursorchange', function() {
+      console.log('select');
+    });
+    $scope.$on('typeahead:asyncrequest', function() {
+      console.log('select');
+    });
+    $scope.$on('typeahead:asynccancel', function() {
+      console.log('select');
+    });
+    $scope.$on('typeahead:asyncreceive', function() {
+      console.log('select');
+    });
+*/
+
+
+
+
 
     model.bookflags = {
       noinformation: false
     };
 
 
-    notifier.info('BookRecordCtrl', '', 'Controller');
+    notifier.log('BookRecordCtrl', '', 'Controller');
 
     model.removeItem = function() {
       notifier('removey','','teste');
     }
+    //////////////
+    //util
+    function isArray( obj ) {
+      return Object.prototype.toString.call(obj) === '[object Array]';
+    }
+
   }
 
 }());

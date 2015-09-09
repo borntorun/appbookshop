@@ -7,6 +7,7 @@ var bookCtrl = require('./book.controller');
 router.get('/search/advanced/:limit([0-9]+)/:title/:authors/:subject/:collection/:categories/:edition', bookCtrl.advancedSearch);
 router.get('/search/free/:limit([0-9]+)/:filter?', bookCtrl.search);
 router.get('/store/:id', bookCtrl.store);
+router.get('/admin/:id', bookCtrl.edit);
 
 module.exports = require('../apirouter')(router, bookCtrl, []);
 

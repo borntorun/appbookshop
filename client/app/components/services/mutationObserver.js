@@ -13,7 +13,7 @@
     .factory('mutationObserver', mutationObserver);
 
   /* @ngInject */
-  function mutationObserver(_lodash) {
+  function mutationObserver(_lodash, MutationObserver) {
     var observers = [],
       id = 0;
 

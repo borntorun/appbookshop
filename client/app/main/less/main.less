@@ -169,8 +169,8 @@ form div label {
   display: block;
   vertical-align: top;
   font-size: 13px;
-  font-weight: bold;
-  text-transform: uppercase;
+  font-weight: normal;
+  //text-transform: uppercase;
   color: #939393;
   margin-bottom: 0px;
   min-height: 70px;
@@ -179,9 +179,10 @@ form div label {
 form div label.label-items {
   background-color: #F7F5F5;
   border: 1px dotted;
-  min-height: 35px;
-  margin-bottom: 10px;
-  margin-top: -10px;
+  min-height: 70px;
+
+//  margin-bottom: 10px;
+//  margin-top: -10px;
 }
 form div label.label-items span.item {
   display: inline-block;
@@ -194,7 +195,8 @@ form div label.label-items span.item {
 
   //background-image: linear-gradient( to bottom, hsla(0, 0%, 0%, 0), hsla(0, 0%, 0%, 0.2) );
   color: #939393;
-  font-size: 10px;
+  font-size: 11px;
+  font-weight: bold;
   //#vertical-center-align();
 }
 
@@ -227,9 +229,9 @@ label input.typeahead .tt-hint {
   padding: 7px 5px 3px;
   border: none;
   outline: none;
-  color: #555;
-  opacity: .6;
-  transition: all linear .1s;
+  color: rgb(144, 135, 135);
+  //opacity: .6;
+  transition: all linear .05s;
   border-radius: 0px;
   border-left: 1px dotted #545454;
   border-bottom: 1px dotted #545454;
@@ -237,7 +239,9 @@ label input.typeahead .tt-hint {
   font-weight: bold;
   font-size: 14px;
   line-height: 27px;
+  background-color: #EDEEEF;
 }
+
 
 
 label input.ng-dirty.ng-invalid,
@@ -271,15 +275,38 @@ label textarea:focus,
 label input.typeahead:focus {
   border: 1px dotted #8c8c8c;
   color: #545454;
-  background-color: #D3DADA !important;
+  background-color: #ACB5B5 !important;
   //font-size: 30px;
   font-size: 20px;
+}
+
+label input.typeahead:focus {
+  opacity: 0.75
+}
+
+
+label input::-webkit-input-placeholder,
+label textarea::-webkit-input-placeholder {
+  color: #BFBEBE !important;
+}
+input:focus::-webkit-input-placeholder,
+label textarea::-webkit-input-placeholder {
+  color: #9a9898 !important;
+}
+
+
+label input:focus::-webkit-input-placeholder:before,
+label textarea:focus::-webkit-input-placeholder:before,
+label input.typeahead:focus::-webkit-input-placeholder:before {
+  font-family: FontAwesome !important;
+  content: "\f040" !important;
+  color: #544242 !important;
 }
 
 label input:focus,
 label textarea:focus,
 label input.typeahead:focus {
-  opacity: .6;
+  //opacity: .6;
 }
 
 label input.font-major:focus,
@@ -353,7 +380,7 @@ div label.inline {
   color: #9E3939;
   //background-color: rgba(172, 172, 172, 0.70);
   text-shadow: none;
-  font-size: .8em;
+  //font-size: 1em;
   visibility: hidden;
   -webkit-border-radius: 0px;
   -moz-border-radius: 0px;

@@ -10,10 +10,10 @@
         .module('appBookShop.booksearch')
         .controller('BookSearchFilterCategoriesCtrl', BookSearchFilterCategoriesCtrl);
     /* @ngInject */
-    function BookSearchFilterCategoriesCtrl($rootScope, $scope, _lodash, BookSearch) {
+    function BookSearchFilterCategoriesCtrl($rootScope, _lodash, BookSearch) {
         /*jshint validthis: true */
         var vm = this;
-        vm.filtro = BookSearch.getFilterCategories();//[];
+        vm.filtro = BookSearch.getFilterCategories();
 
         vm.options = {
             showLog: true,
@@ -25,15 +25,10 @@
             remote: '/api/tables/category/search/%QUERY',
             prefetch: '/assets/data/categories.json'
         }
-
-//        vm.urlRemote = '/api/tables/category/search/%QUERY';
-//        vm.urlPrefetch = '/assets/data/categories.json';
         vm.removeCat = function (item) {
             removeIfExists(item);
             $rootScope.$broadcast('BookSearchFilterCatChange', vm.filtro);
         }
-
-
         vm.onSelected = function (ev, item) {
             vm.filtro = vm.filtro || [];
             removeIfExists(item.name);
@@ -45,9 +40,8 @@
                 return val === item;
             });
         }
-
-//        $scope.$on('typeahead:cursorchanged', function (event, suggestion, dataset) {
-//            alert('on cursor changed');
-//        });
+        /*$scope.$on('typeahead:cursorchanged', function (event, suggestion, dataset) {
+            alert('on cursor changed');
+        });*/
     }
 }());

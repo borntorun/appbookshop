@@ -14,12 +14,6 @@
 
         vm.options = null;//{opcao1: "teste", opcao2: {sub1: true}};
 
-        //    if (bookconfig.data.labels) {
-        //      console.log(bookconfig.data.labels);
-        //    }
-        //    if (xpto.data.labels) {
-        //      console.log(xpto.data.labels);
-        //    }
         //notifier.info('Activated Main View');
 
       /*var $rootScope = angular.element($window.document.querySelectorAll("[ui-view]")[0]).injector().get('$rootScope');

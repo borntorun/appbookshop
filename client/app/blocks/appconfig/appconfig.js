@@ -18,9 +18,8 @@
     };
   }
 
-  //appconfig.$inject = ['$http', 'exception', 'notifier', 'appconfigHandler'];
   /* @ngInject */
-  function appconfig( $http, exception, notifier, appconfigHandler ) {
+  function appconfig( httpRequest, notifier, appconfigHandler ) {
     var config = {};
     var service = {
       getConfig: getConfig
@@ -31,32 +30,40 @@
       if ( config[key] ) {
         return config[key];
       }
+      var promise;
+
       if ( appconfigHandler.config[key].loading === false ) {
 
         appconfigHandler.config[key].loading = true;
 
-        appconfigHandler.config[key].promisse = $http.get(appconfigHandler.config[key].url);
+        promise = httpRequest.get({
+          url: appconfigHandler.config[key].url
+        });
 
-        appconfigHandler.config[key].promisse
-          .then(getConfigComplete).catch(function( message ) {
+        appconfigHandler.config[key].promisse = promise
+
+        promise
+          .then(function(data){
+            config[key] = data;
             appconfigHandler.config[key].loading = false;
-            appconfigHandler.config[key].promisse = null;
-            exception.catcher(appconfigHandler.config[key].message)(message);
+            //? appconfigHandler.config[key].promisse = null;
+            return data;
+          })
+          .catch(function() {
+            appconfigHandler.config[key].loading = false;
+            //? pq esta linha appconfigHandler.config[key].promisse = null;
+            notifier.log('Error in appconfig.getConfig')
           });
       }
-      return appconfigHandler.config[key].promisse;
+      return promise;
       /*return config[key] || $http.get(appconfigHandler.config[key].url)
         .then(getConfigComplete)
         .catch(function (message) {
           exception.catcher('Configuração aplicação não obtida')(message);
         });
       */
-      function getConfigComplete( resp, status, headers, conf ) {
-        config[key] = resp.data;
-        appconfigHandler.config[key].loading = false;
-        appconfigHandler.config[key].promisse = null;
-        //notifier.info(appconfigHandler.config[key].message);
-        return config[key];
+      function getConfigComplete( resp) {
+
       }
     }
   }

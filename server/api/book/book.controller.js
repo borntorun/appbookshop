@@ -52,6 +52,23 @@ exports.advancedSearch = function(req, res) {
     .exec(bookListResults(res));
 };
 
+// Get a single Book for admin edit
+exports.edit = function(req, res) {
+  console.log(req.params.id);
+  //Book.findById(new ObjectId(req.params.id), function(err, Book) {
+  Book.findById(req.params.id, function(err, Book) {
+    if (err) {
+      return handleError(res, err);
+    }
+    if (!Book) {
+      return res.send(404);
+    }
+    return res.json(200, Book);
+  });
+};
+
+
+
 // Get a single Book for store
 exports.store = function(req, res) {
   console.log(req.params.id);

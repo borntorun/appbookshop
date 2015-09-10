@@ -30,7 +30,7 @@
     "angular-dynamic-layout": "https://github.com/tristanguigue/angular-dynamic-layout.git#master",
     "typeahead.js": "~0.11.1",
     "angular-jssignals": "~0.1.0",
-    "angular-typeaheadjs": "~0.7.0",
+    "angular-typeaheadjs": "^0",
     "lodash": "~3.9.3",
     "simple-basket": "~0.3.1"
   },

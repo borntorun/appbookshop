@@ -51,7 +51,11 @@ function setadvFilter(objFilter, key, value) {
     objFilter[key] = {"$in": [getRegExpFromString(sanitizeStringDollar(value))]};
   }
 }
-
+function setadvFilterNumber(objFilter, key, value) {
+  if (value && value!=="-") {
+    objFilter[key] = {"$eq": sanitizeStringDollar(value)};
+  }
+}
 search.advfilter = function (filter){
   var objFilter={};
 
@@ -60,7 +64,7 @@ search.advfilter = function (filter){
   setadvFilter(objFilter, "subject", filter.subject);
   setadvFilter(objFilter, "nameCollection", filter.collection);
   setadvFilter(objFilter, "categories", filter.categories);
-  setadvFilter(objFilter, "editionNumber", filter.edition);
+  setadvFilterNumber(objFilter, "editionNumber", filter.edition);
 
 
 

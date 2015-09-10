@@ -5,10 +5,12 @@
         .col-xs-12
 
     .row
-        .col-sm-2.col-md-2.hidden-xs(ui-view="main-left")
+        //.col-sm-2.col-md-2.hidden-xs(ui-view="main-left")
+        .col-md-2.hidden-xs.hidden-sm(ui-view="main-left")
             //ng-include(src="'app/navbar/left/layout.html'")
 
-        .col-xs-12.col-sm-10.col-md-8
+        //.col-xs-12.col-sm-10.col-md-8
+        .col-xs-12.col-md-8
             .row
                 .col-xs-12(ui-view="")
                     //xxx
@@ -19,7 +21,8 @@
             .row
                 .col-xs-12(ui-view="main-content-bottom")
 
-        .col-xs-12.col-sm-2.col-md-2(ui-view="main-right")
+        //.col-xs-12.col-sm-2.col-md-2(ui-view="main-right")
+        .col-md-2.hidden-xs.hidden-sm(ui-view="main-right")
             //ng-include(src="'app/navbar/right/layout.html'")
 
 

@@ -4,11 +4,11 @@
 'use strict'
 
 var funcMethods = {
-  "post": function(router, sRoute, fHandler ){router.post(sRoute, fHandler)},
-  "get": function(router, sRoute, fHandler ){router.get(sRoute, fHandler)},
-  "put": function(router, sRoute, fHandler ){router.put(sRoute, fHandler)},
-  "patch": function(router, sRoute, fHandler ){router.patch(sRoute, fHandler)},
-  "delete": function(router, sRoute, fHandler ){router.delete(sRoute, fHandler)}
+  'post': function(router, sRoute, fHandler ){router.post(sRoute, fHandler)},
+  'get': function(router, sRoute, fHandler ){router.get(sRoute, fHandler)},
+  'put': function(router, sRoute, fHandler ){router.put(sRoute, fHandler)},
+  'patch': function(router, sRoute, fHandler ){router.patch(sRoute, fHandler)},
+  'delete': function(router, sRoute, fHandler ){router.delete(sRoute, fHandler)}
 };
 
 function setRoute(method, router, sRoute, fHandler) {

@@ -17,13 +17,14 @@
     /*
     * Private Block
     */
-    var privateVar = {};
 
     /*
     * Public Interface
     */
     var service = {
-      get: get
+      get: get,
+      post: post
+
     };
     return service;
     ///////////////
@@ -31,22 +32,43 @@
     /*
     * Private Block Interface
     */
+
+    function call( defaultOptions, options, thenCallback, catchCallback ) {
+      delete options.method;
+      options = angular.extend(angular.copy(defaultOptions), options || {});
+      return $http(options)
+        .then(thenCallback)
+        .catch(catchCallback);
+    }
+
+    function post( options ) {
+
+      var defaultOptions = {
+        method: 'POST',
+        cache: true
+      };
+
+      return call(defaultOptions, options, response, throwError);
+
+    }
+
     function get( options ) {
 
-      var promise = $http({
+      var defaultOptions = {
         method: 'GET',
-        url: options.url,
-        cache: options.cache || true
-      })
-        .then(function( response ) {
-          return response.data;
-        })
-        .catch(function( response ) {
-          throw err(response.statusText, response);
-        });
+        cache: true
+      };
 
-      return promise;
+      return call(defaultOptions, options, response, throwError);
 
+    }
+
+    function response( response ) {
+      return response.data;
+    }
+
+    function throwError( response ) {
+      throw err(response.statusText, response);
     }
   }
 }());

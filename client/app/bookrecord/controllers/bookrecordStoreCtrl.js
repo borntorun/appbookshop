@@ -5,7 +5,7 @@
  * (https://github.com/johnpapa/angular-styleguide)
  *
  * Descrição: Book record store controller - Store fields view manager
-*/
+ */
 (function() {
   'use strict';
 
@@ -14,7 +14,7 @@
     .controller('BookrecordStoreCtrl', BookrecordStoreCtrl);
 
   /* @ngInject */
-  function BookrecordStoreCtrl(bookconfig, bookrecord, notifier, modalpopup) {
+  function BookrecordStoreCtrl( $rootScope, $state, bookconfig, bookrecord, notifier, modalpopup ) {
     /*jshint validthis: true */
     var model = this;
 
@@ -25,29 +25,57 @@
     model.placeholders = bookconfig.placeholders;
 
     var messages = {
+      TITLE: 'Registo/Edição de Livro',
       SAVE: 'Pretende gravar as alterações efectuadas?',
-      CLEAR: 'Perderá os dados do formulário.\n(o registo na base de dados não será afectado)'
+      CLEAR: 'Pretende limpar o formulário?\n\nPerderá os dados constantes no formulário.\n(o registo na base de dados não será afectado enquanto não efectuar "Gravar")',
+      RESET: 'Desfazer alterações efectaudas?\n\nO registo da base de dados será carregado.\n(perderá as alterações efectuadas no formulário)'
     };
 
-    model.clearForm = function() {
-      modalpopup.confirm(messages.CLEAR, 'Limpar formulário')
+    model.resetForm = function() {
+      modalpopup.confirm(messages.RESET, messages.TITLE)
         .then(function() {
-          bookrecord.clear();
-
-          notifier.info('form cleared', '', 'Book Record');
-          return modalpopup.confirm(messages.SAVE, 'Gravar Alterações')
-
-        })
-        .then(function() {
-          notifier.info('form saved', '', 'Book Record');
+          bookrecord.reset();
         })
         .catch(function() {
-          notifier.info('no done', '', 'Book Record');
+        });
+    };
+    model.clearForm = function() {
+      modalpopup.confirm(messages.CLEAR, messages.TITLE)
+        .then(function() {
+          bookrecord.clear();
+        })
+        .catch(function() {
+          //notifier.info('no done', '', 'Book Record');
         });
 
-    }
-    model.submitForm = function() {
-      notifier.info('submit', '', 'accao:');
-    }
+    };
+    model.save = function() {
+      modalpopup.confirm(messages.SAVE, messages.TITLE)
+        .then(function( /*data*/ ) {
+
+          bookrecord.save()
+            .then(function( data ) {
+              notifier.info('Livro registado<br/>' + data.reference);
+
+              $state.transitionTo($state.current, {
+                bookid: data._id
+              }, {
+                reload: true,
+                inherit: false,
+                notify: true
+              });
+
+              /*$rootScope.$state.go('main.bookrecord', {
+                bookid: data._id
+              });*/
+            })
+            .catch(function( /*data*/) {
+              notifier.warning('Livro não registado', '', 'Registo/Edição');
+            });
+        })
+        .catch(function() {
+          //notifier.info('no done', '', 'Book Record');
+        });
+    };
   }
 }());

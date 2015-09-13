@@ -13,56 +13,9 @@
     .factory('bookrecord', bookrecord);
 
   /* @ngInject */
-  function bookrecord( notifier, $q, httpRequest, _lodash ) {
+  function bookrecord( notifier, $q, Q, httpRequest, _lodash ) {
     var book = {};
-
-    var newBook = function() {
-      return {
-        reference: '0000554',
-        title: '',
-        subtitle: '',
-        authors: [],
-        editionLegalDeposit: '',
-        translators: [],
-        categories: [],
-        keywords: [],
-        obs: [].join('\n'),
-        obsInternal: [],
-        dateResgistration: '2001-12-01',
-        //      dateUpdate: '',
-        //      price: 0,
-        //      priceInitial: 0,
-        //      priceCost: 0,
-        //      qtStore: 0,
-        //      qtSold: 0,
-        //      qt:0,
-        sellOnline: false,
-        sellPresencial: false,
-        isNewBook: false,
-        isFeatured: false,
-        isPromotion: false,
-        isRare: false,
-        isUnique: false,
-        isValuable: false,
-        //      condition:'',
-        //      graphicalPrint: '',
-        //      workmanship: '',
-        //      cover: '',
-        //      dimensions: '',
-        //      weight: 0,
-        //      buyAt: '',
-        //      archive:'',
-        //      lendingTo:''
-      }
-    };
-
-    var clear = function() {
-      for ( var k in book ) {
-        if ( book.hasOwnProperty(k) ) {
-          book[k] = undefined;
-        }
-      }
-    }
+    var bookcache = {};
 
     /*
     * Public Interface
@@ -70,7 +23,9 @@
     var service = {
       book: book,
       get: get,
-      clear: clear
+      save: save,
+      clear: clear,
+      reset: reset
     };
     return service;
     ///////////////
@@ -80,26 +35,126 @@
     */
 
     function get( id ) {
-      var self = this;
+      if ( id.toLowerCase() === 'new' ) {
+        return getNew();
+      }
+      else {
+        return edit(id);
+      }
+    }
 
-      return httpRequest.get({url: '/api/books/admin/' + (id || '')})
+    function save() {
+      var defer = Q.defer();
+
+      if ( !book._id ) {
+        book.dateResgistration = Date.now();
+      }
+      book.dateUpdate = Date.now();
+
+      httpRequest.post({url: '/api/books/admin/' + book._id || 'new', data: book})
         .then(function( data ) {
-          self.clear();
+          init();
+          defer.resolve(data);
+        })
+        .catch(function( /*data*/ ) {
+          //return handlerError({message:'Erro na gravaçao.'});
+          defer.reject(handlerError({message: 'Erro na gravaçao.'}));
+        });
+      return defer.promise;
+    }
+
+    function clear() {
+      for ( var k in book ) {
+        if ( k !== '_id' && k !== 'reference' && book.hasOwnProperty(k) ) {
+          book[k] = undefined;
+        }
+      }
+      book = angular.extend(book, newBook());
+    }
+
+    function reset() {
+      clear();
+      book = angular.extend(book, bookcache);
+    }
+
+    function setReference( ref ) {
+      book.reference = _lodash.padLeft(ref, 5, '0');
+    }
+
+    function edit( id ) {
+      var defer = Q.defer();
+
+      clear();
+
+      httpRequest.get({url: '/api/books/admin/' + (id || ''), cache: false})
+        .then(function( data ) {
+
+          //data["dateUpdate"] = new Date(data["dateUpdate"]);
+
           for ( var k in data ) {
             if ( data.hasOwnProperty(k) ) {
               book[k] = data[k];
             }
           }
-
-          book.reference = _lodash.padLeft(book.reference,5,'0');
-
-          return data;
-        }).
-        catch(function(){
-          notifier.error('Livro não encontrado.', id, 'Error');
-          return {};
+          setReference(book.reference);
+          book.dateResgistrationLocal = new Date(data.dateResgistration).getTime();
+          book.dateUpdateLocal = new Date(data.dateUpdate).getTime();
+          bookcache = angular.copy(book);
+          defer.resolve(data);
+        })
+        .catch(function( /*data*/ ) {
+          defer.reject(handlerError({message: 'Livro não encontrado.'}));
+          //return handlerError({message:'Livro não encontrado.'});
         });
+
+      return defer.promise;
     }
 
+    function getNew() {
+      var defer = Q.defer();
+
+      clear();
+
+      httpRequest.get({url: '/api/counters/newbookreference/'})
+        .then(function( data ) {
+          setReference(data.seq);
+          defer.resolve(data);
+        })
+        .catch(function( /*data*/ ) {
+          defer.reject(handlerError({message: 'Referência inválida.'}));
+          //return handlerError({message:'Referência inválida.'});
+        });
+
+      return defer.promise;
+    }
+
+    function init() {
+      for ( var k in book ) {
+        if ( book.hasOwnProperty(k) ) {
+          delete book[k];
+        }
+      }
+      book = angular.extend(book, newBook());
+    }
+
+    function newBook() {
+      return {
+        authors: [],
+        translators: [],
+        categories: [],
+        keywords: [],
+        obs: [],
+        obsInternal: [],
+        prefaceBy: [],
+        postfaceBy: [],
+        images: [],
+        correctors: []
+      };
+    }
+
+    function handlerError( options ) {
+      notifier.log(options.message, options.data, 'Error');
+      return book;
+    }
   }
 }());

@@ -62,8 +62,8 @@ var BookSchema = new Schema({
   discounts: { type: [Schema.Types.Mixed] },
   taxes: { type: [Schema.Types.Mixed] },
   template: { type: String },
-  dateResgistration: { type: Date, default: Date.now },
-  dateUpdate: { type: Date, default: Date.now }
+  dateResgistration: { type: Date/*, default: Date.now */},
+  dateUpdate: { type: Date/*, default: Date.now*/ }
 });
 
 BookSchema.path('title').required(true, 'Título é obrigatório.');

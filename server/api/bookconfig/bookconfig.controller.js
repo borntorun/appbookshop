@@ -1,5 +1,4 @@
 'use strict';
-var _ = require('lodash');
 var BookConfig = require('./bookconfig.model');
 // Get config
 exports.read = function (req, res) {

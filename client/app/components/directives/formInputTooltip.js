@@ -29,11 +29,9 @@
         if ( parent && parent.append ) {
           parent.append('<div class="tool-tip bottom">' + attrs.forminputTooltip + '</div>');
         }
-
       }, 50);
-
     };
-  }
+  };
 
   /* @ngInject */
   /*function forminputTooltipCtrl( $scope ) {

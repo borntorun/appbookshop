@@ -1,18 +1,21 @@
 span.form-buttons
     button.btn.btn-default(tabindex="10000",ng-disabled="model.bookrecordLogicForm.$pristine()", type="button", ng-click="model.clearForm()") Limpar
-    button.btn.btn-default(tabindex="9998",ng-disabled="model.bookrecordLogicForm.$invalid()", type="submit", id="submit") Gravar
+    button.btn.btn-default(tabindex="10000",ng-show="model.book._id", ng-disabled="model.bookrecordLogicForm.$pristine()", type="button", ng-click="model.resetForm()") Desfazer
+    button.btn.btn-default(tabindex="9998",ng-disabled="model.bookrecordLogicForm.$invalid()", type="submit", id="submit", ng-click="model.save()") Gravar
 
 form.enter-as-tab.on-focus(id="bookrecordStoreForm", logic-form="bookrecord", name="bookrecordStoreForm", novalidate, ng-model-options="{ debounce: 0 }")
     .row
         .col-sm-12.padding20
             label(for="dateResgistration") {{::model.labels.dateResgistration}}
-                input(value="{{::model.book.dateResgistration}}", disabled)
+                input(value="{{::model.book.dateResgistrationLocal | date:'dd MMMM yyyy H:mm'}}", disabled)
 
             label(for="dateUpdate") {{::model.labels.dateUpdate}}
-                    input(value="{{::model.book.dateUpdate}}", disabled)
+                //input(value="{{::model.book.datau | date:'dd-M-yyyy H:mm'}}", disabled)
+                input(value="{{::model.book.dateUpdateLocal | date:'dd MMMM yyyy H:mm'}}", disabled)
+
 
             label(for="price") {{::model.labels.price}}
-                input(type="number", required, lang="pt-PT", step="0.01", tabindex="7500", name="price",
+                input(type="number", lang="pt-PT", step="0.01", tabindex="7500", name="price",
                     ng-model="model.book.price",
                     aria-label="{{::model.placeholders.price}}",
                     placeholder="{{::model.placeholders.price}}")
@@ -93,6 +96,10 @@ form.enter-as-tab.on-focus(id="bookrecordStoreForm", logic-form="bookrecord", na
                 placeholder="{{::model.placeholders.isValuable}}")
             label(for="isValuable") {{::model.labels.isValuable}}
 
+
+pre {{!!model.book._id | json}}
+pre {{!!model.book._id | json}}
+pre {{model.bookrecordLogicForm.$pristine() | json}}
 
 pre {{model.book | json}}
 pre {{ bookrecordStoreForm | json }}

@@ -52,7 +52,7 @@
 
     function disconnect(id) {
 
-      var observer = _lodash.result(_lodash.find(users, { 'id': id}), 'observer');
+      var observer = _lodash.result(_lodash.find(observers, { 'id': id}), 'observer');
 
       if (observer && observer.disconnect) {
         observer.disconnect();

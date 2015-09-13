@@ -10,10 +10,10 @@
 
   /* @ngInject */
   function moduleConfig($stateProvider, _lodash) {
-    var states = {}
+    var states = {};
 
 
-    states["main"] = {
+    states['main'] = {
       /* Main view da aplicação */
       abstract: true,
       url: '/',

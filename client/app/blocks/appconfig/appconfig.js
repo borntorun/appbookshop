@@ -40,7 +40,7 @@
           url: appconfigHandler.config[key].url
         });
 
-        appconfigHandler.config[key].promisse = promise
+        appconfigHandler.config[key].promisse = promise;
 
         promise
           .then(function(data){
@@ -52,7 +52,7 @@
           .catch(function() {
             appconfigHandler.config[key].loading = false;
             //? pq esta linha appconfigHandler.config[key].promisse = null;
-            notifier.log('Error in appconfig.getConfig')
+            notifier.log('Error in appconfig.getConfig');
           });
       }
       return promise;
@@ -62,9 +62,7 @@
           exception.catcher('Configuração aplicação não obtida')(message);
         });
       */
-      function getConfigComplete( resp) {
 
-      }
     }
   }
 }());

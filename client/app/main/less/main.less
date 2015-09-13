@@ -92,14 +92,28 @@ a:hover {
 */
 .toast-success {
   //#refactcolor(10%, maisescuro, background-color, @hsl-secondary-2-2, @important:~'!important');
-  background-color: #51a351;
+  background-color: #40a33a;
 }
+.toast-warning {
+  //#refactcolor(10%, maisescuro, background-color, @hsl-secondary-2-2, @important:~'!important');
+  background-color: #a32d27;
+}
+
+#toast-container > div {
+
+  opacity: 1;
+  -ms-filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
+  filter: alpha(opacity=100);
+}
+
 #toast-container > div.toast-success {
   color: @branco !important;
 }
+
 .zindex100 {
   z-index: 100;
 }
+
 .pointer {
   cursor: pointer;
 }

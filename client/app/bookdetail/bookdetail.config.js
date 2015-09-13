@@ -13,9 +13,9 @@
 
   /* @ngInject */
   function moduleConfig($stateProvider, _lodash) {
-    var states = {}
+    var states = {};
 
-    states["main.bookdetail"] = {
+    states['main.bookdetail'] = {
       /* Detail view for book */
       /* ATENÇÃO: NÃO COLOCAR / NO INÍCIO ... CHILD VIEW */
       url: 'livro/{bookid}',

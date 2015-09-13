@@ -1,5 +1,4 @@
 'use strict';
-var _ = require('lodash');
 var Counters = require('./counters.model.js');
 
 exports.get = function( req, res ) {

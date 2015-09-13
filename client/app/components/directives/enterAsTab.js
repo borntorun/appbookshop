@@ -14,6 +14,7 @@
     .controller('enterAsTabCtrl', enterAsTabCtrl);
 
   function enterAsTabCtrl( $scope, mutationObserver ) {
+    /*jshint validthis: true */
     var model = this;
     var observer;
 
@@ -70,19 +71,19 @@
 
       function getNextItem( el ) {
         var next = scope.allTabindex.eq(scope.allTabindex.index(el) + 1);
-        if ( next.length == 0 ) {
+        if ( next.length === 0 ) {
           next = scope.allTabindex[0];
         }
         return next;
       }
 
       element.on('keydown', function( e ) {
-        if ( e.keyCode == 13 ) {
+        if ( e.keyCode === 13 ) {
           if ( e.target.tagName === 'TEXTAREA' ) {
             return true;
           }
 
-          if ( scope.allTabindex.length == 0 ) {
+          if ( scope.allTabindex.length === 0 ) {
             //no items yet
             findAllItemsWithTabindex();
 

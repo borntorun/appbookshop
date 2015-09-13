@@ -29,6 +29,7 @@ module.exports = function (grunt) {
     yeoman: {
       // configurable paths
       client: require('./bower.json').appPath || 'client',
+      server: 'server',
       dist: 'dist',
       ip: '192.168.40.25',
       port: '12999'
@@ -55,6 +56,7 @@ module.exports = function (grunt) {
       }
     },
     watch: {
+
       injectJS: {
         files: [
           '<%= yeoman.client %>/{app,components}/**/*.module.js',
@@ -76,13 +78,13 @@ module.exports = function (grunt) {
       //  files: ['server/**/*.spec.js'],
       //  tasks: ['env:test', 'mochaTest']
       //},
-      jsTest: {
-        files: [
-          '<%= yeoman.client %>/{app,components}/**/*.spec.js',
-          '<%= yeoman.client %>/{app,components}/**/*.mock.js'
-        ],
-        tasks: ['newer:jshint:all'/*, 'karma'*/]
-      },
+//      jsTest: {
+//        files: [
+//          '<%= yeoman.client %>/{app,components}/**/*.spec.js',
+//          '<%= yeoman.client %>/{app,components}/**/*.mock.js'
+//        ],
+//        tasks: ['newer:jshint:all'/*, 'karma'*/]
+//      },
       injectLess: {
         files: [
           '<%= yeoman.client %>/{app,components}/**/*.less'],
@@ -95,7 +97,8 @@ module.exports = function (grunt) {
       },
       jade: {
         files: [
-          '<%= yeoman.client %>/{app,components}/*', '<%= yeoman.client %>/{app,components}/**/*.jade'],
+          '<%= yeoman.client %>/{app,components}/*',
+          '<%= yeoman.client %>/{app,components}/**/*.jade'],
         tasks: ['jade']
       },
       gruntfile: {
@@ -130,38 +133,64 @@ module.exports = function (grunt) {
           livereload: true,
           nospawn: true //Without this option specified express won't be reloaded
         }
+      },
+      jshintclient: {
+        files: [
+          '<%= yeoman.client %>/app/**/*.js'],
+        tasks: ['hintclient']
+      },
+      jshintserver: {
+        files: [
+          '<%= yeoman.server %>/**/*.js'],
+        tasks: ['hintserver']
       }
     },
     // Make sure code styles are up to par and there are no obvious mistakes
     jshint: {
       options: {
-        jshintrc: '<%= yeoman.client %>/.jshintrc',
         reporter: require('jshint-stylish')
+      },
+      client: {
+        options: {
+          jshintrc: '<%= yeoman.client %>/.jshintrc'
+        },
+        src: [
+          '<%= yeoman.client %>/app/**/*.js',
+          '!<%= yeoman.client %>/app/**/*.spec.js'
+        ]
       },
       server: {
         options: {
-          jshintrc: 'server/.jshintrc'
+          jshintrc: '<%= yeoman.server %>/.jshintrc'
         },
         src: [
-          'server/**/*.js', '!server/**/*.spec.js'
+          '<%= yeoman.server %>/**/*.js',
+          '!<%= yeoman.server %>/**/*.spec.js'
         ]
+      },
+      clientTest: {
+        options: {
+          jshintrc: '<%= yeoman.client %>/.jshintrc'
+        },
+        src: ['<%= yeoman.client %>/**/*.spec.js']
       },
       serverTest: {
         options: {
-          jshintrc: 'server/.jshintrc-spec'
+          jshintrc: '<%= yeoman.server %>/.jshintrc-spec'
         },
-        src: ['server/**/*.spec.js']
-      },
-      all: [
-        '<%= yeoman.client %>/{app,components}/**/*.js',
-        '!<%= yeoman.client %>/{app,components}/**/*.spec.js',
-        '!<%= yeoman.client %>/{app,components}/**/*.mock.js'
-      ],
-      test: {
-        src: [
-          '<%= yeoman.client %>/{app,components}/**/*.spec.js', '<%= yeoman.client %>/{app,components}/**/*.mock.js'
-        ]
+        src: ['<%= yeoman.server %>/**/*.spec.js']
       }
+//      ,all: [
+//        '<%= yeoman.client %>/{app,components}/**/*.js',
+//        '<%= yeoman.server %>/**/*.js',
+//        '!<%= yeoman.client %>/{app,components}/**/*.spec.js',
+//        '!<%= yeoman.client %>/{app,components}/**/*.mock.js'
+//      ],
+//      test: {
+//        src: [
+//          '<%= yeoman.client %>/{app,components}/**/*.spec.js', '<%= yeoman.client %>/{app,components}/**/*.mock.js'
+//        ]
+//      }
     },
     // Empties folders to start fresh
     clean: {
@@ -517,7 +546,7 @@ module.exports = function (grunt) {
         files: {
           '.tmp/app/app.css': '<%= yeoman.client %>/app/app.less'
         }
-      },
+      }
     },
     injector: {
       options: {
@@ -624,6 +653,16 @@ module.exports = function (grunt) {
     }
   });
   // Used for delaying livereload until after server has restarted
+  grunt.registerTask('hintclient', [
+    'jshint:client','jshint:clientTest'
+  ]);
+  grunt.registerTask('hintserver', [
+    'jshint:server','jshint:serverTest'
+  ]);
+  grunt.registerTask('hintall', [
+    'hintclient','hintserver'
+  ]);
+
   grunt.registerTask('wait', function () {
     grunt.log.ok('Waiting for server reload...');
     var done = this.async();
@@ -648,7 +687,7 @@ module.exports = function (grunt) {
       ]);
     }
     grunt.task.run([
-      'clean:server', 'env:all', 'injector:less', 'concurrent:server', 'injector', 'wiredep', 'autoprefixer', 'express:dev', 'wait', /*'open',*/
+      'clean:server', 'env:all', /*'injector:less',*/ 'concurrent:server', 'injector', 'wiredep', 'autoprefixer', 'express:dev', 'wait', /*'open',*/
       'watch'
     ]);
   });

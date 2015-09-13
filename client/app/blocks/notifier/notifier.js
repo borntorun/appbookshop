@@ -42,27 +42,27 @@
 
     function error(message, data, title) {
       message = message || 'Erro na pagina.';
-      verifyBottomPosition()
-      toastr.error(message, title);
+      verifyBottomPosition();
+      toastr.error(message, title, {timeOut: 2000});
       $log.error(message, getData(data));
 
     }
 
     function info(message, data, title) {
-      verifyBottomPosition()
+      verifyBottomPosition();
       toastr.info(message, title);
       $log.info(message, getData(data));
     }
 
     function success(message, data, title) {
-      verifyBottomPosition()
+      verifyBottomPosition();
       toastr.success(message, title);
       $log.info(message, getData(data));
     }
 
     function warning(message, data, title) {
-      verifyBottomPosition()
-      toastr.warning(message, title);
+      verifyBottomPosition();
+      toastr.warning(message, title, {timeOut: 60000});
       $log.warn(message, getData(data));
     }
   }

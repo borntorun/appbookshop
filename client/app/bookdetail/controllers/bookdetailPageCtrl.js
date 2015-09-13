@@ -12,7 +12,7 @@
     .controller('BookDetailPageCtrl', BookDetailPageCtrl);
 
   /* @ngInject */
-  function BookDetailPageCtrl( $scope, $rootScope, bookdetail, bookconfig, exception, notifier ) {
+  function BookDetailPageCtrl( $rootScope, bookdetail, bookconfig ) {
     /*jshint validthis: true */
     var vm = this;
 
@@ -37,10 +37,14 @@
         vm.bookflags.nopostfaceBy = !vm.book.postfaceBy || vm.book.postfaceBy.length === 0;
         vm.bookflags.nocorrector = !vm.book.corrector || vm.book.corrector.length === 0;
 
-        vm.bookflags.hasinformation = vm.book.circulation || vm.book.editionLegalDeposit || vm.book.graphicalPrint || vm.book.cover
-          || !vm.bookflags.noprefaceBy
-          || !vm.bookflags.nopostfaceBy
-          || !vm.bookflags.nocorrector;
+        vm.bookflags.hasinformation =
+          vm.book.circulation ||
+          vm.book.editionLegalDeposit ||
+            vm.book.graphicalPrint ||
+            vm.book.cover ||
+            !vm.bookflags.noprefaceBy ||
+            !vm.bookflags.nopostfaceBy ||
+            !vm.bookflags.nocorrector;
 
         console.log(vm.book);
       }, function( data ) {
@@ -50,14 +54,14 @@
     vm.searchCategoria = function( item ) {
       //TODO: colocar limit
       $rootScope.$state.go('main.search.advresults', {
-        type: "advanced",
+        type: 'advanced',
         limit: 25,
-        title: "-",
-        authors: "-",
-        subject: "-",
-        collection: "-",
+        title: '-',
+        authors: '-',
+        subject: '-',
+        collection: '-',
         categories: item,
-        edition: "-"
+        edition: '-'
       });
     };
 

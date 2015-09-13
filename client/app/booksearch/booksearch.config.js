@@ -13,9 +13,9 @@
 
   /* @ngInject */
   function moduleConfig( $stateProvider, _lodash ) {
-    var states = {}
+    var states = {};
 
-    states["main.search"] = {
+    states['main.search'] = {
       url: '',
       views: {
         '': {
@@ -30,7 +30,7 @@
         }
       }
     };
-    states["main.search.results"] = {
+    states['main.search.results'] = {
       url: 'search/:type/:limit/:term',
       views: {
         'booksearch-results': {
@@ -39,7 +39,7 @@
         }
       }
     };
-    states["main.search.advresults"] = {
+    states['main.search.advresults'] = {
       url: 'search/:type/:limit/:title/:authors/:subject/:collection/:categories/:edition',
       views: {
         'booksearch-results': {

@@ -28,44 +28,45 @@
     };
     return directive;
     ////////////////
-    function linkfunction(scope, element, attrs) {
-      var onstateChangeSuccess = scope.$on('$stateChangeSuccess', changeLayout)
+    function linkfunction(scope/*, element, attrs*/) {
+      var onstateChangeSuccess = scope.$on('$stateChangeSuccess', changeLayout);
 
       function setLayout(name) {
 
         var
-          advIsOpen = $("#toggleAdvSearch").attr("aria-expanded")==="true",
-          freeIsOpen = $("#toggleFreeSearch").attr("aria-expanded")==="true",
-          filterIsOpen = $("#toggleFilterSearch").attr("aria-expanded")==="true",
+          advIsOpen = $('#toggleAdvSearch').attr('aria-expanded')=== 'true',
+          freeIsOpen = $('#toggleFreeSearch').attr('aria-expanded')=== 'true',
+          filterIsOpen = $('#toggleFilterSearch').attr('aria-expanded')=== 'true',
 
-          filterhide = (name === "main.bookdetail"),
-          filterChange = (name === "main.bookdetail" && filterIsOpen),
-          advChange = (name === "main.search.advresults" && !advIsOpen),
-          freeChange = (name === "main.search.results" && !freeIsOpen);
+          filterhide = (name === 'main.bookdetail'),
+          filterChange = (name === 'main.bookdetail' && filterIsOpen),
+          advChange = (name === 'main.search.advresults' && !advIsOpen),
+          freeChange = (name === 'main.search.results' && !freeIsOpen);
 
-        filterChange = filterChange || (name !== "main.bookdetail" && !filterIsOpen && BookSearch.getFilterCategories().length>0);
-        advChange = advChange || (name === "main.bookdetail" && advIsOpen);
-        freeChange = freeChange || (name === "main.bookdetail" && freeIsOpen);
+        filterChange = filterChange || (name !== 'main.bookdetail' && !filterIsOpen && BookSearch.getFilterCategories().length>0);
+        advChange = advChange || (name === 'main.bookdetail' && advIsOpen);
+        freeChange = freeChange || (name === 'main.bookdetail' && freeIsOpen);
 
 
         if (filterhide) {
-          $("span:has(#toggleFilterSearch)").hide();
+          $('span:has(#toggleFilterSearch)').hide();
         } else {
-          $("span:has(#toggleFilterSearch)").show();
+          $('span:has(#toggleFilterSearch)').show();
         }
         if (filterChange) {
-          $("#toggleFilterSearch").click();
+          $('#toggleFilterSearch').click();
         }
         if (advChange) {
-          $("#toggleAdvSearch").click();
+          $('#toggleAdvSearch').click();
         }
         if (freeChange) {
-          $("#toggleFreeSearch").click();
+          $('#toggleFreeSearch').click();
         }
 
       }
 
-      function changeLayout(event, toState, toParams, fromState, fromParams) {
+
+      function changeLayout(event, toState/*, toParams, fromState, fromParams*/) {
         //if (fromState.name!=="main.search" && toState.name!==fromState.name) {
           setLayout(toState.name);
         //}

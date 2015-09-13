@@ -31,6 +31,7 @@
  */
 (function() {
   'use strict';
+  /*jshint validthis: true */
   angular
     .module('appBookShop.components')
     .directive('logicForm', logicFormDirective)
@@ -42,6 +43,7 @@
    */
   /* @ngInject */
   function logicForm() {
+
     /**
      * Register a logic form (an entity that act as group of several forms)
      * @param name
@@ -49,35 +51,42 @@
      * @returns {*}
      */
     this.register = function( name, formController ) {
+
       if ( !this[name] ) {
-        this[name] = LogicForm(name);//new LogicForm(name, formController);
+        this[name] = createLogicForm(name);//new LogicForm(name, formController);
       }
       this[name].addForm(formController);
 
       return this[name];
-    }
+    };
 
     /*
     Private block
      */
 
-    /**
-     * Logic Form object
-     * @param name
-     * @constructor
-     */
-    function LogicForm( name ) {
+    function createLogicForm( name ) {
+
       var logicForm = {
         name: name,
         addForm: addForm,
+        exists: exists,
         $invalid: isInvalid,
         $pristine: isPristine
-      }
+      };
 
       var forms = [];
 
       return logicForm;
       /////////////////////////////
+
+      function exists(fieldName) {
+        for ( var i = 0; i < forms.length; i++ ) {
+          if ( !!forms[fieldName] ) {
+            return true;
+          }
+        }
+        return false;
+      }
       function isPristine() {
         for ( var i = 0; i < forms.length; i++ ) {
           if ( forms[i].$pristine === false) {
@@ -85,7 +94,7 @@
           }
         }
         return true;
-      };
+      }
       function isInvalid() {
         for ( var i = 0; i < forms.length; i++ ) {
           if ( forms[i].$invalid === true) {
@@ -93,7 +102,7 @@
           }
         }
         return false;
-      };
+      }
       function addForm( form ) {
         if ( !this[form.$name] ) {
           /*form.isFieldChangedInvalid = function(fieldName) {
@@ -103,33 +112,16 @@
           this[form.$name] = form;
 
           forms.push(form);
-        }
-      };
 
-      /*this.name = name;
-
-      this.isInvalid = function() {
-        for ( var i = 0; i < forms.length; i++ ) {
-          if ( forms[i].$invalid ) {
-            return true;
+        } else {
+          this[form.$name] = form;
+          for ( var i = 0; i < forms.length; i++ ) {
+            if ( forms[i].$name === form.$name) {
+              forms[i] = form;
+            }
           }
         }
-        return false;
-      };
-      var selfLogicForm = this;
-      this.addForm = function addForm( form ) {
-        if ( !selfLogicForm[form.$name] ) {
-          */
-      /*form.isFieldChangedInvalid = function(fieldName) {
-                  var field = form[fieldName];
-                  return field.$dirty && field.$invalid;
-                }*/
-      /*
-                selfLogicForm[form.$name] = form;
-
-                forms.push(form);
-              }
-            };*/
+      }
 
     }
   }
@@ -176,8 +168,7 @@
       //element must be a form
 
       if ( element[0].tagName !== 'FORM' ) {
-        console.log('logicForm directive: Parent element must be a form tag and is: [' +
-          element[0].parentElement.outerHTML + ']')
+        console.log('logicForm directive: Parent element must be a form tag and is: [' + element[0].parentElement.outerHTML + ']');
         return;
       }
       var logicName = attrs.logicForm;

@@ -8,6 +8,7 @@
  */
 (function() {
   'use strict';
+  /*jshint validthis: true */
   angular
     .module('appBookShop.components')
     .provider('modalpopup', modalpopupProvider);
@@ -39,7 +40,7 @@
        */
       return {
         confirm : confirm
-      }
+      };
     }
 
     /*
@@ -69,7 +70,7 @@
         windowClass:"positionModal"*/
     };
 
-    function modalCtrl($scope) {
+    function modalCtrl(/*$scope*/) {
       var model = this;
 
       model.title = options.title;

@@ -5,10 +5,11 @@
   "bitwise": true,
   "camelcase": true,
   "curly": true,
-  "eqeqeq": true,
+  "eqeqeq": false,
   "immed": true,
   "indent": 4,
-  "latedef": true,
+  "latedef": "nofunc",
+  "sub": true,
   "newcap": true,
   "noarg": true,
   "quotmark": "single",
@@ -18,6 +19,8 @@
   "strict": true,
   "trailing": true,
   "smarttabs": true,
+  "laxcomma": true,
+
   "globals": {
     "toastr": true,
     "jQuery": true,

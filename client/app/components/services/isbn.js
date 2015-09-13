@@ -21,7 +21,7 @@
 
     return function( isbn ) {
       return isbn? validate(isbn): true;
-    }
+    };
     ///////////////
 
     /*
@@ -34,7 +34,7 @@
 
       if ( regex.test(subject) ) {
         // Remove non ISBN digits, then split into an array
-        var chars = subject.replace(/[- ]|^ISBN(?:-1[03])?:?/g, "").split("");
+        var chars = subject.replace(/[- ]|^ISBN(?:-1[03])?:?/g, '').split('');
         // Remove the final ISBN digit from `chars`, and assign it to `last`
         var last = chars.pop();
         var sum = 0;
@@ -47,11 +47,11 @@
             sum += (i + 2) * parseInt(chars[i], 10);
           }
           check = 11 - (sum % 11);
-          if ( check == 10 ) {
-            check = "X";
+          if ( check === 10 ) {
+            check = 'X';
           }
-          else if ( check == 11 ) {
-            check = "0";
+          else if ( check === 11 ) {
+            check = '0';
           }
         }
         else {
@@ -60,11 +60,10 @@
             sum += (i % 2 * 2 + 1) * parseInt(chars[i], 10);
           }
           check = 10 - (sum % 10);
-          if ( check == 10 ) {
-            check = "0";
+          if ( check === 10 ) {
+            check = '0';
           }
         }
-
         if ( check == last ) {
           return true;
         }

@@ -8,6 +8,7 @@ router.get('/search/advanced/:limit([0-9]+)/:title/:authors/:subject/:collection
 router.get('/search/free/:limit([0-9]+)/:filter?', bookCtrl.search);
 router.get('/store/:id', bookCtrl.store);
 router.get('/admin/:id', bookCtrl.edit);
+router.post('/admin/:id', bookCtrl.save);
 
 module.exports = require('../apirouter')(router, bookCtrl, []);
 

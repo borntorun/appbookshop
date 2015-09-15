@@ -1,5 +1,6 @@
 'use strict';
 var config = require('../../config/environment');
+var util = require('../../util');
 var Schema = require('mongoose').Schema;
 var BookSchema = new Schema({
   reference: { type: Number },
@@ -13,15 +14,15 @@ var BookSchema = new Schema({
   editionPublisher: { type: String },
   editionTranslatedLanguage: { type: String },
   editionCountryFirstPublisher: { type: String },
-  editionYearCountryFirstEdition: { type: String },
+  editionYearCountryFirstEdition: { type: Number },
   editionISBN: { type: String },
   originalLanguage: { type: String },
   originalTitle: { type: String },
   originalPublisher: { type: String },
-  originalYearFirstEdition: { type: String },
+  originalYearFirstEdition: { type: Number },
   originalCountryEdition: { type: String },
   nameCollection: { type: String },
-  numCollection: { type: Number },
+  numCollection: { type: String },
   translators: { type: [String] },
   prefaceBy: { type: [String] },
   postfaceBy: { type: [String] },
@@ -29,7 +30,7 @@ var BookSchema = new Schema({
   cover: { type: String },
   images: { type: [String] },
   workmanship: { type: String },
-  pagesNum: { type: Number },
+  pagesNum: { type: String },
   priceInitial: { type: Number },
   priceCost: { type: Number },
   price: { type: Number },
@@ -62,14 +63,75 @@ var BookSchema = new Schema({
   discounts: { type: [Schema.Types.Mixed] },
   taxes: { type: [Schema.Types.Mixed] },
   template: { type: String },
-  dateResgistration: { type: Date/*, default: Date.now */},
-  dateUpdate: { type: Date/*, default: Date.now*/ }
+  dateResgistration: { type: Date, default: Date.now },
+  dateUpdate: { type: Date, default: Date.now }
 });
+var table = require('../tables/tables.model');
 
 BookSchema.path('title').required(true, 'Título é obrigatório.');
 
-module.exports = config.mongo.books.connection.model('Book', BookSchema);
+/*BookSchema.pre('save', function( next ) {
+  try {
+    if ( this.obs ) {
+      console.log(this.obs)
+      this.obs = this.obs[0].split('\n');
+      console.log(this.obs)
+    }
+  } catch( e ) {
 
+  }
+  next();
+});*/
+
+BookSchema.post('save', function( doc ) {
+
+  function addItem( Model, item ) {
+    Model.find({'name': item}, function( err, data ) {
+      if ( data.length == 0 ) {
+        new Model({'name': item})
+          .save(function( err, data ) {
+            console.log('after :------------------------:', data);
+          });
+      }
+    });
+  }
+
+  function processItem( Model ) {
+    return function( item ) {
+      addItem(Model, item);
+    };
+  }
+
+  function processField( Model, value ) {
+    if ( value ) {
+      if ( util.isArray(value) && value.length > 0 ) {
+        value.forEach(processItem(Model));
+      }
+      else {
+        processItem(Model)(value);
+      }
+    }
+  }
+
+  processField(table('author'), this.authors);
+  processField(table('author'), this.prefaceBy);
+  processField(table('author'), this.postfaceBy);
+  processField(table('author'), this.correctors);
+  processField(table('publisher'), this.editionPublisher);
+  processField(table('language'), this.editionLanguage);
+  processField(table('country'), this.editionCountry);
+  processField(table('category'), this.categories);
+  processField(table('keyword'), this.keywords);
+  processField(table('translator'), this.translators);
+  processField(table('language'), this.editionTranslatedLanguage);
+  processField(table('publisher'), this.editionCountryFirstPublisher);
+  processField(table('publisher'), this.originalPublisher);
+  processField(table('language'), this.originalLanguage);
+  processField(table('country'), this.originalCountryEdition);
+
+});
+
+module.exports = config.mongo.books.connection.model('Book', BookSchema);
 
 //em destaque à entrada no site
 //  isFeatured: true

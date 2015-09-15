@@ -30,20 +30,41 @@
       return (vArray && vArray.length > 0) ? vArray[0] : '';
     }
 
+    //for fields that are strings
+    function emitInitString(name, value) {
+      $scope.$emit('angtty:init:' + name, value);
+    }
+
+    //for fields that arrrays
+    function emitInitArray(name, fieldModel, value) {
+      model.book[fieldModel] = value;
+      emitInitString(name, model.book[fieldModel]);
+    }
+
+
     bookrecord.get($rootScope.$stateParams.bookid)
       .then(function( /*data*/ ) {
         //treat book fields here
 
-        model.book.author = getFirstItemIfOne(model.book.authors);
 
-        $scope.$emit('angtty:init:authors', model.book.author);
+//        model.book.author = getFirstItemIfOne(model.book.authors);
+//        $scope.$emit('angtty:init:authors', model.book.author);
 
-        model.book.translator = getFirstItemIfOne(model.book.translators);
-        model.book.categorie = getFirstItemIfOne(model.book.categories);
-        model.book.keyword = getFirstItemIfOne(model.book.keywords);
-        model.book.corrector = getFirstItemIfOne(model.book.correctors);
-        model.book.postface = getFirstItemIfOne(model.book.postfaceBy);
-        model.book.preface = getFirstItemIfOne(model.book.prefaceBy);
+        emitInitArray('authors', 'author', getFirstItemIfOne(model.book.authors));
+        emitInitArray('translators', 'translator', getFirstItemIfOne(model.book.translators));
+        emitInitArray('categories', 'category', getFirstItemIfOne(model.book.categories));
+        emitInitArray('keywords', 'keyword', getFirstItemIfOne(model.book.keywords));
+        emitInitArray('correctors', 'corrector', getFirstItemIfOne(model.book.correctors));
+        emitInitArray('postfaceBy', 'postface', getFirstItemIfOne(model.book.postfaceBy));
+        emitInitArray('prefaceBy', 'preface', getFirstItemIfOne(model.book.prefaceBy));
+        emitInitString('editionPublisher', model.book.editionPublisher);
+        emitInitString('editionLanguage', model.book.editionLanguage);
+        emitInitString('editionCountry', model.book.editionCountry);
+        emitInitString('editionTranslatedLanguage', model.book.editionTranslatedLanguage);
+        emitInitString('editionCountryFirstPublisher', model.book.editionCountryFirstPublisher);
+        emitInitString('originalPublisher', model.book.originalPublisher);
+        emitInitString('originalLanguage', model.book.originalLanguage);
+        emitInitString('originalCountryEdition', model.book.originalCountryEdition);
 
       })
       .catch(function( /*data*/ ) {
@@ -54,15 +75,30 @@
     var autocompleteTTOptions = {minLength: 3, limit: 20};
 
     model.config = {
-      authors: {options: autocompleteOptions, ttoptions: autocompleteTTOptions},
-      languages: {options: autocompleteOptions, ttoptions: autocompleteTTOptions},
-      countries: {options: autocompleteOptions, ttoptions: autocompleteTTOptions},
-      publishers: {options: autocompleteOptions, ttoptions: autocompleteTTOptions},
-      categories: {options: autocompleteOptions, ttoptions: autocompleteTTOptions},
-      keywords: {options: autocompleteOptions, ttoptions: autocompleteTTOptions},
-      translators: {options: autocompleteOptions, ttoptions: autocompleteTTOptions}
+      author: {options: autocompleteOptions, ttoptions: autocompleteTTOptions},
+      language: {options: autocompleteOptions, ttoptions: autocompleteTTOptions},
+      country: {options: autocompleteOptions, ttoptions: autocompleteTTOptions},
+      publisher: {options: autocompleteOptions, ttoptions: autocompleteTTOptions},
+      category: {options: autocompleteOptions, ttoptions: autocompleteTTOptions},
+      keyword: {options: autocompleteOptions, ttoptions: autocompleteTTOptions},
+      translator: {options: autocompleteOptions, ttoptions: autocompleteTTOptions}
     };
-    model.config.authors.ttoptions = angular.extend(
+
+    function configTT(table){
+      model.config[table].ttoptions = angular.extend(
+        angular.copy(model.config[table].ttoptions),
+        {name: table, remote: '/api/tables/' + table + '/search/%QUERY', prefetch: '/assets/data/' + table + '.json'});
+    }
+
+    configTT('author');
+    configTT('language');
+    configTT('country');
+    configTT('publisher');
+    configTT('category');
+    configTT('keyword');
+    configTT('translator');
+
+    /*model.config.authors.ttoptions = angular.extend(
       angular.copy(model.config.authors.ttoptions),
       {name: 'authors', remote: '/api/tables/author/search/%QUERY', prefetch: '/assets/data/authors.json'});
     model.config.languages.ttoptions = angular.extend(
@@ -82,8 +118,8 @@
       {name: 'keywords', remote: '/api/tables/keyword/search/%QUERY', prefetch: '/assets/data/keywords.json'});
     model.config.translators.ttoptions = angular.extend(
       angular.copy(model.config.translators.ttoptions),
-      {name: 'translators', remote: '/api/tables/author/search/%QUERY', prefetch: '/assets/data/authors.json'});
-
+      {name: 'translators', remote: '/api/tables/translator/search/%QUERY', prefetch: '/assets/data/translators.json'});
+*/
     var active;
 
     function logevent( func, item, data ) {

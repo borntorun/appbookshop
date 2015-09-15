@@ -20,7 +20,7 @@
   "trailing": true,
   "smarttabs": true,
   "laxcomma": true,
-
+  "-W116": false, // disable: Expected '===' and instead saw '=='.
   "globals": {
     "toastr": true,
     "jQuery": true,

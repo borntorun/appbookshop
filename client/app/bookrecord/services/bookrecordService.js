@@ -46,10 +46,10 @@
     function save() {
       var defer = Q.defer();
 
-      if ( !book._id ) {
+      /*if ( !book._id ) {
         book.dateResgistration = Date.now();
       }
-      book.dateUpdate = Date.now();
+      book.dateUpdate = Date.now();*/
 
       httpRequest.post({url: '/api/books/admin/' + book._id || 'new', data: book})
         .then(function( data ) {
@@ -99,6 +99,7 @@
           setReference(book.reference);
           book.dateResgistrationLocal = new Date(data.dateResgistration).getTime();
           book.dateUpdateLocal = new Date(data.dateUpdate).getTime();
+
           bookcache = angular.copy(book);
           defer.resolve(data);
         })
@@ -144,11 +145,60 @@
         categories: [],
         keywords: [],
         obs: [],
-        obsInternal: [],
         prefaceBy: [],
         postfaceBy: [],
         images: [],
-        correctors: []
+        correctors: [],
+        title: null,
+        subject: null,
+        editionNumber: null,
+        editionYear: null,
+        editionLanguage: null,
+        editionCountry: null,
+        editionPublisher: null,
+        editionTranslatedLanguage: null,
+        editionCountryFirstPublisher: null,
+        editionYearCountryFirstEdition: null,
+        editionISBN: null,
+        originalLanguage: null,
+        originalTitle: null,
+        originalPublisher: null,
+        originalYearFirstEdition: null,
+        originalCountryEdition: null,
+        nameCollection: null,
+        numCollection: null,
+        graphicalPrint: null,
+        cover: null,
+        workmanship: null,
+        pagesNum: null,
+        priceInitial: null,
+        priceCost: null,
+        price: null,
+        buyAt: null,
+        editionLegalDeposit: null,
+        circulation: null,
+        archive: null,
+        condition: null,
+        lendingTo: null,
+        obsInternal: null,
+        subtitle: null,
+        dimensions: null,
+        weight: null,
+        numVolume: null,
+        qt: null,
+        isNewBook: null,
+        isFeatured: null,
+        isPromotion: null,
+        isRare: null,
+        isUnique: null,
+        isValuable: null,
+        sellOnline: null,
+        sellPresencial: null,
+        qtStore: null,
+        qtSold: null,
+        discounts: null,
+        taxes: null,
+        template: null
       };
     }
 

@@ -43,11 +43,11 @@ form.enter-as-tab.on-focus(logic-form="bookrecord", id="bookrecordForm", name="b
                 .col-xs-12.col-lg-6
                     label(for="authors") {{::model.labels.authors}}
                         span(angular-typeaheadjs,
-                        angty-onselect="model.events.onselect",
+                            angty-onselect="model.events.onselect",
                             angty-onactive="model.events.onactive",
                             angty-onopen="model.events.onopen",
                             angty-onchange="model.events.onchange",
-                            angty-options="{{model.config.authors.options}}", angty-ttoptions="{{model.config.authors.ttoptions}}")
+                            angty-options="{{model.config.author.options}}", angty-ttoptions="{{model.config.author.ttoptions}}")
                             input.typeahead(type="text", tabindex="300" name="authors", ng-model="model.book.author", aria-label="{{::model.placeholders.authors}}", placeholder="{{::model.placeholders.authors}}")
 
                 .col-xs-12.col-lg-6(ng-show="model.book.authors.length>0")
@@ -70,7 +70,7 @@ form.enter-as-tab.on-focus(logic-form="bookrecord", id="bookrecordForm", name="b
                             angty-onchange="model.events.onchange",
                             angty-onactive="model.events.onactive",
                             angty-onopen="model.events.onopen",
-                            angty-options="{{model.config.publishers.options}}", angty-ttoptions="{{model.config.publishers.ttoptions}}")
+                            angty-options="{{model.config.publisher.options}}", angty-ttoptions="{{model.config.publisher.ttoptions}}")
                             input.typeahead(type="text", tabindex="400", name="editionPublisher", ng-model="model.book.editionPublisher", aria-label="{{::model.placeholders.editionPublisher}}", placeholder="{{::model.placeholders.editionPublisher}}")
                 .col-xs-12.col-lg-2
                     label(for="editionLanguage") {{::model.labels.editionLanguage}}
@@ -78,7 +78,7 @@ form.enter-as-tab.on-focus(logic-form="bookrecord", id="bookrecordForm", name="b
                             angty-onchange="model.events.onchange",
                             angty-onactive="model.events.onactive",
                             angty-onopen="model.events.onopen",
-                            angty-options="{{model.config.languages.options}}", angty-ttoptions="{{model.config.languages.ttoptions}}")
+                            angty-options="{{model.config.language.options}}", angty-ttoptions="{{model.config.language.ttoptions}}")
                             input.typeahead(type="text", tabindex="500", name="editionLanguage", ng-model="model.book.editionLanguage", aria-label="{{::model.placeholders.editionLanguage}}", placeholder="{{::model.placeholders.editionLanguage}}")
                 .col-xs-12.col-lg-2
                     label(for="editionCountry") {{::model.labels.editionCountry}}
@@ -86,7 +86,7 @@ form.enter-as-tab.on-focus(logic-form="bookrecord", id="bookrecordForm", name="b
                             angty-onchange="model.events.onchange",
                             angty-onactive="model.events.onactive",
                             angty-onopen="model.events.onopen",
-                            angty-options="{{model.config.countries.options}}", angty-ttoptions="{{model.config.countries.ttoptions}}")
+                            angty-options="{{model.config.country.options}}", angty-ttoptions="{{model.config.country.ttoptions}}")
                             input.typeahead(type="text", tabindex="600", name="editionCountry", ng-model="model.book.editionCountry", aria-label="{{::model.placeholders.editionCountry}}", placeholder="{{::model.placeholders.editionCountry}}")
                 .col-xs-12.col-lg-2
                     label(for="editionYear") {{::model.labels.editionYear}}
@@ -135,7 +135,7 @@ form.enter-as-tab.on-focus(logic-form="bookrecord", id="bookrecordForm", name="b
                             angty-onchange="model.events.onchange",
                             angty-onactive="model.events.onactive",
                             angty-onopen="model.events.onopen",
-                            angty-options="{{model.config.translators.options}}", angty-ttoptions="{{model.config.translators.ttoptions}}")
+                            angty-options="{{model.config.translator.options}}", angty-ttoptions="{{model.config.translator.ttoptions}}")
                             input.typeahead(type="text", tabindex="1600", name="translators", ng-model="model.book.translator", aria-label="{{::model.placeholders.translators}}", placeholder="{{::model.placeholders.translators}}")
                 .col-xs-12.col-lg-9(ng-hide="model.book.translators.length>1")
                     label(for="translators") {{::model.labels.translators}}
@@ -143,13 +143,13 @@ form.enter-as-tab.on-focus(logic-form="bookrecord", id="bookrecordForm", name="b
                             angty-onchange="model.events.onchange",
                             angty-onactive="model.events.onactive",
                             angty-onopen="model.events.onopen",
-                            angty-options="{{model.config.translators.options}}", angty-ttoptions="{{model.config.translators.ttoptions}}")
+                            angty-options="{{model.config.translator.options}}", angty-ttoptions="{{model.config.translator.ttoptions}}")
                             input.typeahead(type="text", tabindex="1700", name="translators", ng-model="model.book.translator", aria-label="{{::model.placeholders.translators}}", placeholder="{{::model.placeholders.translators}}")
 
                 .col-xs-12.col-lg-4(ng-show="model.book.translators.length>1")
                     label.label-items
                         span.item(ng-repeat="item in model.book.translators track by $index")
-                            i.fa.fa-times
+                            i.fa.fa-times(ng-click="model.removeItem('translators', item)")
                             | {{item}}
                 .col-xs-12.col-lg-3
                     label(for="editionTranslatedLanguage") {{::model.labels.editionTranslatedLanguage}}
@@ -157,7 +157,7 @@ form.enter-as-tab.on-focus(logic-form="bookrecord", id="bookrecordForm", name="b
                             angty-onchange="model.events.onchange",
                             angty-onactive="model.events.onactive",
                             angty-onopen="model.events.onopen",
-                            angty-options="{{model.config.languages.options}}", angty-ttoptions="{{model.config.languages.ttoptions}}")
+                            angty-options="{{model.config.language.options}}", angty-ttoptions="{{model.config.language.ttoptions}}")
                             input.typeahead(type="text", tabindex="1800", name="editionTranslatedLanguage", ng-model="model.book.editionTranslatedLanguage", aria-label="{{::model.placeholders.editionTranslatedLanguage}}", placeholder="{{::model.placeholders.editionTranslatedLanguage}}")
         //.col-sm-4.caixa
         .col-xs-12.col-lg-4.caixa
@@ -170,7 +170,7 @@ form.enter-as-tab.on-focus(logic-form="bookrecord", id="bookrecordForm", name="b
                             angty-onchange="model.events.onchange",
                             angty-onactive="model.events.onactive",
                             angty-onopen="model.events.onopen",
-                            angty-options="{{model.config.publishers.options}}", angty-ttoptions="{{model.config.publishers.ttoptions}}")
+                            angty-options="{{model.config.publisher.options}}", angty-ttoptions="{{model.config.publisher.ttoptions}}")
                             input.typeahead(type="text", tabindex="1900", name="editionCountryFirstPublisher", ng-model="model.book.editionCountryFirstPublisher", aria-label="{{::model.placeholders.editionCountryFirstPublisher}}", placeholder="{{::model.placeholders.editionCountryFirstPublisher}}")
                 .col-xs-12.col-lg-6
                     label(for="editionYearCountryFirstEdition") {{::model.labels.editionYearCountryFirstEdition}}
@@ -197,7 +197,7 @@ form.enter-as-tab.on-focus(logic-form="bookrecord", id="bookrecordForm", name="b
                             angty-onchange="model.events.onchange",
                             angty-onactive="model.events.onactive",
                             angty-onopen="model.events.onopen",
-                            angty-options="{{model.config.languages.options}}", angty-ttoptions="{{model.config.languages.ttoptions}}")
+                            angty-options="{{model.config.language.options}}", angty-ttoptions="{{model.config.language.ttoptions}}")
                             input.typeahead(type="text", tabindex="2300", name="originalLanguage", ng-model="model.book.originalLanguage", aria-label="{{::model.placeholders.originalLanguage}}", placeholder="{{::model.placeholders.originalLanguage}}")
                 .col-xs-12.col-lg-2
                     label(for="originalCountryEdition") {{::model.labels.originalCountryEdition}}
@@ -205,7 +205,7 @@ form.enter-as-tab.on-focus(logic-form="bookrecord", id="bookrecordForm", name="b
                             angty-onchange="model.events.onchange",
                             angty-onactive="model.events.onactive",
                             angty-onopen="model.events.onopen",
-                            angty-options="{{model.config.countries.options}}", angty-ttoptions="{{model.config.countries.ttoptions}}")
+                            angty-options="{{model.config.country.options}}", angty-ttoptions="{{model.config.country.ttoptions}}")
                             input.typeahead(type="text", tabindex="2400", name="originalCountryEdition", ng-model="model.book.originalCountryEdition", aria-label="{{::model.placeholders.originalCountryEdition}}", placeholder="{{::model.placeholders.originalCountryEdition}}")
                 .col-xs-12.col-lg-2
                     label(for="originalYearFirstEdition") {{::model.labels.originalYearFirstEdition}}
@@ -224,13 +224,13 @@ form.enter-as-tab.on-focus(logic-form="bookrecord", id="bookrecordForm", name="b
                                     angty-onchange="model.events.onchange",
                                     angty-onactive="model.events.onactive",
                                     angty-onopen="model.events.onopen",
-                                    angty-options="{{model.config.categories.options}}", angty-ttoptions="{{model.config.categories.ttoptions}}")
-                                    input.typeahead(type="text", tabindex="2600", name="categories", ng-model="model.book.categorie", aria-label="{{::model.placeholders.categories}}", placeholder="{{::model.placeholders.categories}}")
+                                    angty-options="{{model.config.category.options}}", angty-ttoptions="{{model.config.category.ttoptions}}")
+                                    input.typeahead(type="text", tabindex="2600", name="categories", ng-model="model.book.category", aria-label="{{::model.placeholders.categories}}", placeholder="{{::model.placeholders.categories}}")
                     .row
                         .col-xs-12
                             label.label-items
                                 span.item(ng-repeat="item in model.book.categories track by $index")
-                                    i.fa.fa-times
+                                    i.fa.fa-times(ng-click="model.removeItem('categories', item)")
                                     | {{item}}
                 .col-xs-12.col-lg-6
                     .row
@@ -240,13 +240,13 @@ form.enter-as-tab.on-focus(logic-form="bookrecord", id="bookrecordForm", name="b
                                     angty-onchange="model.events.onchange",
                                     angty-onactive="model.events.onactive",
                                     angty-onopen="model.events.onopen",
-                                    angty-options="{{model.config.keywords.options}}", angty-ttoptions="{{model.config.keywords.ttoptions}}")
+                                    angty-options="{{model.config.keyword.options}}", angty-ttoptions="{{model.config.keyword.ttoptions}}")
                                     input.typeahead(type="text", tabindex="2700", name="keywords", ng-model="model.book.keyword", aria-label="{{::model.placeholders.keywords}}", placeholder="{{::model.placeholders.keywords}}")
                     .row
                         .col-xs-12
                             label.label-items
                                 span.item(ng-repeat="item in model.book.keywords track by $index")
-                                    i.fa.fa-times
+                                    i.fa.fa-times(ng-click="model.removeItem('keywords', item)")
                                     | {{item}}
         //.col-sm-6
         .col-xs-12.col-lg-6
@@ -257,7 +257,7 @@ form.enter-as-tab.on-focus(logic-form="bookrecord", id="bookrecordForm", name="b
             .row
                 .col-xs-12
                     label(for="obs") {{::model.labels.obs}}
-                        textarea(name="obs", tabindex="2900", ng-model="model.book.obs", aria-label="{{::model.placeholders.obs}}", placeholder="{{::model.placeholders.obs}}")
+                        textarea(name="obs", tabindex="2900", split-array-text, ng-model="model.book.obs", aria-label="{{::model.placeholders.obs}}", placeholder="{{::model.placeholders.obs}}")
     .row.caixa
         //.col-sm-4
         .col-xs-12.col-lg-4
@@ -268,13 +268,13 @@ form.enter-as-tab.on-focus(logic-form="bookrecord", id="bookrecordForm", name="b
                             angty-onchange="model.events.onchange",
                             angty-onactive="model.events.onactive",
                             angty-onopen="model.events.onopen",
-                            angty-options="{{model.config.authors.options}}", angty-ttoptions="{{model.config.authors.ttoptions}}")
+                            angty-options="{{model.config.author.options}}", angty-ttoptions="{{model.config.author.ttoptions}}")
                             input.typeahead(type="text", tabindex="3000", name="prefaceBy", ng-model="model.book.preface", aria-label="{{::model.placeholders.prefaceBy}}", placeholder="{{::model.placeholders.prefaceBy}}")
             .row
                 .col-xs-12
                     label.label-items
                         span.item(ng-repeat="item in model.book.prefaceBy track by $index")
-                            i.fa.fa-times
+                            i.fa.fa-times(ng-click="model.removeItem('prefaceBy', item)")
                             | {{item}}
         //.col-sm-4
         .col-xs-12.col-lg-4
@@ -285,13 +285,13 @@ form.enter-as-tab.on-focus(logic-form="bookrecord", id="bookrecordForm", name="b
                             angty-onchange="model.events.onchange",
                             angty-onactive="model.events.onactive",
                             angty-onopen="model.events.onopen",
-                            angty-options="{{model.config.authors.options}}", angty-ttoptions="{{model.config.authors.ttoptions}}")
+                            angty-options="{{model.config.author.options}}", angty-ttoptions="{{model.config.author.ttoptions}}")
                             input.typeahead(type="text", tabindex="3100", name="postfaceBy", ng-model="model.book.postface", aria-label="{{::model.placeholders.postfaceBy}}", placeholder="{{::model.placeholders.postfaceBy}}")
             .row
                 .col-xs-12
                     label.label-items
                         span.item(ng-repeat="item in model.book.postfaceBy track by $index")
-                            i.fa.fa-times
+                            i.fa.fa-times(ng-click="model.removeItem('posftfaceBY', item)")
                             | {{item}}
         //.col-sm-4
         .col-xs-12.col-lg-4
@@ -302,13 +302,13 @@ form.enter-as-tab.on-focus(logic-form="bookrecord", id="bookrecordForm", name="b
                             angty-onchange="model.events.onchange",
                             angty-onactive="model.events.onactive",
                             angty-onopen="model.events.onopen",
-                            angty-options="{{model.config.authors.options}}", angty-ttoptions="{{model.config.authors.ttoptions}}")
+                            angty-options="{{model.config.author.options}}", angty-ttoptions="{{model.config.author.ttoptions}}")
                             input.typeahead(type="text", tabindex="3200", name="correctors", ng-model="model.book.corrector", aria-label="{{::model.placeholders.correctors}}", placeholder="{{::model.placeholders.correctors}}")
             .row
                 .col-xs-12
                     label.label-items
                         span.item(ng-repeat="item in model.book.correctors track by $index")
-                            i.fa.fa-times
+                            i.fa.fa-times(ng-click="model.removeItem('correctors', item)")
                             | {{item}}
 
     .row.caixa

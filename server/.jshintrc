@@ -21,5 +21,6 @@
   "asi": true,
   "debug": true,
   "expr": true,
-  "laxcomma": true
+  "laxcomma": true,
+  "-W116": false // disable: Expected '===' and instead saw '=='.
 }

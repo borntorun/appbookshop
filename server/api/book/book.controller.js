@@ -2,16 +2,9 @@
 var _ = require('lodash');
 var Book = require('./book.model');
 var BookFields = require('./book.fields');
+var searchLib = require('./book.search.lib');
 //var ObjectId = require('mongoose').Types.ObjectId;
 
-/*
-{
-"$or": [
-  {"title" : {"$in" : [/Blue/, /Catcher/, /1930/]}},
-  {"yearEdition" : 1930}
-]
-}
-*/
 
 function bookListResults( res ) {
   return function( err, Books ) {
@@ -21,6 +14,7 @@ function bookListResults( res ) {
     return res.json(200, Books);
   };
 }
+
 function bookListLimit( limit ) {
   var value = Number(limit);
   return value === 0 || value > 100 ? 100 : value;
@@ -36,87 +30,30 @@ exports.search = function( req, res ) {
   //Book.find({"$or" : [{"title" : /Blue/}, {"yearEdition" : 1930}]}).limit(req.params.limit || 100).exec(function(err, Books) {
   //console.log(require("./book.search.lib").filter(req.params.filter));
 
-  Book.find(require('./book.search.lib').filter(req.params.filter), BookFields.storeSearch)
-    .limit(bookListLimit(req.params.limit))
-    .exec(bookListResults(res)/*function(err, Books) {
-      if (err) {
-        return handleError(err, res);
-      }
-      return res.json(200, Books);
-    }*/);
-};
-exports.advancedSearch = function( req, res ) {
-  Book.find(require('./book.search.lib').advfilter(req.params), BookFields.storeSearch)
+  Book
+    .find(searchLib.filter(req.params.filter), BookFields.storeSearch)
     .limit(bookListLimit(req.params.limit))
     .exec(bookListResults(res));
 };
-
-/**
- *
- * @param req
- * @param res
- */
+exports.advancedSearch = function( req, res ) {
+  Book.find(searchLib.advfilter(req.params), BookFields.storeSearch)
+    .limit(bookListLimit(req.params.limit))
+    .exec(bookListResults(res));
+};
 exports.store = function( req, res ) {
-  console.log(req.params.id);
-  //Book.findById(new ObjectId(req.params.id), function(err, Book) {
-  Book.findById(req.params.id, BookFields.storeDetail, function( err, Book ) {
-    if ( err ) {
-      return handleError(err, res);
-    }
-    if ( !Book ) {
-      return res.send(404);
-    }
-    return res.json(200, Book);
-  });
+  Book.findById(req.params.id || '', BookFields.storeDetail, result(res));
 };
-
-/**
- *
- * @param req
- * @param res
- */
 exports.get = function( req, res ) {
-  Book.findById(req.params.id || '', function( err, Book ) {
-    if ( err ) {
-      return handleError(err, res);
-    }
-    if ( !Book ) {
-      return res.send(404);
-    }
-
-//    console.log(Book);
-    return res.json(200, Book);
-  });
+  Book.findById(req.params.id || '', result(res));
 };
-
-/**
- *
- * @param req
- * @param res
- */
 exports.edit = function( req, res ) {
-  console.log(req.params.id);
-
-  Book.findById(req.params.id, function( err, Book ) {
-    if ( err ) {
-      return handleError(err, res);
-    }
-    if ( !Book ) {
-      return res.send(404);
-    }
-//    console.log('book:' , Book);
-//    console.log('dateUpdate:' + Book.dateUpdate);
-//    console.log('dateUpdate UTC:' + new Date(Book.dateUpdate + ' UTC').toString());
-
-    return res.json(200, Book);
-  });
+  Book.findById(req.params.id || '', result(res));
 };
 
 // Save a Book in the DB.
 exports.save = function( req, res ) {
-
+  //console.log('req.body:-----------------', req.body);
   if ( req.body._id ) {
-
     Book.findById(req.body._id, function( err, found ) {
       if ( err ) {
         return handleError(err, res);
@@ -124,18 +61,32 @@ exports.save = function( req, res ) {
       if ( !found ) {
         return res.send(404);
       }
+      console.log('req.body before merge----------------------',req.body);
       delete req.body._id;
       delete req.body.reference;
       delete req.body.dateResgistration;
       delete req.body.dateUpdate;
 
-      found = _.merge(found, req.body);
+      /*var foundjson = found.toObject();
 
+      for ( var k in foundjson ) {
+        if ( k!== '_id' && k!== 'dateResgistration' && k!== 'reference' && k!== '__v' && foundjson.hasOwnProperty(k) && !req.body[k] ) {
+          console.log('---delete----',k, found[k], '----', delete found[k]);
+          //delete found[k];
+          console.log('---depois----',k, found[k]);
+        }
+      }
+*/
+
+      console.log('found before merge----------------------',found);
+      found = _.merge(found, req.body);
+      console.log('found after merge----------------------',found);
       updateArrays(found, req.body);
 
       found.dateUpdate = Date.now();
 
       found.save(function( err, data ) {
+        console.log('data after save----------------------',data);
         if ( err ) {
           return handleError(err, res);
         }
@@ -158,7 +109,7 @@ exports.save = function( req, res ) {
           return handleError(err, res);
         }
 
-//        console.log('novo: ', data);
+        console.log('novo: ', new Date());
 
         return res.json(201, {
           _id: data.id,
@@ -170,18 +121,29 @@ exports.save = function( req, res ) {
 
 };
 
+function result(res){
+  return function(err, data){
+    if ( err ) {
+      return handleError(err, res);
+    }
+    if ( !data ) {
+      return res.send(404);
+    }
+    return res.json(200, data);
+  };
+}
+
 function isArray( obj ) {
   return Object.prototype.toString.call(obj) === '[object Array]';
 }
 
 function updateArrays(toObj, fromObj) {
-  for ( var k in fromObj ) {
 
+  for ( var k in fromObj ) {
+    //console.log(k,'-',fromObj[k],'-',toObj[k]);
     if ( fromObj.hasOwnProperty(k) && isArray(fromObj[k]) ) {
-//      console.log(k);
       toObj[k].pop();
       toObj[k] = fromObj[k];
-//      console.log('after update -' + k + ':' + toObj[k]);
     }
   }
 }
@@ -232,3 +194,15 @@ function handleError( err, res ) {
 //    });
 //  });
 //};
+
+
+
+
+/*
+{
+"$or": [
+  {"title" : {"$in" : [/Blue/, /Catcher/, /1930/]}},
+  {"yearEdition" : 1930}
+]
+}
+*/

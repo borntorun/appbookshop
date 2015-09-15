@@ -4,7 +4,7 @@
  * Criado com base em angular design style de John Papa
  * (https://github.com/johnpapa/angular-styleguide)
  *
- * Descrição: Manipulate array of strings to bw displayed on textarea
+ * Descrição: Manipulate array of strings to be displayed on textarea by split/join by newline
 */
 (function () {
   'use strict';
@@ -22,7 +22,7 @@
     * Public Interface
     */
     var directive = {
-      restrict: 'AEC',
+      restrict: 'AC',
       require: 'ngModel',
       link: link
     };
@@ -34,17 +34,19 @@
     * Private Block interface
     */
     function link(scope, element, attrs, ctrl) {
-      function toText(value) {
-        return value.split('\n');
+      var charSplit = element.attr('split-array-text');
+
+      function toArray(value) {
+        return value.split(charSplit);
       }
 
-      function toArray(text) {
-        return text.join('\n');
+      function toText(value) {
+        return value.join(charSplit);
       }
 
       //ngModel
-      ctrl.$parsers.push(toText);
-      ctrl.$formatters.push(toArray);
+      ctrl.$parsers.push(toArray);
+      ctrl.$formatters.push(toText);
     }
 
   }

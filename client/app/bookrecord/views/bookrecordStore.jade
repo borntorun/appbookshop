@@ -1,7 +1,7 @@
-span.form-buttons
-    button.btn.btn-default(tabindex="10000",ng-disabled="model.bookrecordLogicForm.$pristine()", type="button", ng-click="model.clearForm()") Limpar
-    button.btn.btn-default(tabindex="10000",ng-show="model.book._id", ng-disabled="model.bookrecordLogicForm.$pristine()", type="button", ng-click="model.resetForm()") Desfazer
-    button.btn.btn-default(tabindex="9998",ng-disabled="model.bookrecordLogicForm.$invalid()", type="submit", id="submit", ng-click="model.save()") Gravar
+//span.bookrecordStore-buttons.hidden
+//    button.btn.btn-default(tabindex="10000",ng-disabled="model.bookrecordLogicForm.$pristine()", type="button", ng-click="model.clearForm()") Limpar
+//    button.btn.btn-default(tabindex="10000",ng-show="model.book._id", ng-disabled="model.bookrecordLogicForm.$pristine()", type="button", ng-click="model.resetForm()") Desfazer
+//    button.btn.btn-default(tabindex="9998",ng-disabled="model.bookrecordLogicForm.$invalid()", type="submit", id="submit", ng-click="model.save()") Gravar
 
 form.enter-as-tab.on-focus(id="bookrecordStoreForm", logic-form="bookrecord", name="bookrecordStoreForm", novalidate, ng-model-options="{ debounce: 0 }")
     .row
@@ -16,37 +16,50 @@ form.enter-as-tab.on-focus(id="bookrecordStoreForm", logic-form="bookrecord", na
 
             label(for="price") {{::model.labels.price}}
                 input(type="number", lang="pt-PT", step="0.01", tabindex="7500", name="price",
+                    min="0",
                     ng-model="model.book.price",
                     aria-label="{{::model.placeholders.price}}",
                     placeholder="{{::model.placeholders.price}}")
+                div.tool-tip.bottom(ng-show="bookrecordStoreForm.price.$dirty && bookrecordStoreForm.price.$invalid") {{::model.valMessages.price.invalid}}
 
             label(for="priceInitial") {{::model.labels.priceInitial}}
                 input(type="number",lang="pt-PT", step="0.01", tabindex="7600", name="priceInitial",
-                ng-model="model.book.priceInitial",
-                aria-label="{{::model.placeholders.priceInitial}}",
-                placeholder="{{::model.placeholders.priceInitial}}")
+                    min="0",
+                    ng-model="model.book.priceInitial",
+                    aria-label="{{::model.placeholders.priceInitial}}",
+                    placeholder="{{::model.placeholders.priceInitial}}")
+                div.tool-tip.bottom(ng-show="bookrecordStoreForm.priceInitial.$dirty && bookrecordStoreForm.priceInitial.$invalid") {{::model.valMessages.priceInitial.invalid}}
 
             label(for="priceCost") {{::model.labels.priceCost}}
                 input(type="number",lang="pt-PT", step="0.01", tabindex="7700", name="priceCost",
-                ng-model="model.book.priceCost",
-                aria-label="{{::model.placeholders.priceCost}}",
-                placeholder="{{::model.placeholders.priceCost}}")
+                    min="0",
+                    ng-model="model.book.priceCost",
+                    aria-label="{{::model.placeholders.priceCost}}",
+                    placeholder="{{::model.placeholders.priceCost}}")
+                div.tool-tip.bottom(ng-show="bookrecordStoreForm.priceCost.$dirty && bookrecordStoreForm.priceCost.$invalid") {{::model.valMessages.priceCost.invalid}}
 
             label(for="qt") {{::model.labels.qt}}
                 input(type="number",lang="pt", step="1", tabindex="7800", name="qt",
+                    min="0",
                     ng-model="model.book.qt",
                     aria-label="{{::model.placeholders.qt}}",
                     placeholder="{{::model.placeholders.qt}}")
-            label(for="qtSold") {{::model.labels.qtSold}}
-                input(type="number",lang="pt", step="1", tabindex="7900", name="qtSold",
-                    ng-model="model.book.qtSold",
-                    aria-label="{{::model.placeholders.qtSold}}",
-                    placeholder="{{::model.placeholders.qtSold}}")
-            label(for="qtStore") {{::model.labels.qtStore}}
-                input(type="number",lang="pt", step="1", tabindex="8000", name="qtStore",
-                    ng-model="model.book.qtStore",
-                    aria-label="{{::model.placeholders.qtStore}}",
-                    placeholder="{{::model.placeholders.qtStore}}")
+                div.tool-tip.bottom(ng-show="bookrecordStoreForm.qt.$dirty && bookrecordStoreForm.qt.$invalid") {{::model.valMessages.qt.invalid}}
+
+            //label(for="qtSold") {{::model.labels.qtSold}}
+            //    input(type="number",lang="pt", step="1", tabindex="7900", name="qtSold",
+            //        min="0",
+            //        ng-model="model.book.qtSold",
+            //        aria-label="{{::model.placeholders.qtSold}}",
+            //        placeholder="{{::model.placeholders.qtSold}}")
+            //    div.tool-tip.bottom(ng-show="bookrecordStoreForm.qtSold.$dirty && bookrecordStoreForm.qtSold.$invalid") {{::model.valMessages.qtSold.invalid}}
+            //label(for="qtStore") {{::model.labels.qtStore}}
+            //    input(type="number",lang="pt", step="1", tabindex="8000", name="qtStore",
+            //        min="0",
+            //        ng-model="model.book.qtStore",
+            //        aria-label="{{::model.placeholders.qtStore}}",
+            //        placeholder="{{::model.placeholders.qtStore}}")
+            //    div.tool-tip.bottom(ng-show="bookrecordStoreForm.qtStore.$dirty && bookrecordStoreForm.qtStore.$invalid") {{::model.valMessages.qtStore.invalid}}
 
             input(type="checkbox", tabindex="8100", id="sellOnline", name="sellOnline",
                 ng-model="model.book.sellOnline",
@@ -97,9 +110,9 @@ form.enter-as-tab.on-focus(id="bookrecordStoreForm", logic-form="bookrecord", na
             label(for="isValuable") {{::model.labels.isValuable}}
 
 
-pre {{!!model.book._id | json}}
-pre {{!!model.book._id | json}}
-pre {{model.bookrecordLogicForm.$pristine() | json}}
-
-pre {{model.book | json}}
-pre {{ bookrecordStoreForm | json }}
+//pre {{!!model.book._id | json}}
+//pre {{!!model.book._id | json}}
+//pre {{model.bookrecordLogicForm.$pristine() | json}}
+//
+//pre {{model.book | json}}
+//pre {{ bookrecordStoreForm | json }}

@@ -69,6 +69,7 @@
       var logicForm = {
         name: name,
         addForm: addForm,
+        setPristine: setPristine,
         exists: exists,
         $invalid: isInvalid,
         $pristine: isPristine
@@ -102,6 +103,16 @@
           }
         }
         return false;
+      }
+      function setPristine() {
+        forms.forEach(function(item){
+          item.$setPristine();
+        });
+      }
+      function setDirty() {
+        forms.forEach(function(item){
+          item.$setDirty();
+        });
       }
       function addForm( form ) {
         if ( !this[form.$name] ) {

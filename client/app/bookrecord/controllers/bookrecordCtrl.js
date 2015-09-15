@@ -12,43 +12,24 @@
     .controller('BookrecordCtrl', BookrecordCtrl);
 
   /* @ngInject */
-  function BookrecordCtrl( $scope, $rootScope, _lodash, bookconfig, bookrecord, notifier ) {
+  function BookrecordCtrl( $scope, $rootScope, _lodash, bookconfig, bookrecord, notifier, $state, modalpopup, logicForm ) {
     /*jshint validthis: true */
     var model = this;
 
-    model.book = bookrecord.book;
-
-    model.labels = bookconfig.labels;
-
-    model.placeholders = bookconfig.placeholders;
-
-    model.valMessages = bookconfig.valMessages;
-
-    model.anoActual = new Date().getFullYear();
-
-    function getFirstItemIfOne( vArray ) {
-      return (vArray && vArray.length > 0) ? vArray[0] : '';
-    }
-
-    //for fields that are strings
-    function emitInitString(name, value) {
-      $scope.$emit('angtty:init:' + name, value);
-    }
-
-    //for fields that arrrays
-    function emitInitArray(name, fieldModel, value) {
-      model.book[fieldModel] = value;
-      emitInitString(name, model.book[fieldModel]);
-    }
-
+    var messages = {
+      TITLE: 'Registo/Edição de Livro',
+      SAVE: 'Pretende gravar as alterações efectuadas?',
+      CLEAR: 'Pretende limpar o formulário?\n\nPerderá os dados constantes no formulário.\n(o registo na base de dados não será afectado enquanto não efectuar "Gravar")',
+      RESET: 'Desfazer alterações efectaudas?\n\nO registo da base de dados será carregado.\n(perderá as alterações efectuadas no formulário)'
+    };
 
     bookrecord.get($rootScope.$stateParams.bookid)
       .then(function( /*data*/ ) {
         //treat book fields here
 
 
-//        model.book.author = getFirstItemIfOne(model.book.authors);
-//        $scope.$emit('angtty:init:authors', model.book.author);
+        //        model.book.author = getFirstItemIfOne(model.book.authors);
+        //        $scope.$emit('angtty:init:authors', model.book.author);
 
         emitInitArray('authors', 'author', getFirstItemIfOne(model.book.authors));
         emitInitArray('translators', 'translator', getFirstItemIfOne(model.book.translators));
@@ -71,68 +52,73 @@
         notifier.warning('Livro não encontrado', '', 'Registo/Edição');
       });
 
-    var autocompleteOptions = {showLog: true, clear: false, selectOnAutocomplete: false, emitOnlyIfPresent: true, watchInitEvent: true, watchSetValEvent: true};
-    var autocompleteTTOptions = {minLength: 3, limit: 20};
+    model.book = bookrecord.book;
 
-    model.config = {
-      author: {options: autocompleteOptions, ttoptions: autocompleteTTOptions},
-      language: {options: autocompleteOptions, ttoptions: autocompleteTTOptions},
-      country: {options: autocompleteOptions, ttoptions: autocompleteTTOptions},
-      publisher: {options: autocompleteOptions, ttoptions: autocompleteTTOptions},
-      category: {options: autocompleteOptions, ttoptions: autocompleteTTOptions},
-      keyword: {options: autocompleteOptions, ttoptions: autocompleteTTOptions},
-      translator: {options: autocompleteOptions, ttoptions: autocompleteTTOptions}
+    model.labels = bookconfig.labels;
+
+    model.placeholders = bookconfig.placeholders;
+
+    model.valMessages = bookconfig.valMessages;
+
+    model.anoActual = new Date().getFullYear();
+
+    model.resetForm = function() {
+      modalpopup.confirm(messages.RESET, messages.TITLE)
+        .then(function() {
+          bookrecord.reset();
+          logicForm.bookrecord.setPristine();
+        })
+        .catch(function() {
+        });
     };
 
-    function configTT(table){
-      model.config[table].ttoptions = angular.extend(
-        angular.copy(model.config[table].ttoptions),
-        {name: table, remote: '/api/tables/' + table + '/search/%QUERY', prefetch: '/assets/data/' + table + '.json'});
-    }
+    model.clearForm = function() {
+      modalpopup.confirm(messages.CLEAR, messages.TITLE)
+        .then(function() {
+          bookrecord.clear();
+        })
+        .catch(function() {
+          //notifier.info('no done', '', 'Book Record');
+        });
 
-    configTT('author');
-    configTT('language');
-    configTT('country');
-    configTT('publisher');
-    configTT('category');
-    configTT('keyword');
-    configTT('translator');
+    };
 
-    /*model.config.authors.ttoptions = angular.extend(
-      angular.copy(model.config.authors.ttoptions),
-      {name: 'authors', remote: '/api/tables/author/search/%QUERY', prefetch: '/assets/data/authors.json'});
-    model.config.languages.ttoptions = angular.extend(
-      angular.copy(model.config.languages.ttoptions),
-      {name: 'languages', remote: '/api/tables/language/search/%QUERY', prefetch: '/assets/data/languages.json'});
-    model.config.countries.ttoptions = angular.extend(
-      angular.copy(model.config.countries.ttoptions),
-      {name: 'countries', remote: '/api/tables/country/search/%QUERY', prefetch: '/assets/data/countries.json'});
-    model.config.publishers.ttoptions = angular.extend(
-      angular.copy(model.config.publishers.ttoptions),
-      {name: 'publishers', remote: '/api/tables/publisher/search/%QUERY', prefetch: '/assets/data/publishers.json'});
-    model.config.categories.ttoptions = angular.extend(
-      angular.copy(model.config.categories.ttoptions),
-      {name: 'categories', remote: '/api/tables/category/search/%QUERY', prefetch: '/assets/data/categories.json'});
-    model.config.keywords.ttoptions = angular.extend(
-      angular.copy(model.config.keywords.ttoptions),
-      {name: 'keywords', remote: '/api/tables/keyword/search/%QUERY', prefetch: '/assets/data/keywords.json'});
-    model.config.translators.ttoptions = angular.extend(
-      angular.copy(model.config.translators.ttoptions),
-      {name: 'translators', remote: '/api/tables/translator/search/%QUERY', prefetch: '/assets/data/translators.json'});
-*/
-    var active;
+    model.save = function() {
+      modalpopup.confirm(messages.SAVE, messages.TITLE)
+        .then(function( /*data*/ ) {
 
-    function logevent( func, item, data ) {
-      console.log(func + '----' + item.type, '  --target:', item.currentTarget.name, '--data:', data);
-    }
+          bookrecord.save()
+            .then(function( data ) {
+              notifier.info('Livro registado<br/>' + data.reference);
 
-    function removeIfExists( varray, item ) {
-      _lodash.remove(varray, function( val ) {
-        return val === item;
-      });
-    }
+              $state.transitionTo($state.current, {
+                bookid: data._id
+              }, {
+                reload: true,
+                inherit: false,
+                notify: true
+              });
 
-    model.events = {
+              /*$rootScope.$state.go('main.bookrecord', {
+                bookid: data._id
+              });*/
+            })
+            .catch(function( /*data*/) {
+              notifier.warning('Livro não registado', '', 'Registo/Edição');
+            });
+        })
+        .catch(function() {
+          //notifier.info('no done', '', 'Book Record');
+        });
+    };
+
+    model.removeItem = function( field, item ) {
+      removeIfExists(model.book[field], item);
+      $scope.$emit('angtty:setval:' + field, model.book[field].length > 1 ? '' : model.book[field][0]);
+    };
+
+    model.autocompleteEvents = {
+      active: false,
       /*onevent: function( item, data ) {
         console.log('type:' + item.type, '--target:', item.currentTarget.name);
         if(item.type === 'typeahead:change' && !data) {
@@ -150,18 +136,18 @@
       onactive: function( item, data ) {
         logevent('onactive', item, data);
         //para evitar abrir as sugestões ao receber p focus
-        active = true;
+        model.autocompleteEvents.active = true;
       },
       onopen: function( item, data ) {
         logevent('onopen', item, data);
 
         //para evitar abrir as sugestões ao receber p focus
         if ( item.type === 'typeahead:beforeopen' ) {
-          if ( active ) {
+          if ( model.autocompleteEvents.active ) {
             item.preventDefault();
           }
         }
-        active = false;
+        model.autocompleteEvents.active = false;
       },
       onchange: function( event, data ) {
         logevent('onchange', event, data);
@@ -204,19 +190,66 @@
         //
         //        });*/
       }
-
     };
 
-    model.bookflags = {
-      noinformation: false
+    var autocompleteOptions = {showLog: true, clear: false, selectOnAutocomplete: false, emitOnlyIfPresent: true, watchInitEvent: true, watchSetValEvent: true};
+    var autocompleteTTOptions = {minLength: 3, limit: 20};
+
+    model.config = {
+      author: {options: autocompleteOptions, ttoptions: autocompleteTTOptions},
+      language: {options: autocompleteOptions, ttoptions: autocompleteTTOptions},
+      country: {options: autocompleteOptions, ttoptions: autocompleteTTOptions},
+      publisher: {options: autocompleteOptions, ttoptions: autocompleteTTOptions},
+      category: {options: autocompleteOptions, ttoptions: autocompleteTTOptions},
+      keyword: {options: autocompleteOptions, ttoptions: autocompleteTTOptions},
+      translator: {options: autocompleteOptions, ttoptions: autocompleteTTOptions}
     };
+
+
+    configTT('author');
+    configTT('language');
+    configTT('country');
+    configTT('publisher');
+    configTT('category');
+    configTT('keyword');
+    configTT('translator');
+
+
+
+
+    function configTT(table){
+      model.config[table].ttoptions = angular.extend(
+        angular.copy(model.config[table].ttoptions),
+        {name: table, remote: '/api/tables/' + table + '/search/%QUERY', prefetch: '/assets/data/' + table + '.json'});
+    }
+    function getFirstItemIfOne( vArray ) {
+      return (vArray && vArray.length > 0) ? vArray[0] : '';
+    }
+
+    //for fields that are strings
+    function emitInitString(name, value) {
+      $scope.$emit('angtty:init:' + name, value);
+    }
+
+    //for fields that arrrays
+    function emitInitArray(name, fieldModel, value) {
+      model.book[fieldModel] = value;
+      emitInitString(name, model.book[fieldModel]);
+    }
+    function logevent( func, item, data ) {
+      console.log(func + '----' + item.type, '  --target:', item.currentTarget.name, '--data:', data);
+    }
+
+    function removeIfExists( varray, item ) {
+      _lodash.remove(varray, function( val ) {
+        return val === item;
+      });
+    }
+
 
     notifier.log('BookRecordCtrl', '', 'Controller');
 
-    model.removeItem = function( field, item ) {
-      removeIfExists(model.book[field], item);
-      $scope.$emit('angtty:setval:' + field, model.book[field].length > 1 ? '' : model.book[field][0]);
-    };
+
 
     //////////////
     //util

@@ -91,7 +91,7 @@
 
             ctrl.setDestroyMutationObserver();
           }
-          getNextItem(e.target).focus();
+          getNextItem(e.target).focus().select();
 
           return false;
         }

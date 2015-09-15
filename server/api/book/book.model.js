@@ -70,20 +70,18 @@ var table = require('../tables/tables.model');
 
 BookSchema.path('title').required(true, 'Título é obrigatório.');
 
-/*BookSchema.pre('save', function( next ) {
+BookSchema.pre('save', function( next ) {
   try {
-    if ( this.obs ) {
-      console.log(this.obs)
-      this.obs = this.obs[0].split('\n');
-      console.log(this.obs)
-    }
+
+    this.dateUpdate = Date.now();
+
   } catch( e ) {
 
   }
   next();
-});*/
+});
 
-BookSchema.post('save', function( doc ) {
+BookSchema.post('save', function( /*doc*/ ) {
 
   function addItem( Model, item ) {
     Model.find({'name': item}, function( err, data ) {

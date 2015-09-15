@@ -135,7 +135,13 @@ Book.find({}).remove(function () {
         'originalYearFirstEdition': {'invalid': 'ano entre 1500-Ano actual'},
         'editionNumber': {'invalid': 'valor inválido'},
         'circulation': {'invalid': 'valor inválido'},
-        'editionISBN': {'invalid': 'ISBN inválido'}
+        'editionISBN': {'invalid': 'ISBN inválido'},
+        'price': {'invalid': 'valor inválido'},
+        'priceInitial': {'invalid': 'valor inválido'},
+        'priceCost': {'invalid': 'valor inválido'},
+        'qt': {'invalid': 'valor inválido'},
+        'qtSold': {'invalid': 'valor inválido'},
+        'qtStore': {'invalid': 'valor inválido'}
       }
 
     }

@@ -1,13 +1,30 @@
+@media (min-width: 480px) {
+  .bookrecordStore-buttons {
+    display: block !important;
+    visibility: visible !important;
+  }
+}
+
 #bookrecordForm input#reference {
   font-size: 18px;
   text-align: center;
 }
 
+#bookrecordForm input.subtitle {
+  font-size:14px;
+  margin-top:2px;
+  line-height:13px
+}
+
+
+
 #bookrecordForm div.row.caixa {
+  margin-top: 10px;
   margin-bottom: 10px;
   box-shadow: 1px 1px 8px 0px #887F7F;
   padding-top: 5px;
-  padding-bottom: 5px;
+  /*padding-bottom: 5px;*/
+  padding-bottom: 10px;
   padding-right: 0px;
   margin-right: -10px;
 }
@@ -25,6 +42,10 @@
 #bookrecordForm div.title {
   margin-top: 10px;
 }
+#bookrecordForm div.title label[for=title] {
+  min-height: 100px;
+}
+
 #bookrecordForm div.title .reference span{
   #convert-px(to_percent, font-size, 13);
   font-weight: normal;
@@ -32,12 +53,13 @@
 
 @media (min-width: 1024px) {
   #bookrecordForm div.title{
-    //height: 80px;
-    #convert-px(to_em, height, 80);
+    ////height: 80px;
+    //#convert-px(to_em, height, /*80*/120);
+    height: auto;
   }
 
   #bookrecordForm div.title > div {
-    #vertical-center-align();
+    //#vertical-center-align();
   }
 
   #bookrecordForm div.title .reference{
@@ -46,7 +68,7 @@
   }
 
   #bookrecordForm div.title label {
-    min-height: 90px;
+    //min-height: /*90px*/125px;
   }
   #bookrecordForm div.title label input:not(:focus)[name=title] {
     font-size: 18px;

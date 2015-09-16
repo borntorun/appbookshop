@@ -24,7 +24,7 @@
     var service = {
       getConfig: getConfig,
       urlAbsolute: function() {
-        return $state.href($state.current.name, $state.params, {absolute: true})
+        return $state.href($state.current.name, $state.params, {absolute: true});
       }
     };
     return service;

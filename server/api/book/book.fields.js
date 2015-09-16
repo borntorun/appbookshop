@@ -5,6 +5,8 @@
 
 var fields = {
   storeSearch: {
+    'reference': 1,
+    'slug': 1,
     'title': 1,
     'authors': 1,
     'images': 1,
@@ -24,6 +26,8 @@ var fields = {
     'template': 1
   },
   storeDetail: {
+    'reference': 1,
+    'slug': 1,
     'title': 1,
     'authors': 1,
     'subject': 1,

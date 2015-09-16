@@ -11,7 +11,7 @@ var cors = require('cors'); //new
 var bodyParser = require('body-parser');
 var methodOverride = require('method-override');
 var cookieParser = require('cookie-parser');
-var errorHandler = require('errorhandler');
+//var errorHandler = require('errorhandler');
 var path = require('path');
 var config = require('./environment');
 
@@ -40,6 +40,7 @@ module.exports = function (app) {
     app.use(express.static(path.join(config.root, config.appPath)));
     app.set('appPath', config.appPath);
     app.use(morgan('dev'));
-    app.use(errorHandler()); // Error handler - has to be last
+    //app.use(errorHandler({log: errorNotification})); // Error handler - has to be last
   }
+
 };

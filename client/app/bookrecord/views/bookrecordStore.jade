@@ -3,7 +3,7 @@
 //    button.btn.btn-default(tabindex="10000",ng-show="model.book._id", ng-disabled="model.bookrecordLogicForm.$pristine()", type="button", ng-click="model.resetForm()") Desfazer
 //    button.btn.btn-default(tabindex="9998",ng-disabled="model.bookrecordLogicForm.$invalid()", type="submit", id="submit", ng-click="model.save()") Gravar
 
-form.enter-as-tab.on-focus(id="bookrecordStoreForm", logic-form="bookrecord", name="bookrecordStoreForm", novalidate, ng-model-options="{ debounce: 0 }")
+form.enter-as-tab.on-focus(ng-show="model.book.reference",id="bookrecordStoreForm", logic-form="bookrecord", name="bookrecordStoreForm", novalidate, ng-model-options="{ debounce: 0 }")
     .row
         .col-sm-12.padding20
             label(for="dateResgistration") {{::model.labels.dateResgistration}}

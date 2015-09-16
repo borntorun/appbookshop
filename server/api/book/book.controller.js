@@ -6,7 +6,6 @@ var searchLib = require('./book.search.lib');
 var util = require('../../util');
 //var ObjectId = require('mongoose').Types.ObjectId;
 
-
 function bookListResults( res ) {
   return function( err, Books ) {
     if ( err ) {
@@ -25,6 +24,8 @@ function bookListLimit( limit ) {
 exports.read = function( req, res ) {
   Book.find(bookListResults(res));
 };
+
+//simple search for books
 exports.search = function( req, res ) {
   //{"$or" : [{"ticket_no" : 725}, {"winner" : true}]}
   //Book.find((req.params.filter && JSON.parse(req.params.filter)) || {}).limit(req.params.limit || 10).exec(function(err, Books) {
@@ -36,25 +37,39 @@ exports.search = function( req, res ) {
     .limit(bookListLimit(req.params.limit))
     .exec(bookListResults(res));
 };
+
+//advanced search for books
 exports.advancedSearch = function( req, res ) {
   Book.find(searchLib.advfilter(req.params), BookFields.storeSearch)
     .limit(bookListLimit(req.params.limit))
     .exec(bookListResults(res));
 };
+
+//get one book
 exports.store = function( req, res ) {
-  Book.findById(req.params.id || '', BookFields.storeDetail, result(res));
+  var search = {'reference': req.params.reference || ''};
+
+  Book.findOne(search, BookFields.storeDetail, result(res));
 };
+
 /*exports.get = function( req, res ) {
   Book.findById(req.params.id || '', result(res));
 };*/
+
+//get one book for editing
 exports.edit = function( req, res ) {
-  Book.findById(req.params.id || '', result(res));
+  console.log('edit:------------------', req.params);
+  //Book.findById(req.params.id || '', result(res));
+
+  var search = {'reference': req.params.reference || ''};
+
+  Book.findOne(search, result(res));
 };
 
-// Save a Book in the DB.
+//save a book (new or existing)
 exports.save = function( req, res ) {
 
-  function updateArrays(toObj, fromObj) {
+  function updateArrays( toObj, fromObj ) {
 
     for ( var k in fromObj ) {
       if ( fromObj.hasOwnProperty(k) && util.isArray(fromObj[k]) ) {
@@ -86,13 +101,15 @@ exports.save = function( req, res ) {
 
       found.save(function( err, data ) {
         if ( err ) {
+          console.log('error on save', err);
           return handleError(err, res);
         }
 
         return res.json(200, {
           _id: data._id,
           reference: data.reference,
-          title: data.title
+          title: data.title,
+          slug: data.slug
         });
       });
     });
@@ -108,15 +125,15 @@ exports.save = function( req, res ) {
         return res.json(201, {
           _id: data.id,
           reference: data.reference,
-          title: data.title
+          title: data.title,
+          slug: data.slug
         });
       });
   }
-
 };
 
-function result(res){
-  return function(err, data){
+function result( res ) {
+  return function( err, data ) {
     if ( err ) {
       return handleError(err, res);
     }
@@ -126,11 +143,9 @@ function result(res){
     return res.json(200, data);
   };
 }
-
-
 function handleError( err, res ) {
   console.log(err);
-  return res.send(500, err);
+  return res.status(500).json({ error: err.message })
 }
 
 //// Updates an existing Book in the DB.
@@ -172,9 +187,6 @@ function handleError( err, res ) {
 //    });
 //  });
 //};
-
-
-
 
 /*
 {

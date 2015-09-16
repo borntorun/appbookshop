@@ -1,4 +1,4 @@
-form.enter-as-tab.on-focus(logic-form="bookrecord", id="bookrecordForm", name="bookrecordForm", novalidate, ng-submit="model.submitForm()", ng-model-options="{ debounce: 0 }")
+form.enter-as-tab.on-focus(ng-show="model.book.reference", logic-form="bookrecord", id="bookrecordForm", name="bookrecordForm", novalidate, ng-submit="model.submitForm()", ng-model-options="{ debounce: 0 }")
     .row
         .col-xs-12
             span.bookrecordStore-buttons.hidden.pull-right

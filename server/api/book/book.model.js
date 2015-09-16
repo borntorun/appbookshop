@@ -5,6 +5,7 @@ var Schema = require('mongoose').Schema;
 var BookSchema = new Schema({
   reference: { type: Number },
   title: { type: String },
+  slug: { type: String },
   authors: { type: [String] },
   subject: { type: String },
   editionNumber: { type: Number },
@@ -67,16 +68,26 @@ var BookSchema = new Schema({
   dateUpdate: { type: Date, default: Date.now }
 });
 var table = require('../tables/tables.model');
+var getSlug = require('speakingurl');
 
 BookSchema.path('title').required(true, 'Título é obrigatório.');
 
 BookSchema.pre('save', function( next ) {
+
   try {
 
     this.dateUpdate = Date.now();
 
+    this.slug = getSlug(this.title, {uricNoSlash: true, custom: {
+      '&': '-e-',
+      '$': '-cifr-',
+      '#': '-card-',
+      '%': '-perc-'
+    }});
+
   } catch( e ) {
 
+    next(e);
   }
   next();
 });

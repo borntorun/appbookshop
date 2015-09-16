@@ -49,8 +49,10 @@
     if ( $logProvider.debugEnabled ) {
       $logProvider.debugEnabled(true);
     }
-    $urlRouterProvider
-      .otherwise('/');
+
+    $urlRouterProvider.otherwise('/');
+
+
     $locationProvider.html5Mode({
       enabled: true,
       requireBase: false

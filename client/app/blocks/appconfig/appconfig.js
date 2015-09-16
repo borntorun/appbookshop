@@ -19,10 +19,13 @@
   }
 
   /* @ngInject */
-  function appconfig( httpRequest, notifier, appconfigHandler ) {
+  function appconfig( httpRequest, notifier, appconfigHandler, $state ) {
     var config = {};
     var service = {
-      getConfig: getConfig
+      getConfig: getConfig,
+      urlAbsolute: function() {
+        return $state.href($state.current.name, $state.params, {absolute: true})
+      }
     };
     return service;
 

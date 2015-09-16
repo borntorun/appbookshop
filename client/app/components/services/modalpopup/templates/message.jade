@@ -1,0 +1,5 @@
+.modal-header
+    h4.modal-title {{model.title}}
+.modal-body(ng-bind-html="model.message")
+.modal-footer
+    button.btn.btn-default(ng-click="$close()") Continuar

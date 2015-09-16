@@ -12,21 +12,21 @@
     .controller('BookrecordCtrl', BookrecordCtrl);
 
   /* @ngInject */
-  function BookrecordCtrl( $scope, $rootScope, _lodash, bookconfig, bookrecord, notifier, $state, modalpopup, logicForm ) {
+  function BookrecordCtrl( $scope, $rootScope, _lodash, bookconfig, bookrecord, notifier, $state, modalpopup, logicform, appconfig ) {
     /*jshint validthis: true */
     var model = this;
 
     var messages = {
       TITLE: 'Registo/Edição de Livro',
+      NOTFOUND: 'Livro não encontrado\n\n%url\n\nVerifique o endereço e tente novamente',
       SAVE: 'Pretende gravar as alterações efectuadas?',
       CLEAR: 'Pretende limpar o formulário?\n\nPerderá os dados constantes no formulário.\n(o registo na base de dados não será afectado enquanto não efectuar "Gravar")',
-      RESET: 'Desfazer alterações efectaudas?\n\nO registo da base de dados será carregado.\n(perderá as alterações efectuadas no formulário)'
+      RESET: 'Desfazer alterações efectuadas?\n\nO registo da base de dados será carregado.\n(perderá as alterações efectuadas no formulário)'
     };
 
-    bookrecord.get($rootScope.$stateParams.bookid)
+    bookrecord.get($rootScope.$stateParams.reference)
       .then(function( /*data*/ ) {
         //treat book fields here
-
 
         //        model.book.author = getFirstItemIfOne(model.book.authors);
         //        $scope.$emit('angtty:init:authors', model.book.author);
@@ -49,7 +49,11 @@
 
       })
       .catch(function( /*data*/ ) {
-        notifier.warning('Livro não encontrado', '', 'Registo/Edição');
+        //notifier.warning('Livro não encontrado', '', 'Registo/Edição');
+        modalpopup.message({message: messages.NOTFOUND, title: messages.TITLE, vars: {url: appconfig.urlAbsolute()}})
+          .finally(function() {
+            $state.go('main.search');
+          });
       });
 
     model.book = bookrecord.book;
@@ -63,17 +67,17 @@
     model.anoActual = new Date().getFullYear();
 
     model.resetForm = function() {
-      modalpopup.confirm(messages.RESET, messages.TITLE)
+      modalpopup.confirm({message: messages.RESET, title: messages.TITLE})
         .then(function() {
           bookrecord.reset();
-          logicForm.bookrecord.setPristine();
+          logicform.bookrecord.setPristine();
         })
         .catch(function() {
         });
     };
 
     model.clearForm = function() {
-      modalpopup.confirm(messages.CLEAR, messages.TITLE)
+      modalpopup.confirm({message: messages.CLEAR, title: messages.TITLE})
         .then(function() {
           bookrecord.clear();
         })
@@ -84,7 +88,7 @@
     };
 
     model.save = function() {
-      modalpopup.confirm(messages.SAVE, messages.TITLE)
+      modalpopup.confirm({message: messages.SAVE, title: messages.TITLE})
         .then(function( /*data*/ ) {
 
           bookrecord.save()
@@ -92,7 +96,10 @@
               notifier.info('Livro registado<br/>' + data.reference);
 
               $state.transitionTo($state.current, {
-                bookid: data._id
+                area: 'admin',
+                type: $state.params.type,
+                reference: data.reference,
+                slug: data.slug
               }, {
                 reload: true,
                 inherit: false,
@@ -103,8 +110,9 @@
                 bookid: data._id
               });*/
             })
-            .catch(function( /*data*/) {
+            .catch(function( /*data*/ ) {
               notifier.warning('Livro não registado', '', 'Registo/Edição');
+
             });
         })
         .catch(function() {
@@ -205,7 +213,6 @@
       translator: {options: autocompleteOptions, ttoptions: autocompleteTTOptions}
     };
 
-
     configTT('author');
     configTT('language');
     configTT('country');
@@ -214,28 +221,27 @@
     configTT('keyword');
     configTT('translator');
 
-
-
-
-    function configTT(table){
+    function configTT( table ) {
       model.config[table].ttoptions = angular.extend(
         angular.copy(model.config[table].ttoptions),
         {name: table, remote: '/api/tables/' + table + '/search/%QUERY', prefetch: '/assets/data/' + table + '.json'});
     }
+
     function getFirstItemIfOne( vArray ) {
       return (vArray && vArray.length > 0) ? vArray[0] : '';
     }
 
     //for fields that are strings
-    function emitInitString(name, value) {
+    function emitInitString( name, value ) {
       $scope.$emit('angtty:init:' + name, value);
     }
 
     //for fields that arrrays
-    function emitInitArray(name, fieldModel, value) {
+    function emitInitArray( name, fieldModel, value ) {
       model.book[fieldModel] = value;
       emitInitString(name, model.book[fieldModel]);
     }
+
     function logevent( func, item, data ) {
       console.log(func + '----' + item.type, '  --target:', item.currentTarget.name, '--data:', data);
     }
@@ -246,10 +252,7 @@
       });
     }
 
-
     notifier.log('BookRecordCtrl', '', 'Controller');
-
-
 
     //////////////
     //util

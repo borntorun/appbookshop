@@ -33,7 +33,7 @@
             name: 'categories',
             limit: BookSearch.getSearchLimit(),
             remote: '/api/tables/category/search/%QUERY',
-            prefetch: '/assets/data/categories.json',
+            prefetch: '/assets/data/category.json',
             classNames: {
                 input: 'searchadvcat'
             }

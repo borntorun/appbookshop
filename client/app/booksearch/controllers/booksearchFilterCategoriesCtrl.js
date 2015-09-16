@@ -23,7 +23,7 @@
         vm.ttoptions = {
             name: 'categories',
             remote: '/api/tables/category/search/%QUERY',
-            prefetch: '/assets/data/categories.json'
+            prefetch: '/assets/data/category.json'
         };
         vm.removeCat = function (item) {
             removeIfExists(item);

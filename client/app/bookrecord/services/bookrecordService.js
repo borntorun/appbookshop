@@ -149,6 +149,7 @@
         postfaceBy: [],
         images: [],
         correctors: [],
+        slug: null,
         title: null,
         subject: null,
         editionNumber: null,

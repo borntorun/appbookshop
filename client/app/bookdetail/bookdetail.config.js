@@ -18,7 +18,11 @@
     states['main.bookdetail'] = {
       /* Detail view for book */
       /* ATENÇÃO: NÃO COLOCAR / NO INÍCIO ... CHILD VIEW */
-      url: 'livro/{bookid}',
+
+      url: '{type:book|livro}/{reference}/{slug}',
+      params: {
+        slug: { value: null, squash: true }
+      },
       /* Views affected by this url */
       views: {
         '': {templateUrl: 'app/bookdetail/jade/bookdetailPageLayout.html',controller: 'BookDetailPageCtrl as vm'},

@@ -16,14 +16,13 @@
   /* @ngInject */
   function modalpopupProvider() {
 
-
     this.config = function( config ) {
       if ( config ) {
       }
     };
 
     /* @ngInject */
-    this.$get = function($modal) {
+    this.$get = function( $modal ) {
       $modal_ = $modal;
       return new ModalPopupServiceFactory();
     };
@@ -39,7 +38,8 @@
       return the service
        */
       return {
-        confirm : confirm
+        confirm: confirm,
+        message: message
       };
     }
 
@@ -53,10 +53,34 @@
      * @param title
      * @returns {*}
      */
-    function confirm(message, title) {
-      options.message = message? message.replace(/\n/g, '<br/>'): message;
-      options.title = title? title.replace(/\n/g, '<br/>'): title;
+    function confirm( opt ) {
+      //      options.message = opt.message? opt.message.replace(/\n/g, '<br/>'): opt.message;
+      //      options.title = opt.title? opt.title.replace(/\n/g, '<br/>'): opt.title;
+      //      options.message = replaceArgs(opt.message, opt.vars);
+      opt.templateUrl = opt.templateUrl || '/app/components/services/modalpopup/templates/confirm.html';
+      return show(opt);
+    }
+
+    function message( opt ) {
+      //      options.message = opt.message? opt.message.replace(/\n/g, '<br/>'): opt.message;
+      //      options.message = replaceArgs(opt.message, opt.vars);
+      //      options.title = opt.title? opt.title.replace(/\n/g, '<br/>'): opt.title;
+      opt.templateUrl = opt.templateUrl || '/app/components/services/modalpopup/templates/message.html';
+      return show(opt);
+    }
+
+    function show( opt ) {
+      options.message = replaceArgs(opt.message ? opt.message.replace(/\n/g, '<br/>') : opt.message, opt.vars);
+      options.title = opt.title ? opt.title.replace(/\n/g, '<br/>') : opt.title;
+      options.templateUrl = opt.templateUrl;
       return $modal_.open(options).result;
+    }
+
+    function replaceArgs( message, vars ) {
+      for ( var k in vars ) {
+        message = message.replace(new RegExp('%' + k, 'ig'), vars[k]);
+      }
+      return message;
     }
 
     /*
@@ -64,19 +88,18 @@
      */
     var $modal_;
     var options = {
-      templateUrl: '/app/components/services/modalpopup/templates/confirm.html',
+      //templateUrl: '/app/components/services/modalpopup/templates/confirm.html',
       controller: modalCtrl,
       controllerAs: 'model'/*,
         windowClass:"positionModal"*/
     };
 
-    function modalCtrl(/*$scope*/) {
+    function modalCtrl( /*$scope*/ ) {
       var model = this;
 
       model.title = options.title;
       model.message = options.message;
     }
-
 
   }
 }());

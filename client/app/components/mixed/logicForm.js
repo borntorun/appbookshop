@@ -36,7 +36,7 @@
     .module('appBookShop.components')
     .directive('logicForm', logicFormDirective)
     .controller('logicFormCtrl', logicFormCtrl)
-    .service('logicForm', logicForm);
+    .service('logicform', logicForm);
 
   /**
    * Service to mantain logic form entities
@@ -109,11 +109,11 @@
           item.$setPristine();
         });
       }
-      function setDirty() {
+      /*function setDirty() {
         forms.forEach(function(item){
           item.$setDirty();
         });
-      }
+      }*/
       function addForm( form ) {
         if ( !this[form.$name] ) {
           /*form.isFieldChangedInvalid = function(fieldName) {
@@ -141,10 +141,10 @@
    * Controller for the directive
    * @param logicForm
    */
-  function logicFormCtrl( /*$scope,*/ logicForm ) {
+  function logicFormCtrl( /*$scope,*/ logicform ) {
     this.initialize = function( logicName, formController, elementController ) {
       elementController[formController.$name] = formController;
-      elementController[logicName + 'LogicForm'] = logicForm.register(logicName, formController);
+      elementController[logicName + 'LogicForm'] = logicform.register(logicName, formController);
     };
 
   }

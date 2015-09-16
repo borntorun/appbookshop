@@ -1,7 +1,6 @@
 .modal-header
     h4.modal-title {{model.title}}
-.modal-body
-    | {{model.message}}
+.modal-body(ng-bind-html="model.message")
 .modal-footer
     button.btn.btn-default(ng-click="$close()") Sim
     button.btn.btn-default(ng-click="$dismiss()") Não

@@ -23,7 +23,7 @@
 
     vm.bookconfiglabels = bookconfig.labels;
 
-    bookdetail.get($rootScope.$stateParams.bookid)
+    bookdetail.get($rootScope.$stateParams.reference)
       .then(function( data ) {
         //$scope.$apply(function(){
         vm.book = data;

@@ -113,15 +113,15 @@
     model.autocompleteEvents = {
       active: false,
 
-      onevent: function( item, data ) {
+      onevent: function( /*item, data*/ ) {
         //logevent('onevent', item, data);
       },
-      onactive: function( item, data ) {
+      onactive: function( /*item, data*/ ) {
         //logevent('onactive', item, data);
         //para evitar abrir as sugestões ao receber p focus
         model.autocompleteEvents.active = true;
       },
-      onopen: function( item, data ) {
+      onopen: function( item/*, data*/ ) {
         //logevent('onopen', item, data);
 
         //para evitar abrir as sugestões ao receber p focus
@@ -151,7 +151,7 @@
         }
 
       },
-      onselect: function( item, data ) {
+      onselect: function( /*item, data*/ ) {
         //logevent('onselect', item, data);
       }
     };
@@ -194,9 +194,9 @@
       emitInitString(name, model.book[fieldModel]);
     }
 
-    function logevent( func, item, data ) {
+    /*function logevent( func, item, data ) {
       console.log(func + '----' + item.type, '  --target:', item.currentTarget.name, '--data:', data);
-    }
+    }*/
 
     function removeIfExists( varray, item ) {
       _lodash.remove(varray, function( val ) {

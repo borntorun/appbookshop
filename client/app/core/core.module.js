@@ -5,16 +5,16 @@
   'use strict';
 
   angular.module('appBookShop.core', [
-    /*
-     * Angular modules
-     */
-    //'ngCookies', 'ngResource', 'ngSanitize', 'ngAnimate', 'ui.router', 'ui.bootstrap', 'angular.jquery', 'dynamicLayout',
 
     /*
      * Our reusable cross app code modules
      */
     //'blocks.exception', 'blocks.logger', 'blocks.router',
-    'blocks.notifier', 'blocks.exception', 'blocks.appconfig', 'appBookShop.components',
+    'appBookShop.components',
+    'blocks.notifier',
+    'blocks.exception',
+    'blocks.appconfig',
+
     /*
      * 3rd Party modules
      */

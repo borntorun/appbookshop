@@ -6,12 +6,12 @@
 var search = {};
 
 function sanitizeStringDollar(value) {
-  return value.replace(/^\$[\$]*/,"");
+  return value.replace(/^\$[\$]*/,'');
 }
 
 function sanitizeInputArray(aInput) {
   aInput.forEach(function(element, index, aValues){
-    aValues[index] = sanitizeStringDollar(element);//element.replace(/^\$[\$]*/,"");
+    aValues[index] = sanitizeStringDollar(element);//element.replace(/^\$[\$]*/,'');
   });
   return aInput;
 }
@@ -31,15 +31,15 @@ search.filter = function (filter){
   var aValues;
 
   if (filter) {
-    aValues = transformRegExpInputArray(sanitizeInputArray(filter.split(",")));
+    aValues = transformRegExpInputArray(sanitizeInputArray(filter.split(',')));
     console.log(aValues);
-    return {"$or": [
-      {"title": {"$in" : aValues}},
-      {"originalTitle": {"$in" : aValues}},
-      {"authors": {"$in" : aValues}},
-      {"keywords": {"$in" : aValues}},
-      {"subject": {"$in" : aValues}},
-      {"editionLanguage": {"$in" : aValues}}
+    return {'$or': [
+      {'title': {'$in' : aValues}},
+      {'originalTitle': {'$in' : aValues}},
+      {'authors': {'$in' : aValues}},
+      {'keywords': {'$in' : aValues}},
+      {'subject': {'$in' : aValues}},
+      {'editionLanguage': {'$in' : aValues}}
     ]};
   }
   return {};
@@ -47,20 +47,24 @@ search.filter = function (filter){
 
 
 function setadvFilter(objFilter, key, value) {
-  if (value && value!=="-") {
-    objFilter[key] = {"$in": [getRegExpFromString(sanitizeStringDollar(value))]};
+  if (value && value!=='-') {
+    objFilter[key] = {'$in': [getRegExpFromString(sanitizeStringDollar(value))]};
   }
 }
-
+function setadvFilterNumber(objFilter, key, value) {
+  if (value && value!=='-') {
+    objFilter[key] = {'$eq': sanitizeStringDollar(value)};
+  }
+}
 search.advfilter = function (filter){
   var objFilter={};
 
-  setadvFilter(objFilter, "title", filter.title);
-  setadvFilter(objFilter, "authors", filter.authors);
-  setadvFilter(objFilter, "subject", filter.subject);
-  setadvFilter(objFilter, "nameCollection", filter.collection);
-  setadvFilter(objFilter, "categories", filter.categories);
-  setadvFilter(objFilter, "editionNumber", filter.edition);
+  setadvFilter(objFilter, 'title', filter.title);
+  setadvFilter(objFilter, 'authors', filter.authors);
+  setadvFilter(objFilter, 'subject', filter.subject);
+  setadvFilter(objFilter, 'nameCollection', filter.collection);
+  setadvFilter(objFilter, 'categories', filter.categories);
+  setadvFilterNumber(objFilter, 'editionNumber', filter.edition);
 
 
 

@@ -6,7 +6,7 @@ nav.navbar.navbar-default.navbar-fixed-top
                 span.icon-bar
                 span.icon-bar
                 span.icon-bar
-            a.navbar-brand(ui-sref="main.search") Livraria Torres
+            a.navbar-brand(ui-sref="main.search") Livros & Livros
         div.navbar-collapse.collapse(id="navbar")
             //ul.nav.navbar-nav.navbar-left.nav-barra-topo
             //    li
@@ -19,7 +19,7 @@ nav.navbar.navbar-default.navbar-fixed-top
                     ul.dropdown-menu(role="menu")
                         li.dropdown-header Livros
                         li
-                            a(href="#", ng-click="bookAdd()") Adicionar
+                            a(ui-sref="main.bookrecord({type:'livro',reference:'new',slug:''})") Adicionar
                         li.divider
                         li.dropdown-header ...
                 li.dropdown

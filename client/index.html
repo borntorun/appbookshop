@@ -1,12 +1,12 @@
 <!doctype html>
 <!--[if lt IE 7]>
-<html ng-app="appBookShop" class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<html lang="pt" ng-app="appBookShop" class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>
-<html ng-app="appBookShop" class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<html lang="pt" ng-app="appBookShop" class="no-js lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>
-<html ng-app="appBookShop" class="no-js lt-ie9"> <![endif]-->
+<html lang="pt" ng-app="appBookShop" class="no-js lt-ie9"> <![endif]-->
 <!--[if gt IE 8]><!-->
-<html ng-app="appBookShop" class="no-js"> <!--<![endif]-->
+<html lang="pt" ng-app="appBookShop" class="no-js"> <!--<![endif]-->
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -29,7 +29,6 @@
     <!-- build:css(client) app/vendor.css -->
     <!-- bower:css -->
     <link rel="stylesheet" href="bower_components/toastr/toastr.css" />
-    <link rel="stylesheet" href="bower_components/jquery-ui/themes/smoothness/jquery-ui.css" />
     <!-- endbower -->
     <!-- endbuild -->
     <!-- build:css({.tmp,client}) app/app.css -->
@@ -39,6 +38,7 @@
     <!-- endbuild -->
 </head>
 <body class="ng-cloack">
+
 <!--[if lt IE 7]>
 <p class="browsehappy">Está a utilizar um navegador <strong>desactualizado</strong>. Por favor,<a href="http://browsehappy.com/">actualize o seu navegador</a> para uma melhor experiência.</p>
 
@@ -52,16 +52,19 @@
 <div ui-view></div>
 <div ui-view="hint"></div>
 
-<!--<div class="nav navbar-fixed-bottom" style="width:250px">-->
-    <!--<pre>-->
-      <!--&lt;!&ndash; Here's some values to keep an eye on in the sample in order to understand $state and $stateParams &ndash;&gt;-->
-      <!--$state = {{$state.current.name}}-->
-      <!--$stateParams = {{$stateParams}}-->
-      <!--$state full url = {{ $state.$current.url.source }}-->
-      <!--&lt;!&ndash; $state.$current is not a public api, we are using it to-->
-           <!--display the full url for learning purposes&ndash;&gt;-->
-    <!--</pre>-->
-<!--</div>-->
+<!--<div class="nav navbar-fixed-bottom" style="width:100%">-->
+<!--<div style="width:100%">
+    <pre>
+      &lt;!&ndash; Here's some values to keep an eye on in the sample in order to understand $state and $stateParams &ndash;&gt;
+      $state = {{$state.current.name}}
+      $state = {{$state.current}}
+      $stateParams = {{$stateParams}}
+      $state full url = {{ $state.$current.url.source }}
+      {{$state.href($state.current.name, $state.params, {absolute: true})}}
+      &lt;!&ndash; $state.$current is not a public api, we are using it to
+           display the full url for learning purposes&ndash;&gt;
+    </pre>
+</div>-->
 
 
 
@@ -109,21 +112,17 @@
 <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
 <script src="bower_components/angular-cookies/angular-cookies.js"></script>
 <script src="bower_components/angular-resource/angular-resource.js"></script>
-<script src="bower_components/jquery-ui/jquery-ui.js"></script>
-<script src="bower_components/lodash/lodash.js"></script>
-<script src="bower_components/angular-dynamic-layout/src/dynamic-layout.js"></script>
-<script src="bower_components/angular-dynamic-layout/src/services/filter.js"></script>
-<script src="bower_components/angular-dynamic-layout/src/services/position.js"></script>
-<script src="bower_components/angular-dynamic-layout/src/services/ranker.js"></script>
-<script src="bower_components/angular.jquery/dist/angular.jquery.js"></script>
-<script src="bower_components/api-check/dist/apiCheck.js"></script>
-<script src="bower_components/angular-formly/dist/formly.js"></script>
-<script src="bower_components/angular-formly-templates-bootstrap/dist/angular-formly-templates-bootstrap.js"></script>
+<script src="bower_components/angular-dynamic-layout/dist/angular-dynamic-layout.js"></script>
 <script src="bower_components/typeahead.js/dist/typeahead.bundle.js"></script>
 <script src="bower_components/js-signals/dist/signals.js"></script>
 <script src="bower_components/angular-jssignals/dist/angular-jssignals.js"></script>
 <script src="bower_components/q/q.js"></script>
 <script src="bower_components/angular-typeaheadjs/dist/angular-typeaheadjs.js"></script>
+<script src="bower_components/lodash/lodash.js"></script>
+<script src="bower_components/localforage/dist/localforage.js"></script>
+<script src="bower_components/localforage-sessionstoragewrapper/src/localforage-sessionstoragewrapper.js"></script>
+<script src="bower_components/simple-basket/dist/simplebasket.js"></script>
+<script src="bower_components/simple-basket/dist/plugins/storage-localforage.js"></script>
 <!-- endbower -->
 <!-- endbuild -->
 
@@ -135,6 +134,7 @@
 <script src="app/blocks/exception/exception.module.js"></script>
 <script src="app/blocks/notifier/notifier.module.js"></script>
 <script src="app/bookdetail/bookdetail.module.js"></script>
+<script src="app/bookrecord/bookrecord.module.js"></script>
 <script src="app/booksearch/booksearch.module.js"></script>
 <script src="app/components/components.module.js"></script>
 <script src="app/core/core.module.js"></script>
@@ -143,6 +143,7 @@
 <script src="app/core/core.constants.js"></script>
 <script src="app/main/main.constants.js"></script>
 <script src="app/bookdetail/bookdetail.config.js"></script>
+<script src="app/bookrecord/bookrecord.config.js"></script>
 <script src="app/booksearch/booksearch.config.js"></script>
 <script src="app/core/core.config.js"></script>
 <script src="app/main/main.config.js"></script>
@@ -150,14 +151,26 @@
 <script src="app/blocks/exception/exception-handler.provider.js"></script>
 <script src="app/blocks/exception/exception.js"></script>
 <script src="app/blocks/notifier/notifier.js"></script>
-<script src="app/bookdetail/bookdetailPageCtrl.js"></script>
-<script src="app/bookdetail/bookdetailService.js"></script>
-<script src="app/booksearch/booksearchAdvancedFormCtrl.js"></script>
-<script src="app/booksearch/booksearchFilterCategories.js"></script>
-<script src="app/booksearch/booksearchFreeFormCtrl.js"></script>
-<script src="app/booksearch/booksearchResultCtrl.js"></script>
-<script src="app/booksearch/booksearchService.js"></script>
-<script src="app/components/test-directive.js"></script>
+<script src="app/bookdetail/controllers/bookdetailPageCtrl.js"></script>
+<script src="app/bookdetail/services/bookdetailService.js"></script>
+<script src="app/bookrecord/controllers/bookrecordCtrl.js"></script>
+<script src="app/bookrecord/controllers/bookrecordStoreCtrl.js"></script>
+<script src="app/bookrecord/services/bookrecordService.js"></script>
+<script src="app/booksearch/controllers/booksearchAdvancedFormCtrl.js"></script>
+<script src="app/booksearch/controllers/booksearchFilterCategoriesCtrl.js"></script>
+<script src="app/booksearch/controllers/booksearchFreeFormCtrl.js"></script>
+<script src="app/booksearch/controllers/booksearchResultCtrl.js"></script>
+<script src="app/booksearch/services/booksearchService.js"></script>
+<script src="app/components/directives/enterAsTab.js"></script>
+<script src="app/components/directives/formInputTooltip.js"></script>
+<script src="app/components/directives/isbn.js"></script>
+<script src="app/components/directives/splitArrayText.js"></script>
+<script src="app/components/mixed/logicForm.js"></script>
+<script src="app/components/services/err.js"></script>
+<script src="app/components/services/http.js"></script>
+<script src="app/components/services/isbn.js"></script>
+<script src="app/components/services/modalpopup/modalpopup.js"></script>
+<script src="app/components/services/mutationObserver.js"></script>
 <script src="app/main/main.js"></script>
 <script src="app/navbar/top/navbarTopCtrl.js"></script>
 <!-- endinjector -->

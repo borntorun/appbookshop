@@ -8,9 +8,9 @@
   'use strict';
   angular.module('appBookShop.booksearch').factory('BookSearch', BookSearch);
   /* @ngInject */
-  function BookSearch($rootScope, $http, $q, exception, SignalsService, notifier) {
+  function BookSearch( httpRequest, Q, SignalsService, notifier) {
     var serviceData = {
-      inputsearchDefault: 'freud,musil,outsider,proust,buc',
+      inputsearchDefault: '',
       inputsearch: '',
       inputsearchObjDefault: {title: '-', authors: '-', subject: '-', collection: '-', categories: '-', edition: '-'},
       inputsearchObj: {title: '', authors: '', subject: '', collection: '', categories: '', edition: ''},
@@ -42,24 +42,33 @@
     };
     return service;
     /////////
-    function httpGet(url, strParameters, qDeferred) {
-      $http.get(url + strParameters, {cache: true}).then(function (resp, status, headers, conf) {
-        serviceData.isinit = false;
-        serviceData.results = resp.data;
-        qDeferred.resolve(serviceData.results);
-      }).catch(function (message) {
-        exception.catcher()(message);
-        qDeferred.reject(message);
-      });
+
+    function handlerError( options ) {
+      notifier.log(options.message, options.data, 'Error');
+      return options.message;
+    }
+    function httpGet(url, strParameters) {
+      var defer = Q.defer();
+
+      httpRequest.get({url:url + strParameters})
+        .then(function(data) {
+          serviceData.isinit = false;
+          serviceData.results = data;
+          defer.resolve(serviceData.results);
+        })
+        .catch(function(data){
+          defer.reject(handlerError({message: 'Erro na procura.', data: data}));
+        });
+      return defer.promise;
     }
 
     function searchAdvanced(inputObj, limit) {
       function getPar(par) {
-        return par || "-";
+        return par || '-';
       }
       function getParameteresAsString() {
         var obj = serviceData.inputsearchObj;
-        var aStr = []
+        var aStr = [];
 
         aStr.push(getPar(obj.title));
         aStr.push(getPar(obj.authors));
@@ -80,17 +89,13 @@
       serviceData.inputsearchObj = obj;
       serviceData.limit = limit ? limit : serviceData.limitDefault;
 
-      var deferred = $q.defer();
-      httpGet('/api/books/search/advanced/', serviceData.limit + '/' + getParameteresAsString(), deferred);
-      return deferred.promise;
+      return httpGet('/api/books/search/advanced/', serviceData.limit + '/' + getParameteresAsString());
     }
 
     function searchFree(input, limit) {
-      var deferred = $q.defer();
       serviceData.inputsearch = input !== undefined ? input : serviceData.inputsearchDefault;
       serviceData.limit = limit ? limit : serviceData.limitDefault;
-      httpGet('/api/books/search/free/', serviceData.limit + '/' + (serviceData.inputsearch || ''), deferred);
-      return deferred.promise;
+      return httpGet('/api/books/search/free/', serviceData.limit + '/' + (serviceData.inputsearch || ''));
     }
     function getInputDefault() {
       return serviceData.inputsearchDefault;

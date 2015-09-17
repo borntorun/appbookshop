@@ -13,14 +13,25 @@
 
   /* @ngInject */
   function moduleConfig($stateProvider, _lodash) {
-    var states = {}
+    var states = {};
 
-    states["main.bookdetail"] = {
+    states['main.bookdetail'] = {
       /* Detail view for book */
-      url: 'livro/{bookid}',
+      /* ATENÇÃO: NÃO COLOCAR / NO INÍCIO ... CHILD VIEW */
+
+      url: '{type:book|livro}/{reference}/{slug}',
+      params: {
+        slug: { value: null, squash: true }
+      },
       /* Views affected by this url */
       views: {
-        '': {templateUrl: 'app/bookdetail/jade/bookdetailPageLayout.html',controller: 'BookDetailPageCtrl as vm'}
+        '': {templateUrl: 'app/bookdetail/jade/bookdetailPageLayout.html',controller: 'BookDetailPageCtrl as vm'},
+        'navbarleft-books@main': {
+          template: 'teste1'
+        },
+        'main-bottom@main': {
+          template: 'view bottom'
+        }
         /*,
         'navbarleft-books': {
           templateUrl: 'components/books/detail/bookDetailFeatured.html'

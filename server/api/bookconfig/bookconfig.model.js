@@ -2,7 +2,10 @@
 var config = require('../../config/environment');
 var Schema = require('mongoose').Schema;
 var BookConfigSchema = new Schema({
-  labels: { type: Schema.Types.Mixed }
+  search: { type: Schema.Types.Mixed },
+  labels: { type: Schema.Types.Mixed },
+  placeholders: { type: Schema.Types.Mixed },
+  valMessages: { type: Schema.Types.Mixed }
 }, {
   collection: 'bookconfig'
 });

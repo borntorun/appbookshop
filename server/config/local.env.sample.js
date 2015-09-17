@@ -4,7 +4,7 @@
 //
 // You will need to set these on the server you deploy to.
 module.exports = {
-  DOMAIN: 'http://192.168.40.20:9000',
+  DOMAIN: 'http://192.168.40.25:9000',
   SESSION_SECRET: 'appBookShop-secret',
   // Control debug level for modules using visionmedia/debug
   DEBUG: ''

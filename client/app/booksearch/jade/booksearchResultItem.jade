@@ -2,9 +2,9 @@
     div.block-price {{::it.price}} €
     div.block-price-icons-triangshadow
     div.panel.panel-default
-
         div.panel-heading.block-title
-            a(ui-sref="main.bookdetail({bookid:it._id})")
+            //|{{it.reference}}
+            a(ui-sref="main.bookdetail({type:'livro',reference:it.reference,slug:it.slug})")
                 span.title.appbooklink {{::it.title}}
             div(ng-class="{'hidden': !it.authors || it.authors.length===0}")
                 span(ng-repeat="author in ::it.authors")
@@ -24,6 +24,6 @@
                         | ISBN:{{::it.editionISBN}}
             carousel.carousel(interval="0")
                 slide(ng-repeat="foto in ::it.images")
-                    a(ui-sref="main.bookdetail({bookid:it._id})")
+                    a(ui-sref="main.bookdetail({type:'livro',reference:it.reference,slug:it.slug})")
                         img.block-image(ng-src="{{::foto}}")
 

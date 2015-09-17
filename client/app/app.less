@@ -80,9 +80,19 @@
 }
 .tt-suggestion {
   padding: 3px 20px;
-  font-size: 12px;
-  line-height: 15px;
+  font-size:14px; /*12px;*/
+  line-height: 17px;/*15px;*/
 }
+@media (max-width: 1023px) {
+
+  .tt-suggestion {
+
+    font-size: 15px; /*12px;*/
+    line-height: 18px; /*15px;*/
+
+  }
+}
+
 .tt-suggestion:hover {
   cursor: pointer;
 }
@@ -90,15 +100,32 @@
   color: #fff;
   background-color: #0097cf;
   cursor: pointer;
+
+  width:104%;
+  margin-left: -2%;
+  border-radius: 3px;
 }
 .tt-suggestion p {
   margin: 0;
 }
 
+.padding5 {
+  padding: 5px;
+}
+.padding10 {
+  padding: 10px;
+}
+.padding15 {
+  padding: 15px;
+}
+.padding20 {
+  padding: 20px;
+}
 // injector
 @import 'blocks/less/mixins.less';
 @import 'blocks/less/var.less';
-@import 'main/main.less';
+@import 'main/less/main.less';
 @import 'bookdetail/less/bookdetail.less';
+@import 'bookrecord/less/bookrecord.less';
 @import 'booksearch/less/booksearch.less';
 // endinjector

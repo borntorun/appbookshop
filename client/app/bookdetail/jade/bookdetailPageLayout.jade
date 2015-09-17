@@ -1,182 +1,181 @@
-//div.row
-//    div.col-xs-12.panel.panel-default
-div.col-xs-12.bookdetail
-    div.row.panel.panel-default.nomargins.bookdetail-panel
-        div.col-xs-12.col-sm-4.col-md-4.col-lg-4
-            div.text-center.blockimage-panel-parent
-                carousel.carousel(interval="0")
-                    slide(ng-repeat="foto in vm.book.images")
-                        img.block-image(ng-src="{{foto}}")
-                        //img.bookdetail-image(ng-src="{{vm.book.images[0]}}")
-                        //img(ng-src="{{foto}}", style="/*margin:auto;height:160px;width:140px;display: block;*/")
-            div.panel.panel-default.hidden-xs
-                div.panel-heading(ng-class="{'hidden': vm.bookflags.nocategories}")
-                    | Catalogado em:
-                ul.list-group(ng-class="{'hidden': vm.bookflags.nocategories}")
-                    li.list-group-item(ng-repeat="item in vm.book.categories")
-                        span
-                        span(ng-click="vm.searchCategoria(item)").appbooklink {{item}}
+//div.col-xs-12.bookdetail
+//div.row.panel.panel-default.nomargins.bookdetail-panel
+div.row.panel.panel-default.nomargins.bookdetail
+    div.col-xs-12.col-sm-4.col-md-4.col-lg-4
+        div.text-center.blockimage-panel-parent
+            carousel.carousel(interval="0")
+                slide(ng-repeat="foto in vm.book.images")
+                    img.block-image(ng-src="{{foto}}")
+                    //img.bookdetail-image(ng-src="{{vm.book.images[0]}}")
+                    //img(ng-src="{{foto}}", style="/*margin:auto;height:160px;width:140px;display: block;*/")
+        div.panel.panel-default.hidden-xs
+            div.panel-heading(ng-class="{'hidden': vm.bookflags.nocategories}")
+                | Catalogado em:
+            ul.list-group(ng-class="{'hidden': vm.bookflags.nocategories}")
+                li.list-group-item(ng-repeat="item in vm.book.categories")
+                    span
+                    span(ng-click="vm.searchCategoria(item)").appbooklink {{item}}
 
-        div.col-xs-12.col-sm-8.col-md-8.col-lg-8.bookdetail-panel-right
-            div.row
-                div.col-xs-12
+    div.col-xs-12.col-sm-8.col-md-8.col-lg-8.bookdetail-panel-right
+        div.row
+            div.col-xs-12
+                div
+                    span.booktitle {{vm.book.title}}
                     div
-                        span.booktitle {{vm.book.title}}
-                        div
-                            em {{vm.book.subtitle}}
-                        div.bookauthor
-                            span(ng-repeat="author in vm.book.authors")
-                                a.fielditem.appbooklink(ui-sref="main.search.advresults({type:\"advanced\",limit:25,title:\"-\",authors:author,subject:\"-\",collection:\"-\",categories:\"-\",edition: \"-\"})")
-                                    | {{::author}}
+                        em {{vm.book.subtitle}}
+                    div.bookauthor
+                        span(ng-repeat="author in vm.book.authors")
+                            a.fielditem.appbooklink(ui-sref="main.search.advresults({type:\"advanced\",limit:25,title:\"-\",authors:author,subject:\"-\",collection:\"-\",categories:\"-\",edition: \"-\"})")
+                                | {{::author}}
 
 
-                            //span ({{vm.bookconfiglabels['authors']}})
-                    div.pull-left
+                        //span ({{vm.bookconfiglabels['authors']}})
+                div.pull-left
+                    ul.list-group
+                        li.list-group-item.boxedicao
+                            span
+                            span {{vm.book.editionPublisher}}
+                            br
+                            span {{vm.book.editionNumber}}ª&nbsp;Edição,&nbsp;
+                            span {{vm.book.editionYear}},&nbsp;
+                            span {{vm.book.editionCountry}}
+                div.block-price
+                    | {{vm.book.price}} €
+                button.boxprice.btn.btn-default
+                    strong
+                        | Comprar
+
+
+                div.block-price-icons-triangshadow
+                //div.boxprice
+                //    button.btn.btn-default
+                //        | {{vm.book.price}} €&nbsp;
+                //        br
+                //        strong
+                //            | Comprar
+
+                //div.pull-right
+                    span {{vm.book.price}} €&nbsp;
+        div.row
+            div.col-xs-12.col-sm-6
+                div.panel.panel-default
+                    div.panel-heading Detalhe do livro
+                    ul.list-group
+                        li.list-group-item(ng-class="{'hidden': !vm.book.nameCollection}")
+                            span {{vm.bookconfiglabels['nameCollection']}}:
+                            span {{vm.book.nameCollection}}
+                        li.list-group-item(ng-class="{'hidden': !vm.book.numCollection}")
+                            span {{vm.bookconfiglabels['numCollection']}}:
+                            span {{vm.book.numCollection}}
+                        li.list-group-item(ng-class="{'hidden': !vm.book.editionLanguage}")
+                            span {{vm.bookconfiglabels['editionLanguage']}}:
+                            span {{vm.book.editionLanguage}}
+                        li.list-group-item(ng-class="{'hidden': !vm.book.workmanship}")
+                            span {{vm.bookconfiglabels['workmanship']}}:
+                            span {{vm.book.workmanship}}
+                        li.list-group-item(ng-class="{'hidden': !vm.book.pagesNum}")
+                            span {{vm.bookconfiglabels['pagesNum']}}:
+                            span {{vm.book.pagesNum}}
+                        li.list-group-item(ng-class="{'hidden': !vm.book.editionISBN}")
+                            span {{vm.bookconfiglabels['editionISBN']}}:
+                            span {{vm.book.editionISBN}}
+                        li.list-group-item(ng-class="{'hidden': !vm.book.dimensions}")
+                            span {{vm.bookconfiglabels['dimensions']}}:
+                            span {{vm.book.dimensions}}
+                        li.list-group-item(ng-class="{'hidden': !vm.book.weight}")
+                            span {{vm.bookconfiglabels['weight']}}:
+                            span {{vm.book.weight}}
+                        li.list-group-item(ng-class="{'hidden': !vm.book.numVolume}")
+                            span {{vm.bookconfiglabels['numVolume']}}:
+                            span {{vm.book.numVolume}}
+                        li.list-group-item(ng-class="{'hidden': !vm.book.condition}")
+                            span {{vm.bookconfiglabels['condition']}}:
+                            span {{vm.book.condition}}
+            div.col-xs-12.col-sm-6
+                div.panel.panel-default(ng-class="{'hidden': vm.bookflags.notranslatores || !vm.bookflags.originalinfo}")
+
+                    div.panel-heading(ng-class="{'hidden': vm.bookflags.notranslatores}")
+                        | Tradução
+                    ul.list-group(ng-class="{'hidden': !vm.book.translators || vm.book.translators.length===0}")
+                        li.list-group-item
+                            span
+                            span.fielditem(ng-repeat="author in vm.book.translators") {{author}}
+                        li.list-group-item(ng-class="{'hidden': !vm.book.editionTranslatedLanguage}")
+                            span {{vm.bookconfiglabels['editionTranslatedLanguage']}}:
+                            span {{vm.book.editionTranslatedLanguage}}
+
+                    div.panel-heading(ng-class="{'hidden': !vm.bookflags.originalinfo}")
+                        | Edição Original
+                    ul.list-group(ng-class="{'hidden': !vm.bookflags.originalinfo}")
+                        li.list-group-item(ng-class="{'hidden': !vm.book.originalTitle}")
+                            span {{vm.bookconfiglabels['originalTitle']}}:
+                            span {{vm.book.originalTitle}}
+                        li.list-group-item(ng-class="{'hidden': !vm.book.originalLanguage}")
+                            span {{vm.bookconfiglabels['originalLanguage']}}:
+                            span {{vm.book.originalLanguage}}
+                        li.list-group-item(ng-class="{'hidden': !vm.book.originalPublisher}")
+                            span {{vm.bookconfiglabels['originalPublisher']}}:
+                            span {{vm.book.originalPublisher}}
+                        li.list-group-item(ng-class="{'hidden': !vm.book.originalYearFirstEdition}")
+                            span {{vm.bookconfiglabels['originalYearFirstEdition']}}:
+                            span {{vm.book.originalYearFirstEdition}}
+                        li.list-group-item(ng-class="{'hidden': !vm.book.originalCountryEdition}")
+                            span {{vm.bookconfiglabels['originalCountryEdition']}}:
+                            span {{vm.book.originalCountryEdition}}
+
+
+        div.row
+            div.col-xs-12(role="tabpanel").nopaddings
+                //nav-stacked para ajustar medis
+                ul.nav.nav-pills(role="tablist")
+                    li(role="presentation",ng-class="{'hidden': !vm.book.subject, 'active': vm.book.subject}")
+                        a(data-target="#bookdetail-tabsubject" aria-controls="bookdetail-tabsubject" role="tab" data-toggle="pill") {{vm.bookconfiglabels['subject']}}
+                    li(role="presentation",ng-class="{'hidden': vm.bookflags.noobs, 'active': !vm.book.subject && !vm.bookflags.noobs}")
+                        a(data-target="#bookdetail-tabobs" aria-controls="bookdetail-tabobs" role="tab" data-toggle="pill") {{vm.bookconfiglabels['obs']}}
+                    li(role="presentation",ng-class="{'hidden': !vm.bookflags.hasinformation, 'active': !vm.book.subject && vm.bookflags.noobs && vm.bookflags.hasinformation}")
+                        a(data-target="#bookdetail-tabinfo" aria-controls="bookdetail-tabinfo" role="tab" data-toggle="pill") + Informações
+
+                //
+                //div.panel.panel-default
+                div.tab-content
+                    div.col-xs-12.tab-pane.nopaddings(role="tabpanel",id="bookdetail-tabsubject",ng-class="{'hidden': !vm.book.subject, 'active': vm.book.subject}")
                         ul.list-group
-                            li.list-group-item.boxedicao
-                                span
-                                span {{vm.book.editionPublisher}}
-                                br
-                                span {{vm.book.editionNumber}}ª&nbsp;Edição,&nbsp;
-                                span {{vm.book.editionYear}},&nbsp;
-                                span {{vm.book.editionCountry}}
-                    div.block-price
-                        | {{vm.book.price}} €
-                    button.boxprice.btn.btn-default
-                        strong
-                            | Comprar
-
-
-                    div.block-price-icons-triangshadow
-                    //div.boxprice
-                    //    button.btn.btn-default
-                    //        | {{vm.book.price}} €&nbsp;
-                    //        br
-                    //        strong
-                    //            | Comprar
-
-                    //div.pull-right
-                        span {{vm.book.price}} €&nbsp;
-            div.row
-                div.col-xs-12.col-sm-6
-                    div.panel.panel-default
-                        div.panel-heading Detalhe do livro
-                        ul.list-group
-                            li.list-group-item(ng-class="{'hidden': !vm.book.nameCollection}")
-                                span {{vm.bookconfiglabels['nameCollection']}}:
-                                span {{vm.book.nameCollection}}
-                            li.list-group-item(ng-class="{'hidden': !vm.book.numCollection}")
-                                span {{vm.bookconfiglabels['numCollection']}}:
-                                span {{vm.book.numCollection}}
-                            li.list-group-item(ng-class="{'hidden': !vm.book.editionLanguage}")
-                                span {{vm.bookconfiglabels['editionLanguage']}}:
-                                span {{vm.book.editionLanguage}}
-                            li.list-group-item(ng-class="{'hidden': !vm.book.workmanship}")
-                                span {{vm.bookconfiglabels['workmanship']}}:
-                                span {{vm.book.workmanship}}
-                            li.list-group-item(ng-class="{'hidden': !vm.book.pagesNum}")
-                                span {{vm.bookconfiglabels['pagesNum']}}:
-                                span {{vm.book.pagesNum}}
-                            li.list-group-item(ng-class="{'hidden': !vm.book.editionISBN}")
-                                span {{vm.bookconfiglabels['editionISBN']}}:
-                                span {{vm.book.editionISBN}}
-                            li.list-group-item(ng-class="{'hidden': !vm.book.dimensions}")
-                                span {{vm.bookconfiglabels['dimensions']}}:
-                                span {{vm.book.dimensions}}
-                            li.list-group-item(ng-class="{'hidden': !vm.book.weight}")
-                                span {{vm.bookconfiglabels['weight']}}:
-                                span {{vm.book.weight}}
-                            li.list-group-item(ng-class="{'hidden': !vm.book.numVolume}")
-                                span {{vm.bookconfiglabels['numVolume']}}:
-                                span {{vm.book.numVolume}}
-                            li.list-group-item(ng-class="{'hidden': !vm.book.condition}")
-                                span {{vm.bookconfiglabels['condition']}}:
-                                span {{vm.book.condition}}
-                div.col-xs-12.col-sm-6
-                    div.panel.panel-default(ng-class="{'hidden': vm.bookflags.notranslatores || !vm.bookflags.originalinfo}")
-
-                        div.panel-heading(ng-class="{'hidden': vm.bookflags.notranslatores}")
-                            | Tradução
-                        ul.list-group(ng-class="{'hidden': !vm.book.translators || vm.book.translators.length===0}")
                             li.list-group-item
                                 span
-                                span.fielditem(ng-repeat="author in vm.book.translators") {{author}}
-                            li.list-group-item(ng-class="{'hidden': !vm.book.editionTranslatedLanguage}")
-                                span {{vm.bookconfiglabels['editionTranslatedLanguage']}}:
-                                span {{vm.book.editionTranslatedLanguage}}
-
-                        div.panel-heading(ng-class="{'hidden': !vm.bookflags.originalinfo}")
-                            | Edição Original
-                        ul.list-group(ng-class="{'hidden': !vm.bookflags.originalinfo}")
-                            li.list-group-item(ng-class="{'hidden': !vm.book.originalTitle}")
-                                span {{vm.bookconfiglabels['originalTitle']}}:
-                                span {{vm.book.originalTitle}}
-                            li.list-group-item(ng-class="{'hidden': !vm.book.originalLanguage}")
-                                span {{vm.bookconfiglabels['originalLanguage']}}:
-                                span {{vm.book.originalLanguage}}
-                            li.list-group-item(ng-class="{'hidden': !vm.book.originalPublisher}")
-                                span {{vm.bookconfiglabels['originalPublisher']}}:
-                                span {{vm.book.originalPublisher}}
-                            li.list-group-item(ng-class="{'hidden': !vm.book.originalYearFirstEdition}")
-                                span {{vm.bookconfiglabels['originalYearFirstEdition']}}:
-                                span {{vm.book.originalYearFirstEdition}}
-                            li.list-group-item(ng-class="{'hidden': !vm.book.originalCountryEdition}")
-                                span {{vm.bookconfiglabels['originalCountryEdition']}}:
-                                span {{vm.book.originalCountryEdition}}
-
-
-            div.row
-                div.col-xs-12(role="tabpanel").nopaddings
-                    //nav-stacked para ajustar medis
-                    ul.nav.nav-pills(role="tablist")
-                        li(role="presentation",ng-class="{'hidden': !vm.book.subject, 'active': vm.book.subject}")
-                            a(data-target="#bookdetail-tabsubject" aria-controls="bookdetail-tabsubject" role="tab" data-toggle="pill") {{vm.bookconfiglabels['subject']}}
-                        li(role="presentation",ng-class="{'hidden': vm.bookflags.noobs, 'active': !vm.book.subject && !vm.bookflags.noobs}")
-                            a(data-target="#bookdetail-tabobs" aria-controls="bookdetail-tabobs" role="tab" data-toggle="pill") {{vm.bookconfiglabels['obs']}}
-                        li(role="presentation",ng-class="{'hidden': !vm.bookflags.hasinformation, 'active': !vm.book.subject && vm.bookflags.noobs && vm.bookflags.hasinformation}")
-                            a(data-target="#bookdetail-tabinfo" aria-controls="bookdetail-tabinfo" role="tab" data-toggle="pill") + Informações
-
-                    //
-                    //div.panel.panel-default
-                    div.tab-content
-                        div.col-xs-12.tab-pane.nopaddings(role="tabpanel",id="bookdetail-tabsubject",ng-class="{'hidden': !vm.book.subject, 'active': vm.book.subject}")
-                            ul.list-group
-                                li.list-group-item
-                                    span
-                                    span {{vm.book.subject}}
-                        div.col-xs-12.tab-pane.nopaddings(role="tabpanel",id="bookdetail-tabobs",ng-class="{'hidden': vm.bookflags.noobs, 'active': !vm.book.subject && !vm.bookflags.noobs}")
-                            ul.list-group
-                                li.list-group-item(ng-repeat="item in vm.book.obs")
-                                    span
-                                    span {{item}}
-                        div.col-xs-12.tab-pane.nopaddings(role="tabpanel" id="bookdetail-tabinfo",ng-class="{'hidden': !vm.bookflags.hasinformation, 'active': !vm.book.subject && vm.bookflags.noobs && vm.bookflags.hasinformation}")
-                            div.row
-                                //.col-sm-6
-                                div.col-xs-12
-                                    ul.list-group
-                                        li.list-group-item(ng-class="{'hidden': !vm.book.circulation}")
-                                            span {{vm.bookconfiglabels['circulation']}}:
-                                            span {{vm.book.circulation}}
-                                        li.list-group-item(ng-class="{'hidden': !vm.book.legalDeposit}")
-                                            span {{vm.bookconfiglabels['legalDeposit']}}:
-                                            span {{vm.book.legalDeposit}}
-                                        li.list-group-item(ng-class="{'hidden': !vm.book.graphicalPrint}")
-                                            span {{vm.bookconfiglabels['graphicalPrint']}}:
-                                            span {{vm.book.graphicalPrint}}
-                                        li.list-group-item(ng-class="{'hidden': !vm.book.cover}")
-                                            span {{vm.bookconfiglabels['cover']}}:
-                                            span {{vm.book.cover}}
-                                        //div.col-xs-12.col-sm-6
-                                        //    ul.list-group
-                                        li.list-group-item(ng-class="{'hidden': vm.bookflags.noprefaceBy}")
-                                            span {{vm.bookconfiglabels['prefaceBy']}}:
-                                            span.fielditem(ng-repeat="author in vm.book.prefaceBy") {{author}}
-                                        li.list-group-item(ng-class="{'hidden': vm.bookflags.nopostfaceBy}")
-                                            span {{vm.bookconfiglabels['postfaceBy']}}:
-                                            span.fielditem(ng-repeat="author in vm.book.postfaceBy") {{author}}
-                                        li.list-group-item(ng-class="{'hidden': vm.bookflags.nocorrector}")
-                                            span {{vm.bookconfiglabels['corrector']}}:
-                                            span.fielditem(ng-repeat="author in vm.book.corrector") {{author}}
+                                span {{vm.book.subject}}
+                    div.col-xs-12.tab-pane.nopaddings(role="tabpanel",id="bookdetail-tabobs",ng-class="{'hidden': vm.bookflags.noobs, 'active': !vm.book.subject && !vm.bookflags.noobs}")
+                        ul.list-group
+                            li.list-group-item(ng-repeat="item in vm.book.obs")
+                                span
+                                span {{item}}
+                    div.col-xs-12.tab-pane.nopaddings(role="tabpanel" id="bookdetail-tabinfo",ng-class="{'hidden': !vm.bookflags.hasinformation, 'active': !vm.book.subject && vm.bookflags.noobs && vm.bookflags.hasinformation}")
+                        div.row
+                            //.col-sm-6
+                            div.col-xs-12
+                                ul.list-group
+                                    li.list-group-item(ng-class="{'hidden': !vm.book.circulation}")
+                                        span {{vm.bookconfiglabels['circulation']}}:
+                                        span {{vm.book.circulation}}
+                                    li.list-group-item(ng-class="{'hidden': !vm.book.editionLegalDeposit}")
+                                        span {{vm.bookconfiglabels['editionLegalDeposit']}}:
+                                        span {{vm.book.editionLegalDeposit}}
+                                    li.list-group-item(ng-class="{'hidden': !vm.book.graphicalPrint}")
+                                        span {{vm.bookconfiglabels['graphicalPrint']}}:
+                                        span {{vm.book.graphicalPrint}}
+                                    li.list-group-item(ng-class="{'hidden': !vm.book.cover}")
+                                        span {{vm.bookconfiglabels['cover']}}:
+                                        span {{vm.book.cover}}
+                                    //div.col-xs-12.col-sm-6
+                                    //    ul.list-group
+                                    li.list-group-item(ng-class="{'hidden': vm.bookflags.noprefaceBy}")
+                                        span {{vm.bookconfiglabels['prefaceBy']}}:
+                                        span.fielditem(ng-repeat="author in vm.book.prefaceBy") {{author}}
+                                    li.list-group-item(ng-class="{'hidden': vm.bookflags.nopostfaceBy}")
+                                        span {{vm.bookconfiglabels['postfaceBy']}}:
+                                        span.fielditem(ng-repeat="author in vm.book.postfaceBy") {{author}}
+                                    li.list-group-item(ng-class="{'hidden': vm.bookflags.nocorrector}")
+                                        span {{vm.bookconfiglabels['corrector']}}:
+                                        span.fielditem(ng-repeat="author in vm.book.corrector") {{author}}
 
 //.row
     .col-xs-12.col-sm-offset-2.col-sm-8.bookdetail-panelinfo
@@ -199,8 +198,8 @@ div.col-xs-12.bookdetail
                             strong {{vm.bookconfiglabels['circulation']}}:
                             | {{vm.book.circulation}}
                         li.list-group-item
-                            strong {{vm.bookconfiglabels['legalDeposit']}}:
-                            | {{vm.book.legalDeposit}}
+                            strong {{vm.bookconfiglabels['editionLegalDeposit']}}:
+                            | {{vm.book.editionLegalDeposit}}
             .col-xs-12.col-sm-4
                 div.panel.panel-default
                     div.panel-heading

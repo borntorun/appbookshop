@@ -33,7 +33,6 @@
     /*
     * Private Block
     */
-
     function get( id ) {
       if ( id.toLowerCase() === 'new' ) {
         return getNew();
@@ -83,14 +82,9 @@
 
     function edit( id ) {
       var defer = Q.defer();
-
       clear();
-
       httpRequest.get({url: '/api/books/admin/' + (id || ''), cache: false})
         .then(function( data ) {
-
-          //data["dateUpdate"] = new Date(data["dateUpdate"]);
-
           for ( var k in data ) {
             if ( data.hasOwnProperty(k) ) {
               book[k] = data[k];
@@ -99,23 +93,17 @@
           setReference(book.reference);
           book.dateResgistrationLocal = new Date(data.dateResgistration).getTime();
           book.dateUpdateLocal = new Date(data.dateUpdate).getTime();
-
           bookcache = angular.copy(book);
           defer.resolve(data);
         })
         .catch(function( /*data*/ ) {
           defer.reject(handlerError({message: 'Livro não encontrado.'}));
-          //return handlerError({message:'Livro não encontrado.'});
         });
-
       return defer.promise;
     }
-
     function getNew() {
       var defer = Q.defer();
-
       init();
-
       httpRequest.get({url: '/api/counters/newbookreference/', cache: false})
         .then(function( data ) {
           setReference(data.seq);
@@ -123,9 +111,7 @@
         })
         .catch(function( /*data*/ ) {
           defer.reject(handlerError({message: 'Referência inválida.'}));
-          //return handlerError({message:'Referência inválida.'});
         });
-
       return defer.promise;
     }
 

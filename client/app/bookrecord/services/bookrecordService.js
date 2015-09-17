@@ -22,7 +22,7 @@
     */
     var service = {
       book: book,
-      get: get,
+      load: load,
       save: save,
       clear: clear,
       reset: reset
@@ -42,7 +42,7 @@
       book.reference = _lodash.padLeft(ref, 5, '0');
     }
 
-    function get( id ) {
+    function load( id ) {
       if ( id.toLowerCase() === 'new' ) {
         return editNew();
       }
@@ -80,7 +80,6 @@
           defer.resolve(data);
         },
         function( /*data*/ ) {
-          //defer.reject(handlerError({message: 'Livro não encontrado.'}));
           reject(defer, 'Livro não encontrado.');
         }
       );
@@ -88,13 +87,13 @@
     }
 
     function editNew() {
+      init();
       var defer = call({method: httpRequest.get, url: '/api/counters/newbookreference/', cache: false},
         function( data ) {
           setReference(data.seq);
           defer.resolve(data);
         },
         function( /*data*/ ) {
-          //defer.reject(handlerError({message: 'Referência inválida.'}));
           reject(defer, 'Referência inválida.');
         });
       return defer.promise;
@@ -117,8 +116,6 @@
       }
       book = angular.extend(book, model());
     }
-
-
 
     function model() {
       return {
@@ -194,6 +191,8 @@
         .catch(catchCallback);
       return defer;
     }
+
+
 
     function reject( defer, message ) {
       defer.reject(handlerError({message: message}));

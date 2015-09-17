@@ -12,7 +12,7 @@
     .controller('BookrecordCtrl', BookrecordCtrl);
 
   /* @ngInject */
-  function BookrecordCtrl( $scope, $rootScope, _lodash, bookconfig, bookrecord, notifier, $state, modalpopup, logicform, appconfig ) {
+  function BookrecordCtrl( $scope, /*$rootScope,*/ _lodash, bookconfig, bookrecord, notifier, $state, modalpopup, logicform, appconfig ) {
     /*jshint validthis: true */
     var model = this;
 
@@ -24,13 +24,8 @@
       RESET: 'Desfazer alterações efectuadas?\n\nO registo da base de dados será carregado.\n(perderá as alterações efectuadas no formulário)'
     };
 
-    bookrecord.get($rootScope.$stateParams.reference)
+    bookrecord.load($state.params.reference)
       .then(function( /*data*/ ) {
-        //treat book fields here
-
-        //        model.book.author = getFirstItemIfOne(model.book.authors);
-        //        $scope.$emit('angtty:init:authors', model.book.author);
-
         emitInitArray('authors', 'author', getFirstItemIfOne(model.book.authors));
         emitInitArray('translators', 'translator', getFirstItemIfOne(model.book.translators));
         emitInitArray('categories', 'category', getFirstItemIfOne(model.book.categories));
@@ -72,8 +67,7 @@
           bookrecord.reset();
           logicform.bookrecord.setPristine();
         })
-        .catch(function() {
-        });
+        .catch(function() {});
     };
 
     model.clearForm = function() {
@@ -81,9 +75,7 @@
         .then(function() {
           bookrecord.clear();
         })
-        .catch(function() {
-          //notifier.info('no done', '', 'Book Record');
-        });
+        .catch(function() {});
 
     };
 
@@ -105,19 +97,12 @@
                 inherit: false,
                 notify: true
               });
-
-              /*$rootScope.$state.go('main.bookrecord', {
-                bookid: data._id
-              });*/
             })
             .catch(function( /*data*/ ) {
               notifier.warning('Livro não registado', '', 'Registo/Edição');
-
             });
         })
-        .catch(function() {
-          //notifier.info('no done', '', 'Book Record');
-        });
+        .catch(function() {});
     };
 
     model.removeItem = function( field, item ) {
@@ -127,27 +112,17 @@
 
     model.autocompleteEvents = {
       active: false,
-      /*onevent: function( item, data ) {
-        console.log('type:' + item.type, '--target:', item.currentTarget.name);
-        if(item.type === 'typeahead:change' && !data) {
-          var v = model.book[item.currentTarget.name];
-          if ( v && isArray(v) && v.length > 0 ) {
-            console.log('trigggg');
 
-            $scope.$emit('angtty:setval:' + item.currentTarget.name, v[0] );
-          }
-        }
-      },*/
       onevent: function( item, data ) {
-        logevent('onevent', item, data);
+        //logevent('onevent', item, data);
       },
       onactive: function( item, data ) {
-        logevent('onactive', item, data);
+        //logevent('onactive', item, data);
         //para evitar abrir as sugestões ao receber p focus
         model.autocompleteEvents.active = true;
       },
       onopen: function( item, data ) {
-        logevent('onopen', item, data);
+        //logevent('onopen', item, data);
 
         //para evitar abrir as sugestões ao receber p focus
         if ( item.type === 'typeahead:beforeopen' ) {
@@ -158,7 +133,7 @@
         model.autocompleteEvents.active = false;
       },
       onchange: function( event, data ) {
-        logevent('onchange', event, data);
+        //logevent('onchange', event, data);
 
         if ( isArray(model.book[event.currentTarget.name]) ) {
           var field = model.book[event.currentTarget.name];
@@ -177,26 +152,7 @@
 
       },
       onselect: function( item, data ) {
-        logevent('onselect', item, data);
-
-        //        if ( item.type.indexOf('before') === -1 ) {
-        //          $scope.$apply(function(){
-        //            model.book['authors'].push(data.name);
-        //
-        //            /*model.book['author'] = model.book['authors'][0];*/
-        //          });
-        //          $scope.$apply(function() {
-        //            $scope.$emit('angtty:setval:authors', model.book['authors'].length > 1 ? '' : model.book['authors'][0]);
-        //          });
-        //        }
-        //
-        //        /*$scope.$apply(function() {
-        //          var v = model.book[item.currentTarget.name];
-        //          if ( v && isArray(v) ) {
-        //            model.book[item.currentTarget.name].push(data.name);
-        //          }
-        //
-        //        });*/
+        //logevent('onselect', item, data);
       }
     };
 
@@ -227,10 +183,6 @@
         {name: table, remote: '/api/tables/' + table + '/search/%QUERY', prefetch: '/assets/data/' + table + '.json'});
     }
 
-    function getFirstItemIfOne( vArray ) {
-      return (vArray && vArray.length > 0) ? vArray[0] : '';
-    }
-
     //for fields that are strings
     function emitInitString( name, value ) {
       $scope.$emit('angtty:init:' + name, value);
@@ -252,7 +204,9 @@
       });
     }
 
-    notifier.log('BookRecordCtrl', '', 'Controller');
+    function getFirstItemIfOne( vArray ) {
+      return (vArray && vArray.length > 0) ? vArray[0] : '';
+    }
 
     //////////////
     //util

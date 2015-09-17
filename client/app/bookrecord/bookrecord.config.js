@@ -23,7 +23,8 @@
       /* ATENÇÃO: NÃO COLOCAR / NO INÍCIO ... CHILD VIEW */
       url: '{area:admin}/{type:book|livro}/{reference}/{slug}',
       params: {
-        slug: { value: null, squash: true }
+        slug: { value: null, squash: true },
+        area: { value: 'admin', squash: false }
       },
 
 

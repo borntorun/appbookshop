@@ -18,7 +18,7 @@ config.mongo.books.connection = database(config.mongo.books);
 // Populate DB with sample data
 if (config.seedDB) {
   //require('./config/databases/seed');
-  require('./api/book/seed');
+  //require('./api/book/seed');
   require('./api/bookconfig/seed');
   require('./api/category/seed');
   require('./api/publisher/seed');

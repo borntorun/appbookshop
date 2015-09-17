@@ -114,9 +114,9 @@
     function getNew() {
       var defer = Q.defer();
 
-      clear();
+      init();
 
-      httpRequest.get({url: '/api/counters/newbookreference/'})
+      httpRequest.get({url: '/api/counters/newbookreference/', cache: false})
         .then(function( data ) {
           setReference(data.seq);
           defer.resolve(data);

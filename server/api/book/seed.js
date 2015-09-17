@@ -4,7 +4,7 @@
  */
 
 'use strict';
-var Book = require('./book.model');
+//var Book = require('./book.model');
 console.log('seeding books...');
 
 /*issue #31*https://bitbucket.org/borntorun/appbookshop/issues/31/slug-create-a-slug-for-the-items-already closed/
@@ -17,9 +17,7 @@ console.log('seeding books...');
 
 });*/
 
-//Book.update({reference: 1},{dateUpdate: new Date() },function(err, data){
-//  console.log(data);
-//});
+
 
 //Book.find({}).remove(function () {
 //  Book.create(

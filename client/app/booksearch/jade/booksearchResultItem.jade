@@ -3,7 +3,7 @@
     div.block-price-icons-triangshadow
     div.panel.panel-default
         div.panel-heading.block-title
-            |{{it.reference}}
+            //|{{it.reference}}
             a(ui-sref="main.bookdetail({type:'livro',reference:it.reference,slug:it.slug})")
                 span.title.appbooklink {{::it.title}}
             div(ng-class="{'hidden': !it.authors || it.authors.length===0}")

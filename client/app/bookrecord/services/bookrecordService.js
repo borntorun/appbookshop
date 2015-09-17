@@ -33,44 +33,6 @@
     /*
     * Private Block
     */
-    function get( id ) {
-      if ( id.toLowerCase() === 'new' ) {
-        return getNew();
-      }
-      else {
-        return edit(id);
-      }
-    }
-
-    function save() {
-      var defer = Q.defer();
-
-      /*if ( !book._id ) {
-        book.dateResgistration = Date.now();
-      }
-      book.dateUpdate = Date.now();*/
-
-      httpRequest.post({url: '/api/books/admin/' + book._id || 'new', data: book})
-        .then(function( data ) {
-          init();
-          defer.resolve(data);
-        })
-        .catch(function( /*data*/ ) {
-          //return handlerError({message:'Erro na gravaçao.'});
-          defer.reject(handlerError({message: 'Erro na gravaçao.'}));
-        });
-      return defer.promise;
-    }
-
-    function clear() {
-      for ( var k in book ) {
-        if ( k !== '_id' && k !== 'reference' && book.hasOwnProperty(k) ) {
-          book[k] = undefined;
-        }
-      }
-      book = angular.extend(book, newBook());
-    }
-
     function reset() {
       clear();
       book = angular.extend(book, bookcache);
@@ -80,11 +42,32 @@
       book.reference = _lodash.padLeft(ref, 5, '0');
     }
 
+    function get( id ) {
+      if ( id.toLowerCase() === 'new' ) {
+        return editNew();
+      }
+      else {
+        return edit(id);
+      }
+    }
+
+    function save() {
+      var defer = call({method: httpRequest.post, url: '/api/books/admin/' + book._id || 'new', data: book},
+        function( data ) {
+          init();
+          defer.resolve(data);
+        },
+        function() {
+          reject(defer, 'Livro não encontrado.');
+        }
+      );
+      return defer.promise;
+    }
+
     function edit( id ) {
-      var defer = Q.defer();
       clear();
-      httpRequest.get({url: '/api/books/admin/' + (id || ''), cache: false})
-        .then(function( data ) {
+      var defer = call({method: httpRequest.get, url: '/api/books/admin/' + (id || ''), cache: false},
+        function( data ) {
           for ( var k in data ) {
             if ( data.hasOwnProperty(k) ) {
               book[k] = data[k];
@@ -95,22 +78,24 @@
           book.dateUpdateLocal = new Date(data.dateUpdate).getTime();
           bookcache = angular.copy(book);
           defer.resolve(data);
-        })
-        .catch(function( /*data*/ ) {
-          defer.reject(handlerError({message: 'Livro não encontrado.'}));
-        });
+        },
+        function( /*data*/ ) {
+          //defer.reject(handlerError({message: 'Livro não encontrado.'}));
+          reject(defer, 'Livro não encontrado.');
+        }
+      );
       return defer.promise;
     }
-    function getNew() {
-      var defer = Q.defer();
-      init();
-      httpRequest.get({url: '/api/counters/newbookreference/', cache: false})
-        .then(function( data ) {
+
+    function editNew() {
+      var defer = call({method: httpRequest.get, url: '/api/counters/newbookreference/', cache: false},
+        function( data ) {
           setReference(data.seq);
           defer.resolve(data);
-        })
-        .catch(function( /*data*/ ) {
-          defer.reject(handlerError({message: 'Referência inválida.'}));
+        },
+        function( /*data*/ ) {
+          //defer.reject(handlerError({message: 'Referência inválida.'}));
+          reject(defer, 'Referência inválida.');
         });
       return defer.promise;
     }
@@ -121,10 +106,21 @@
           delete book[k];
         }
       }
-      book = angular.extend(book, newBook());
+      book = angular.extend(book, model());
     }
 
-    function newBook() {
+    function clear() {
+      for ( var k in book ) {
+        if ( k !== '_id' && k !== 'reference' && book.hasOwnProperty(k) ) {
+          book[k] = undefined;
+        }
+      }
+      book = angular.extend(book, model());
+    }
+
+
+
+    function model() {
       return {
         authors: [],
         translators: [],
@@ -187,6 +183,20 @@
         taxes: null,
         template: null
       };
+    }
+
+    function call( options, thenCallback, catchCallback ) {
+      var defer = Q.defer();
+      var method = options.method;
+      delete options.method;
+      method.call(null, options)
+        .then(thenCallback)
+        .catch(catchCallback);
+      return defer;
+    }
+
+    function reject( defer, message ) {
+      defer.reject(handlerError({message: message}));
     }
 
     function handlerError( options ) {

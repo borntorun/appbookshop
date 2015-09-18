@@ -4,7 +4,7 @@
 module.exports = {
   // MongoDB connection options
   mongo: {
-    books: {
+    library: {
       uri: 'mongodb://192.168.99.21/appBooks-books-test',
       options: {}
     },

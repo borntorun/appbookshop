@@ -10,4 +10,4 @@ var TranslatorSchema = new Schema({
 
 TranslatorSchema.path('name').required(true, 'Nome é obrigatório.');
 
-module.exports = config.mongo.books.connection.model('Translator', TranslatorSchema);
+module.exports = config.mongo.library.connection.model('Translator', TranslatorSchema);

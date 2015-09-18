@@ -8,4 +8,4 @@ var ThingSchema = new Schema({
   opt: String
 });
 
-module.exports = config.mongo.books.connection.model('Thing', ThingSchema);
+module.exports = config.mongo.library.connection.model('Thing', ThingSchema);

@@ -32,42 +32,16 @@ module.exports = function( app ) {
   app.use(cors());
 
   /////auth
-  //auth
-  app.use(session({secret: 'anything'}));
-  app.use(passport.initialize());
-  app.use(passport.session());
-  passport.serializeUser(function( user, done ) {
-    //place a user object into the session
-    done(null, user);
-  });
-  passport.deserializeUser(function( user, done ) {
-    //take a user object from the session
-    //and locate it on the database for example
-    done(null, user);
-  });
-
-  var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
-  var configGoogle = require('jsonfile').readFileSync('configenv.json');
-
-  passport.use(new GoogleStrategy({
-      clientID: configGoogle.google.clientID,
-      clientSecret: configGoogle.google.clientSecret,
-      callbackURL: 'http://vmcentos7-jmmtc.org:12999/auth/google/callback'
-    },
-    //function that passport will call whean google calls the callback url
-    function( req, accessToken, refreshToken, profile, done ) {
-      console.log('function callback');
-      console.log(req.user);
-      done(null, profile);
-    }
-  ));
-
+  //auth with passport(must before routes)
 
 
   ///////
   require('../routes')(app);
 
   if ( 'production' === env ) {
+    //routes
+
+
     app.use(favicon(path.join(config.root, config.appPath, 'favicon.ico')));
     app.use(express.static(path.join(config.root, config.appPath)));
     app.set('appPath', config.root + config.appPath);
@@ -80,10 +54,15 @@ module.exports = function( app ) {
     }));
     app.use(express.static(path.join(config.root, '.tmp')));
     app.use(express.static(path.join(config.root, config.appPath)));
+
+
     app.set('appPath', config.appPath);
     app.use(morgan('dev'));
     //app.use(errorHandler({log: errorNotification})); // Error handler - has to be last
   }
+
+  //routes
+  require('../routes')(app);
 
 
 };

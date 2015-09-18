@@ -140,7 +140,7 @@ BookSchema.post('save', function( /*doc*/ ) {
 
 });
 
-module.exports = config.mongo.books.connection.model('Book', BookSchema);
+module.exports = config.mongo.library.connection.model('Book', BookSchema);
 
 //em destaque à entrada no site
 //  isFeatured: true

@@ -7,4 +7,4 @@ var CountersSchema = new Schema({
 }, {
   collection: 'counters'
 });
-module.exports = config.mongo.books.connection.model('Counters', CountersSchema);
+module.exports = config.mongo.library.connection.model('Counters', CountersSchema);

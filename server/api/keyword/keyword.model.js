@@ -10,4 +10,4 @@ var KeywordSchema = new Schema({
 
 KeywordSchema.path('name').required(true, 'Nome é obrigatório.');
 
-module.exports = config.mongo.books.connection.model('Keyword', KeywordSchema);
+module.exports = config.mongo.library.connection.model('Keyword', KeywordSchema);

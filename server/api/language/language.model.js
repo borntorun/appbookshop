@@ -10,4 +10,4 @@ var LanguageSchema = new Schema({
 
 LanguageSchema.path('name').required(true, 'Nome é obrigatório.');
 
-module.exports = config.mongo.books.connection.model('Language', LanguageSchema);
+module.exports = config.mongo.library.connection.model('Language', LanguageSchema);

@@ -6,6 +6,9 @@ var searchLib = require('./book.search.lib');
 var util = require('../../util');
 //var ObjectId = require('mongoose').Types.ObjectId;
 
+
+
+
 function bookListResults( res ) {
   return function( err, Books ) {
     if ( err ) {
@@ -20,6 +23,7 @@ function bookListLimit( limit ) {
   return value === 0 || value > 100 ? 100 : value;
 }
 
+
 // Get list of Books
 exports.read = function( req, res ) {
   Book.find(bookListResults(res));
@@ -31,6 +35,12 @@ exports.search = function( req, res ) {
   //Book.find((req.params.filter && JSON.parse(req.params.filter)) || {}).limit(req.params.limit || 10).exec(function(err, Books) {
   //Book.find({"$or" : [{"title" : /Blue/}, {"yearEdition" : 1930}]}).limit(req.params.limit || 100).exec(function(err, Books) {
   //console.log(require("./book.search.lib").filter(req.params.filter));
+
+  var User = require('../../auth/user/user.model');
+  User.find({}).exec(function(err, data){
+    console.log('-----', err, data);
+  });
+
 
   Book
     .find(searchLib.filter(req.params.filter), BookFields.storeSearch)

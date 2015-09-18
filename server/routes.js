@@ -21,20 +21,16 @@ module.exports = function (app) {
 
   app.use('/api/tables', require('./api/tables'));
 
-  app.use('/auth', require('./auth'));
+  //app.use('/auth', require('./auth'));
 
   // All undefined asset or api routes should return a 404
   app.route('/:url(api|auth)/*').get(errors[404]);
 
   // Route to index.html
   var funcIndexHtml = function (req, res) {
-
-    //console.log(path.join(config.root, config.appPath, 'index.html'));
-
     var options = {
       root: path.join(config.root, config.appPath)
     };
-    console.log('em-routes.js',req.user);
     res.sendFile('index.html', options);
   };
 

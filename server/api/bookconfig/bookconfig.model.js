@@ -9,4 +9,4 @@ var BookConfigSchema = new Schema({
 }, {
   collection: 'bookconfig'
 });
-module.exports = config.mongo.books.connection.model('BookConfig', BookConfigSchema);
+module.exports = config.mongo.library.connection.model('BookConfig', BookConfigSchema);

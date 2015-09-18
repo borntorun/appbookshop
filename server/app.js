@@ -8,13 +8,17 @@ process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 
 var express = require('express');
 
+var errors = require('./components/errors');
+
 // Environment
 var config = require('./config/environment');
 
 // Database
 var database = require('./config/databases');
-// Connect Database: mongo.books
-config.mongo.books.connection = database(config.mongo.books);
+
+// Connect Database: mongo.library
+config.mongo.library.connection = database(config.mongo.library);
+
 // Populate DB with sample data
 if (config.seedDB) {
   //require('./config/databases/seed');

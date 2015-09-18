@@ -10,4 +10,4 @@ var AuthorSchema = new Schema({
 
 AuthorSchema.path('name').required(true, 'Nome é obrigatório.');
 
-module.exports = config.mongo.books.connection.model('Author', AuthorSchema);
+module.exports = config.mongo.library.connection.model('Author', AuthorSchema);

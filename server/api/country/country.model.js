@@ -10,4 +10,4 @@ var CountrySchema = new Schema({
 
 CountrySchema.path('name').required(true, 'Nome é obrigatório.');
 
-module.exports = config.mongo.books.connection.model('Country', CountrySchema);
+module.exports = config.mongo.library.connection.model('Country', CountrySchema);

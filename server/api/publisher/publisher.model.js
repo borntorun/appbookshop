@@ -7,4 +7,4 @@ var PublisherSchema = new Schema({
 
 PublisherSchema.path('name').required(true, 'Nome é obrigatório.');
 
-module.exports = config.mongo.books.connection.model('Publisher', PublisherSchema);
+module.exports = config.mongo.library.connection.model('Publisher', PublisherSchema);

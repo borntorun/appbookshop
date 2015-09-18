@@ -9,9 +9,9 @@
 //
 //describe('Connect to Database (server/config/database)', function () {
 //  it('should respond with correct database name', function (done) {
-//    var connection = require('./index')(config.mongo.books);
+//    var connection = require('./index')(config.mongo.library);
 //    connection.on('connected', function() {
-//      (this.name).should.be.equal(path.basename(config.mongo.books.uri));
+//      (this.name).should.be.equal(path.basename(config.mongo.library.uri));
 //      done();
 //    });
 //    connection.on('error', function (err) {
@@ -22,8 +22,8 @@
 //    });
 //  });
 //  it('should respond with error', function (done) {
-//    config.mongo.books.options = _.merge(config.mongo.books.options, {'user': 'userxpto', 'pass': 'passxpto'});
-//    var connection = require('./index')(config.mongo.books);
+//    config.mongo.library.options = _.merge(config.mongo.library.options, {'user': 'userxpto', 'pass': 'passxpto'});
+//    var connection = require('./index')(config.mongo.library);
 //    connection.on('connected', function() {
 //      true.should.be.false;
 //      done();

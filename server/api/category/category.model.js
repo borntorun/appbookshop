@@ -10,4 +10,4 @@ var CategorySchema = new Schema({
 
 CategorySchema.path('name').required(true, 'Nome é obrigatório.');
 
-module.exports = config.mongo.books.connection.model('Category', CategorySchema);
+module.exports = config.mongo.library.connection.model('Category', CategorySchema);

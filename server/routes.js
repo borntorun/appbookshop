@@ -4,6 +4,10 @@
 
 'use strict';
 var errors = require('./components/errors');
+var config = require('./config/environment');
+var path = require('path');
+
+
 module.exports = function (app) {
 
   // Insert routes below
@@ -17,14 +21,23 @@ module.exports = function (app) {
 
   app.use('/api/tables', require('./api/tables'));
 
+  app.use('/auth', require('./auth'));
 
   // All undefined asset or api routes should return a 404
-  app.route('/:url(api|auth|components|app|bower_components|assets)/*').get(errors[404]);
+  app.route('/:url(api|auth)/*').get(errors[404]);
+
   // Route to index.html
   var funcIndexHtml = function (req, res) {
-    console.log('funcIndexHtml', req.params);
-    res.sendfile(app.get('appPath') + '/index.html');
+
+    //console.log(path.join(config.root, config.appPath, 'index.html'));
+
+    var options = {
+      root: path.join(config.root, config.appPath)
+    };
+    console.log('em-routes.js',req.user);
+    res.sendFile('index.html', options);
   };
+
   app.route('/').get(funcIndexHtml);
 
   app.route('/search/advanced/([0-9]+)/*').get(funcIndexHtml);
@@ -33,26 +46,13 @@ module.exports = function (app) {
 
   app.route('/:area(book|livro)/:reference([\\d]+)/:slug([\\w-]+)?').get(funcIndexHtml);
 
-//  app.route('/book/:id').get(function (req, res) {
-//    res.redirect('/livro/' + req.params.id);
-//  });
-
-  //app.route('/admin/{livro|book}/:id').get(funcIndexHtml);
-
-
   app.route('/admin/:area(book|livro)/:reference(new|[\\d]+)/:slug([\\w-]+)?').get(funcIndexHtml);
-  //  app.route('/admin/book/:id').get(function (req, res) {
-//    res.redirect('/admin/livro/' + req.params.id);
-//  });
 
   //
   app.route('/about').get(function (req, res) {
-    res.sendfile(app.get('appPath') + '/index.html');
+
+    res.sendFile(app.get('appPath') + '/index.html');
   });
 
-  // All other routes should redirect to 404
-  app.route('/*').get(function(req,res) {
-    console.log(req.params);
-    errors[404](req,res);
-  });
+
 };

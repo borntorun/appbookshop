@@ -43,8 +43,17 @@ process.on('SIGINT', function clean() {
 var app = express();
 
 var server = require('http').createServer(app);
+
+
+
 require('./config/express')(app);
-require('./routes')(app);
+
+// All other routes should redirect to 404
+app.route('/*').get(function(req,res) {
+  console.log('em-app.js', req.params);
+  errors[404](req,res);
+});
+
 // Start server
 server.listen(config.port, config.ip, function () {
   console.log('Express server listening on %d, in %s mode', config.port, app.get('env'));

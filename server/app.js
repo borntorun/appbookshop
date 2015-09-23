@@ -5,6 +5,10 @@
 'use strict';
 // Set default node environment to development
 process.env.NODE_ENV = process.env.NODE_ENV || 'development';
+//process.env.NODE_ENV = 'production';
+
+
+console.log(process.env.NODE_ENV);
 
 var express = require('express');
 
@@ -47,8 +51,6 @@ process.on('SIGINT', function clean() {
 var app = express();
 
 var server = require('http').createServer(app);
-
-
 
 require('./config/express')(app);
 

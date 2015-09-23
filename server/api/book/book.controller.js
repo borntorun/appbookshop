@@ -36,12 +36,6 @@ exports.search = function( req, res ) {
   //Book.find({"$or" : [{"title" : /Blue/}, {"yearEdition" : 1930}]}).limit(req.params.limit || 100).exec(function(err, Books) {
   //console.log(require("./book.search.lib").filter(req.params.filter));
 
-  var User = require('../../auth/user/user.model');
-  User.find({}).exec(function(err, data){
-    console.log('-----', err, data);
-  });
-
-
   Book
     .find(searchLib.filter(req.params.filter), BookFields.storeSearch)
     .limit(bookListLimit(req.params.limit))

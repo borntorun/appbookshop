@@ -15,12 +15,12 @@
      * We could place these under every feature area,
      * but this is easier to maintain.
      */
-
     'appBookShop.core',
     /*
      * Feature areas
      */
     'appBookShop.main',
+    'appBookShop.auth',
     'appBookShop.navbar',
     'appBookShop.booksearch',
     'appBookShop.bookdetail',

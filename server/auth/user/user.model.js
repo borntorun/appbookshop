@@ -6,7 +6,7 @@ var UserSchema = new Schema({
   email: { type: String },
   name: { type: String },
   active: { type: Boolean },
-  googleToken: { type: String }
+  googleId: { type: String }
 });
 
 UserSchema.path('name').required(true, 'Nome é obrigatório.');
@@ -14,7 +14,7 @@ UserSchema.path('email').required(true, 'Email é obrigatório.');
 
 UserSchema.method('toJSON', function(){
   var user = this.toObject();
-  delete user.googleToken;
+  delete user.googleId;
   return user;
 });
 

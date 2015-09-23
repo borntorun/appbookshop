@@ -26,6 +26,8 @@
       }
     };
 
+
+
     _lodash.forEach(states, function(state, key) {
       $stateProvider.state(key, state);
     });

@@ -7,62 +7,129 @@ var express = require('express');
 var favicon = require('serve-favicon');
 var morgan = require('morgan');
 var compression = require('compression');
-var cors = require('cors'); //new
+//var cors = require('cors'); //new
 var bodyParser = require('body-parser');
 
-//auth
-var passport = require('passport');
-var session = require('express-session');
-
-var methodOverride = require('method-override');
-var cookieParser = require('cookie-parser');
-//var errorHandler = require('errorhandler');
 var path = require('path');
 var config = require('./environment');
+var methodOverride = require('method-override');
+
+/**
+ * Passport
+*/
+var passport = require('passport');
+/**
+ * express-session
+*/
+var session = require('express-session');
+/**
+ * cookies
+*/
+var Cookies = require('cookies');
 
 module.exports = function( app ) {
+
   var env = app.get('env');
-  app.set('views', config.root + '/server/views');
+
+  app.use(morgan('dev'));
+
+  /**
+   * Set jade view engine
+   */
+  app.set('views', [
+      config.root + '/server/auth/google/views',
+      config.root + '/server/views'
+  ]);
   app.set('view engine', 'jade');
+
+  /**
+   * Set static routes
+   * (must be before session - static resources do not use session)
+   */
+  if ( 'production' === env ) {
+    app.use(favicon(path.join(config.root, config.appPath, 'favicon.ico')));
+    app.use(express.static(path.join(config.root, config.appPath)));
+  }
+  if ( 'development' === env || 'test' === env ) {
+    app.use(express.static(path.join(config.root, '.tmp')));
+    app.use(express.static(path.join(config.root, 'client')));
+  }
+
+  /**
+   * Initiate session
+   */
+  //TODO: session to use database
+  app.use(session({secret: process.env.SESSIONSECRET || '1S9H9H9...'}));
+
+  /////auth
+  //auth with passport(must before routes)
+//  app.use(passport.initialize());
+//  app.use(passport.session());
+
+
   app.use(compression());
   app.use(bodyParser.urlencoded({ extended: false }));
   app.use(bodyParser.json());
   app.use(methodOverride());
-  app.use(cookieParser());
-  app.use(cors());
-
-  /////auth
-  //auth with passport(must before routes)
 
 
-  ///////
-  require('../routes')(app);
+  //app.use(cookieParser());
+  /*app.use(cors({
+    origin: ['http://192.168.40.25:12999','http://192.168.99.20:12999', 'http://localhost:12999']
+  }));*/
+  /*app.use(function( req, res, next ) {
+    res.header('Access-Control-Allow-Origin', 'http://localhost:12999, http://192.168.40.25:12999, http://192.168.99.20:12999');
+    res.header('Access-Control-Allow-Methods', 'GET,PUT,DELETE,POST');
+    //res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
 
-  if ( 'production' === env ) {
-    //routes
+    next();
+  });*/
 
 
-    app.use(favicon(path.join(config.root, config.appPath, 'favicon.ico')));
-    app.use(express.static(path.join(config.root, config.appPath)));
-    app.set('appPath', config.root + config.appPath);
-    app.use(morgan('dev'));
-  }
+
+
+  /**
+   * live-reload
+   */
   if ( 'development' === env || 'test' === env ) {
     app.use(require('connect-livereload')({
       port: 35729,
       src: 'http://192.168.40.25:35729/livereload.js?snipver=1'
     }));
-    app.use(express.static(path.join(config.root, '.tmp')));
-    app.use(express.static(path.join(config.root, config.appPath)));
-
-
-    app.set('appPath', config.appPath);
-    app.use(morgan('dev'));
-    //app.use(errorHandler({log: errorNotification})); // Error handler - has to be last
   }
 
-  //routes
+  /**
+   * Dynamic routes
+   */
   require('../routes')(app);
 
+
+
+//  if ( 'production' === env ) {
+//    //routes
+//
+//    app.use(favicon(path.join(config.root, config.appPath, 'favicon.ico')));
+//
+//    app.use(express.static(path.join(config.root, config.appPath)));
+//
+//    //app.set('appPath', config.root + config.appPath);
+//
+//
+//  }
+//
+//  if ( 'development' === env || 'test' === env ) {
+//    /*app.use(require('connect-livereload')({
+//      port: 35729,
+//      src: 'http://192.168.40.25:35729/livereload.js?snipver=1'
+//    }));*/
+//    app.use(express.static(path.join(config.root, '.tmp')));
+//    app.use(express.static(path.join(config.root, 'client')));
+//
+//    //app.use(express.static(path.join(config.root, config.appPath)));
+//
+//    //app.set('appPath', config.appPath);
+//
+//
+//  }
 
 };

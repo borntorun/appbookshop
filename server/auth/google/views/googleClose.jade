@@ -1,0 +1,9 @@
+script.
+    //
+    //alert('aqui');
+    var userdata = !{JSON.stringify(userdata)};
+
+    alert(userdata);
+    window.opener.postMessage(userdata,'http://192.168.40.25:12999');
+    window.close();
+

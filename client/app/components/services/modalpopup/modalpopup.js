@@ -57,7 +57,7 @@
       //      options.message = opt.message? opt.message.replace(/\n/g, '<br/>'): opt.message;
       //      options.title = opt.title? opt.title.replace(/\n/g, '<br/>'): opt.title;
       //      options.message = replaceArgs(opt.message, opt.vars);
-      opt.templateUrl = opt.templateUrl || '/app/components/services/modalpopup/templates/confirm.html';
+      opt.templateUrl = opt.templateUrl || 'assets/templates/html/confirm.html';//'/app/components/services/modalpopup/templates/confirm.html';
       return show(opt);
     }
 
@@ -65,7 +65,7 @@
       //      options.message = opt.message? opt.message.replace(/\n/g, '<br/>'): opt.message;
       //      options.message = replaceArgs(opt.message, opt.vars);
       //      options.title = opt.title? opt.title.replace(/\n/g, '<br/>'): opt.title;
-      opt.templateUrl = opt.templateUrl || '/app/components/services/modalpopup/templates/message.html';
+      opt.templateUrl = opt.templateUrl || 'assets/templates/html/message.html';//'/app/components/services/modalpopup/templates/message.html';
       return show(opt);
     }
 

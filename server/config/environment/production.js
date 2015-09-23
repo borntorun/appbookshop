@@ -19,7 +19,7 @@ module.exports = {
       uri: mongolabUri/*process.env.MONGOLAB_URI*/ ||
         process.env.MONGOHQ_URL ||
         process.env.OPENSHIFT_MONGODB_DB_URL + process.env.OPENSHIFT_APP_NAME ||
-        'mongodb://192.168.99.21/appBooks',
+        'mongodb://192.168.40.25/appBooks-books-dev',
       options: {}
     }
   },

@@ -2,7 +2,7 @@
  * Controller appBookShop.booksearch BookSearchFilterCategories
  * (João Carvalho, 13-03-2015)
  *
- * Descrição: Controla filtro de categorias no form de search
+ * Description: Controla filtro de categorias no form de search
  */
 (function () {
     'use strict';

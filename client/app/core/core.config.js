@@ -135,6 +135,7 @@
 //  }
 
   core.run(run);
+
   core.run(runStateChangeError);
   /* @ngInject */
   function run( $rootScope, $state, $stateParams ) {

@@ -26,17 +26,26 @@ module.exports = function( app ) {
 //      console.log('nomedele:', nomedele);
 //    }
 //
-//    console.log('funcIndexHtml req.cookies:', req.cookies);
+
 //
-//    console.log('funcIndexHtml req.session:', req.session);
+
 //    console.log('funcIndexHtml req.user:', req.user);
 //    console.log('funcIndexHtml req.url:', req.url);
 //    //console.log('funcIndexHtml req:', req);
 
     var options = {
       root: config.root//path.join(config.root, config.appPath)
+      //csrfToken: req.csrfToken()
     };
 
+    console.log('funcIndexHtml req.params:', req.params);
+    console.log('funcIndexHtml res options:', options);
+
+    var ocookie = new Cookies(req, res);
+    console.log('funcIndexHtml req.cookies:', req.cookies);
+    console.log('funcIndexHtml req.session:', req.session);
+
+    ocookie.set('XSRF-TOKEN', req.csrfToken(), { httpOnly: false });
     res.sendFile('index.html', options);
   };
 
@@ -44,7 +53,7 @@ module.exports = function( app ) {
   app.route('/index.html').get(funcIndexHtml);
 
   // Insert routes below
-  app.use('/api/things', require('./api/thing'));
+  //app.use('/api/things', require('./api/thing'));
 
   app.use('/api/counters', require('./api/counters'));
 
@@ -59,9 +68,9 @@ module.exports = function( app ) {
   // All undefined asset or api routes should return a 404
   app.route('/:url(api|auth)/*').get(errors[404]);
 
-  app.route('/search/:type(advanced|free)/([0-9]+)/*').get(funcIndexHtml);
+  app.route('/search/free/([0-9]+)/:term').get(funcIndexHtml);
 
-  //app.route('/search/free/([0-9]+)/*').get(funcIndexHtml);
+  app.route('/search/advanced/([0-9]+)/:tit/:aut/:ssub/:col/:cat/:edi').get(funcIndexHtml);
 
   app.route('/:area(book|livro)/:reference([\\d]+)/:slug([\\w-]+)?').get(funcIndexHtml);
 

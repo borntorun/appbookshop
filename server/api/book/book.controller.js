@@ -4,10 +4,9 @@ var Book = require('./book.model');
 var BookFields = require('./book.fields');
 var searchLib = require('./book.search.lib');
 var util = require('../../util');
+var nodeutil = require('util');
+var mongosanitize = require('mongo-sanitize');
 //var ObjectId = require('mongoose').Types.ObjectId;
-
-
-
 
 function bookListResults( res ) {
   return function( err, Books ) {
@@ -23,13 +22,12 @@ function bookListLimit( limit ) {
   return value === 0 || value > 100 ? 100 : value;
 }
 
-
-// Get list of Books
+//List of Books
 exports.read = function( req, res ) {
   Book.find(bookListResults(res));
 };
 
-//simple search for books
+//Simple search
 exports.search = function( req, res ) {
   //{"$or" : [{"ticket_no" : 725}, {"winner" : true}]}
   //Book.find((req.params.filter && JSON.parse(req.params.filter)) || {}).limit(req.params.limit || 10).exec(function(err, Books) {
@@ -42,36 +40,41 @@ exports.search = function( req, res ) {
     .exec(bookListResults(res));
 };
 
-//advanced search for books
+//Advanced search
 exports.advancedSearch = function( req, res ) {
+
   Book.find(searchLib.advfilter(req.params), BookFields.storeSearch)
     .limit(bookListLimit(req.params.limit))
     .exec(bookListResults(res));
 };
 
-//get one book
+//Get one book
 exports.store = function( req, res ) {
-  var search = {'reference': req.params.reference || ''};
+  var ref = mongosanitize(req.params.reference);
+  var search = {'reference': ref || ''};
 
   Book.findOne(search, BookFields.storeDetail, result(res));
 };
 
-/*exports.get = function( req, res ) {
-  Book.findById(req.params.id || '', result(res));
-};*/
-
-//get one book for editing
+//Get one book for editing
 exports.edit = function( req, res ) {
-  console.log('edit:------------------', req.params);
-  //Book.findById(req.params.id || '', result(res));
-
-  var search = {'reference': req.params.reference || ''};
+  var ref = mongosanitize(req.params.reference);
+  var search = {'reference': ref || ''};
 
   Book.findOne(search, result(res));
 };
 
-//save a book (new or existing)
+//Save a book (new or existing)
 exports.save = function( req, res ) {
+
+
+  req.checkBody('title', 'Error in title.').notEmpty();
+  req.checkBody('reference', 'Error in reference.').notEmpty();
+
+  var errors = req.validationErrors();
+  if ( errors ) {
+    return handleError(new Error('Error(s): ' + nodeutil.inspect(errors)), res, 400);
+  }
 
   function updateArrays( toObj, fromObj ) {
 
@@ -84,12 +87,27 @@ exports.save = function( req, res ) {
   }
 
   if ( req.body._id ) {
-    Book.findById(req.body._id, function( err, found ) {
+    req.checkBody('_id', 'Error in id.').notEmpty().isAlphanumeric();
+
+    var id = mongosanitize(req.body._id);
+
+    Book.findById(id, function( err, found ) {
+
+
+
       if ( err ) {
         return handleError(err, res);
       }
       if ( !found ) {
-        return res.send(404);
+        return handleErrorNotFound(res);
+      }
+
+      if (found.__v !== req.body.__v) {
+        return handleErrorVersionConflict(res);
+      }
+
+      if(parseInt(req.body.reference) !== found.reference) {
+        return handleError(new Error('Reference does not match.'), res, 409);
       }
 
       delete req.body._id;
@@ -105,7 +123,6 @@ exports.save = function( req, res ) {
 
       found.save(function( err, data ) {
         if ( err ) {
-          console.log('error on save', err);
           return handleError(err, res);
         }
 
@@ -123,7 +140,6 @@ exports.save = function( req, res ) {
       .save(function( err, data ) {
 
         if ( err ) {
-
           return handleError(err, res);
         }
         return res.json(201, {
@@ -147,56 +163,19 @@ function result( res ) {
     return res.json(200, data);
   };
 }
-function handleError( err, res ) {
+function handleError( err, res, code ) {
   console.log(err);
-  return res.status(500).json({ error: err.message })
+  return res.status(code || 500).json({ error: err.message })
+}
+function handleErrorNotFound( res ) {
+  return handleError(new Error('Not found.'), res, 404);
+}
+function handleErrorVersionConflict( res ) {
+  return handleError(new Error('Conflito de versão.\nExiste uma versão mais recente do registo.\n'), res, 409);
 }
 
-//// Updates an existing Book in the DB.
-//exports.update = function( req, res ) {
-//  console.log(req.body);
-//  if ( req.body._id ) {
-//    delete req.body._id;
-//  }
-//  Book.findById(req.params.id, function( err, Book ) {
-//    if ( err ) {
-//      return handleError(err, res);
-//    }
-//    if ( !Book ) {
-//      return res.send(404);
-//    }
-//    var updated = _.merge(Book, req.body);
-//    updated.save(function( err ) {
-//      if ( err ) {
-//        return handleError(err, res);
-//      }
-//      return res.json(200, Book);
-//    });
-//  });
-//};
-//// Deletes a Book from the DB.
-//exports.destroy = function( req, res ) {
-//  Book.findById(req.params.id, function( err, Book ) {
-//    if ( err ) {
-//      return handleError(err, res);
-//    }
-//    if ( !Book ) {
-//      return res.send(404);
-//    }
-//    Book.remove(function( err ) {
-//      if ( err ) {
-//        return handleError(err, res);
-//      }
-//      return res.send(204);
-//    });
-//  });
-//};
+//
+//function responseError(type, message, detail, info, code) {
+//
+//}
 
-/*
-{
-"$or": [
-  {"title" : {"$in" : [/Blue/, /Catcher/, /1930/]}},
-  {"yearEdition" : 1930}
-]
-}
-*/

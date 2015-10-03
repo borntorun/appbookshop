@@ -2,7 +2,7 @@
  * Module appBookShop.booksearch config
  * (João Carvalho, 15-03-2015)
  *
- * Descrição: Configura modulo appBookShop.booksearch
+ * Description: Configura modulo appBookShop.booksearch
  */
 (function() {
   'use strict';

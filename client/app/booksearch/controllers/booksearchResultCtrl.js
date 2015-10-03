@@ -2,7 +2,7 @@
  * Controller appBookShop.booksearch BookSearchResultCtrl
  * (João Carvalho, 12-03-2015)
  *
- * Descrição: Controla resultados da pesquisa de livros
+ * Description: Controla resultados da pesquisa de livros
  */
 (function() {
   'use strict';
@@ -26,7 +26,7 @@
           vm.results = data;
         })
         .catch(function( /*error*/ ) {
-          notifier.warning('Erro na pesquisa', '', 'Pesquisa Livre');
+          notifier.warning('Erro na pesquisa', 'Pesquisa Livre');
         });
     }
     if ( $rootScope.$stateParams.type === 'advanced' ) {
@@ -41,12 +41,12 @@
 
       BookSearch.searchAdvanced(inputObj, $rootScope.$stateParams.limit)
         .then(function( data ) {
-          //notifier.info('Procura Ok');
+
           applyFilterCategories(BookSearch.getFilterCategories());
           vm.results = data;
         })
         .catch(function( /*error*/ ) {
-          notifier.warning('Erro na pesquisa', '', 'Pesquisa Avançada');
+          notifier.warning('Erro na pesquisa', 'Pesquisa Avançada');
         });
     }
 

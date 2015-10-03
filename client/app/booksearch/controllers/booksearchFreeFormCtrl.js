@@ -2,7 +2,7 @@
  * Controller appBookShop.booksearch BookSearchFreeFormCtrl
  * (João Carvalho, 12-03-2015)
  *
- * Descrição: Controla pesquisa livre de livros
+ * Description: Controla pesquisa livre de livros
  */
 (function () {
   'use strict';

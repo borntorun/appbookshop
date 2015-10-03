@@ -11,7 +11,8 @@ router.get('/store/:reference/:slug?', bookCtrl.store);
 
 //router.get('/admin/:reference', bookCtrl.edit);
 router.get('/admin/:reference/:slug?', bookCtrl.edit);
-router.post('/admin/:id', bookCtrl.save);
+router.post('/admin/:id', require('body-parser').json(),  require('express-validator')(), bookCtrl.save);
+
 
 module.exports = require('../apirouter')(router, bookCtrl, []);
 

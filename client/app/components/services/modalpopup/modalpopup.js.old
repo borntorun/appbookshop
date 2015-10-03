@@ -4,7 +4,7 @@
  * Criado com base em angular design style de John Papa
  * (https://github.com/johnpapa/angular-styleguide)
  *
- * Description: Service to use $modal from ui.bootstrap
+ * Descrição: Service to use $modal from ui.bootstrap
  */
 (function() {
   'use strict';
@@ -53,23 +53,34 @@
      * @param title
      * @returns {*}
      */
-    function confirm( message, title, opt ) {
-      opt = opt || {};
+    function confirm( opt ) {
+      //      options.message = opt.message? opt.message.replace(/\n/g, '<br/>'): opt.message;
+      //      options.title = opt.title? opt.title.replace(/\n/g, '<br/>'): opt.title;
+      //      options.message = replaceArgs(opt.message, opt.vars);
       opt.templateUrl = opt.templateUrl || 'assets/templates/html/confirm.html';//'/app/components/services/modalpopup/templates/confirm.html';
-      return show(message, title, opt);
+      return show(opt);
     }
 
-    function message( message, title, opt ) {
-      opt = opt || {};
+    function message( opt ) {
+      //      options.message = opt.message? opt.message.replace(/\n/g, '<br/>'): opt.message;
+      //      options.message = replaceArgs(opt.message, opt.vars);
+      //      options.title = opt.title? opt.title.replace(/\n/g, '<br/>'): opt.title;
       opt.templateUrl = opt.templateUrl || 'assets/templates/html/message.html';//'/app/components/services/modalpopup/templates/message.html';
-      return show(message, title, opt);
+      return show(opt);
     }
 
-    function show( message, title, opt ) {
-      options.message = message ? message.replace(/\n/g, '<br/>') : message;
-      options.title = title ? title.replace(/\n/g, '<br/>') : title;
+    function show( opt ) {
+      options.message = replaceArgs(opt.message ? opt.message.replace(/\n/g, '<br/>') : opt.message, opt.vars);
+      options.title = opt.title ? opt.title.replace(/\n/g, '<br/>') : opt.title;
       options.templateUrl = opt.templateUrl;
       return $modal_.open(options).result;
+    }
+
+    function replaceArgs( message, vars ) {
+      for ( var k in vars ) {
+        message = message.replace(new RegExp('%' + k, 'ig'), vars[k] || '');
+      }
+      return message;
     }
 
     /*
@@ -77,6 +88,7 @@
      */
     var $modal_;
     var options = {
+      //templateUrl: '/app/components/services/modalpopup/templates/confirm.html',
       controller: modalCtrl,
       controllerAs: 'model'/*,
         windowClass:"positionModal"*/

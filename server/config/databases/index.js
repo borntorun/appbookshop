@@ -3,9 +3,13 @@
  */
 'use strict'
 var mongoose = require('mongoose');
+//var config = require('../environment');
 
-module.exports = function (dbconfig) {
+module.exports = exports = function ( /*seedCallback*/dbconfig) {
+  //var dbconfig = config.mongo.library;
   var connection = mongoose.createConnection(dbconfig.uri,  dbconfig.options);
+
+  //config.mongo.library.connection = connection;
 
   connection.on('connected', function() {
     console.log('Mongoose connected to:');
@@ -20,5 +24,10 @@ module.exports = function (dbconfig) {
     console.log(this.name);
     console.log(err);
   });
+
+
+
+  //seedCallback.call();
+
   return connection;
 };

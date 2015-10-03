@@ -2,7 +2,7 @@
  * Module appBookShop.booksearch
  * (João Carvalho, 12-03-2015)
  *
- * Descrição: Definição módulo para funcionalidade de pesquisa de livros
+ * Description: Definição módulo para funcionalidade de pesquisa de livros
  */
 (function() {
   'use strict';
@@ -17,7 +17,7 @@
    * Directive appBookShop.booksearch BookSearchFormLayout
    * (João Carvalho, 12-03-2015)
    *
-   * Descrição:
+   * Description:
    *  responsável por gerir accordion em booksearchLayout.jade consoante o state
    */
   /* @ngInject */

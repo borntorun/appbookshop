@@ -4,7 +4,7 @@
  * Criado com base em angular design style de John Papa
  * (https://github.com/johnpapa/angular-styleguide)
  *
- * Descrição: Manipulate array of strings to be displayed on textarea by split/join by newline
+ * Description: Manipulate array of strings to be displayed on textarea by split/join by newline
 */
 (function () {
   'use strict';

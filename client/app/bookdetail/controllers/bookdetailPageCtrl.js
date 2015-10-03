@@ -2,7 +2,7 @@
  * Controller appBookShop.bookdetail BookDetailPage
  * (João Carvalho, 16-03-2015)
  *
- * Descrição: Book Detail Controller - Detalhe de livro mode view page
+ * Description: Book Detail Controller - Detalhe de livro mode view page
  */
 (function() {
   'use strict';

@@ -4,7 +4,7 @@
 * Criado com base em angular design style de John Papa
 * (https://github.com/johnpapa/angular-styleguide)
 *
-* Descrição: Allows definition/managment of MutationObserver's for DOM elements (see: https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver)
+* Description: Allows definition/managment of MutationObserver's for DOM elements (see: https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver)
 */
 (function() {
   'use strict';

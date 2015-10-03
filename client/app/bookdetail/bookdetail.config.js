@@ -2,7 +2,7 @@
  * Module appBookShop.bookdetail Configuration
  * (João Carvalho, 16-03-2015)
  *
- * Descrição: Configura modulo appBookShop.bookdetail
+ * Description: Configura modulo appBookShop.bookdetail
  */
 (function() {
   'use strict';
@@ -42,8 +42,11 @@
         }*/
       },
       resolve: {
-        bookconfig: [ 'bookconfig', function (bookconfig) {
+        /*bookconfig: [ 'bookconfig', function (bookconfig) {
           return bookconfig;
+        }]*/
+        bookconfig: ['appconfig', function (appconfig) {
+          return appconfig.getConfig('bookconfig');
         }]
       }
     };

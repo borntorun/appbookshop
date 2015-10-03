@@ -2,9 +2,9 @@ form.enter-as-tab.on-focus(ng-show="model.book.reference", logic-form="bookrecor
     .row
         .col-xs-12
             span.bookrecordStore-buttons.hidden.pull-right
-                button.btn.btn-default(tabindex="10000",ng-disabled="model.bookrecordLogicForm.$pristine()", type="button", ng-click="model.clearForm()") Limpar
-                button.btn.btn-default(tabindex="10000",ng-show="model.book._id", ng-disabled="model.bookrecordLogicForm.$pristine()", type="button", ng-click="model.resetForm()") Desfazer
-                button.btn.btn-default(tabindex="9998",ng-disabled="model.bookrecordLogicForm.$invalid()", type="submit", id="submit", ng-click="model.save()") Gravar
+                button.btn.btn-default(tabindex="10000",ng-disabled="model.bookrecordLogicForm.isPristine()", type="button", ng-click="model.clearForm()") Limpar
+                button.btn.btn-default(tabindex="10000",ng-show="model.book._id", ng-disabled="model.bookrecordLogicForm.isPristine()", type="button", ng-click="model.resetForm()") Desfazer
+                button.btn.btn-default(leave-focus, tabindex="9998",ng-disabled="model.bookrecordLogicForm.isInvalid() || model.bookrecordLogicForm.processing()", type="submit", id="submit", ng-click="model.save()") Gravar
 
 
     .row.title
@@ -23,9 +23,8 @@ form.enter-as-tab.on-focus(ng-show="model.book.reference", logic-form="bookrecor
                 .col-xs-12
                     label(for="authors") {{::model.labels.authors}}
                         span(angular-typeaheadjs,
-                        angty-onselect="model.autocompleteEvents.onselect",
                         angty-onactive="model.autocompleteEvents.onactive",
-                        angty-onopen="model.autocompleteEvents.onopen",
+                        angty-onbeforeopen="model.autocompleteEvents.onbeforeopen",
                         angty-onchange="model.autocompleteEvents.onchange",
                         angty-options="{{model.config.author.options}}", angty-ttoptions="{{model.config.author.ttoptions}}")
                             input.typeahead(type="text", tabindex="210" name="authors", ng-model="model.book.author", aria-label="{{::model.placeholders.authors}}", placeholder="{{::model.placeholders.authors}}")
@@ -42,7 +41,7 @@ form.enter-as-tab.on-focus(ng-show="model.book.reference", logic-form="bookrecor
                         angular-typeaheadjs(
                         angty-onchange="model.autocompleteEvents.onchange",
                         angty-onactive="model.autocompleteEvents.onactive",
-                        angty-onopen="model.autocompleteEvents.onopen",
+                        angty-onbeforeopen="model.autocompleteEvents.onbeforeopen",
                         angty-options="{{model.config.translator.options}}", angty-ttoptions="{{model.config.translator.ttoptions}}")
                             input.typeahead(type="text", tabindex="300", name="translators", ng-model="model.book.translator", aria-label="{{::model.placeholders.translators}}", placeholder="{{::model.placeholders.translators}}")
                 .col-xs-12.col-lg-9(ng-hide="model.book.translators.length>1")
@@ -50,7 +49,7 @@ form.enter-as-tab.on-focus(ng-show="model.book.reference", logic-form="bookrecor
                         angular-typeaheadjs(
                         angty-onchange="model.autocompleteEvents.onchange",
                         angty-onactive="model.autocompleteEvents.onactive",
-                        angty-onopen="model.autocompleteEvents.onopen",
+                        angty-onbeforeopen="model.autocompleteEvents.onbeforeopen",
                         angty-options="{{model.config.translator.options}}", angty-ttoptions="{{model.config.translator.ttoptions}}")
                             input.typeahead(type="text", tabindex="300", name="translators", ng-model="model.book.translator", aria-label="{{::model.placeholders.translators}}", placeholder="{{::model.placeholders.translators}}")
                 .col-xs-12.col-lg-5(ng-show="model.book.translators.length>1")
@@ -63,7 +62,7 @@ form.enter-as-tab.on-focus(ng-show="model.book.reference", logic-form="bookrecor
                         angular-typeaheadjs(
                         angty-onchange="model.autocompleteEvents.onchange",
                         angty-onactive="model.autocompleteEvents.onactive",
-                        angty-onopen="model.autocompleteEvents.onopen",
+                        angty-onbeforeopen="model.autocompleteEvents.onbeforeopen",
                         angty-options="{{model.config.language.options}}", angty-ttoptions="{{model.config.language.ttoptions}}")
                             input.typeahead(type="text", tabindex="310", name="editionTranslatedLanguage", ng-model="model.book.editionTranslatedLanguage", aria-label="{{::model.placeholders.editionTranslatedLanguage}}", placeholder="{{::model.placeholders.editionTranslatedLanguage}}")
     .row.caixa
@@ -80,7 +79,7 @@ form.enter-as-tab.on-focus(ng-show="model.book.reference", logic-form="bookrecor
                         angular-typeaheadjs(
                             angty-onchange="model.autocompleteEvents.onchange",
                             angty-onactive="model.autocompleteEvents.onactive",
-                            angty-onopen="model.autocompleteEvents.onopen",
+                            angty-onbeforeopen="model.autocompleteEvents.onbeforeopen",
                             angty-options="{{model.config.publisher.options}}", angty-ttoptions="{{model.config.publisher.ttoptions}}")
                             input.typeahead(type="text", tabindex="400", name="editionPublisher", ng-model="model.book.editionPublisher", aria-label="{{::model.placeholders.editionPublisher}}", placeholder="{{::model.placeholders.editionPublisher}}")
                 .col-xs-12.col-lg-2
@@ -88,7 +87,7 @@ form.enter-as-tab.on-focus(ng-show="model.book.reference", logic-form="bookrecor
                         angular-typeaheadjs(
                             angty-onchange="model.autocompleteEvents.onchange",
                             angty-onactive="model.autocompleteEvents.onactive",
-                            angty-onopen="model.autocompleteEvents.onopen",
+                            angty-onbeforeopen="model.autocompleteEvents.onbeforeopen",
                             angty-options="{{model.config.language.options}}", angty-ttoptions="{{model.config.language.ttoptions}}")
                             input.typeahead(type="text", tabindex="500", name="editionLanguage", ng-model="model.book.editionLanguage", aria-label="{{::model.placeholders.editionLanguage}}", placeholder="{{::model.placeholders.editionLanguage}}")
                 .col-xs-12.col-lg-2
@@ -96,7 +95,7 @@ form.enter-as-tab.on-focus(ng-show="model.book.reference", logic-form="bookrecor
                         angular-typeaheadjs(
                             angty-onchange="model.autocompleteEvents.onchange",
                             angty-onactive="model.autocompleteEvents.onactive",
-                            angty-onopen="model.autocompleteEvents.onopen",
+                            angty-onbeforeopen="model.autocompleteEvents.onbeforeopen",
                             angty-options="{{model.config.country.options}}", angty-ttoptions="{{model.config.country.ttoptions}}")
                             input.typeahead(type="text", tabindex="600", name="editionCountry", ng-model="model.book.editionCountry", aria-label="{{::model.placeholders.editionCountry}}", placeholder="{{::model.placeholders.editionCountry}}")
                 .col-xs-12.col-lg-2
@@ -151,7 +150,7 @@ form.enter-as-tab.on-focus(ng-show="model.book.reference", logic-form="bookrecor
                         angular-typeaheadjs(
                             angty-onchange="model.autocompleteEvents.onchange",
                             angty-onactive="model.autocompleteEvents.onactive",
-                            angty-onopen="model.autocompleteEvents.onopen",
+                            angty-onbeforeopen="model.autocompleteEvents.onbeforeopen",
                             angty-options="{{model.config.language.options}}", angty-ttoptions="{{model.config.language.ttoptions}}")
                             input.typeahead(type="text", tabindex="2300", name="originalLanguage", ng-model="model.book.originalLanguage", aria-label="{{::model.placeholders.originalLanguage}}", placeholder="{{::model.placeholders.originalLanguage}}")
                 .col-xs-12.col-lg-2
@@ -159,7 +158,7 @@ form.enter-as-tab.on-focus(ng-show="model.book.reference", logic-form="bookrecor
                         angular-typeaheadjs(
                             angty-onchange="model.autocompleteEvents.onchange",
                             angty-onactive="model.autocompleteEvents.onactive",
-                            angty-onopen="model.autocompleteEvents.onopen",
+                            angty-onbeforeopen="model.autocompleteEvents.onbeforeopen",
                             angty-options="{{model.config.country.options}}", angty-ttoptions="{{model.config.country.ttoptions}}")
                             input.typeahead(type="text", tabindex="2400", name="originalCountryEdition", ng-model="model.book.originalCountryEdition", aria-label="{{::model.placeholders.originalCountryEdition}}", placeholder="{{::model.placeholders.originalCountryEdition}}")
                 .col-xs-12.col-lg-2
@@ -177,7 +176,7 @@ form.enter-as-tab.on-focus(ng-show="model.book.reference", logic-form="bookrecor
                                 angular-typeaheadjs(
                                     angty-onchange="model.autocompleteEvents.onchange",
                                     angty-onactive="model.autocompleteEvents.onactive",
-                                    angty-onopen="model.autocompleteEvents.onopen",
+                                    angty-onbeforeopen="model.autocompleteEvents.onbeforeopen",
                                     angty-options="{{model.config.category.options}}", angty-ttoptions="{{model.config.category.ttoptions}}")
                                     input.typeahead(type="text", tabindex="2600", name="categories", ng-model="model.book.category", aria-label="{{::model.placeholders.categories}}", placeholder="{{::model.placeholders.categories}}")
                     .row
@@ -193,7 +192,7 @@ form.enter-as-tab.on-focus(ng-show="model.book.reference", logic-form="bookrecor
                                 angular-typeaheadjs(
                                     angty-onchange="model.autocompleteEvents.onchange",
                                     angty-onactive="model.autocompleteEvents.onactive",
-                                    angty-onopen="model.autocompleteEvents.onopen",
+                                    angty-onbeforeopen="model.autocompleteEvents.onbeforeopen",
                                     angty-options="{{model.config.keyword.options}}", angty-ttoptions="{{model.config.keyword.ttoptions}}")
                                     input.typeahead(type="text", tabindex="2700", name="keywords", ng-model="model.book.keyword", aria-label="{{::model.placeholders.keywords}}", placeholder="{{::model.placeholders.keywords}}")
                     .row
@@ -206,11 +205,17 @@ form.enter-as-tab.on-focus(ng-show="model.book.reference", logic-form="bookrecor
             .row
                 .col-xs-12
                     label(for="obsInternal") {{::model.labels.obsInternal}}
-                        textarea(rows="3", name="obsInternal", tabindex="2800", ng-model="model.book.obsInternal", aria-label="{{::model.placeholders.obsInternal}}", placeholder="{{::model.placeholders.obsInternal}}")
+                        textarea(rows="3", name="obsInternal", tabindex="2800", ng-model="model.book.obsInternal", aria-label="{{::model.placeholders.obsInternal}}",
+                        ng-attr-placeholder="{{::model.placeholders.obsInternal}}")
+                        //use ng-attr.placeholder... because of error in IE https://github.com/angular/angular.js/issues/5025#issuecomment-38895391
+                        //placeholder="{{::model.placeholders.obsInternal}}")
             .row
                 .col-xs-12
                     label(for="obs") {{::model.labels.obs}}
-                        textarea(rows="3", name="obs", tabindex="2900", split-array-text="\n", ng-model="model.book.obs", aria-label="{{::model.placeholders.obs}}", placeholder="{{::model.placeholders.obs}}")
+                        textarea(rows="3", name="obs", tabindex="2900", split-array-text="\n", ng-model="model.book.obs", aria-label="{{::model.placeholders.obs}}",
+                        ng-attr-placeholder="{{::model.placeholders.obs}}")
+                        //use ng-attr.placeholder... because of error in IE https://github.com/angular/angular.js/issues/5025#issuecomment-38895391
+                        //placeholder="{{::model.placeholders.obs}}")
     .row.caixa
         .col-xs-12.col-lg-4
             .row
@@ -219,7 +224,7 @@ form.enter-as-tab.on-focus(ng-show="model.book.reference", logic-form="bookrecor
                         angular-typeaheadjs(
                             angty-onchange="model.autocompleteEvents.onchange",
                             angty-onactive="model.autocompleteEvents.onactive",
-                            angty-onopen="model.autocompleteEvents.onopen",
+                            angty-onbeforeopen="model.autocompleteEvents.onbeforeopen",
                             angty-options="{{model.config.author.options}}", angty-ttoptions="{{model.config.author.ttoptions}}")
                             input.typeahead(type="text", tabindex="3000", name="prefaceBy", ng-model="model.book.preface", aria-label="{{::model.placeholders.prefaceBy}}", placeholder="{{::model.placeholders.prefaceBy}}")
             .row
@@ -235,7 +240,7 @@ form.enter-as-tab.on-focus(ng-show="model.book.reference", logic-form="bookrecor
                         angular-typeaheadjs(
                             angty-onchange="model.autocompleteEvents.onchange",
                             angty-onactive="model.autocompleteEvents.onactive",
-                            angty-onopen="model.autocompleteEvents.onopen",
+                            angty-onbeforeopen="model.autocompleteEvents.onbeforeopen",
                             angty-options="{{model.config.author.options}}", angty-ttoptions="{{model.config.author.ttoptions}}")
                             input.typeahead(type="text", tabindex="3100", name="postfaceBy", ng-model="model.book.postface", aria-label="{{::model.placeholders.postfaceBy}}", placeholder="{{::model.placeholders.postfaceBy}}")
             .row
@@ -251,7 +256,7 @@ form.enter-as-tab.on-focus(ng-show="model.book.reference", logic-form="bookrecor
                         angular-typeaheadjs(
                             angty-onchange="model.autocompleteEvents.onchange",
                             angty-onactive="model.autocompleteEvents.onactive",
-                            angty-onopen="model.autocompleteEvents.onopen",
+                            angty-onbeforeopen="model.autocompleteEvents.onbeforeopen",
                             angty-options="{{model.config.author.options}}", angty-ttoptions="{{model.config.author.ttoptions}}")
                             input.typeahead(type="text", tabindex="3200", name="correctors", ng-model="model.book.corrector", aria-label="{{::model.placeholders.correctors}}", placeholder="{{::model.placeholders.correctors}}")
             .row
@@ -309,7 +314,7 @@ form.enter-as-tab.on-focus(ng-show="model.book.reference", logic-form="bookrecor
                         angular-typeaheadjs(
                         angty-onchange="model.autocompleteEvents.onchange",
                         angty-onactive="model.autocompleteEvents.onactive",
-                        angty-onopen="model.autocompleteEvents.onopen",
+                        angty-onbeforeopen="model.autocompleteEvents.onbeforeopen",
                         angty-options="{{model.config.publisher.options}}", angty-ttoptions="{{model.config.publisher.ttoptions}}")
                             input.typeahead(type="text", tabindex="4110", name="editionCountryFirstPublisher", ng-model="model.book.editionCountryFirstPublisher", aria-label="{{::model.placeholders.editionCountryFirstPublisher}}", placeholder="{{::model.placeholders.editionCountryFirstPublisher}}")
                 .col-xs-12.col-lg-2

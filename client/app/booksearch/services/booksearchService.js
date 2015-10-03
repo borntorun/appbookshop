@@ -2,7 +2,7 @@
  * Service appBookShop.bookdetail BookSearch
  * (João Carvalho, 12-03-2015)
  *
- * Descrição: Serviço para book search
+ * Description: Serviço para book search
  */
 (function () {
   'use strict';
@@ -23,7 +23,7 @@
     };
 
     SignalsService.searched.listen(function(data){
-      notifier.info('Search clicked', data, 'Searched Signal');
+      notifier.info('Search clicked', 'Searched Signal', data);
     });
 
 
@@ -44,7 +44,7 @@
     /////////
 
     function handlerError( options ) {
-      notifier.log(options.message, options.data, 'Error');
+      notifier.log(options.message, 'Error', options.data);
       return options.message;
     }
     function httpGet(url, strParameters) {

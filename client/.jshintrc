@@ -21,6 +21,7 @@
   "smarttabs": true,
   "laxcomma": true,
   "-W116": false, // disable: Expected '===' and instead saw '=='.
+  "-W041": false, //disable Use '===' to compare with '0'.
   "globals": {
     "toastr": true,
     "jQuery": true,

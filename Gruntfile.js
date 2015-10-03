@@ -244,7 +244,7 @@ module.exports = function( grunt ) {
       custom: {
         options: {
           'web-host': '192.168.40.25',
-          'hidden': ['node_modules'],
+          //'hidden': ['node_modules'],
           'debug-brk': ''
         }
       }

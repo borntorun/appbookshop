@@ -2,7 +2,7 @@
  * Controller appBookShop.booksearch BookSearchAdvancedFormCtrl
  * (João Carvalho, 12-03-2015)
  *
- * Descrição: Controla pesquisa avançada de livros
+ * Description: Controla pesquisa avançada de livros
  */
 (function () {
     'use strict';

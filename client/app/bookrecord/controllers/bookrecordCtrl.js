@@ -2,7 +2,7 @@
  * Controller appBookShop.bookrecord Bookrecord
  * (João Carvalho, 16-03-2015)
  *
- * Descrição: Book Record Controller - Form de edição livro
+ * Description: Book Record Controller - Form de edição livro
  */
 (function() {
   'use strict';
@@ -12,40 +12,16 @@
     .controller('BookrecordCtrl', BookrecordCtrl);
 
   /* @ngInject */
-  function BookrecordCtrl( $scope, /*$rootScope,*/ _lodash, bookconfig, bookrecord, notifier, $state, modalpopup, logicform, appconfig ) {
+  function BookrecordCtrl( $scope, $state, _lodash, bookconfig, bookrecord, notifier, logicform, message ) {
     /*jshint validthis: true */
     var model = this;
 
-    var messages = {
-      TITLE: 'Registo/Edição de Livro',
-      NOTFOUND: 'Livro não encontrado\n\n%url\n\nVerifique o endereço e tente novamente',
-      SAVE: 'Pretende gravar as alterações efectuadas?',
-      CLEAR: 'Pretende limpar o formulário?\n\nPerderá os dados constantes no formulário.\n(o registo na base de dados não será afectado enquanto não efectuar "Gravar")',
-      RESET: 'Desfazer alterações efectuadas?\n\nO registo da base de dados será carregado.\n(perderá as alterações efectuadas no formulário)'
-    };
-
     bookrecord.load($state.params.reference)
       .then(function( /*data*/ ) {
-        emitInitArray('authors', 'author', getFirstItemIfOne(model.book.authors));
-        emitInitArray('translators', 'translator', getFirstItemIfOne(model.book.translators));
-        emitInitArray('categories', 'category', getFirstItemIfOne(model.book.categories));
-        emitInitArray('keywords', 'keyword', getFirstItemIfOne(model.book.keywords));
-        emitInitArray('correctors', 'corrector', getFirstItemIfOne(model.book.correctors));
-        emitInitArray('postfaceBy', 'postface', getFirstItemIfOne(model.book.postfaceBy));
-        emitInitArray('prefaceBy', 'preface', getFirstItemIfOne(model.book.prefaceBy));
-        emitInitString('editionPublisher', model.book.editionPublisher);
-        emitInitString('editionLanguage', model.book.editionLanguage);
-        emitInitString('editionCountry', model.book.editionCountry);
-        emitInitString('editionTranslatedLanguage', model.book.editionTranslatedLanguage);
-        emitInitString('editionCountryFirstPublisher', model.book.editionCountryFirstPublisher);
-        emitInitString('originalPublisher', model.book.originalPublisher);
-        emitInitString('originalLanguage', model.book.originalLanguage);
-        emitInitString('originalCountryEdition', model.book.originalCountryEdition);
-
+        emitInitValues();
       })
       .catch(function( /*data*/ ) {
-        //notifier.warning('Livro não encontrado', '', 'Registo/Edição');
-        modalpopup.message({message: messages.NOTFOUND, title: messages.TITLE, vars: {url: appconfig.urlAbsolute()}})
+        message('bookrecord', 'notfound')
           .finally(function() {
             $state.go('main.search');
           });
@@ -62,47 +38,48 @@
     model.anoActual = new Date().getFullYear();
 
     model.resetForm = function() {
-      modalpopup.confirm({message: messages.RESET, title: messages.TITLE})
+      message('bookrecord', 'reset')
         .then(function() {
           bookrecord.reset();
+          emitInitValues();
           logicform.bookrecord.setPristine();
-        })
-        .catch(function() {});
+        });
+      /*.catch(function() {});*/
     };
 
     model.clearForm = function() {
-      modalpopup.confirm({message: messages.CLEAR, title: messages.TITLE})
+      message('bookrecord', 'clear')
         .then(function() {
           bookrecord.clear();
-        })
-        .catch(function() {});
-
+        });
+      /*.catch(function() {});*/
     };
 
     model.save = function() {
-      modalpopup.confirm({message: messages.SAVE, title: messages.TITLE})
+      message('bookrecord', 'save')
         .then(function( /*data*/ ) {
+
+          model.bookrecordLogicForm.processing(true);
 
           bookrecord.save()
             .then(function( data ) {
-              notifier.info('Livro registado<br/>' + data.reference);
+              notifier.info('Livro registado', 'Registo/Edição', data.reference);
 
-              $state.transitionTo($state.current, {
-                area: 'admin',
-                type: $state.params.type,
-                reference: data.reference,
-                slug: data.slug
-              }, {
-                reload: true,
-                inherit: false,
-                notify: true
-              });
+              $state.transitionTo($state.current,
+                {area: 'admin', type: $state.params.type, reference: data.reference, slug: data.slug},
+                {reload: true, inherit: false, notify: true}
+              );
             })
-            .catch(function( /*data*/ ) {
-              notifier.warning('Livro não registado', '', 'Registo/Edição');
+            .catch(function( err ) {
+              notifier.warning('Livro não registado', 'Registo/Edição');
+              message('bookrecord', 'notsaved', err);
+            })
+            .finally(function() {
+              model.bookrecordLogicForm.processing(false);
             });
         })
-        .catch(function() {});
+        .catch(function() {
+        });
     };
 
     model.removeItem = function( field, item ) {
@@ -112,29 +89,18 @@
 
     model.autocompleteEvents = {
       active: false,
-
-      onevent: function( /*item, data*/ ) {
-        //logevent('onevent', item, data);
-      },
-      onactive: function( /*item, data*/ ) {
-        //logevent('onactive', item, data);
-        //para evitar abrir as sugestões ao receber p focus
-        model.autocompleteEvents.active = true;
-      },
-      onopen: function( item/*, data*/ ) {
-        //logevent('onopen', item, data);
-
-        //para evitar abrir as sugestões ao receber p focus
-        if ( item.type === 'typeahead:beforeopen' ) {
-          if ( model.autocompleteEvents.active ) {
-            item.preventDefault();
-          }
+      onbeforeopen: function( item/*, data*/ ) {
+        /*console.log(item.type);*/
+        if ( model.autocompleteEvents.active ) {
+          item.preventDefault();
         }
         model.autocompleteEvents.active = false;
       },
+      onactive: function( /*item, data*/ ) {
+        //to avoid open suggestions when input receiving focus
+        model.autocompleteEvents.active = true;
+      },
       onchange: function( event, data ) {
-        //logevent('onchange', event, data);
-
         if ( isArray(model.book[event.currentTarget.name]) ) {
           var field = model.book[event.currentTarget.name];
           removeIfExists(field, data);
@@ -150,13 +116,17 @@
           });
         }
 
-      },
-      onselect: function( /*item, data*/ ) {
-        //logevent('onselect', item, data);
       }
     };
 
-    var autocompleteOptions = {showLog: true, clear: false, selectOnAutocomplete: false, emitOnlyIfPresent: true, watchInitEvent: true, watchSetValEvent: true};
+    var autocompleteOptions = {
+      showLog: true,
+      clear: false,
+      selectOnAutocomplete: false,
+      emitOnlyIfPresent: true,
+      watchInitEvent: true,
+      watchSetValEvent: true
+      /*, setSameListenerEventBefore: true*/};
     var autocompleteTTOptions = {minLength: 3, limit: 20};
 
     model.config = {
@@ -168,6 +138,24 @@
       keyword: {options: autocompleteOptions, ttoptions: autocompleteTTOptions},
       translator: {options: autocompleteOptions, ttoptions: autocompleteTTOptions}
     };
+
+    function emitInitValues() {
+      emitInitArray('authors', 'author', getFirstItemIfOne(model.book.authors));
+      emitInitArray('translators', 'translator', getFirstItemIfOne(model.book.translators));
+      emitInitArray('categories', 'category', getFirstItemIfOne(model.book.categories));
+      emitInitArray('keywords', 'keyword', getFirstItemIfOne(model.book.keywords));
+      emitInitArray('correctors', 'corrector', getFirstItemIfOne(model.book.correctors));
+      emitInitArray('postfaceBy', 'postface', getFirstItemIfOne(model.book.postfaceBy));
+      emitInitArray('prefaceBy', 'preface', getFirstItemIfOne(model.book.prefaceBy));
+      emitInitString('editionPublisher', model.book.editionPublisher);
+      emitInitString('editionLanguage', model.book.editionLanguage);
+      emitInitString('editionCountry', model.book.editionCountry);
+      emitInitString('editionTranslatedLanguage', model.book.editionTranslatedLanguage);
+      emitInitString('editionCountryFirstPublisher', model.book.editionCountryFirstPublisher);
+      emitInitString('originalPublisher', model.book.originalPublisher);
+      emitInitString('originalLanguage', model.book.originalLanguage);
+      emitInitString('originalCountryEdition', model.book.originalCountryEdition);
+    }
 
     configTT('author');
     configTT('language');
@@ -193,10 +181,6 @@
       model.book[fieldModel] = value;
       emitInitString(name, model.book[fieldModel]);
     }
-
-    /*function logevent( func, item, data ) {
-      console.log(func + '----' + item.type, '  --target:', item.currentTarget.name, '--data:', data);
-    }*/
 
     function removeIfExists( varray, item ) {
       _lodash.remove(varray, function( val ) {

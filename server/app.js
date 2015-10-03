@@ -3,66 +3,58 @@
  */
 
 'use strict';
-// Set default node environment to development
+
+/**
+ * Set default NODE_ENV - Environment
+ */
 process.env.NODE_ENV = process.env.NODE_ENV || 'development';
-//process.env.NODE_ENV = 'production';
 
-
-console.log(process.env.NODE_ENV);
-
-var express = require('express');
-
-var errors = require('./components/errors');
-
-// Environment
 var config = require('./config/environment');
 
-// Database
-var database = require('./config/databases');
+/**
+ * Set database connections
+ */
 
-// Connect Database: mongo.library
-config.mongo.library.connection = database(config.mongo.library);
+config.mongo.library.connection = require('./config/databases')(config.mongo.library);
 
-// Populate DB with sample data
-if (config.seedDB) {
-  //require('./config/databases/seed');
-  //require('./api/book/seed');
-  require('./api/bookconfig/seed');
-  require('./api/category/seed');
-  require('./api/publisher/seed');
-  require('./api/country/seed');
-  require('./api/language/seed');
-  require('./api/keyword/seed');
-  require('./api/author/seed');
-  require('./api/translator/seed');
+//seed database
+require('./config/databases/seed')(require('./api/seed'));
 
-}
+/**
+ * Set response to signals to proper close db connections
+ */
 
-process.on('SIGINT', function clean() {
+process.on('SIGINT', function() {
   console.log('Exiting on SIGINT....');
-  require('mongoose').disconnect(function(){
+  require('mongoose').disconnect(function() {
     console.log('Mongo DB disconnected.');
   });
   process.exit(0);
+
 });
 
+/**
+ * Config and start Express Server
+ */
+var express = require('express');
 
-// Setup server
 var app = express();
 
 var server = require('http').createServer(app);
 
 require('./config/express')(app);
 
+//sould this be here?
+var errors = require('./components/errors');
 // All other routes should redirect to 404
-app.route('/*').get(function(req,res) {
+app.route('/*').get(function( req, res ) {
   console.log('em-app.js', req.params);
-  errors[404](req,res);
+  errors[404](req, res);
 });
 
 // Start server
-server.listen(config.port, config.ip, function () {
+server.listen(config.port, config.ip, function() {
   console.log('Express server listening on %d, in %s mode', config.port, app.get('env'));
 });
 // Expose app
-exports = module.exports = app;
+module.exports = exports = app;

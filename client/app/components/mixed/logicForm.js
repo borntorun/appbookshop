@@ -6,7 +6,7 @@
  * Criado com base em angular design style de John Papa
  * (https://github.com/johnpapa/angular-styleguide)
  *
- * Descrição: Directive and Service to enable forms (formController) be treated as one logic group
+ * Description: Directive and Service to enable forms (formController) be treated as one logic group
  * Purpose: control status (and validation TODO:?) of several forms located in different views but that must act as one unique logic group for validation/submit/save etc.
  *
  * Example:
@@ -71,14 +71,21 @@
         addForm: addForm,
         setPristine: setPristine,
         exists: exists,
-        $invalid: isInvalid,
-        $pristine: isPristine
+        isInvalid: isInvalid,
+        isPristine: isPristine,
+        processing: processing
       };
 
       var forms = [];
+      var isProcessing = false;
 
       return logicForm;
       /////////////////////////////
+
+      function processing(value) {
+        isProcessing = (value === undefined? isProcessing : !!value);
+        return isProcessing;
+      }
 
       function exists(fieldName) {
         for ( var i = 0; i < forms.length; i++ ) {

@@ -18,4 +18,5 @@ UserSchema.method('toJSON', function(){
   return user;
 });
 
+
 module.exports = config.mongo.library.connection.model('User', UserSchema);

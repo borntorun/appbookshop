@@ -4,7 +4,7 @@
  * Criado com base em angular design style de John Papa
  * (https://github.com/johnpapa/angular-styleguide)
  *
- * Descrição: Directive to config a tootip for use with an element
+ * Description: Directive to config a tootip for use with an element
  */
 (function() {
   'use strict';

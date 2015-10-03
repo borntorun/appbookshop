@@ -99,7 +99,7 @@ BookSchema.post('save', function( /*doc*/ ) {
       if ( data.length == 0 ) {
         new Model({'name': item})
           .save(function( err, data ) {
-            console.log('after :------------------------:', data);
+            //console.log('after :------------------------:', data);
           });
       }
     });

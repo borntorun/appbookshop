@@ -4,7 +4,7 @@
  * Criado com base em angular design style de John Papa
  * (https://github.com/johnpapa/angular-styleguide)
  *
- * Descrição: Service to bookrecord view managment
+ * Description: Service to bookrecord view managment
  */
 (function() {
   'use strict';
@@ -57,8 +57,8 @@
           init();
           defer.resolve(data);
         },
-        function() {
-          reject(defer, 'Livro não encontrado.');
+        function(err) {
+          reject(defer, err);
         }
       );
       return defer.promise;
@@ -79,8 +79,8 @@
           bookcache = angular.copy(book);
           defer.resolve(data);
         },
-        function( /*data*/ ) {
-          reject(defer, 'Livro não encontrado.');
+        function( err ) {
+          reject(defer, err);
         }
       );
       return defer.promise;
@@ -93,8 +93,8 @@
           setReference(data.seq);
           defer.resolve(data);
         },
-        function( /*data*/ ) {
-          reject(defer, 'Referência inválida.');
+        function( err ) {
+          reject(defer, err);
         });
       return defer.promise;
     }
@@ -192,15 +192,14 @@
       return defer;
     }
 
-
-
-    function reject( defer, message ) {
-      defer.reject(handlerError({message: message}));
+    function reject( defer, err ) {
+      defer.reject(handlerError(err));
     }
 
-    function handlerError( options ) {
-      notifier.log(options.message, options.data, 'Error');
-      return book;
+    function handlerError( err ) {
+      notifier.log(err.message, 'Error',err.cause.data);
+
+      return err;
     }
   }
 }());

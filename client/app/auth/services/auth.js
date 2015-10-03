@@ -4,7 +4,7 @@
  * Criado com base em angular design style de John Papa
  * (https://github.com/johnpapa/angular-styleguide)
  *
- * Descrição: Authentication Service
+ * Description: Authentication Service
  */
 (function() {
   'use strict';
@@ -13,7 +13,7 @@
     .factory('auth', auth);
 
   /* @ngInject */
-  function auth( exception, notifier, $window, Q,$state ) {
+  function auth( $window, Q, httpRequest ) {
     /*
     * Private Block
     */
@@ -33,39 +33,26 @@
     function googleAuth() {
       var defer = Q.defer();
 
-      var url = 'https://accounts.google.com/o/oauth2/auth?';
-
-      var googlePar = {
-        'response_type': 'code',
-        'client_id': '552881844129-imd7v6hlrocg5efcebj6nku28nmoge5s.apps.googleusercontent.com',
-        'redirect_uri': 'http://localhost:12999/auth/google/callback',//$window.location.origin,//
-        'scope': 'profile email'
-      };
-
-      for ( var k in googlePar ) {
-        url += k + '=' + googlePar[k] + '&';
-      }
-      url = url.slice(0, -1);
-
-      var options = 'top=0,left=0';
+      var options = 'top=0,left=0,toolbar=no';
       //console.log(url);
 
-      $window.open(url, '', options);
+      $window.open('/auth/google/logininfo', '', options);
 
-      $window.addEventListener('message', function(event){
+      $window.addEventListener('message', function( event ) {
         console.log(event);
-        //if (event.origin === $window.location.origin && event.data==='reload'){
-        if (event.origin === 'http://localhost:12999' &&
-          event.data.email &&
-          event.data.name &&
-          event.data.tokenjwt){
-          //$state.go('main.search');
 
-          if (event.data) {
+        if ( event.origin !== 'http://local.host:12999' || event.data.error ) {
+          console.log('erro 1');
+          defer.reject(new Error('Erro 1!'));
+        }
+        else {
+          if ( event.data.email && event.data.name && event.data.tokenjwt ) {
+            //$state.go('main.search');
             defer.resolve(event.data);
           }
           else {
-            defer.reject(new Error('Erro!'));
+            console.log('erro 2');
+            defer.reject(new Error('Erro 2!'));
           }
         }
       });

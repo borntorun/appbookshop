@@ -9,10 +9,11 @@ var morgan = require('morgan');
 var compression = require('compression');
 //var cors = require('cors'); //new
 var bodyParser = require('body-parser');
+var csurf = require('csurf');
 
 var path = require('path');
 var config = require('./environment');
-var methodOverride = require('method-override');
+//var methodOverride = require('method-override');
 
 /**
  * Passport
@@ -29,9 +30,16 @@ var Cookies = require('cookies');
 
 module.exports = function( app ) {
 
+
   var env = app.get('env');
 
   app.use(morgan('dev'));
+  app.use(compression({level:2}));
+  app.use(bodyParser.urlencoded({ extended: false }));
+  //bodyParser.json is used per route
+  //app.use(bodyParser.json());
+  //app.use(methodOverride());
+
 
   /**
    * Set jade view engine
@@ -61,16 +69,22 @@ module.exports = function( app ) {
   //TODO: session to use database
   app.use(session({secret: process.env.SESSIONSECRET || '1S9H9H9...'}));
 
+  /**
+   * Use CSRF
+   */
+  var csrfValue = function(req) {
+    var token = (req.body && req.body._csrf) || (req.query && req.query._csrf) || (req.headers['x-csrf-token']) || (req.headers['x-xsrf-token']);
+    return token;
+  };
+  app.use(csurf({value: csrfValue}));
+
+
   /////auth
   //auth with passport(must before routes)
 //  app.use(passport.initialize());
 //  app.use(passport.session());
 
 
-  app.use(compression());
-  app.use(bodyParser.urlencoded({ extended: false }));
-  app.use(bodyParser.json());
-  app.use(methodOverride());
 
 
   //app.use(cookieParser());

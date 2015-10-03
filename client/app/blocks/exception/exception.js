@@ -17,7 +17,7 @@
 
     function catcher(message) {
       return function(reason) {
-        notifier.error(message, reason);
+        notifier.error(message, '',reason);
       };
     }
   }

@@ -8,20 +8,41 @@
     .module('blocks.notifier')
     .factory('notifier', notifier);
 
-  //notifier.$inject = ['$log', '$window', 'toastr'];
+
   /* @ngInject */
-  function notifier($log, $window, toastr) {
+  function notifier( $log, toastr) {
     var service = {
       showToasts: true,
 
-      error   : error,
+      error: function(message, title, data) {
+        return write('error', message, title, data, {timeOut: 2500});
+      },
+      info: function(message, title, data) {
+        return write('info', message, title, data, {timeOut: 2500});
+      },
+      success: function(message, title, data) {
+        return write('success', message, title, data, {timeOut: 2500});
+      },
+      warning: function(message, title, data) {
+        return write('warning', message, title, data, {timeOut: 2500});
+      },
+      warn: function(message, title, data) {
+        return write('warning', message, title, data, {timeOut: 2500});
+      },
+      /*errorx   : error,
       info    : info,
       success : success,
       warning : warning,
-      warn : warning,
+      warn : warning,*/
+      log: log //straight to console; bypass toastr
 
-      // straight to console; bypass toastr
-      log     : $log.log
+    };
+
+    var mapActionsLog = {
+      error: 'error',
+      info: 'info',
+      success: 'info',
+      warning: 'warn'
     };
 
     return service;
@@ -40,31 +61,45 @@
       }*/
     }
 
-    function error(message, data, title) {
-      message = message || 'Erro na pagina.';
+    function write(type, message, title, data, options) {
       verifyBottomPosition();
-      toastr.error(message, title, {timeOut: 2000});
-      $log.error(message, getData(data));
+      toastr[type](message, title, options);
+      $log[mapActionsLog[type]](message, getData(data));
+    }
+
+    function log(message, data) {
+      //straight to console; bypass toastr
+      $log.log(message, getData(data));
+    }
+
+    /*function error(message, data, title) {
+      write('error', message, title, data, {timeOut: 2500});
+//      verifyBottomPosition();
+//      toastr.error(message, title, );
+//      $log.error(message, getData(data));
 
     }
 
     function info(message, data, title) {
       verifyBottomPosition();
-      toastr.info(message, title);
+      toastr.info(message, title, {timeOut: 2500});
       $log.info(message, getData(data));
     }
 
     function success(message, data, title) {
       verifyBottomPosition();
-      toastr.success(message, title);
+      toastr.success(message, title, {timeOut: 2500});
       $log.info(message, getData(data));
     }
 
     function warning(message, data, title) {
       verifyBottomPosition();
-      toastr.warning(message, title, {timeOut: 60000});
+      toastr.warning(message, title, {timeOut: 2500});
       $log.warn(message, getData(data));
-    }
+    }*/
+
+
+
   }
 }());
 

@@ -2,7 +2,7 @@
  * Controller appBookShop.navbar NavBarTop
  * (João Carvalho, 16-03-2015)
  *
- * Descrição: Controller para barra de navegação no topo
+ * Description: Controller para barra de navegação no topo
  */
 (function() {
   'use strict';

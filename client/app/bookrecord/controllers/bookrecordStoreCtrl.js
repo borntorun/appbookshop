@@ -4,7 +4,7 @@
  * Criado com base em angular design style de John Papa
  * (https://github.com/johnpapa/angular-styleguide)
  *
- * Descrição: Book record store controller - Store fields view manager
+ * Description: Book record store controller - Store fields view manager
  */
 (function() {
   'use strict';

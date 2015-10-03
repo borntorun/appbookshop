@@ -2,7 +2,7 @@
  * Module appBookShop.components
  * (João Carvalho, 16-03-2015)
  *
- * Descrição: Definição módulo para componentes gerais
+ * Description: Definição módulo para componentes gerais
  */
 (function() {
   'use strict';

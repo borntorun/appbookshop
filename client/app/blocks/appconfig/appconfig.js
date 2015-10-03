@@ -21,6 +21,8 @@
   /* @ngInject */
   function appconfig( httpRequest, notifier, appconfigHandler, $state ) {
     var config = {};
+    var promise;
+
     var service = {
       getConfig: getConfig,
       urlAbsolute: function() {
@@ -33,11 +35,8 @@
       if ( config[key] ) {
         return config[key];
       }
-      var promise;
-
-      if ( appconfigHandler.config[key].loading === false ) {
-
-        appconfigHandler.config[key].loading = true;
+      if ( promise == null || promise.$$state.status != 0 /*appconfigHandler.config[key].loading === false*/ ) {
+        //appconfigHandler.config[key].loading = true;
 
         promise = httpRequest.get({
           url: appconfigHandler.config[key].url
@@ -48,23 +47,19 @@
         promise
           .then(function(data){
             config[key] = data;
-            appconfigHandler.config[key].loading = false;
-            //? appconfigHandler.config[key].promisse = null;
+            //appconfigHandler.config[key].loading = false;
+            notifier.log('Loaded appconfig.getConfig:','',key);
             return data;
           })
           .catch(function() {
-            appconfigHandler.config[key].loading = false;
-            //? pq esta linha appconfigHandler.config[key].promisse = null;
-            notifier.log('Error in appconfig.getConfig');
+            //appconfigHandler.config[key].loading = false;
+            notifier.log('Error loading appconfig.getConfig','',key);
+          })
+          .finally(function(){
+            notifier.log('Finish loading appconfig.getConfig:','',key);
           });
       }
       return promise;
-      /*return config[key] || $http.get(appconfigHandler.config[key].url)
-        .then(getConfigComplete)
-        .catch(function (message) {
-          exception.catcher('Configuração aplicação não obtida')(message);
-        });
-      */
 
     }
   }

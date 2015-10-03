@@ -4,7 +4,7 @@
  * Criado com base em angular design style de John Papa
  * (https://github.com/johnpapa/angular-styleguide)
  *
- * Descrição: Apply validation to an input to accept an ISBN
+ * Description: Apply validation to an input to accept an ISBN
 */
 (function () {
   'use strict';

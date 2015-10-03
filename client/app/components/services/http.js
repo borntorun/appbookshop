@@ -4,7 +4,7 @@
  * Criado com base em angular design style de John Papa
  * (https://github.com/johnpapa/angular-styleguide)
  *
- * Descrição: Enable a http ajax request with $http
+ * Description: Enable a http ajax request with $http
  */
 (function() {
   'use strict';
@@ -68,6 +68,9 @@
     }
 
     function throwError( response ) {
+      if(response.status==0) {
+        response.statusText = 'Network Error (received response empty)';
+      }
       throw err(response.statusText, response);
     }
   }

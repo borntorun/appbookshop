@@ -59,7 +59,7 @@
        * @example
        *     throw { message: 'error message we added' };
        */
-      notifier.error(exception.message, exception);
+      notifier.error(exception.message, '', exception);
     };
   }
 }());

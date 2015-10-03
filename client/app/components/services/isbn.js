@@ -4,7 +4,7 @@
  * Criado com base em angular design style de John Papa
  * (https://github.com/johnpapa/angular-styleguide)
  *
- * Descrição: Valida ISBN
+ * Description: Valida ISBN
  */
 (function() {
   'use strict';

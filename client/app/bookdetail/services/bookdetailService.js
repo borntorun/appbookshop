@@ -2,7 +2,7 @@
  * Service appBookShop.bookdetail bookdetail
  * (João Carvalho, 16-03-2015)
  *
- * Descrição: Serviço para book detail
+ * Description: Serviço para book detail
  */
 (function() {
   'use strict';
@@ -29,7 +29,7 @@
           return data;
         }).
         catch(function(){
-          notifier.error('Livro não encontrado.', id, 'Error');
+          notifier.error('Livro não encontrado.', 'Error', id);
           return {};
         });
     }

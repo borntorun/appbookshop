@@ -14,6 +14,7 @@
     'blocks.notifier',
     'blocks.exception',
     'blocks.appconfig',
+    'blocks.message',
 
     /*
      * 3rd Party modules

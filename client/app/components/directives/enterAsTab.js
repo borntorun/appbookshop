@@ -4,7 +4,7 @@
  * Criado com base em angular design style de John Papa
  * (https://github.com/johnpapa/angular-styleguide)
  *
- * Descrição: Directive to make input text elements have Enter key to behave as Tab key
+ * Description: Directive to make input text elements have Enter key to behave as Tab key
  */
 (function() {
   'use strict';

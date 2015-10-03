@@ -2,7 +2,7 @@
  * Module appBookShop.bookrecord Configuration
  * (João Carvalho, 16-03-2015)
  *
- * Descrição: Configura modulo appBookShop.bookrecord
+ * Description: Configura modulo appBookShop.bookrecord
  */
 (function() {
   'use strict';
@@ -61,8 +61,11 @@
         }*/
       },
       resolve: {
-        bookconfig: [ 'bookconfig', function( bookconfig ) {
+        /*bookconfig: [ 'bookconfig', function( bookconfig ) {
           return bookconfig;
+        }]*/
+        bookconfig: ['appconfig', function (appconfig) {
+          return appconfig.getConfig('bookconfig');
         }]
       }
     };

@@ -33,11 +33,10 @@
     function googleAuth() {
       var defer = Q.defer();
 
-      var options = 'top=0,left=0';
+      var options = 'top=0,left=0,toolbar=no';
       //console.log(url);
 
-      console.log('vai abrir');
-      $window.open('/auth/google/authenticate', '', options);
+      $window.open('/auth/google/logininfo', '', options);
 
       $window.addEventListener('message', function( event ) {
         console.log(event);

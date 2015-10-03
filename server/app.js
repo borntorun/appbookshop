@@ -48,7 +48,7 @@ require('./config/express')(app);
 var errors = require('./components/errors');
 // All other routes should redirect to 404
 app.route('/*').get(function( req, res ) {
-  console.log('em-app.js', req.params);
+  console.log('em app.js', req.params);
   errors[404](req, res);
 });
 

@@ -26,6 +26,16 @@
       }
     };
 
+    states['main.googlelogin'] = {
+      /* ATENÇÃO: NÃO COLOCAR / NO INÍCIO ... CHILD VIEW */
+      //url: 'login/google',
+      views: {
+        'dologin@': {
+          template: '',
+          controller: 'AuthLoginCtrl as model'
+        }
+      }
+    };
 
 
     _lodash.forEach(states, function(state, key) {

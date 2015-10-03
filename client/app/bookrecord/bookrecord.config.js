@@ -15,7 +15,6 @@
   function moduleConfig( $stateProvider, _lodash ) {
     var states = {};
 
-
     ///{ref:[\\d]*}
 
     states['main.bookrecord'] = {
@@ -26,7 +25,6 @@
         slug: { value: null, squash: true },
         area: { value: 'admin', squash: false }
       },
-
 
       /* Views affected by this url */
       views: {
@@ -64,7 +62,7 @@
         /*bookconfig: [ 'bookconfig', function( bookconfig ) {
           return bookconfig;
         }]*/
-        bookconfig: ['appconfig', function (appconfig) {
+        bookconfig: ['appconfig', function( appconfig ) {
           return appconfig.getConfig('bookconfig');
         }]
       }

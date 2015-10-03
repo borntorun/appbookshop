@@ -7,7 +7,6 @@ var Cookies = require('cookies');
 var errors = require('./components/errors');
 var config = require('./config/environment');
 var path = require('path');
-var passport = require('passport');
 
 module.exports = function( app ) {
 
@@ -28,8 +27,8 @@ module.exports = function( app ) {
 //
 
 //
-
-//    console.log('funcIndexHtml req.user:', req.user);
+    console.log('req.isAuthenticated=====', req.isAuthenticated());
+    console.log('funcIndexHtml req.user======:', req.user);
 //    console.log('funcIndexHtml req.url:', req.url);
 //    //console.log('funcIndexHtml req:', req);
 
@@ -49,11 +48,15 @@ module.exports = function( app ) {
     res.sendFile('index.html', options);
   };
 
+  var auth = require('./auth');
+
+  app.use('/logout', auth.logout);
+
   app.route('/').get(funcIndexHtml);
+
   app.route('/index.html').get(funcIndexHtml);
 
   // Insert routes below
-  //app.use('/api/things', require('./api/thing'));
 
   app.use('/api/counters', require('./api/counters'));
 
@@ -74,6 +77,8 @@ module.exports = function( app ) {
 
   app.route('/:area(book|livro)/:reference([\\d]+)/:slug([\\w-]+)?').get(funcIndexHtml);
 
-  app.route('/admin/:area(book|livro)/:reference(new|[\\d]+)/:slug([\\w-]+)?').get(funcIndexHtml);
+  app.route('/admin/:area(book|livro)/:reference(new|[\\d]+)/:slug([\\w-]+)?')
+    .all(auth.ensureIsAuthenticated)
+    .get(funcIndexHtml);
 
 };

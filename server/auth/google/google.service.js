@@ -1,38 +1,24 @@
 'use strict'
 
+var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 var options = require('./google.options');
-var reqPromise = require('request-promise');
-var profile = require('./google.profile');
+//var profile = require('./google.profile');
 
-exports.loginInfo = function() {
-  return options.loginInfo();
-}
+exports.googleStrategy = function() {
+  return new GoogleStrategy(options.strategyOptions,
+    function( accessToken, refreshToken, profile, done ) {
+      // asynchronous verification, for effect...
+      process.nextTick(function() {
 
+        // To keep the example simple, the user's Google profile is returned to
+        // represent the logged-in user.  In a typical application, you would want
+        // to associate the Google account with a user record in your database,
+        // and return that user instead.
+        console.log('profile', profile);
 
-exports.authenticate = function( googleCode ) {
-
-  options.token.form.code = googleCode;
-
-  //GET ACCESS TOKEN
-  return reqPromise(options.token)
-    .then(function( data ) {
-      console.log(data);
-      /*jshint camelcase: false */
-      options.profile.headers.Authorization = 'Bearer ' + data.access_token;
-
-      //GET PROFILE INFORMATION
-      return reqPromise(options.profile)
-        .then(function(data){
-          return profile.getUser(data);
-        })
-        .catch(function( err, data ) {
-          console.log(err, data);
-          return null;
-        });
-
-    })
-    .catch(function( err, data ) {
-      console.log(err, data);
-      return null;
-    });
+        return done(null, profile);
+      });
+    }
+  );
 };
+

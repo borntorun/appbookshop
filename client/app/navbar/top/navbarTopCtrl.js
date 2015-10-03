@@ -13,11 +13,13 @@
     .controller('NavBarTopCtrl', NavBarTopCtrl);
 
   /* @ngInject */
-  function NavBarTopCtrl( exception, notifier, auth, $window ) {
+  function NavBarTopCtrl( exception, notifier, auth, $window, $state ) {
     var model = this;
 
     model.loginGoogle = function() {
-      auth.loginWithGoogle()
+      console.log('vai para o estado');
+      $state.go('main.googlelogin');
+      /*auth.loginWithGoogle()
         .then(function(userdata) {
           //data containd email/name/tokenjwt to store on the localStorage
           //TODO:store it
@@ -29,7 +31,7 @@
         })
         .catch(function(err){
           console.log(err);
-        });
+        });*/
     };
   }
 }());

@@ -15,10 +15,8 @@ var path = require('path');
 var config = require('./environment');
 //var methodOverride = require('method-override');
 
-/**
- * Passport
-*/
-var passport = require('passport');
+
+
 /**
  * express-session
 */
@@ -79,11 +77,14 @@ module.exports = function( app ) {
   app.use(csurf({value: csrfValue}));
 
 
-  /////auth
+  /**
+   * Authentication
+   */
   //auth with passport(must before routes)
-//  app.use(passport.initialize());
-//  app.use(passport.session());
-
+  /**
+   * Passport
+   */
+  require('../auth/passport-strategies')(app);
 
 
 

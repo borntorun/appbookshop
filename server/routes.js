@@ -50,11 +50,14 @@ module.exports = function( app ) {
 
   var auth = require('./auth');
 
-  app.use('/logout', auth.logout);
+
+  app.use('/logout', auth.ensureIsAuthenticated, auth.logout);
 
   app.route('/').get(funcIndexHtml);
 
   app.route('/index.html').get(funcIndexHtml);
+
+  //app.route('/login/google').get(funcIndexHtml);
 
   // Insert routes below
 
@@ -71,7 +74,7 @@ module.exports = function( app ) {
   // All undefined asset or api routes should return a 404
   app.route('/:url(api|auth)/*').get(errors[404]);
 
-  app.route('/search/free/([0-9]+)/:term').get(funcIndexHtml);
+  app.route('/search/free/([0-9]+)/:term?').get(funcIndexHtml);
 
   app.route('/search/advanced/([0-9]+)/:tit/:aut/:ssub/:col/:cat/:edi').get(funcIndexHtml);
 

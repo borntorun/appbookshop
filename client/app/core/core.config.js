@@ -29,8 +29,8 @@
   Config object for module
    */
   var config = {
-    appErrorPrefix: '[Livraria Torres Erro] ', //Configure the exceptionHandler decorator
-    appTitle: 'Livraria Torres',
+    appErrorPrefix: '[Livros & Livros] ', //Configure the exceptionHandler decorator
+    appTitle: 'Livros & Livros',
     version: '0.0.1'
   };
   core.value('config', config);
@@ -42,7 +42,7 @@
 //  core.config(configTest);
 
   /* @ngInject */
-  function configureAngularProviders( $httpProvider, $logProvider, $urlRouterProvider, $locationProvider, $animateProvider ) {
+  function configureAngularProviders( $httpProvider, $logProvider, $urlRouterProvider, $locationProvider, $animateProvider, $stickyStateProvider ) {
     $httpProvider.useApplyAsync(true);
     $animateProvider.classNameFilter(/(carousel|dynamic-layout|app-anima)/);//feature do ngAnimate...
     // turn debugging off/on (no info or warn)
@@ -57,6 +57,8 @@
       enabled: true,
       requireBase: false
     });
+
+    $stickyStateProvider.enableDebug(true);
   }
 
   /* @ngInject */

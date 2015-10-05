@@ -29,7 +29,7 @@
     return directive;
     ////////////////
     function linkfunction(scope/*, element, attrs*/) {
-      var onstateChangeSuccess = scope.$on('$stateChangeSuccess', changeLayout);
+      //x var onstateChangeSuccess = scope.$on('$stateChangeSuccess', changeLayout);
 
       function setLayout(name) {
 
@@ -71,10 +71,10 @@
           setLayout(toState.name);
         //}
       }
-      setLayout($rootScope.$state.current.name);
+      //x setLayout($rootScope.$state.current.name);
 
       scope.$on('$destroy', function () {
-        onstateChangeSuccess();
+        //x onstateChangeSuccess();
       });
 
     }

@@ -22,7 +22,7 @@ exports.callback = function( req, res ) {
       });
   }
   else {
-    res.render('googleClose', {'data': {error: 'no code returned'}});
+    return res.render('googleClose', {'data': {error: 'no code returned'}});
   }
 };
 

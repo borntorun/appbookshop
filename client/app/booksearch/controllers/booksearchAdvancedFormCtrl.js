@@ -12,9 +12,8 @@
     /* @ngInject*/
     function BookSearchAdvancedFormCtrl( $interval, $timeout, notifier, $rootScope, $scope, BookSearch) {
         /*jshint validthis: true */
-        var
-            vm = this,
-            onstateChangeSuccess = $scope.$on('$stateChangeSuccess', setInputSearch);
+        var vm = this;
+        //x var onstateChangeSuccess = $scope.$on('$stateChangeSuccess', setInputSearch);
 
 
 
@@ -100,7 +99,7 @@
         //      alert(data);
         //    });
         $scope.$on('$destroy', function () {
-            onstateChangeSuccess(); //unregister the listenner 'onstateChangeSuccess'
+            //x onstateChangeSuccess(); //unregister the listenner 'onstateChangeSuccess'
         });
     }
 }());

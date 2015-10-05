@@ -28,12 +28,9 @@
 
       /* Views affected by this url */
       views: {
-        '': {
+        'main-content@main': {
           templateUrl: 'app/bookrecord/views/bookrecord.html',
           controller: 'BookrecordCtrl as model'
-        },
-        'main-left@main': {
-          template: ''//'views navbarleft-books (main.jade)'
         },
         'main-right@main': {
           templateUrl: 'app/bookrecord/views/bookrecordNavRight.html'
@@ -41,22 +38,7 @@
         'bookrecord-store@main.bookrecord': {
           templateUrl: 'app/bookrecord/views/bookrecordStore.html',
           controller: 'BookrecordStoreCtrl as model'
-        },
-        'main-content-bottom@main': {
-          template: ''//'view main-content-bottom (main.jade)'
-        },
-        'hint@': {
-          template: ''//'view hint - index.html'
         }
-        /*,
-        'navbarleft-books': {
-          templateUrl: 'app/bookrecord/views/bookrecordFotoLayout.html'
-        }*/
-        /* View existente na main view / no index.html *//*
-        ,
-        'hint@': {
-          template: 'teste xpto'
-        }*/
       },
       resolve: {
         /*bookconfig: [ 'bookconfig', function( bookconfig ) {

@@ -17,8 +17,8 @@
     var model = this;
 
     model.loginGoogle = function() {
-      console.log('vai para o estado');
-      $state.go('main.googlelogin');
+
+      $state.go('googlelogin');
       /*auth.loginWithGoogle()
         .then(function(userdata) {
           //data containd email/name/tokenjwt to store on the localStorage

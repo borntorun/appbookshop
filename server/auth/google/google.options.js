@@ -12,5 +12,6 @@ exports.scope = googleEnv[config.env].scope;
 exports.strategyOptions = {
   clientID: googleEnv[config.env].client_id,
   clientSecret: googleEnv[config.env].client_secret,
-  callbackURL: googleEnv[config.env].redirect_uri
+  callbackURL: googleEnv[config.env].redirect_uri,
+  passReqToCallback: true
 }

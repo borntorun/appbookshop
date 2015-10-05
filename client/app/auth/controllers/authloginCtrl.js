@@ -14,7 +14,7 @@
     .controller('AuthLoginCtrl', AuthLoginCtrl);
 
   /* @ngInject */
-  function AuthLoginCtrl(auth, $window) {
+  function AuthLoginCtrl(auth, $window, $previousState) {
     /*jshint validthis: true */
     var model = this;
 
@@ -31,6 +31,9 @@
       })
       .catch(function(err){
         console.log(err);
+      })
+      .finally(function(){
+        $previousState.go();
       });
   }
 }());

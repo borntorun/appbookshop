@@ -42,6 +42,8 @@
       $window.addEventListener('message', function( event ) {
         console.log(event);
 
+
+
         if ( event.origin !== 'http://local.host:12999' || event.data.error ) {
           console.log('erro 1');
           defer.reject(new Error('Erro 1!'));

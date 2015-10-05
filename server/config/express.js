@@ -84,7 +84,7 @@ module.exports = function( app ) {
   /**
    * Passport
    */
-  require('../auth/passport-strategies')(app);
+  require('../auth/passport')(app);
 
 
 

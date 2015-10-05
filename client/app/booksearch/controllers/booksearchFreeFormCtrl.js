@@ -12,7 +12,7 @@
     /*jshint validthis: true */
     var vm = this;
 
-    var onstateChangeSuccess = $scope.$on('$stateChangeSuccess', setInputSearch);
+    //x var onstateChangeSuccess = $scope.$on('$stateChangeSuccess', setInputSearch);
 
     vm.inputsearch = BookSearch.getSearchTerm();
     vm.limit = BookSearch.getSearchLimit();
@@ -36,7 +36,7 @@
     }
 
     $scope.$on('$destroy', function(){
-      onstateChangeSuccess(); //unregister the listenner 'onstateChangeSuccess'
+      //x onstateChangeSuccess(); //unregister the listenner 'onstateChangeSuccess'
     });
   }
 }());

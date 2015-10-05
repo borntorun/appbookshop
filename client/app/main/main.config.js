@@ -23,15 +23,16 @@
         bookconfig: ['appconfig', function (appconfig) {
           return appconfig.getConfig('bookconfig');
         }]
-      }
+      },
+      sticky: true
     };
 
-    states['main.googlelogin'] = {
+    states['googlelogin'] = {
       /* ATENÇÃO: NÃO COLOCAR / NO INÍCIO ... CHILD VIEW */
-      //url: 'login/google',
+//      url: '', /*QD não tem url  não colocar key */
       views: {
-        'dologin@': {
-          template: '',
+        'dologin': {
+          template: 'xxxxx',
           controller: 'AuthLoginCtrl as model'
         }
       }

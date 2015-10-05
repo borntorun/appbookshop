@@ -9,6 +9,7 @@ var passport = require('passport');
 /**
  * Route to authenticate
  */
+
 router.get('/authenticate', /*function( req, res, next ) {
     console.log('authenticate----', req);
     next();
@@ -17,6 +18,7 @@ router.get('/authenticate', /*function( req, res, next ) {
     scope: googleOptions.scope
   })
 );
+
 
 /**
  * Route(s) called by google after authentication attempt

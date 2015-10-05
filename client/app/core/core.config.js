@@ -39,7 +39,7 @@
    */
   core.config(configureAngularProviders);
   core.config(configureOtherProviders);
-//  core.config(configTest);
+
 
   /* @ngInject */
   function configureAngularProviders( $httpProvider, $logProvider, $urlRouterProvider, $locationProvider, $animateProvider, $stickyStateProvider ) {
@@ -58,7 +58,7 @@
       requireBase: false
     });
 
-    $stickyStateProvider.enableDebug(true);
+    $stickyStateProvider.enableDebug(false);
   }
 
   /* @ngInject */
@@ -76,6 +76,8 @@
       }
     });
   }
+
+
 
 //  /* @ngInject */
 //  function configTest( lfDriver, simpleBasket ) {

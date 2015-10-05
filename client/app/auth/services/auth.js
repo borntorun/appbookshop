@@ -13,23 +13,67 @@
     .factory('auth', auth);
 
   /* @ngInject */
-  function auth( $window, Q, httpRequest ) {
+  function auth( $, $window, Q, notifier ) {
     /*
     * Private Block
     */
+    var user = null;
+    var storage;
 
     /*
     * Public Interface
     */
     var service = {
-      loginWithGoogle: googleAuth
+      loginWithGoogle: googleAuth,
+      logout: logout,
+      isAuthenticated: isAuthenticated,
+      loadUser: loadUser,
+      saveUser: saveUser,
+      setStorage: function( driver ) {
+        storage = driver;
+      }
     };
+
     return service;
     ///////////////
     //just put functions below this point
     /*
     * Private Block Interface
     */
+
+    function loadUser() {
+      if ( !storage ) {
+        return;
+      }
+      storage.load()
+        .then(function( data ) {
+          console.log(data);
+          user = data;
+        });
+    }
+
+    function saveUser( obj ) {
+      storage.save(obj)
+        .then(function( data ) {
+          console.log(data);
+          user = data;
+        });
+    }
+
+    function isAuthenticated() {
+      return user != null;
+    }
+
+    function logout() {
+      if ( !storage ) {
+        return Q(null);
+      }
+      return Q(storage.clear()
+        .then(function() {
+          user = null;
+        }));
+    }
+
     function googleAuth() {
       var defer = Q.defer();
 
@@ -37,30 +81,47 @@
       //console.log(url);
 
       console.log('vai abrir');
+
       $window.open('/auth/google/authenticate', '', options);
 
-      $window.addEventListener('message', function( event ) {
-        console.log(event);
-
-
-
-        if ( event.origin !== 'http://local.host:12999' || event.data.error ) {
-          console.log('erro 1');
-          defer.reject(new Error('Erro 1!'));
-        }
-        else {
-          if ( event.data.email && event.data.name && event.data.tokenjwt ) {
-            //$state.go('main.search');
-            defer.resolve(event.data);
-          }
-          else {
-            console.log('erro 2');
-            defer.reject(new Error('Erro 2!'));
-          }
-        }
-      });
+      setMessageListener();
 
       return defer.promise;
+      ////////////////
+      function setMessageListener() {
+        $($window).on("message", messageListener);
+      }
+
+      function unsetMessageListener() {
+        $($window).off("message", messageListener);
+      }
+
+      function messageListener( ev ) {
+        var event = ev.originalEvent;
+        console.log(event);
+
+        if ( event.origin !== 'http://local.host:12999' || !event.data || event.data.error ) {
+          defer.reject(false/*new Error('Invalid Login')*/);
+        }
+        else {
+          if ( event.data && event.data.user ) {
+            try {
+              saveUser(event.data.user);
+              defer.resolve(true);
+            }
+            catch( err ) {
+              notifier.log(err);
+              defer.reject(err);
+            }
+          }
+          else {
+            user = undefined;
+            defer.reject(false);
+          }
+        }
+        unsetMessageListener();
+      }
     }
+
   }
 }());

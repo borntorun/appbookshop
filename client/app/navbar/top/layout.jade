@@ -24,11 +24,12 @@ nav.navbar.navbar-default.navbar-fixed-top
                         li.dropdown-header ...
                 li.dropdown
                     a.dropdown-toggle(href="#", data-toggle="dropdown", role="button", aria-expanded="false")
-                        | Entrar
+                        span(ng-hide="model.isAuthenticated") Entrar
+                        span(ng-show="model.isAuthenticated") Sair
                         span.caret
                     ul.dropdown-menu(role="menu")
                         li
-                            a(ng-click="model.loginGoogle()" href="#")
+                            a(ng-click="model.googleAuthenticate()" href="#")
                                 //a(ui-sref="googlelogin")
                                 i.fa.fa-google-plus | Conta Google
 //include ../../components/books/edition/bookAddForm

@@ -7,7 +7,8 @@ var UserSchema = new Schema({
   name: { type: String },
   active: { type: Boolean },
   googleId: { type: String },
-  photo: { type: String }
+  photo: { type: String },
+  accessToken: { type: String }
 });
 
 UserSchema.path('name').required(true, 'Nome é obrigatório.');

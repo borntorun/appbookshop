@@ -13,12 +13,27 @@
     .controller('NavBarTopCtrl', NavBarTopCtrl);
 
   /* @ngInject */
-  function NavBarTopCtrl( exception, notifier, auth, $window, $state ) {
+  function NavBarTopCtrl( exception, notifier, auth, $window, $state, SignalsService ) {
     var model = this;
 
-    model.loginGoogle = function() {
+    model.isAuthenticated = auth.isAuthenticated();
 
-      $state.go('googlelogin');
+    SignalsService.loginsucceded.listen(function( /*value*/ ) {
+      model.isAuthenticated = true;
+    });
+    SignalsService.logoutsucceded.listen(function( /*value*/ ) {
+      model.isAuthenticated = false;
+    });
+
+    model.googleAuthenticate = function() {
+
+      if (model.isAuthenticated === false) {
+        $state.go('googlelogin');
+      } else {
+        $state.go('logout');
+      }
+
+
       /*auth.loginWithGoogle()
         .then(function(userdata) {
           //data containd email/name/tokenjwt to store on the localStorage

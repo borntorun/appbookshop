@@ -48,11 +48,11 @@
         },
         params: true/*,
         fn: function($dsr$) {
-          var shouldRedirect = // TODO finish docs;
+          .....
         }*/
       }
     };
-    
+
     states['main.search.featured'] = {
       url: '',
       templateUrl: 'app/booksearch/jade/booksearchResult.html',

@@ -10,6 +10,9 @@ router.get('/store/:reference/:slug?', bookCtrl.store);
 
 
 //router.get('/admin/:reference', bookCtrl.edit);
+
+//TODO: set auth.ensureIsAuthenticated in routes
+
 router.get('/admin/:reference/:slug?', bookCtrl.edit);
 router.post('/admin/:id', require('body-parser').json(),  require('express-validator')(), bookCtrl.save);
 

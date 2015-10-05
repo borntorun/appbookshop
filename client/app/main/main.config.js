@@ -31,13 +31,22 @@
       /* ATENÇÃO: NÃO COLOCAR / NO INÍCIO ... CHILD VIEW */
 //      url: '', /*QD não tem url  não colocar key */
       views: {
-        'dologin': {
-          template: 'xxxxx',
+        'loginlogout': {
+          template: '',
           controller: 'AuthLoginCtrl as model'
         }
       }
     };
-
+    states['logout'] = {
+      /* ATENÇÃO: NÃO COLOCAR / NO INÍCIO ... CHILD VIEW */
+      //      url: '', /*QD não tem url  não colocar key */
+      views: {
+        'loginlogout': {
+          template: '',
+          controller: 'AuthLogoutCtrl as model'
+        }
+      }
+    };
 
     _lodash.forEach(states, function(state, key) {
       $stateProvider.state(key, state);

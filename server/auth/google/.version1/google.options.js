@@ -1,4 +1,5 @@
 'use strict'
+/*jshint camelcase: false */
 //console.log(__dirname);
 var config = require('../../config/environment');
 var path = require('path');
@@ -6,7 +7,7 @@ console.log(path.join(__dirname,'configenv.json'));
 var googleEnv = require('jsonfile').readFileSync(path.join(__dirname,'configenv.json')).google;
 
 
-/*jshint camelcase: false */
+
 var options_token = {
   uri: googleEnv.uri_token,
   method: 'POST',

@@ -14,25 +14,25 @@
     .controller('AuthLoginCtrl', AuthLoginCtrl);
 
   /* @ngInject */
-  function AuthLoginCtrl(auth, $window, $previousState) {
+  function AuthLoginCtrl(/*$window,*/ auth, $previousState, SignalsService, notifier) {
     /*jshint validthis: true */
-    var model = this;
+    //var model = this;
 
-    console.log('vai para o loginWithGoogle');
+
+
     auth.loginWithGoogle()
-      .then(function(userdata) {
-        //data containd email/name/tokenjwt to store on the localStorage
-        //TODO:store it
-
-        console.log('then', userdata);
-
-        $window.location.reload();
-
+      .then(function(data) {
+        console.log('loginWithGoogle.then-',data);
+        SignalsService.loginsucceded.emit();
       })
-      .catch(function(err){
-        console.log(err);
+      .catch(function(data){
+        console.log('loginWithGoogle.catch-',data);
+
+        SignalsService.logoutsucceded.emit();
+        notifier.warning(err.message);
       })
-      .finally(function(){
+      .finally(function(data){
+        console.log('loginWithGoogle.finally-',data);
         $previousState.go();
       });
   }

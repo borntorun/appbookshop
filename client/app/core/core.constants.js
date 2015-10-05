@@ -13,7 +13,7 @@
     .constant('Q', window.Q)
     .constant('MutationObserver', window.MutationObserver)
 
-    .constant('lfDriver', window.localforageDriver)
+    .constant('localforageDriver', window.localforageDriver)
     .constant('simpleBasket', window.simplebasket);
 
 }());

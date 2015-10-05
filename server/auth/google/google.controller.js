@@ -19,7 +19,7 @@ exports.success = function( req, res ) {
   console.log('success------'/*, req.user*/);
   return res.render('googleClose', {
     'data': {
-      success: true
+      user: req.user
     }
   });
 }
@@ -35,7 +35,7 @@ exports.fail = function( req, res ) {
   console.log('fail------'/*, req.user*/);
   return res.render('googleClose', {
     'data': {
-      success: false
+      error: new Error('Invalid credentials')
     }
   });
 

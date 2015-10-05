@@ -2,8 +2,9 @@
 
 var passport = require('passport');
 var googleService = require('../google/google.service');
+var googleProfile = require('../google/google.profile');
 
-module.exports = function(app) {
+module.exports = function( app ) {
   app.use(passport.initialize());
   app.use(passport.session());
   // Passport session setup.
@@ -13,14 +14,33 @@ module.exports = function(app) {
   //   the user by ID when deserializing.  However, since this example does not
   //   have a database of user records, the complete Google profile is
   //   serialized and deserialized.
-  passport.serializeUser(function(user, done) {
+  passport.serializeUser(function( user, done ) {
     console.log('serializeUser:>>>\n', user);
+    //    {
+    //      name: user.name,
+    //      email: user.email,
+    //      photo: user.photo
+    //    }
+
     done(null, user);
   });
 
-  passport.deserializeUser(function(obj, done) {
-    console.log('deserializeUser:>>>\n', obj);
-    done(null, obj);
+  passport.deserializeUser(function( user, done ) {
+    console.log('deserializeUser:>>>\n', user);
+
+
+    googleProfile.getUser(user)
+      .then(googleService.isValidToken)
+      .then(function(result) {
+        console.log('deserializeUser: result >>>', result);
+        done(null, user);
+      })
+      .catch(function(result){
+        console.log('deserializeUser: result >>>', result);
+        done(null, null);
+      });
+
+
   });
 
   passport.use(googleService.googleStrategy());

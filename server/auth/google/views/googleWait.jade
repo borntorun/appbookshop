@@ -1,0 +1,59 @@
+
+style.
+    div.loading-image {
+        height: 620px;
+        text-align: center;
+    }
+    div.loading-image div {
+        text-align: center;
+        height: 100px;
+        position: relative;
+        top: 45%;
+        -webkit-transform: translateY(-45%);
+        -ms-transform: translateY(-45%);
+        transform: translateY(-45%);
+        font-size: 0.85em;
+    }
+    div.loading-image div img {
+        height: 100px;
+        /*position: absolute;*/
+        /*top: 50%;*/
+        /*-webkit-transform: translateY(-50%);*/
+        /*-ms-transform: translateY(-50%);*/
+        /*transform: translateY(-50%);*/
+    }
+
+div.loading-image
+    div
+        | a contactar Google...
+        br
+        img(src="/assets/images/loading.gif")
+
+
+
+script.
+    //
+    function center() {
+        // Fixes dual-screen position                         Most browsers      Firefox
+        var dualScreenLeft = window.screenLeft != undefined ? window.screenLeft : screen.left;
+        var dualScreenTop = window.screenTop != undefined ? window.screenTop : screen.top;
+
+        //screen.width, screen.height
+
+        var w = window.innerWidth ? window.innerWidth : document.documentElement.clientWidth ? document.documentElement.clientWidth : screen.width;
+        var h = window.innerHeight ? window.innerHeight : document.documentElement.clientHeight ? document.documentElement.clientHeight : screen.height;
+
+        var left = ((screen.width / 2) - (w / 2)) + dualScreenLeft;
+        var top = ((screen.height / 2) - (h / 2)) + dualScreenTop;
+
+        window.moveTo(left, top);
+        window.focus();
+
+    }
+
+    setTimeout(function(){
+      center();
+    });
+    setTimeout(function(){
+      window.location.href = '/auth/google/authenticate';
+    },1000);

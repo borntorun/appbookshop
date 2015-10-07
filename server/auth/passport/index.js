@@ -15,28 +15,20 @@ module.exports = function( app ) {
   //   have a database of user records, the complete Google profile is
   //   serialized and deserialized.
   passport.serializeUser(function( user, done ) {
-    console.log('serializeUser:>>>\n', user);
-    //    {
-    //      name: user.name,
-    //      email: user.email,
-    //      photo: user.photo
-    //    }
-
+    /*console.log('serializeUser:>>>\n', user);*/
     done(null, user);
   });
 
   passport.deserializeUser(function( user, done ) {
-    console.log('deserializeUser:>>>\n', user);
-
-
+    /*console.log('deserializeUser:>>>\n', user);*/
     googleProfile.getUser(user)
       .then(googleService.isValidToken)
       .then(function(result) {
-        console.log('deserializeUser: result >>>', result);
+        /*console.log('deserializeUser: result >>>', result);*/
         done(null, user);
       })
       .catch(function(result){
-        console.log('deserializeUser: result >>>', result);
+        /*console.log('deserializeUser: result >>>', result);*/
         done(null, null);
       });
 

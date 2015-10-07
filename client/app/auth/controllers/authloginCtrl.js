@@ -21,19 +21,17 @@
 
 
     auth.loginWithGoogle()
-      .then(function(data) {
-        console.log('loginWithGoogle.then-',data);
+      .then(function() {
+        notifier.info('Bem-vindo, ' + auth.user().name + '! - Sessão iniciada!');
         SignalsService.loginsucceded.emit();
       })
-      .catch(function(data){
-        console.log('loginWithGoogle.catch-',data);
-
+      .catch(function(err){
+        notifier.log(err);
         SignalsService.logoutsucceded.emit();
-        notifier.warning(err.message);
       })
-      .finally(function(data){
-        console.log('loginWithGoogle.finally-',data);
-        $previousState.go();
+      .finally(function(){
+        //$previousState.go();
       });
+
   }
 }());

@@ -12,7 +12,7 @@
     /*jshint validthis: true */
     var vm = this;
 
-    //x var onstateChangeSuccess = $scope.$on('$stateChangeSuccess', setInputSearch);
+    /*var onstateChangeSuccess = $scope.$on('$stateChangeSuccess', setInputSearch);*/
 
     vm.inputsearch = BookSearch.getSearchTerm();
     vm.limit = BookSearch.getSearchLimit();
@@ -22,7 +22,7 @@
       SignalsService.searched.emit(vm.inputsearch);
     };
 
-    function setInputSearch (event, toState, toParams, fromState, fromParams) {
+    /*function setInputSearch (event, toState, toParams, fromState, fromParams) {
       if (toState.name === 'main.search') {
         vm.inputsearch = BookSearch.getSearchInputDefault();
         vm.limit = BookSearch.getSearchLimit();
@@ -33,11 +33,11 @@
         vm.limit = toParams.limit;
         event.preventDefault();
       }
-    }
+    }*/
 
-    $scope.$on('$destroy', function(){
-      //x onstateChangeSuccess(); //unregister the listenner 'onstateChangeSuccess'
-    });
+    /*$scope.$on('$destroy', function(){
+      onstateChangeSuccess(); //unregister the listenner 'onstateChangeSuccess'
+    });*/
   }
 }());
 

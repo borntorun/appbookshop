@@ -1,4 +1,4 @@
-nav.navbar.navbar-default.navbar-fixed-top
+nav.navbar.navbar-default.navbar-fixed-top.nav-barra-topo
     div.container-fluid(ng-controller="NavBarTopCtrl as model")
         div.navbar-header
             button.navbar-toggle.collapsed(type="button", data-toggle="collapse", data-target="#navbar", aria-expanded="false", aria-controls="navbar")
@@ -8,11 +8,9 @@ nav.navbar.navbar-default.navbar-fixed-top
                 span.icon-bar
             a.navbar-brand(ui-sref="main.search") Livros & Livros
         div.navbar-collapse.collapse(id="navbar")
-            //ul.nav.navbar-nav.navbar-left.nav-barra-topo
-            //    li
-            //        a(ui-sref="main.searchadv") Pesquisa Avançada
+
             ul.nav.navbar-nav.navbar-right
-                li.dropdown
+                li.dropdown(ng-show="model.isAuthenticated")
                     a.dropdown-toggle(href="#", data-toggle="dropdown", role="button", aria-expanded="false")
                         | Gerir
                         span.caret
@@ -24,12 +22,18 @@ nav.navbar.navbar-default.navbar-fixed-top
                         li.dropdown-header ...
                 li.dropdown
                     a.dropdown-toggle(href="#", data-toggle="dropdown", role="button", aria-expanded="false")
-                        span(ng-hide="model.isAuthenticated") Entrar
-                        span(ng-show="model.isAuthenticated") Sair
+
+                        span(ng-hide="model.isAuthenticated") Perfil
+                        span(ng-show="model.isAuthenticated")
+                            span {{model.user.name || model.user.email}}
                         span.caret
-                    ul.dropdown-menu(role="menu")
-                        li
+                    ul.dropdown-menu.profile(role="menu")
+                        li(ng-hide="model.isAuthenticated")
                             a(ng-click="model.googleAuthenticate()" href="#")
-                                //a(ui-sref="googlelogin")
-                                i.fa.fa-google-plus | Conta Google
-//include ../../components/books/edition/bookAddForm
+                                i.fa.fa-google-plus | Entrar conta Google
+                        li(ng-show="model.isAuthenticated")
+                            span
+                                img(ng-show="!!model.user.photo", ng-src="{{model.user.photo}}", alt="{{model.user.name}}")
+                            span
+                                a(ng-click="model.googleAuthenticate()" href="#")
+                                    i.fa.fa-google-plus | Terminar Sessão

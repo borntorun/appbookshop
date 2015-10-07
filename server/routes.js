@@ -50,16 +50,9 @@ module.exports = function( app ) {
 
   var auth = require('./auth');
 
-
-  app.use('/logout', auth.ensureIsAuthenticated, auth.logout);
-
   app.route('/').get(funcIndexHtml);
 
   app.route('/index.html').get(funcIndexHtml);
-
-  //app.route('/login/google').get(funcIndexHtml);
-
-  // Insert routes below
 
   app.use('/api/counters', require('./api/counters'));
 
@@ -71,6 +64,9 @@ module.exports = function( app ) {
 
   app.use('/auth/google', require('./auth/google'));
 
+  app.route('/auth/logout').post(auth.ensureIsAuthenticated, auth.logout);
+
+
   // All undefined asset or api routes should return a 404
   app.route('/:url(api|auth)/*').get(errors[404]);
 
@@ -81,7 +77,10 @@ module.exports = function( app ) {
   app.route('/:area(book|livro)/:reference([\\d]+)/:slug([\\w-]+)?').get(funcIndexHtml);
 
   app.route('/admin/:area(book|livro)/:reference(new|[\\d]+)/:slug([\\w-]+)?')
-    .all(auth.ensureIsAuthenticated)
-    .get(funcIndexHtml);
+    .post(auth.ensureIsAuthenticated);
 
+  app.route('/admin/:area(book|livro)/:reference(new|[\\d]+)/:slug([\\w-]+)?')
+    .get(auth.ensureRedirectIsNotAuthenticated, funcIndexHtml)
+
+  app.route('/message/:term?').get(funcIndexHtml);
 };

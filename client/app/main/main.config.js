@@ -27,11 +27,25 @@
       sticky: true
     };
 
+    states['message'] = {
+      url: '/message/:term', /*QD não tem url  não colocar key */
+      views: {
+        'auxiliar': {
+          template: '',
+          controller: ['$state', 'notifier', function($state, notifier) {
+            notifier.warning($state.params.term);
+
+            $state.go('main.search');
+          }]
+        }
+      }
+    };
+
     states['googlelogin'] = {
       /* ATENÇÃO: NÃO COLOCAR / NO INÍCIO ... CHILD VIEW */
 //      url: '', /*QD não tem url  não colocar key */
       views: {
-        'loginlogout': {
+        'auxiliar': {
           template: '',
           controller: 'AuthLoginCtrl as model'
         }
@@ -41,7 +55,7 @@
       /* ATENÇÃO: NÃO COLOCAR / NO INÍCIO ... CHILD VIEW */
       //      url: '', /*QD não tem url  não colocar key */
       views: {
-        'loginlogout': {
+        'auxiliar': {
           template: '',
           controller: 'AuthLogoutCtrl as model'
         }

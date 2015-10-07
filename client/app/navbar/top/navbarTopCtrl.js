@@ -13,40 +13,51 @@
     .controller('NavBarTopCtrl', NavBarTopCtrl);
 
   /* @ngInject */
-  function NavBarTopCtrl( exception, notifier, auth, $window, $state, SignalsService ) {
+  function NavBarTopCtrl( $scope, $state, $previousState, $timeout, auth, SignalsService) {
     var model = this;
 
     model.isAuthenticated = auth.isAuthenticated();
+    model.user = {};
+
+
+    setUser();
 
     SignalsService.loginsucceded.listen(function( /*value*/ ) {
-      model.isAuthenticated = true;
+      setViewAuthenticate(true);
+
     });
     SignalsService.logoutsucceded.listen(function( /*value*/ ) {
-      model.isAuthenticated = false;
+      setViewAuthenticate(false);
     });
 
     model.googleAuthenticate = function() {
 
       if (model.isAuthenticated === false) {
         $state.go('googlelogin');
+        $timeout(function(){
+          $previousState.go();
+        },10);
       } else {
         $state.go('logout');
       }
 
 
-      /*auth.loginWithGoogle()
-        .then(function(userdata) {
-          //data containd email/name/tokenjwt to store on the localStorage
-          //TODO:store it
 
-          console.log('then', userdata);
-
-          $window.location.reload();
-
-        })
-        .catch(function(err){
-          console.log(err);
-        });*/
     };
+
+    function setViewAuthenticate(state) {
+      $scope.$apply(function(){
+        model.isAuthenticated = state;
+        setUser();
+      });
+    }
+    function setUser() {
+
+      if (model.isAuthenticated) {
+        model.user = angular.extend(model.user, auth.user());
+      } else {
+        model.user = {};
+      }
+    }
   }
 }());

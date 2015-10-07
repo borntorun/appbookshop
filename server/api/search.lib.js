@@ -36,7 +36,7 @@ search.filter = function (filter){
 
   if (filter) {
     aValues = transformRegExpInputArray(sanitizeInputArray(filter.split(',')));
-    console.log(aValues);
+    //console.log(aValues);
     return {'$or': [
       {'name': {'$in' : aValues}}
     ]};

@@ -13,16 +13,9 @@
     function BookSearchAdvancedFormCtrl( $interval, $timeout, notifier, $rootScope, $scope, BookSearch) {
         /*jshint validthis: true */
         var vm = this;
-        //x var onstateChangeSuccess = $scope.$on('$stateChangeSuccess', setInputSearch);
+        /*var onstateChangeSuccess = $scope.$on('$stateChangeSuccess', setInputSearch);*/
 
-
-
-
-
-        //notifier.info('Procura Livros Activa');
         vm.criteria = {};
-//        vm.urlRemote = '/api/tables/category/search/%QUERY';
-//        vm.urlPrefetch = '/assets/data/categories.json';
         vm.limit = BookSearch.getSearchLimit();
 
         vm.options = {
@@ -38,25 +31,10 @@
             }
         };
 
-
         setFields(BookSearch.getSearchAdvancedTerm());
-        /*vm.onSelected = function (item) {
-          vm.criteria.categories = item.name;
-        };
-        vm.onClosed = function (item) {
-          vm.criteria.categories = item.name;
-        };
 
-        $scope.$on('typeahead:opened', function(event, data) {
-          alert('on scope opened');
-          vm.onSelected(data);
-        });
-        $scope.$on('typeahead:closed', function(event, data) {
-          alert('on scope closed');
-          vm.onClosed(data);
-        });*/
         vm.search = function search() {
-            //console.log(vm.criteria);
+
             vm.criteria.edition = vm.firstEdition ? '1' : '';
             $rootScope.$state.go('main.search.advresults', {
                 type: 'advanced',
@@ -69,7 +47,7 @@
                 edition: vm.firstEdition ? '1' : '-'
             });
         };
-        vm.empty = function (/*form*/) {
+        vm.empty = function () {
             return vm.firstEdition === false && (vm.criteria.title + vm.criteria.authors + vm.criteria.subject + vm.criteria.collection + vm.criteria.categories).trim().length === 0;
         };
         function setFields(obj) {
@@ -81,7 +59,7 @@
             vm.firstEdition = obj.edition === '1' ? true : false;
         }
 
-        function setInputSearch(event, toState, toParams/*, fromState, fromParams*/) {
+        /*function setInputSearch(event, toState, toParams*//*, fromState, fromParams*//*) {
             if (toState.name === 'main.search.advresults') {
                 setFields({
                     title: toParams.title,
@@ -93,13 +71,10 @@
                 });
                 event.preventDefault();
             }
-        }
+        }*/
 
-        //    $scope.$on('typeahead:opened', function(event, data) {
-        //      alert(data);
-        //    });
-        $scope.$on('$destroy', function () {
-            //x onstateChangeSuccess(); //unregister the listenner 'onstateChangeSuccess'
-        });
+        /*$scope.$on('$destroy', function () {
+            onstateChangeSuccess(); //unregister the listenner 'onstateChangeSuccess'
+        });*/
     }
 }());

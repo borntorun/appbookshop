@@ -23,18 +23,17 @@
   }
 
   /* @ngInject */
-  function configureStorage( localforageDriver, auth ) {
-    console.log(localforageDriver, auth);
+  function configureStorage( localforageDriver, auth, notifier ) {
     localforageDriver.create(localforageDriver.STORAGE.SESSIONSTORAGE, {
       key: 'user', name: 'auth', storeName: 'appbookshop', description: 'user data'
     })
       .then(function( driver ) {
-        //auth.setStorage(driver);
-        auth.loadUser();
+        auth.setStorage(driver);
+        auth.loadUser()
+          .catch(function( err ) {
+            notifier.log(err);
+          });
       });
-    //      .catch(function( error ) {
-    //        done(error);
-    //      });
   }
 
 }());

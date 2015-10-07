@@ -47,16 +47,14 @@
         promise
           .then(function(data){
             config[key] = data;
-            //appconfigHandler.config[key].loading = false;
-            notifier.log('Loaded appconfig.getConfig:','',key);
+            //notifier.log('Loaded appconfig.getConfig:','',key);
             return data;
           })
           .catch(function() {
-            //appconfigHandler.config[key].loading = false;
             notifier.log('Error loading appconfig.getConfig','',key);
           })
           .finally(function(){
-            notifier.log('Finish loading appconfig.getConfig:','',key);
+            //notifier.log('Finish loading appconfig.getConfig:','',key);
           });
       }
       return promise;

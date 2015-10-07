@@ -1,15 +1,17 @@
 .row.dynamic-layout-item.element-item
-    div.block-price {{::it.price}} €
-    div.block-price-icons-triangshadow
+    div(ng-class="{'hidden': !it.price}")
+        div.block-price {{::it.price}} €
+        div.block-price-icons-triangshadow
     div.panel.panel-default
         div.panel-heading.block-title
             //|{{it.reference}}
             a(ui-sref="main.bookdetail({type:'livro',reference:it.reference,slug:it.slug})")
                 span.title.appbooklink {{::it.title}}
-            div(ng-class="{'hidden': !it.authors || it.authors.length===0}")
-                span(ng-repeat="author in ::it.authors")
-                    a(ui-sref="main.search.advresults({type:\"advanced\",limit:25,title:\"-\",authors:author,subject:\"-\",collection:\"-\",categories:\"-\",edition: \"-\"})")
-                        span.fielditem.appbooklink {{::author}}
+            div.block-authors(ng-class="{'hidden': !it.authors || it.authors.length===0}")
+                //span(ng-repeat="author in ::it.authors")
+                a(ng-repeat="author in ::it.authors",ui-sref="main.search.advresults({type:\"advanced\",limit:25,title:\"-\",authors:author,subject:\"-\",collection:\"-\",categories:\"-\",edition: \"-\"})")
+                    span.fielditem.appbooklink {{::author}}
+                    br
         div.panel-body
             ul.list-group.block-edicao-container
                 li.list-group-item.block-edicao

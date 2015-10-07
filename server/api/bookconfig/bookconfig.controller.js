@@ -6,7 +6,7 @@ exports.read = function (req, res) {
     if (err) {
       return handleError(res, err);
     }
-    return res.json(200, BookConfig[0]);
+    return res.status(200).json(BookConfig[0]);
   });
 };
 function handleError(res, err) {

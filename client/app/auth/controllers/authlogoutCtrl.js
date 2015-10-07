@@ -14,22 +14,17 @@
     .controller('AuthLogoutCtrl', AuthLogoutCtrl);
 
   /* @ngInject */
-  function AuthLogoutCtrl(/*$window,*/ auth, $previousState, SignalsService, notifier) {
+  function AuthLogoutCtrl(auth, $previousState, SignalsService, notifier) {
     /*jshint validthis: true */
     //var model = this;
 
     auth.logout()
-      .then(function() {
-        notifier.info('Logged out.');
-        //$window.location.reload();
-      })
       .catch(function(err){
-        console.log(err);
-        notifier.warning(err.message);
-
+        notifier.log(err);
       })
       .finally(function(){
         SignalsService.logoutsucceded.emit();
+        notifier.info('Sessão terminada.');
         $previousState.go();
       });
   }

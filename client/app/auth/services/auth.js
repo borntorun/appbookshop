@@ -8,12 +8,14 @@
  */
 (function() {
   'use strict';
+  /*jshint newcap: false */
+
   angular
     .module('appBookShop.auth')
     .factory('auth', auth);
 
   /* @ngInject */
-  function auth( $, $window, Q, notifier ) {
+  function auth( $, $window, Q, httpRequest) {
     /*
     * Private Block
     */
@@ -24,7 +26,10 @@
     * Public Interface
     */
     var service = {
-      loginWithGoogle: googleAuth,
+      user: function() {
+        return user;
+      },
+      loginWithGoogle: loginWithGoogle,
       logout: logout,
       isAuthenticated: isAuthenticated,
       loadUser: loadUser,
@@ -41,23 +46,30 @@
     * Private Block Interface
     */
 
+    function errStorage() {
+      return Q(null).then(function(){
+        throw new Error('Error in session storage');
+      });
+    }
+
     function loadUser() {
-      if ( !storage ) {
-        return;
-      }
-      storage.load()
+      if ( !storage ) {return errStorage();}
+
+      return Q(storage.load()
         .then(function( data ) {
-          console.log(data);
+          //set the user in memory
           user = data;
-        });
+        }));
     }
 
     function saveUser( obj ) {
-      storage.save(obj)
+      if ( !storage ) {return errStorage();}
+
+      return Q(storage.save(obj)
         .then(function( data ) {
-          console.log(data);
+          //set the user in memory equals to storage
           user = data;
-        });
+        }));
     }
 
     function isAuthenticated() {
@@ -68,54 +80,57 @@
       if ( !storage ) {
         return Q(null);
       }
-      return Q(storage.clear()
-        .then(function() {
+
+
+      return Q.allSettled([httpRequest.post({url: '/auth/logout'}),storage.clear()])
+        .then(function (results) {
+          /*results.forEach(function (result) {
+            console.log(result.state, result.value, result.reason);
+          });*/
           user = null;
-        }));
+        })
+        .catch(function(err){
+          user = null;
+          throw err;
+        });
+
     }
 
-    function googleAuth() {
+
+
+    function loginWithGoogle() {
       var defer = Q.defer();
 
-      var options = 'top=0,left=0';
-      //console.log(url);
+      var options = 'top=0,left=0,width=500,height=640';
 
-      console.log('vai abrir');
-
-      $window.open('/auth/google/authenticate', '', options);
+      $window.open('/auth/google/authenticatewait', '', options);
 
       setMessageListener();
 
       return defer.promise;
       ////////////////
       function setMessageListener() {
-        $($window).on("message", messageListener);
+        $($window).on('message', messageListener);
       }
 
       function unsetMessageListener() {
-        $($window).off("message", messageListener);
+        $($window).off('message', messageListener);
       }
 
       function messageListener( ev ) {
         var event = ev.originalEvent;
-        console.log(event);
+        //console.log(event);
 
         if ( event.origin !== 'http://local.host:12999' || !event.data || event.data.error ) {
+          user = null;
           defer.reject(false/*new Error('Invalid Login')*/);
         }
         else {
           if ( event.data && event.data.user ) {
-            try {
-              saveUser(event.data.user);
-              defer.resolve(true);
-            }
-            catch( err ) {
-              notifier.log(err);
-              defer.reject(err);
-            }
+            defer.resolve(saveUser(event.data.user));
           }
           else {
-            user = undefined;
+            user = null;
             defer.reject(false);
           }
         }

@@ -39,14 +39,14 @@ div.row.panel.panel-default.nomargins.bookdetail
                             span {{vm.book.editionNumber}}ª&nbsp;Edição,&nbsp;
                             span {{vm.book.editionYear}},&nbsp;
                             span {{vm.book.editionCountry}}
-                div.block-price
+                div.block-price(ng-class="{'hidden': !vm.book.price}")
                     | {{vm.book.price}} €
-                button.boxprice.btn.btn-default
+                button.boxprice.btn.btn-default(ng-class="{'hidden': !vm.book.price}")
                     strong
                         | Comprar
 
 
-                div.block-price-icons-triangshadow
+                div.block-price-icons-triangshadow(ng-class="{'hidden': !vm.book.price}")
                 //div.boxprice
                 //    button.btn.btn-default
                 //        | {{vm.book.price}} €&nbsp;

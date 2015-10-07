@@ -1,12 +1,11 @@
 'use strict';
 
-var Q = require('q');
-
-var googleService = require('./google.service');
-
-var passport = require('passport');
 
 
+exports.authenticateWait = function( req, res ) {
+
+  return res.render('googleWait');
+};
 
 /**
  * Handler after success authentication and redirect
@@ -16,13 +15,13 @@ var passport = require('passport');
  * @returns {*}
  */
 exports.success = function( req, res ) {
-  console.log('success------'/*, req.user*/);
+
   return res.render('googleClose', {
     'data': {
       user: req.user
     }
   });
-}
+};
 
 /**
  * Handler after fail authentication and redirect
@@ -32,14 +31,13 @@ exports.success = function( req, res ) {
  * @returns {*}
  */
 exports.fail = function( req, res ) {
-  console.log('fail------'/*, req.user*/);
+
   return res.render('googleClose', {
     'data': {
       error: new Error('Invalid credentials')
     }
   });
-
-}
+};
 
 /**
  * This handler is not used/called because success/fail redirection
@@ -49,6 +47,6 @@ exports.fail = function( req, res ) {
  * @returns {*}
  */
 exports.callback = function( req, res ) {
-  console.log('callback----------------');
+
   return res.status(200).json({data: 'callback'})
-}
+};

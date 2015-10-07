@@ -13,11 +13,11 @@ exports.getUser = function( user ) {
 
   findUser({email: user.email, active: true}, function( err, foundUser ) {
     if ( !err && foundUser ) {
-      console.log('getUser >>>>>>', foundUser);
+
       defer.resolve(foundUser);
     }
     else {
-      console.log('getUser >>>>>>', false);
+
       defer.reject(false);
     }
   });
@@ -29,7 +29,7 @@ exports.authenticate = function( googleProfile ) {
 
   var defer = Q.defer();
 
-  findUser({email: googleProfile.email, active: true}, function( err, foundUser ) {
+  findUser({email: googleProfile.emails[0].value, active: true}, function( err, foundUser ) {
 
     if ( !err && foundUser ) {
 

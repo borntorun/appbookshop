@@ -17,9 +17,9 @@ exports.googleStrategy = function() {
         // to associate the Google account with a user record in your database,
         // and return that user instead.
 
-        console.log('\n\naccesToken=', accessToken);
-        console.log('\n\nrefreshToken=', refreshToken);
-        console.log('\n\nprofile=', profile);
+//        console.log('\n\naccesToken=', accessToken);
+//        console.log('\n\nrefreshToken=', refreshToken);
+//        console.log('\n\nprofile=', profile);
 
         //pass in the object/user to store in session
         //to represent the logged-in user
@@ -31,27 +31,25 @@ exports.googleStrategy = function() {
           googleProfile.authenticate(profile)
             .then(function( user ) {
               //user object returned
-              console.log('googleStrategy then data=', user);
+
               done(null, user);
             })
             .catch(function( err ) {
-              console.log('googleStrategy catch/promise');
+
               return returnErrRedirect(err);
-              //              done(err);
+
             })
         }
         catch( err ) {
-          //          done(err);
-          console.log('googleStrategy try/catch');
+
           return returnErrRedirect(err);
         }
 
         function returnErrRedirect( err ) {
-          console.log('googleStrategy returnErrRedirect=', err);
+          console.log(err);
           return req.res.redirect('/auth/google/fail');
         }
 
-        //return done(null, user);
       });
     }
   );
@@ -60,30 +58,27 @@ exports.googleStrategy = function() {
 exports.isValidToken = function( user ) {
   var defer = Q.defer();
 
-  console.log('isValidToken user=====>', user)
-
   reqPromise({uri: options.uris.validateToken + user.accessToken, method: 'GET'})
     .then(function( data ) {
       if ( data ) {
         data = JSON.parse(data);
-        console.log(data);
-        console.log(data.issued_to, data.user_id, data.user_id === user.googleId);
+
         if ( data.error ) {
-          console.log('isValidToken data.error-->', false);
+
           defer.reject(false);
         }
         if ( data.issued_to && data.user_id && data.user_id === user.googleId ) {
-          console.log('isValidToken-->', true);
+
           defer.resolve(true);
         }
       }
       else {
-        console.log('isValidToken no data-->');
+
         defer.reject(false);
       }
     })
     .catch(function() {
-      console.log('isValidToken catch -->', false);
+
       defer.reject(false);
     });
 

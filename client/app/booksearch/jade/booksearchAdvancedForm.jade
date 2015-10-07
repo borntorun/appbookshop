@@ -41,9 +41,13 @@
 
                 .form-group
                     div.checkbox
-                        label
-                            input(type="checkbox", ng-model="vm.firstEdition", aria-label="1ªs Edições")
-                            | 1ªs Edições
+
+                        input(type="checkbox",id="firstEdition",name="firstEdition", ng-model="vm.firstEdition",aria-label="1ªs Edições",placeholder="1ªs Edições")
+                        label(for="firstEdition") 1ªs Edições
+
+                        //label
+                        //    input(type="checkbox", ng-model="vm.firstEdition", aria-label="1ªs Edições")
+                        //    | 1ªs Edições
                 span.pull-right.bottom
                     button.btn.btn-primary(type="submit", ng-disabled="vm.empty(booksearchAdvancedForm)")
                         | Procurar

@@ -12,37 +12,22 @@ module.exports = function( app ) {
 
   // Route to index.html
   var funcIndexHtml = function( req, res ) {
-//    var theCookies = new Cookies(req, res);
-//
-//    if ( req.url == '/livro/484' ) {
-//
-//      theCookies
-//        // set a regular cookie
-//        .set('nomedele', 'valor', { httpOnly: false });
-//    }
-//    else {
-//      var nomedele = theCookies.get('nomedele');
-//      console.log('nomedele:', nomedele);
-//    }
-//
 
-//
-    console.log('req.isAuthenticated=====', req.isAuthenticated());
-    console.log('funcIndexHtml req.user======:', req.user);
+//    console.log('req.isAuthenticated=====', req.isAuthenticated());
+//    console.log('funcIndexHtml req.user======:', req.user);
 //    console.log('funcIndexHtml req.url:', req.url);
-//    //console.log('funcIndexHtml req:', req);
+//    console.log('funcIndexHtml req:', req);
 
     var options = {
-      root: config.root//path.join(config.root, config.appPath)
-      //csrfToken: req.csrfToken()
+      root: config.root
     };
 
-    console.log('funcIndexHtml req.params:', req.params);
-    console.log('funcIndexHtml res options:', options);
+//    console.log('funcIndexHtml req.params:', req.params);
+//    console.log('funcIndexHtml res options:', options);
 
     var ocookie = new Cookies(req, res);
-    console.log('funcIndexHtml req.cookies:', req.cookies);
-    console.log('funcIndexHtml req.session:', req.session);
+//    console.log('funcIndexHtml req.cookies:', req.cookies);
+//    console.log('funcIndexHtml req.session:', req.session);
 
     ocookie.set('XSRF-TOKEN', req.csrfToken(), { httpOnly: false });
     res.sendFile('index.html', options);

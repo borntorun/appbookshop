@@ -66,9 +66,9 @@
       }
 
       function changeLayout(event, toState, toParams, fromState, fromParams) {
-        /*//if (fromState.name!=="main.search" && toState.name!==fromState.name) {
+        if (fromState.name!=='main.search' && toState.name!==fromState.name) {
           setLayout(toState.name);
-        //}*/
+        }
         if (toState.name == 'main.search.featured') {
           changeTab('#toggleAdvSearch');
           changeTab('#toggleFreeSearch');

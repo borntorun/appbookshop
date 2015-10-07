@@ -1,6 +1,23 @@
 'use strict';
+var googleService = require('../google/google.service');
+var googleProfile = require('./google.profile');
 
+exports.refresh = function(req, res) {
+  if (!req.user) {
+    return res.status(401).json({});
+  }
 
+  googleProfile.getUser(req.user)
+    .catch(null)
+    .then(googleService.isValidToken)
+    .catch(googleService.refresh)
+    .then(function(data){
+      return res.status(200).json(data);
+    })
+    .catch(function(err){
+      return res.status(401).json({});
+    });
+}
 
 exports.authenticateWait = function( req, res ) {
 

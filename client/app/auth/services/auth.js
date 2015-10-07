@@ -15,12 +15,13 @@
     .factory('auth', auth);
 
   /* @ngInject */
-  function auth( $, $window, Q, httpRequest) {
+  function auth( $, $window, $timeout, Q, httpRequest, SignalsService) {
     /*
     * Private Block
     */
     var user = null;
     var storage;
+    var refreshAction;
 
     /*
     * Public Interface
@@ -39,12 +40,47 @@
       }
     };
 
+//refresh session featured: abandoned
+//    SignalsService.loginsucceded.listen(function() {
+//      setRefreshAction(7500);
+//    });
+//    SignalsService.logoutsucceded.listen(function() {
+//      $timeout.cancel(refreshAction);
+//    });
+
     return service;
     ///////////////
     //just put functions below this point
     /*
     * Private Block Interface
     */
+
+//refresh session featured: abandoned
+//    function refreshSession() {
+//      console.log('refreshSession');
+//      //throw new Error('teste');
+//      //return {time:5000};
+//
+//      //se está válido
+//        //recebe time
+//        //retorna time
+//
+//      //se não está válido
+//        //retorna erro
+//    }
+//    function setRefreshAction(time) {
+//      console.log('setRefreshAction', time);
+//      refreshAction = $timeout(refreshSession,time);
+//
+//      refreshAction.then(function(data){
+//        console.log('then', data);
+//        //setRefreshAction(data.time);
+//      });
+//      refreshAction.catch(function(data){
+//        console.log('catch', data);
+//        //$state.go('logout');
+//      });
+//    }
 
     function errStorage() {
       return Q(null).then(function(){
@@ -59,6 +95,8 @@
         .then(function( data ) {
           //set the user in memory
           user = data;
+          //refresh session featured: abandoned
+          //if (user!=null) { setRefreshAction(7500);}
         }));
     }
 
@@ -80,8 +118,6 @@
       if ( !storage ) {
         return Q(null);
       }
-
-
       return Q.allSettled([httpRequest.post({url: '/auth/logout'}),storage.clear()])
         .then(function (results) {
           /*results.forEach(function (result) {
@@ -93,10 +129,7 @@
           user = null;
           throw err;
         });
-
     }
-
-
 
     function loginWithGoogle() {
       var defer = Q.defer();
@@ -137,6 +170,5 @@
         unsetMessageListener();
       }
     }
-
   }
 }());

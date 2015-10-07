@@ -33,8 +33,13 @@ exports.authenticate = function( googleProfile ) {
 
     if ( !err && foundUser ) {
 
+      if(!foundUser.googleId) {
+        if (googleProfile.refreshToken) {
+          foundUser.refreshToken = googleProfile.refreshToken;
+        }
+        foundUser.googleId = googleProfile.id;
+      }
       foundUser.accessToken = googleProfile.accessToken;
-      foundUser.googleId = googleProfile.id;
       foundUser.name = googleProfile.displayName
       foundUser.photo = googleProfile.photos[0].value
 

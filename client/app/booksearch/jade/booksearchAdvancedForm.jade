@@ -24,7 +24,7 @@
                     div.input-group
                         //| {{vm.criteria.categories}}
                         span.input-group-addon(id="categoria")
-                        | {{vm.criteria.categories}}
+                        //| {{vm.criteria.categories}}
                         angular-typeaheadjs(angty-options="{{vm.options}}" angty-ttoptions="{{vm.ttoptions}}")
                             input(placeholder="pesquisar por categoria" ng-model="vm.criteria.categories").typeahead
                         //angular-typeaheadjs(

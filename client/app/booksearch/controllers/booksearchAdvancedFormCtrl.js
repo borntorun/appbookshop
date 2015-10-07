@@ -10,10 +10,11 @@
 
 
     /* @ngInject*/
-    function BookSearchAdvancedFormCtrl( $interval, $timeout, notifier, $rootScope, $scope, BookSearch) {
+    function BookSearchAdvancedFormCtrl( /*$interval, $timeout, notifier,*/ $rootScope, $scope, BookSearch) {
         /*jshint validthis: true */
         var vm = this;
-        /*var onstateChangeSuccess = $scope.$on('$stateChangeSuccess', setInputSearch);*/
+
+        var onstateChangeSuccess = $scope.$on('$stateChangeSuccess', setInputSearch);
 
         vm.criteria = {};
         vm.limit = BookSearch.getSearchLimit();
@@ -59,8 +60,8 @@
             vm.firstEdition = obj.edition === '1' ? true : false;
         }
 
-        /*function setInputSearch(event, toState, toParams*//*, fromState, fromParams*//*) {
-            if (toState.name === 'main.search.advresults') {
+        function setInputSearch(event, toState, toParams/*, fromState, fromParams*/) {
+            if (toState.name == 'main.search.advresults') {
                 setFields({
                     title: toParams.title,
                     authors: toParams.authors,
@@ -71,10 +72,10 @@
                 });
                 event.preventDefault();
             }
-        }*/
+        }
 
-        /*$scope.$on('$destroy', function () {
+        $scope.$on('$destroy', function () {
             onstateChangeSuccess(); //unregister the listenner 'onstateChangeSuccess'
-        });*/
+        });
     }
 }());

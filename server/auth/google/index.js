@@ -17,7 +17,8 @@ router.get('/authenticate', /*function( req, res, next ) {
     next();
   },*/
   passport.authenticate('google', {
-    scope: googleOptions.scope
+    scope: googleOptions.scope,
+    accessType: googleOptions.accessType
   })
 );
 
@@ -40,5 +41,12 @@ router.get('/fail', googleCtrl.fail);
  * Route to success authentication handler
  */
 router.get('/success', googleCtrl.success);
+
+/**
+ * Route to verify the need to refres session (re-authentication)
+ */
+router.get('/refresh', googleCtrl.refresh);
+
+
 
 module.exports = router;

@@ -11,7 +11,7 @@
     .factory('bookdetail', bookdetail);
 
   /* @ngInject */
-  function bookdetail( httpRequest, notifier ) {
+  function bookdetail( httpRequest, Q ) {
     /*
     * Public Interface
     */
@@ -24,14 +24,17 @@
     * Private Block
     */
     function get( id ) {
-      return httpRequest.get({url: '/api/books/store/' + (id || '')})
+      var defer = Q.defer();
+
+      httpRequest.get({url: '/api/books/store/' + (id || '')})
         .then(function( data ) {
-          return data;
+          defer.resolve(data);
         }).
-        catch(function(){
-          notifier.error('Livro não encontrado.', 'Error', id);
-          return {};
+        catch(function(err){
+          defer.reject(err);
         });
+      return defer.promise;
+
     }
 
     /*function getold( id ) {

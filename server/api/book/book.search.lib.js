@@ -32,7 +32,7 @@ search.filter = function (filter){
 
   if (filter) {
     aValues = transformRegExpInputArray(sanitizeInputArray(filter.split(',')));
-    console.log(aValues);
+    //console.log(aValues);
     return {'$or': [
       {'title': {'$in' : aValues}},
       {'originalTitle': {'$in' : aValues}},

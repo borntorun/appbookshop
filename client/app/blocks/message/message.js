@@ -19,6 +19,15 @@
     */
     var groups = {};
 
+    groups.bookdetail = {
+      title: 'Livros & Livros',
+      notfound: {
+        message: 'Livro não encontrado\n\n%url\n\nVerifique o endereço e tente novamente',
+        title: '',
+        type: 'message'
+      }
+    };
+
     groups.bookrecord = {
       title: 'Registo/Edição de Livro',
       notsaved: {

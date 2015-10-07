@@ -21,14 +21,16 @@ module.exports = function( app ) {
 
   passport.deserializeUser(function( user, done ) {
     /*console.log('deserializeUser:>>>\n', user);*/
-    googleProfile.getUser(user)
+    googleProfile
+      .getUser(user)
       .then(googleService.isValidToken)
+      .catch(googleService.refresh)
       .then(function(result) {
-        /*console.log('deserializeUser: result >>>', result);*/
+        //console.log('deserializeUser: result then>>>', result);
         done(null, user);
       })
       .catch(function(result){
-        /*console.log('deserializeUser: result >>>', result);*/
+        //console.log('deserializeUser: result catch>>>', result);
         done(null, null);
       });
 

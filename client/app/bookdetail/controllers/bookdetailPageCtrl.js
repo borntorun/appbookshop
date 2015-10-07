@@ -12,7 +12,7 @@
     .controller('BookDetailPageCtrl', BookDetailPageCtrl);
 
   /* @ngInject */
-  function BookDetailPageCtrl( $rootScope, bookdetail, bookconfig ) {
+  function BookDetailPageCtrl( $scope,$rootScope, bookdetail, bookconfig, message, $state ) {
     /*jshint validthis: true */
     var vm = this;
 
@@ -25,30 +25,30 @@
 
     bookdetail.get($rootScope.$stateParams.reference)
       .then(function( data ) {
-        //$scope.$apply(function(){
-        vm.book = data;
-        //});
+        $scope.$apply(function() {
+          vm.book = data;
 
-        vm.bookflags.notranslatores = !vm.book.translators || vm.book.translators.length === 0;
-        vm.bookflags.nocategories = !vm.book.categories || vm.book.categories.length === 0;
-        vm.bookflags.noobs = !vm.book.obs || vm.book.obs.length === 0;
-        vm.bookflags.originalinfo = vm.book.originalTitle || vm.book.originalLanguage || vm.book.originalPublisher || vm.book.originalCountryEdition || vm.book.originalYearFirstEdition;
-        vm.bookflags.noprefaceBy = !vm.book.prefaceBy || vm.book.prefaceBy.length === 0;
-        vm.bookflags.nopostfaceBy = !vm.book.postfaceBy || vm.book.postfaceBy.length === 0;
-        vm.bookflags.nocorrector = !vm.book.corrector || vm.book.corrector.length === 0;
+          vm.bookflags.notranslatores = !vm.book.translators || vm.book.translators.length === 0;
+          vm.bookflags.nocategories = !vm.book.categories || vm.book.categories.length === 0;
+          vm.bookflags.noobs = !vm.book.obs || vm.book.obs.length === 0;
+          vm.bookflags.originalinfo = vm.book.originalTitle || vm.book.originalLanguage || vm.book.originalPublisher || vm.book.originalCountryEdition || vm.book.originalYearFirstEdition;
+          vm.bookflags.noprefaceBy = !vm.book.prefaceBy || vm.book.prefaceBy.length === 0;
+          vm.bookflags.nopostfaceBy = !vm.book.postfaceBy || vm.book.postfaceBy.length === 0;
+          vm.bookflags.nocorrector = !vm.book.corrector || vm.book.corrector.length === 0;
 
-        vm.bookflags.hasinformation =
-          vm.book.circulation ||
-          vm.book.editionLegalDeposit ||
+          vm.bookflags.hasinformation =
+            vm.book.circulation ||
+            vm.book.editionLegalDeposit ||
             vm.book.graphicalPrint ||
-            vm.book.cover ||
-            !vm.bookflags.noprefaceBy ||
-            !vm.bookflags.nopostfaceBy ||
-            !vm.bookflags.nocorrector;
-
-        console.log(vm.book);
-      }, function( data ) {
-        console.log(data);
+            vm.book.cover || !vm.bookflags.noprefaceBy || !vm.bookflags.nopostfaceBy || !vm.bookflags.nocorrector;
+        });
+        //console.log(vm.book);
+      })
+      .catch(function() {
+        message('bookdetail', 'notfound')
+          .finally(function() {
+            $state.go('main.search');
+          });
       });
 
     vm.searchCategoria = function( item ) {

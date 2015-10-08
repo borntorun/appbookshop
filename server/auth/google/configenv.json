@@ -1,0 +1,25 @@
+{
+  "google": {
+    "uri_profile": "https://www.googleapis.com/userinfo/v2/me",
+    "uri_validateToken": "https://www.googleapis.com/oauth2/v1/tokeninfo?access_token=",
+    "refresh_token": {
+      "uri": "https://www.googleapis.com/oauth2/v3/token",
+      "grant_type": "refresh_token"
+    },
+    "development": {
+      "redirect_uri": "http://local.host:12999/auth/google/callback",
+      "client_id": "552881844129-imd7v6hlrocg5efcebj6nku28nmoge5s.apps.googleusercontent.com",
+      "client_secret": "_7wcF_Dfq9Ou9BKBR6ptOVh_",
+      "scope": ["profile", "email"],
+      "access_type": "offline"
+    },
+    "production": {
+      "redirect_uri": "http://local.host:12999/auth/google/callback",
+      "client_id": "",
+      "client_secret": "",
+      "scope": ["profile", "email"],
+      "access_type": "offline"
+    }
+  }
+}
+

@@ -14,26 +14,33 @@ module.exports = function( app ) {
   //   the user by ID when deserializing.  However, since this example does not
   //   have a database of user records, the complete Google profile is
   //   serialized and deserialized.
-  passport.serializeUser(function( user, done ) {
+  passport.serializeUser(function( req, user, done ) {
     /*console.log('serializeUser:>>>\n', user);*/
     done(null, user);
   });
 
-  passport.deserializeUser(function( user, done ) {
-    /*console.log('deserializeUser:>>>\n', user);*/
-    googleProfile
-      .getUser(user)
-      .then(googleService.isValidToken)
-      .catch(googleService.refresh)
-      .then(function(result) {
-        //console.log('deserializeUser: result then>>>', result);
-        done(null, user);
-      })
-      .catch(function(result){
-        //console.log('deserializeUser: result catch>>>', result);
-        done(null, null);
-      });
+  passport.deserializeUser(function( req, user, done ) {
 
+    //TODO: better solution?
+    var needToVerifyToken = (req.url.indexOf('/admin/') > -1 || req.url.indexOf('/auth/') > -1);
+
+    if ( needToVerifyToken ) {
+      console.log('deserializeUser:>>>\n', req.url);
+      googleProfile
+        .getUser(user)
+        .then(googleService.isValidToken)
+        .catch(googleService.refresh)
+        .then(function( result ) {
+          //console.log('deserializeUser: result then>>>', result);
+          done(null, user);
+        })
+        .catch(function( result ) {
+          //console.log('deserializeUser: result catch>>>', result);
+          done(null, null);
+        });
+    } else {
+      done(null, user);
+    }
 
   });
 

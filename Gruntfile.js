@@ -16,8 +16,8 @@ module.exports = function( grunt ) {
     cdnify: 'grunt-google-cdn',
     protractor: 'grunt-protractor-runner',
     injector: 'grunt-asset-injector',
-    buildcontrol: 'grunt-build-control',
-    replace: 'grunt-text-replace'
+    replace: 'grunt-text-replace',
+    releasebuild: 'grunt-release-build'
   });
   // Time how long tasks take. Can help when optimizing build times
   require('time-grunt')(grunt);
@@ -494,27 +494,6 @@ module.exports = function( grunt ) {
         src: ['{app,components}/**/*.css']
       }
     },
-    buildcontrol: {
-      options: {
-        dir: '<%= yeoman.dist %>',
-        commit: true,
-        push: true,
-        connectCommits: false,
-        message: 'Built %sourceName% from commit %sourceCommit% on branch %sourceBranch%'
-      },
-      heroku: {
-        options: {
-          remote: 'heroku',
-          branch: 'master'
-        }
-      },
-      openshift: {
-        options: {
-          remote: 'openshift',
-          branch: 'master'
-        }
-      }
-    },
     // Run some tasks in parallel to speed up the build process
     concurrent: {
 
@@ -536,7 +515,7 @@ module.exports = function( grunt ) {
         }
       },
       dist: [
-        'jade', 'less', 'imagemin', 'svgmin'
+        'jade', 'less', 'hintall', 'imagemin', 'svgmin'
       ]
     },
     // Test settings
@@ -747,6 +726,10 @@ module.exports = function( grunt ) {
           {from: "-webappport-", to: grunt.option("webappport")},
         ]
       }
+    },
+    //releasebuild
+    releasebuild: {
+      default: {}
     }
   });
   // Used for delaying livereload until after server has restarted
@@ -821,17 +804,13 @@ module.exports = function( grunt ) {
   grunt.registerTask('buildtest', [
     'clean:dist', 'injector:less', 'concurrent:dist', 'injector', 'wiredep', 'useminPrepare', 'autoprefixer', 'uncss:dist', 'ngtemplates'
   ]);
-  grunt.registerTask('deployheroku', [
-    'buildcontrol:heroku'
-  ]);
+
   grunt.registerTask('run', [
     'nodemon:dev'
   ]);
-  /*grunt.registerTask('justtesting', 'just testing args to grunt tasks', function (n) {
-    console.log(grunt.option('option1'));
-    console.log(grunt.option('option2'));
-  });*/
+  grunt.registerTask('release', ['releasebuild:default']);
+
   grunt.registerTask('default', [
-    'newer:jshint', 'test' /*, 'build'*/
+    'newer:jshint', 'test'
   ]);
 };

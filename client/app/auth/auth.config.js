@@ -23,13 +23,24 @@
   }
 
   /* @ngInject */
-  function configureStorage( localforageDriver, auth, notifier ) {
-    localforageDriver.create(localforageDriver.STORAGE.SESSIONSTORAGE, {
+  function configureStorage( localforageDriver, auth, notifier, SignalsService ) {
+
+    //config storage localstorage
+
+
+
+    localforageDriver.create(localforageDriver.STORAGE.LOCALSTORAGE, {
       key: 'user', name: 'auth', storeName: 'appbookshop', description: 'user data'
     })
       .then(function( driver ) {
         auth.setStorage(driver);
         auth.loadUser()
+          .then(function(data){
+            //console.log(data);
+            if (data!=null) {
+              SignalsService.loginsucceded.emit();
+            }
+          })
           .catch(function( err ) {
             notifier.log(err);
           });

@@ -15,12 +15,17 @@ exports.scope = googleEnv[config.env].scope;
 
 exports.accessType = googleEnv[config.env].access_type;
 
+if ('production' === config.env && process.env.domainurl) {
+  googleEnv[config.env].redirect_uri = googleEnv[config.env].redirect_uri.replace('$domainurl$', process.env.domainurl);
+}
+
 exports.strategyOptions = {
-  clientID: googleEnv[config.env].client_id,
-  clientSecret: googleEnv[config.env].client_secret,
+  clientID: process.env.google_clientid || googleEnv[config.env].client_id,
+  clientSecret: process.env.google_clientsecret || googleEnv[config.env].client_secret,
   callbackURL: googleEnv[config.env].redirect_uri,
   passReqToCallback: true
 };
+
 
 exports.validateTokenOptions = {
   uri: googleEnv.uri_validateToken,

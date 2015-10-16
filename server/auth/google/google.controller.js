@@ -1,4 +1,5 @@
 'use strict';
+var config = require('../../config/environment');
 var googleService = require('../google/google.service');
 var googleProfile = require('./google.profile');
 
@@ -35,7 +36,9 @@ exports.success = function( req, res ) {
 
   return res.render('googleClose', {
     'data': {
-      user: req.user
+      user: req.user,
+      hostname: config.domainUrl
+
     }
   });
 };
@@ -51,7 +54,8 @@ exports.fail = function( req, res ) {
 
   return res.render('googleClose', {
     'data': {
-      error: new Error('Invalid credentials')
+      error: new Error('Invalid credentials'),
+      hostname: config.domainUrl
     }
   });
 };

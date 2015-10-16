@@ -13,7 +13,7 @@ module.exports = function( grunt ) {
     express: 'grunt-express-server',
     useminPrepare: 'grunt-usemin',
     ngtemplates: 'grunt-angular-templates',
-    cdnify: 'grunt-google-cdn',
+    /*cdnify: 'grunt-google-cdn',*/
     protractor: 'grunt-protractor-runner',
     injector: 'grunt-asset-injector',
     replace: 'grunt-text-replace',
@@ -55,6 +55,22 @@ module.exports = function( grunt ) {
         url: 'http://<%= yeoman.ip %>:<%= express.options.port %>'
       }
     },
+    //config to debug
+    //para evitar concatenar certos files return ''
+//    concat: {
+//      options: {
+//        process: function(src, filepath) {
+//          //grunt.log.ok(filepath)
+//
+//          //para evitar concatenar certos files return ''
+//          if (filepath.indexOf('/app/auth/')>-1){
+//            grunt.log.ok(filepath);
+//            return '';
+//          }
+//          return src;
+//        }
+//      }
+//    },
     watch: {
       /*
       Inject js files in index.html
@@ -295,7 +311,7 @@ module.exports = function( grunt ) {
         src: 'index.html',
         ignorePath: '<%= yeoman.client %>/',
         //TODO: analize why json3 and es5-shim are being excluded
-        exclude: [/bootstrap-sass-official/, '/json3/', '/es5-shim/', /bootstrap.css/, /font-awesome.css/ ]
+        exclude: [/bootstrap-sass-official/, '/json3/', '/es5-shim/', /bootstrap.css/, /font-awesome.css//*, /ct-ui-router-extras.js/*/ ]
 
       }
     },
@@ -434,14 +450,62 @@ module.exports = function( grunt ) {
       }
     },
     // Replace Google CDN references
-    cdnify: {
+    /*cdnify: {
       dist: {
-        //new html: ['<%= yeoman.dist %>/public/*.html']
-        html: ['<%= yeoman.dist %>/index.html','<%= yeoman.dist %>/public/*.html']
+        //new html: ['<%= yeoman.dist %>/public*//*.html']
+        html: ['<%= yeoman.dist %>/index.html','<%= yeoman.dist %>/public*//*.html']
       }
-    },
+    },*/
     // Copies remaining files to places other tasks can use
     copy: {
+//      debugappfiles: {
+//        files:[
+//          {
+//            expand:true,
+//            cwd: '<%= yeoman.client %>',
+//            dest: '<%= yeoman.dist %>/public/app/appfiles',
+//            src: [
+//              'app/**/*.js'
+//            ]
+//          }
+//        ]
+//      },
+//      debugbowerfiles: {
+//        files: [
+//          {
+//            expand: true,
+//            cwd: '<%= yeoman.client %>',
+//            dest: '<%= yeoman.dist %>/public/app',
+//            src: [
+//              'bower_components/jquery/dist/jquery.js',
+//              'bower_components/angular/angular.js',
+//              'bower_components/toastr/toastr.js',
+//              'bower_components/bootstrap/dist/js/bootstrap.js',
+//              'bower_components/moment/moment.js',
+//              'bower_components/angular-ui-router/release/angular-ui-router.js',
+//              'bower_components/angular-animate/angular-animate.js',
+//              'bower_components/angular-sanitize/angular-sanitize.js',
+//              'bower_components/extras.angular.plus/ngplus-overlay.js',
+//              'bower_components/angular-bootstrap/ui-bootstrap-tpls.js',
+//              'bower_components/angular-cookies/angular-cookies.js',
+//              'bower_components/angular-resource/angular-resource.js',
+//              'bower_components/typeahead.js/dist/typeahead.bundle.js',
+//              'bower_components/js-signals/dist/signals.js',
+//              'bower_components/angular-jssignals/dist/angular-jssignals.js',
+//              'bower_components/q/q.js',
+//              'bower_components/angular-typeaheadjs/dist/angular-typeaheadjs.js',
+//              'bower_components/lodash/lodash.js',
+//              'bower_components/localforage/dist/localforage.js',
+//              'bower_components/localforage-sessionstoragewrapper/src/localforage-sessionstoragewrapper.js',
+//              'bower_components/simple-basket/dist/simplebasket.js',
+//              'bower_components/simple-basket/dist/plugins/storage-localforage.js',
+//              'bower_components/ui-router-extras/release/ct-ui-router-extras.js',
+//              'bower_components/d3/d3.js',
+//              'bower_components/angular-dynamic-layout/dist/angular-dynamic-layout.js'
+//            ]
+//          }
+//        ]
+//      },
       dist: {
         files: [
           /*
@@ -612,6 +676,15 @@ module.exports = function( grunt ) {
         }
       }
     },
+//    uglify: {
+//      options: {
+//        mangle: {
+//          except: [
+//            'ct-ui-router-extras' //problem mangling...?
+//          ]
+//        }
+//      }
+//    },
     injector: {
       options: {
 
@@ -644,6 +717,7 @@ module.exports = function( grunt ) {
           ]
         }
       },
+
       /*
       Inject component less into app.less
       */
@@ -699,7 +773,7 @@ module.exports = function( grunt ) {
       dist: {
         options: {
           htmlroot: __dirname,
-          ignore: [/.*\[disabled\]/,/.*\[type=.*\]/, /#bookrecordForm.*:before.*/, /#bookrecordForm.*:after.*/],
+          ignore: [/.*dropdown-menu.*/,/.*nav.*\.open/,/.*\[disabled\]/,/.*\[type=.*\]/, /#bookrecordForm.*:before.*/, /#bookrecordForm.*:after.*/],
           ignoreSheets: [/fonts.googleapis/],
           stylesheets: ['/.tmp/app/app.css']
         },
@@ -797,9 +871,9 @@ module.exports = function( grunt ) {
   });
   grunt.registerTask('build', [
     'clean:dist', 'injector:less', 'concurrent:dist', 'injector', 'wiredep',
-    'useminPrepare', 'autoprefixer',
-    'uncss:dist', 'ngtemplates', 'concat', 'ngAnnotate',
-    'copy:dist', 'cdnify', 'cssmin', 'uglify', 'rev', 'usemin'
+    /*'copy:debugappfiles',*/ 'useminPrepare', 'autoprefixer',
+    /*'uncss:dist',*/ 'ngtemplates', 'concat',/*'copy:debugbowerfiles',*/ 'ngAnnotate',
+    'copy:dist', /*'cdnify',*/ 'cssmin', 'uglify', 'rev', 'usemin'
   ]);
   grunt.registerTask('buildtest', [
     'clean:dist', 'injector:less', 'concurrent:dist', 'injector', 'wiredep', 'useminPrepare', 'autoprefixer', 'uncss:dist', 'ngtemplates'

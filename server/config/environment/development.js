@@ -5,9 +5,8 @@ module.exports = {
   // MongoDB connection options
   mongo: {
     library: {
-      //uri: 'mongodb://192.168.99.21/appBooks-books-dev',
-      //uri: 'mongodb://192.168.40.1/appBooks-books-dev',
       uri: 'mongodb://192.168.40.25/appBooks-books-dev',
+      //uri: 'mongodb://192.168.40.25/appbookshop',
       options: {
         db: {
           safe: true
@@ -24,5 +23,6 @@ module.exports = {
     }
   },
   seedDB: true,
-  appPath: 'client'
+  appPath: 'client',
+  domainUrl: 'http://local.host:12999'
 };

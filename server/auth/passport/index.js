@@ -25,7 +25,7 @@ module.exports = function( app ) {
     var needToVerifyToken = (req.url.indexOf('/admin/') > -1 || req.url.indexOf('/auth/') > -1);
 
     if ( needToVerifyToken ) {
-      console.log('deserializeUser:>>>\n', req.url);
+      console.log('deserializeUser:>>>\n', user);
       googleProfile
         .getUser(user)
         .then(googleService.isValidToken)

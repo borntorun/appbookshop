@@ -23,5 +23,6 @@ module.exports = {
       options: {}
     }
   },
-  appPath: 'public'
+  appPath: 'public',
+  domainUrl: process.env.domainurl
 };

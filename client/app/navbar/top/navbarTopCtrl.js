@@ -35,6 +35,7 @@
       if (model.isAuthenticated === false) {
         $state.go('googlelogin');
         $timeout(function(){
+          //console.log('prev');
           $previousState.go();
         },10);
       } else {

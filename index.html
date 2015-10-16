@@ -23,8 +23,8 @@
     <!-- meta name="viewport" content="width=device-width, initial-scale=1" -->
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
     <!-- Inserir google (or others) fonts-->
-    <link href="http://fonts.googleapis.com/css?family=Allerta+Stencil" rel="stylesheet" type="text/css"/>
-    <link href="http://fonts.googleapis.com/css?family=Bevan" rel="stylesheet" type="text/css"/>
+    <link href="https://fonts.googleapis.com/css?family=Allerta+Stencil" rel="stylesheet" type="text/css"/>
+    <link href="https://fonts.googleapis.com/css?family=Bevan" rel="stylesheet" type="text/css"/>
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
 
     <!-- build:css(client) app/vendor.css -->
@@ -57,7 +57,7 @@
 
 
 <!--<div class="nav navbar-fixed-bottom" style="width:100%">-->
-<!--<div style="width:100%">
+<!--<div style="width:100%;z-index:999">
     <pre>
       &lt;!&ndash; Here's some values to keep an eye on in the sample in order to understand $state and $stateParams &ndash;&gt;
       $state = {{$state.current.name}}
@@ -65,6 +65,7 @@
       $stateParams = {{$stateParams}}
       $state full url = {{ $state.$current.url.source }}
       {{$state.href($state.current.name, $state.params, {absolute: true})}}
+
       &lt;!&ndash; $state.$current is not a public api, we are using it to
            display the full url for learning purposes&ndash;&gt;
     </pre>
@@ -120,6 +121,7 @@
 <script src="bower_components/angular-dynamic-layout/dist/angular-dynamic-layout.js"></script>
 <!-- endbower -->
 <!-- endbuild -->
+<!--<script src="app/bower_components/ui-router-extras/release/ct-ui-router-extras.js"></script>-->
 
 <!-- build:js({.tmp,client}) app/app.js -->
 <script src="app/app.module.js"></script>
@@ -177,6 +179,12 @@
 <script src="app/navbar/top/navbarTopCtrl.js"></script>
 <!-- endinjector -->
 <!-- endbuild -->
+<!--<script src="app/appfiles/app/auth/auth.module.js"></script>
+<script src="app/appfiles/app/auth/auth.config.js"></script>
+<script src="app/appfiles/app/auth/controllers/authloginCtrl.js"></script>
+<script src="app/appfiles/app/auth/controllers/authlogoutCtrl.js"></script>
+<script src="app/appfiles/app/auth/services/auth.js"></script>-->
+
 
 </body>
 </html>

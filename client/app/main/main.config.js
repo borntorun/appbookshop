@@ -46,7 +46,7 @@
 //      url: '', /*QD não tem url  não colocar key */
       views: {
         'auxiliar': {
-          template: '',
+          template: ' ',
           controller: 'AuthLoginCtrl as model'
         }
       }
@@ -56,7 +56,7 @@
       //      url: '', /*QD não tem url  não colocar key */
       views: {
         'auxiliar': {
-          template: '',
+          template: ' ',
           controller: 'AuthLogoutCtrl as model'
         }
       }

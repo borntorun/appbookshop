@@ -803,7 +803,12 @@ module.exports = function( grunt ) {
     },
     //releasebuild
     releasebuild: {
-      default: {}
+      default: {},
+      minor: {
+        options: {
+          type: 'minor'
+        }
+      }
     }
   });
   // Used for delaying livereload until after server has restarted

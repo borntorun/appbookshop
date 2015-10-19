@@ -19,6 +19,13 @@
       "client_secret": "",
       "scope": ["profile", "email"],
       "access_type": "offline"
+    },
+    "demo": {
+      "redirect_uri": "$domainurl$/auth/google/callback",
+      "client_id": "",
+      "client_secret": "",
+      "scope": ["profile", "email"],
+      "access_type": "offline"
     }
   }
 }

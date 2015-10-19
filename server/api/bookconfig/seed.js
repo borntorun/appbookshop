@@ -5,7 +5,7 @@
 
 'use strict';
 var Book = require('./bookconfig.model');
-console.log('seeding book config...');
+//console.log('seeding book config...');
 Book.find({}).remove(function () {
   Book.create(
     {

@@ -15,7 +15,7 @@ exports.scope = googleEnv[config.env].scope;
 
 exports.accessType = googleEnv[config.env].access_type;
 
-if ('production' === config.env && process.env.domainurl) {
+if (('production' === config.env || 'demo' === config.env) && process.env.domainurl) {
   googleEnv[config.env].redirect_uri = googleEnv[config.env].redirect_uri.replace('$domainurl$', process.env.domainurl);
 }
 

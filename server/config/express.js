@@ -52,7 +52,7 @@ module.exports = function( app ) {
    * Set static routes
    * (must be before session - static resources do not use session)
    */
-  if ( 'production' === env ) {
+  if ( 'production' === env || 'demo' === env ) {
     app.use(favicon(path.join(config.root, config.appPath, 'favicon.ico')));
     app.use(express.static(path.join(config.root, config.appPath)));
   }

@@ -6,7 +6,7 @@ var options = require('./google.options');
 var googleProfile = require('./google.profile');
 var reqPromise = require('request-promise');
 var extend = require('util')._extend;
-
+var config = require('../../config/environment');
 
 exports.googleStrategy = function() {
   return new GoogleStrategy(options.strategyOptions,
@@ -19,9 +19,9 @@ exports.googleStrategy = function() {
         // to associate the Google account with a user record in your database,
         // and return that user instead.
 
-//        console.log('\n\naccesToken=', accessToken);
-//        console.log('\n\nrefreshToken=', refreshToken);
-//        console.log('\n\nprofile=', profile);
+        //        console.log('\n\naccesToken=', accessToken);
+        //        console.log('\n\nrefreshToken=', refreshToken);
+        //        console.log('\n\nprofile=', profile);
 
         //pass in the object/user to store in session
         //to represent the logged-in user
@@ -31,11 +31,17 @@ exports.googleStrategy = function() {
           profile.accessToken = accessToken;
           profile.refreshToken = refreshToken;
 
-
-          googleProfile.authenticate(profile)
+          Q.fcall(function() {
+            if ( config.demo === true ) {
+              return googleProfile.addProfile(profile);
+            }
+            return profile;
+          })
+            .then(function() {
+              return googleProfile.authenticate(profile)
+            })
             .then(function( user ) {
               //user object returned
-
               done(null, user);
             })
             .catch(function( err ) {
@@ -60,12 +66,12 @@ exports.googleStrategy = function() {
 
 };
 
-exports.refresh = function(obj) {
+exports.refresh = function( obj ) {
   //obj is an object {user:...,error:...} data.user is a 'database model' not the req.user
 
   var defer = Q.defer();
 
-  var opt = extend({},options.refreshTokenOptions);
+  var opt = extend({}, options.refreshTokenOptions);
   opt.form.refresh_token = obj.user.refreshToken
 
   reqPromise(opt)
@@ -77,10 +83,11 @@ exports.refresh = function(obj) {
         if ( data.access_token && data.expires_in && data.token_type === 'Bearer' ) {
 
           obj.user.accessToken = data.access_token;
-          obj.user.save(function(err/*, savedUser*/){
-            if (err) {
+          obj.user.save(function( err/*, savedUser*/ ) {
+            if ( err ) {
               defer.reject(false);
-            } else {
+            }
+            else {
               defer.resolve({expiresInSeconds: data.expires_in});
             }
           });
@@ -90,7 +97,7 @@ exports.refresh = function(obj) {
         defer.reject(false);
       }
     })
-    .catch(function(err) {
+    .catch(function( err ) {
       defer.reject(err);
     });
 
@@ -98,12 +105,11 @@ exports.refresh = function(obj) {
 
 }
 
-
 exports.isValidToken = function( user ) {
   //user is a 'user database model' not the req.user
   var defer = Q.defer();
 
-  var opt = extend({},options.validateTokenOptions);
+  var opt = extend({}, options.validateTokenOptions);
   opt.uri = opt.uri + user.accessToken;
 
   reqPromise(opt)
@@ -120,7 +126,7 @@ exports.isValidToken = function( user ) {
         defer.reject({user: user, error: 'no data'});
       }
     })
-    .catch(function(err) {
+    .catch(function( err ) {
       defer.reject({user: user, error: err});
     });
   return defer.promise;

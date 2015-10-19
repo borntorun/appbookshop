@@ -5,13 +5,13 @@
 
 'use strict';
 //var Book = require('./book.model');
-console.log('seeding books...');
+//console.log('seeding books...');
 
 /*issue #31*https://bitbucket.org/borntorun/appbookshop/issues/31/slug-create-a-slug-for-the-items-already closed/
 /*Book.find({}).exec(function(err, data){
   data.forEach(function(item){
     item.save(function(err, data){
-      console.log('save:', data.slug);
+    //console.log('save:', data.slug);
     })
   });
 

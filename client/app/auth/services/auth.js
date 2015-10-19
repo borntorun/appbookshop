@@ -163,9 +163,9 @@
 
         var domainurl = window.location.protocol + '//' + window.location.hostname + (window.location.port ? ':' + window.location.port : '');
 
-        console.log(event.data);
-        console.log(event.origin);
-        console.log(domainurl);
+        //console.log(event.data);
+        //console.log(event.origin);
+        //console.log(domainurl);
 
         if ( event.origin !== domainurl || !event.data || event.data.error ) {
           user = null;

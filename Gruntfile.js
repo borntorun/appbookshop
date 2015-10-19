@@ -1,7 +1,7 @@
 // Generated on 2015-01-24 using generator-angular-fullstack 2.0.13
 'use strict';
 module.exports = function( grunt ) {
-  console.log(__dirname);
+  //console.log(__dirname);
   var localConfig;
   try {
     localConfig = require('./server/config/local.env');
@@ -219,7 +219,7 @@ module.exports = function( grunt ) {
     /*
     Clean folders
     .tmp
-    dist (except .git Procfile)
+    dist (except .git Procfile ...)
     */
     clean: {
       dist: {
@@ -229,8 +229,12 @@ module.exports = function( grunt ) {
             src: [
               '.tmp',
               '<%= yeoman.dist %>/*',
+              '!<%= yeoman.dist %>/.gitignore',
               '!<%= yeoman.dist %>/.git*',
+              '!<%= yeoman.dist %>/deployheroku.sh',
               '!<%= yeoman.dist %>/Procfile',
+              '!<%= yeoman.dist %>/demoheroku',
+              '!<%= yeoman.dist %>/demo*',
               '!<%= yeoman.dist %>/.openshift'
             ]
           }

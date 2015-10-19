@@ -41,9 +41,6 @@
       } else {
         $state.go('logout');
       }
-
-
-
     };
 
     function setViewAuthenticate(state) {

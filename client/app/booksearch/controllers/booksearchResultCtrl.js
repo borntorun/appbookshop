@@ -10,12 +10,38 @@
     .controller('BookSearchResultCtrl', BookSearchResultCtrl);
 
   /* @ngInject */
-  function BookSearchResultCtrl( $rootScope, $scope, $timeout, BookSearch, notifier ) {
+  function BookSearchResultCtrl( $rootScope, $scope, $timeout, auth, SignalsService, BookSearch, notifier ) {
     /*jshint validthis: true */
     var vm = this;
 
     vm.filters = null;
     vm.rankers = null;
+
+    vm.isAuthenticated = auth.isAuthenticated();
+
+    function setViewAuth(/*data*/) {
+      $scope.$apply(function(){
+        vm.isAuthenticated = auth.isAuthenticated();
+        applyAuth(vm.cacheResults);
+        vm.results = vm.cacheResults;
+      });
+    }
+    SignalsService.loginsucceded.listen(setViewAuth);
+    SignalsService.logoutsucceded.listen(setViewAuth);
+
+    function applyAuth(data){
+
+      data.forEach(function(item){
+        //item.isAuthenticated = vm.isAuthenticated;
+        item.call = function(show) {
+          if (show && item.isAuthenticated){return;}
+          item.isAuthenticated = show && vm.isAuthenticated;
+        };
+      });
+    }
+
+
+
 
     $rootScope.$stateParams.type = ($rootScope.$stateParams.type || 'free').toLowerCase();
 
@@ -23,6 +49,8 @@
       BookSearch.search($rootScope.$stateParams.term, $rootScope.$stateParams.limit)
         .then(function( data ) {
           applyFilterCategories(BookSearch.getFilterCategories());
+          vm.cacheResults = data;
+          applyAuth(data);
           vm.results = data;
         })
         .catch(function( /*error*/ ) {
@@ -43,6 +71,8 @@
         .then(function( data ) {
 
           applyFilterCategories(BookSearch.getFilterCategories());
+          vm.cacheResults = data;
+          applyAuth(data);
           vm.results = data;
         })
         .catch(function( /*error*/ ) {

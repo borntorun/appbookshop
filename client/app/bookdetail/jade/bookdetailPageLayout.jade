@@ -19,6 +19,10 @@ div.row.panel.panel-default.nomargins.bookdetail
     div.col-xs-12.col-sm-8.col-md-8.col-lg-8.bookdetail-panel-right
         div.row
             div.col-xs-12
+                div.pull-right.editar-lapis(ng-show="vm.isAuthenticated")
+                    a(ui-sref="main.bookrecord({type:'livro',reference:vm.book.reference,slug:vm.book.slug})", title="Editar", aria-label="Editar")
+                        h3
+                            i.fa.fa-pencil
                 div
                     span.booktitle {{vm.book.title}}
                     div

@@ -49,7 +49,7 @@ module.exports = function( app ) {
 
   app.use('/auth/google', require('./auth/google'));
 
-  app.route('/auth/logout').post(auth.ensureIsAuthenticated, auth.logout);
+  app.route('/auth/logout').all(auth.ensureIsAuthenticated, auth.logout);
 
 
   // All undefined asset or api routes should return a 404

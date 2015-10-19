@@ -1,4 +1,8 @@
-.row.dynamic-layout-item.element-item
+.row.dynamic-layout-item.element-item(ng-mouseleave="it.call(false)",ng-mouseenter="it.call(true)")
+    div.pull-left.editar-lapis(ng-show="it.isAuthenticated")
+        a(ui-sref="main.bookrecord({type:'livro',reference:it.reference,slug:it.slug})", title="Editar", aria-label="Editar")
+            h4
+                i.fa.fa-pencil
     div(ng-class="{'hidden': !it.price}")
         div.block-price {{::it.price}} €
         div.block-price-icons-triangshadow

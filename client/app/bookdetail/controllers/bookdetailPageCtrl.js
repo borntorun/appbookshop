@@ -12,9 +12,19 @@
     .controller('BookDetailPageCtrl', BookDetailPageCtrl);
 
   /* @ngInject */
-  function BookDetailPageCtrl( $scope,$rootScope, bookdetail, bookconfig, message, $state ) {
+  function BookDetailPageCtrl( $scope,$rootScope, auth, SignalsService, bookdetail, bookconfig, message, $state ) {
     /*jshint validthis: true */
     var vm = this;
+
+    vm.isAuthenticated = auth.isAuthenticated();
+
+    function setViewAuth(/*data*/) {
+      $scope.$apply(function(){
+        vm.isAuthenticated = auth.isAuthenticated();
+      });
+    }
+    SignalsService.loginsucceded.listen(setViewAuth);
+    SignalsService.logoutsucceded.listen(setViewAuth);
 
     vm.book = {};
     vm.bookflags = {

@@ -57,20 +57,21 @@ module.exports = function( grunt ) {
     },
     //config to debug
     //para evitar concatenar certos files return ''
-//    concat: {
-//      options: {
-//        process: function(src, filepath) {
-//          //grunt.log.ok(filepath)
-//
-//          //para evitar concatenar certos files return ''
-//          if (filepath.indexOf('/app/auth/')>-1){
-//            grunt.log.ok(filepath);
-//            return '';
-//          }
-//          return src;
-//        }
-//      }
-//    },
+    concat: {
+      options: {
+        process: function(src, filepath) {
+          //grunt.log.ok(filepath)
+
+          //para evitar concatenar certos files return ''
+          //if (filepath.indexOf('/app/auth/')>-1){
+          if (filepath.indexOf('/app/')>-1 && filepath.indexOf('.css')===-1){ //não é css
+            //grunt.log.ok(filepath);
+            return '';
+          }
+          return src;
+        }
+      }
+    },
     watch: {
       /*
       Inject js files in index.html
@@ -232,6 +233,7 @@ module.exports = function( grunt ) {
               '!<%= yeoman.dist %>/.gitignore',
               '!<%= yeoman.dist %>/.git*',
               '!<%= yeoman.dist %>/deployheroku.sh',
+              '!<%= yeoman.dist %>/copydemoheroku.sh',
               '!<%= yeoman.dist %>/Procfile',
               '!<%= yeoman.dist %>/demoheroku',
               '!<%= yeoman.dist %>/demo*',
@@ -462,54 +464,55 @@ module.exports = function( grunt ) {
     },*/
     // Copies remaining files to places other tasks can use
     copy: {
-//      debugappfiles: {
-//        files:[
-//          {
-//            expand:true,
-//            cwd: '<%= yeoman.client %>',
-//            dest: '<%= yeoman.dist %>/public/app/appfiles',
-//            src: [
-//              'app/**/*.js'
-//            ]
-//          }
-//        ]
-//      },
-//      debugbowerfiles: {
-//        files: [
-//          {
-//            expand: true,
-//            cwd: '<%= yeoman.client %>',
-//            dest: '<%= yeoman.dist %>/public/app',
-//            src: [
-//              'bower_components/jquery/dist/jquery.js',
-//              'bower_components/angular/angular.js',
-//              'bower_components/toastr/toastr.js',
-//              'bower_components/bootstrap/dist/js/bootstrap.js',
-//              'bower_components/moment/moment.js',
-//              'bower_components/angular-ui-router/release/angular-ui-router.js',
-//              'bower_components/angular-animate/angular-animate.js',
-//              'bower_components/angular-sanitize/angular-sanitize.js',
-//              'bower_components/extras.angular.plus/ngplus-overlay.js',
-//              'bower_components/angular-bootstrap/ui-bootstrap-tpls.js',
-//              'bower_components/angular-cookies/angular-cookies.js',
-//              'bower_components/angular-resource/angular-resource.js',
-//              'bower_components/typeahead.js/dist/typeahead.bundle.js',
-//              'bower_components/js-signals/dist/signals.js',
-//              'bower_components/angular-jssignals/dist/angular-jssignals.js',
-//              'bower_components/q/q.js',
-//              'bower_components/angular-typeaheadjs/dist/angular-typeaheadjs.js',
-//              'bower_components/lodash/lodash.js',
-//              'bower_components/localforage/dist/localforage.js',
-//              'bower_components/localforage-sessionstoragewrapper/src/localforage-sessionstoragewrapper.js',
-//              'bower_components/simple-basket/dist/simplebasket.js',
-//              'bower_components/simple-basket/dist/plugins/storage-localforage.js',
-//              'bower_components/ui-router-extras/release/ct-ui-router-extras.js',
-//              'bower_components/d3/d3.js',
-//              'bower_components/angular-dynamic-layout/dist/angular-dynamic-layout.js'
-//            ]
-//          }
-//        ]
-//      },
+      //debug
+      debugappfiles: {
+        files:[
+          {
+            expand:true,
+            cwd: '<%= yeoman.client %>',
+            dest: '<%= yeoman.dist %>/public/app/appfiles',
+            src: [
+              'app/**/*.js'
+            ]
+          }
+        ]
+      },
+      debugbowerfiles: {
+        files: [
+          {
+            expand: true,
+            cwd: '<%= yeoman.client %>',
+            dest: '<%= yeoman.dist %>/public/app',
+            src: [
+              'bower_components/jquery/dist/jquery.js',
+              'bower_components/angular/angular.js',
+              'bower_components/toastr/toastr.js',
+              'bower_components/bootstrap/dist/js/bootstrap.js',
+              'bower_components/moment/moment.js',
+              'bower_components/angular-ui-router/release/angular-ui-router.js',
+              'bower_components/angular-animate/angular-animate.js',
+              'bower_components/angular-sanitize/angular-sanitize.js',
+              'bower_components/extras.angular.plus/ngplus-overlay.js',
+              'bower_components/angular-bootstrap/ui-bootstrap-tpls.js',
+              'bower_components/angular-cookies/angular-cookies.js',
+              'bower_components/angular-resource/angular-resource.js',
+              'bower_components/typeahead.js/dist/typeahead.bundle.js',
+              'bower_components/js-signals/dist/signals.js',
+              'bower_components/angular-jssignals/dist/angular-jssignals.js',
+              'bower_components/q/q.js',
+              'bower_components/angular-typeaheadjs/dist/angular-typeaheadjs.js',
+              'bower_components/lodash/lodash.js',
+              'bower_components/localforage/dist/localforage.js',
+              'bower_components/localforage-sessionstoragewrapper/src/localforage-sessionstoragewrapper.js',
+              'bower_components/simple-basket/dist/simplebasket.js',
+              'bower_components/simple-basket/dist/plugins/storage-localforage.js',
+              'bower_components/ui-router-extras/release/ct-ui-router-extras.js',
+              'bower_components/d3/d3.js',
+              'bower_components/angular-dynamic-layout/dist/angular-dynamic-layout.js'
+            ]
+          }
+        ]
+      },
       dist: {
         files: [
           /*
@@ -882,6 +885,18 @@ module.exports = function( grunt ) {
     'clean:dist', 'injector:less', 'concurrent:dist', 'injector', 'wiredep',
     /*'copy:debugappfiles',*/ 'useminPrepare', 'autoprefixer',
     /*'uncss:dist',*/ 'ngtemplates', 'concat',/*'copy:debugbowerfiles',*/ 'ngAnnotate',
+    'copy:dist', /*'cdnify',*/ 'cssmin', 'uglify', 'rev', 'usemin'
+  ]);
+  grunt.registerTask('build-debugapp', [
+    'clean:dist', 'injector:less', 'concurrent:dist', 'injector', 'wiredep',
+    'copy:debugappfiles', 'useminPrepare', 'autoprefixer',
+    /*'uncss:dist',*/ 'ngtemplates', 'concat',/*'copy:debugbowerfiles',*/ 'ngAnnotate',
+    'copy:dist', /*'cdnify',*/ 'cssmin', 'uglify', 'rev', 'usemin'
+  ]);
+  grunt.registerTask('build-debugall', [
+    'clean:dist', 'injector:less', 'concurrent:dist', 'injector', 'wiredep',
+    'copy:debugappfiles', 'useminPrepare', 'autoprefixer',
+    /*'uncss:dist',*/ 'ngtemplates', 'concat','copy:debugbowerfiles', 'ngAnnotate',
     'copy:dist', /*'cdnify',*/ 'cssmin', 'uglify', 'rev', 'usemin'
   ]);
   grunt.registerTask('buildtest', [

@@ -72,6 +72,7 @@ module.exports = function( app ) {
    */
   var csrfValue = function(req) {
     var token = (req.body && req.body._csrf) || (req.query && req.query._csrf) || (req.headers['x-csrf-token']) || (req.headers['x-xsrf-token']);
+    console.log('token------------->:',token )
     return token;
   };
   app.use(csurf({value: csrfValue}));

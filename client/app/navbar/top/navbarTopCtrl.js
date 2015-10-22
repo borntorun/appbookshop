@@ -34,10 +34,12 @@
 
       if (model.isAuthenticated === false) {
         $state.go('googlelogin');
+
+
         $timeout(function(){
           //console.log('prev');
           $previousState.go();
-        },10);
+        },200);/*10ms cause error? $digest already in progress error in firefox?*/
       } else {
         $state.go('logout');
       }

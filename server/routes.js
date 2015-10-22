@@ -18,6 +18,8 @@ module.exports = function( app ) {
 //    console.log('funcIndexHtml req.url:', req.url);
 //    console.log('funcIndexHtml req:', req);
 
+    //console.log('funcIndexHtml config.root-------->:', config.root);///home/joao/devel/web/appbookshop
+
     var options = {
       root: config.root
     };
@@ -26,10 +28,12 @@ module.exports = function( app ) {
 //    console.log('funcIndexHtml res options:', options);
 
     var ocookie = new Cookies(req, res);
-//    console.log('funcIndexHtml req.cookies:', req.cookies);
+    console.log('funcIndexHtml req.cookies:', req.cookies);
 //    console.log('funcIndexHtml req.session:', req.session);
 
-    ocookie.set('XSRF-TOKEN', req.csrfToken(), { httpOnly: false });
+    var valueToken = req.csrfToken();
+    console.log('funcIndexHtml valueToken------>:', valueToken);
+    ocookie.set('XSRF-TOKEN', valueToken, { httpOnly: false });
     res.sendFile('index.html', options);
   };
 
@@ -39,7 +43,7 @@ module.exports = function( app ) {
 
   app.route('/index.html').get(funcIndexHtml);
 
-  app.use('/api/counters', require('./api/counters'));
+  app.use('/api/counters', auth.ensureIsAuthenticated, require('./api/counters'));
 
   app.use('/api/bookconfig', require('./api/bookconfig'));
 

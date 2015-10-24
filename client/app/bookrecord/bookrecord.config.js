@@ -12,7 +12,7 @@
   core.config(moduleConfig);
 
   /* @ngInject */
-  function moduleConfig( $stateProvider, _lodash ) {
+  function moduleConfig( $stateProvider, _lodash, SignalsServiceProvider ) {
     var states = {};
 
     ///{ref:[\\d]*}
@@ -32,12 +32,19 @@
           templateUrl: 'app/bookrecord/views/bookrecord.html',
           controller: 'BookrecordCtrl as model'
         },
+        'main-left@main': {
+          templateUrl: 'app/bookrecord/views/bookrecordNavLeft.html'
+        },
         'main-right@main': {
           templateUrl: 'app/bookrecord/views/bookrecordNavRight.html'
         },
-        'bookrecord-store@main.bookrecord': {
+        'store@main.bookrecord': {
           templateUrl: 'app/bookrecord/views/bookrecordStore.html',
           controller: 'BookrecordStoreCtrl as model'
+        },
+        'similartitle@main.bookrecord': {
+          templateUrl: 'app/bookrecord/views/bookrecordSimilarTitle.html',
+          controller: 'BookrecordSimilarTitleCtrl as model'
         }
       },
       resolve: {
@@ -52,6 +59,14 @@
     _lodash.forEach(states, function( state, key ) {
       $stateProvider.state(key, state);
     });
+
+    SignalsServiceProvider.config({
+      init: true,
+      signals: {
+        bookrecordtitlechanged: 'bookrecordtitlechanged'
+      }
+    });
+
   }
 
 }());

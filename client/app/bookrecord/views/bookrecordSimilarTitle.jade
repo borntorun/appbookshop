@@ -1,0 +1,14 @@
+.col-xs-12.bookrecord-similar(ng-hide="$state.params.reference !== 'new'")
+    .panel.panel-default
+        .panel-heading
+            | Livros existentes com termos similares
+        ul.list-group
+            li.small.list-group-item(ng-repeat="it in model.results track by $index")
+                a.appbooklink(ui-sref="main.bookdetail({type:'livro',reference:it.reference,slug:it.slug})", target="_blank")
+                    |# {{("00000" + it.reference).slice(-5)}} - {{it.title}}
+//pre
+// | {{model.book | json}}
+//
+//pre
+//    | {{$state.params}}
+//    | {{$state.href($state.current.name, $state.params, {absolute: true})}}

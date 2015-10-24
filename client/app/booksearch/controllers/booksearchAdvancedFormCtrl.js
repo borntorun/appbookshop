@@ -10,21 +10,21 @@
 
 
     /* @ngInject*/
-    function BookSearchAdvancedFormCtrl( /*$interval, $timeout, notifier,*/ $rootScope, $scope, BookSearch) {
+    function BookSearchAdvancedFormCtrl( /*$interval, $timeout, notifier,*/ $rootScope, $scope, booksearch) {
         /*jshint validthis: true */
         var vm = this;
 
         var onstateChangeSuccess = $scope.$on('$stateChangeSuccess', setInputSearch);
 
         vm.criteria = {};
-        vm.limit = BookSearch.getSearchLimit();
+        vm.limit = booksearch.getSearchLimit();
 
         vm.options = {
             showLog: true
         };
         vm.ttoptions = {
             name: 'categories',
-            limit: BookSearch.getSearchLimit(),
+            limit: booksearch.getSearchLimit(),
             remote: '/api/tables/category/search/%QUERY',
             prefetch: '/assets/data/category.json',
             classNames: {
@@ -32,7 +32,7 @@
             }
         };
 
-        setFields(BookSearch.getSearchAdvancedTerm());
+        setFields(booksearch.getSearchAdvancedTerm());
 
         vm.search = function search() {
 

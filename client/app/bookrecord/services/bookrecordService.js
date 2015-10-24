@@ -25,7 +25,8 @@
       load: load,
       save: save,
       clear: clear,
-      reset: reset
+      reset: reset,
+      setReference: setReference
     };
     return service;
     ///////////////
@@ -38,8 +39,9 @@
       book = angular.extend(book, bookcache);
     }
 
+    //TODO: extract to a util book service (repeated at bookrecordSimilarTitleCtrl)
     function setReference( ref ) {
-      book.reference = _lodash.padLeft(ref, 5, '0');
+      /*book.reference =*/return _lodash.padLeft(ref, 5, '0');
     }
 
     function load( id ) {
@@ -73,7 +75,7 @@
               book[k] = data[k];
             }
           }
-          setReference(book.reference);
+          book.reference = setReference(book.reference);
           book.dateResgistrationLocal = new Date(data.dateResgistration).getTime();
           book.dateUpdateLocal = new Date(data.dateUpdate).getTime();
           bookcache = angular.copy(book);
@@ -90,7 +92,7 @@
       init();
       var defer = call({method: httpRequest.get, url: '/api/counters/newbookreference/', cache: false},
         function( data ) {
-          setReference(data.seq);
+          book.reference = setReference(data.seq);
           defer.resolve(data);
         },
         function( err ) {

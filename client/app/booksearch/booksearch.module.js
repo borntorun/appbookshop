@@ -21,7 +21,7 @@
    *  responsável por gerir accordion em booksearchLayout.jade consoante o state
    */
   /* @ngInject */
-  function BookSearchFormLayout($rootScope, BookSearch, $timeout) {
+  function BookSearchFormLayout($rootScope, booksearch, $timeout) {
     var directive = {
       restrict: 'A',
       link: linkfunction
@@ -39,7 +39,7 @@
           filterIsOpen = $('#toggleFilterSearch').attr('aria-expanded')=== 'true',
           advChange = (name === 'main.search.advresults' && !advIsOpen) || (name === 'main.search.featured' && advIsOpen),
           freeChange = (name === 'main.search.results' && !freeIsOpen) || (name === 'main.search.featured' && freeIsOpen),
-          filterChange = filterChange || (!filterIsOpen && BookSearch.getFilterCategories().length>0) || (name === 'main.search.featured' && filterIsOpen);
+          filterChange = filterChange || (!filterIsOpen && booksearch.getFilterCategories().length>0) || (name === 'main.search.featured' && filterIsOpen);
 
 
         if (filterChange) {

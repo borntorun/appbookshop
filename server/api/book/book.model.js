@@ -79,10 +79,22 @@ BookSchema.pre('save', function( next ) {
     this.dateUpdate = Date.now();
 
     this.slug = getSlug(this.title, {uricNoSlash: true, custom: {
-      '&': '-e-',
-      '$': '-cifr-',
-      '#': '-card-',
-      '%': '-perc-'
+      '&': '--e--',
+      '$': '--cifr--',
+      '#': '--card--',
+      '%': '--perc--',
+      ':': '--',
+      '=': '--',
+      '!': '--.excl--',
+      '?': '--.perg--',
+      '|': '--trav--',
+      '+': '--mais--',
+      ';': '--.virg--',
+      ',': '--virg--',
+      '>': '--maior--',
+      '<': '--menor--',
+      '@': '--arrob--'
+
     }});
 
   } catch( e ) {

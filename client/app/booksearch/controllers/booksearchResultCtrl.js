@@ -10,7 +10,7 @@
     .controller('BookSearchResultCtrl', BookSearchResultCtrl);
 
   /* @ngInject */
-  function BookSearchResultCtrl( $rootScope, $scope, $timeout, auth, SignalsService, BookSearch, notifier ) {
+  function BookSearchResultCtrl( $rootScope, $scope, $timeout, auth, SignalsService, booksearch, notifier ) {
     /*jshint validthis: true */
     var vm = this;
 
@@ -40,18 +40,19 @@
       });
     }
 
-
-
-
     $rootScope.$stateParams.type = ($rootScope.$stateParams.type || 'free').toLowerCase();
 
     if ( $rootScope.$stateParams.type === 'free' ) {
-      BookSearch.search($rootScope.$stateParams.term, $rootScope.$stateParams.limit)
+      booksearch.search($rootScope.$stateParams.term, $rootScope.$stateParams.limit)
         .then(function( data ) {
-          applyFilterCategories(BookSearch.getFilterCategories());
+          applyFilterCategories(booksearch.getFilterCategories());
           vm.cacheResults = data;
           applyAuth(data);
           vm.results = data;
+          //issue #37
+          if(data.length == 0) {
+            notifier.warn('Não foram encontrados resultados\nReformule a sua pesquisa.');
+          }
         })
         .catch(function( /*error*/ ) {
           notifier.warning('Erro na pesquisa', 'Pesquisa Livre');
@@ -67,13 +68,17 @@
         edition: $rootScope.$stateParams.edition
       };
 
-      BookSearch.searchAdvanced(inputObj, $rootScope.$stateParams.limit)
+      booksearch.searchAdvanced(inputObj, $rootScope.$stateParams.limit)
         .then(function( data ) {
 
-          applyFilterCategories(BookSearch.getFilterCategories());
+          applyFilterCategories(booksearch.getFilterCategories());
           vm.cacheResults = data;
           applyAuth(data);
           vm.results = data;
+          //issue #37
+          if(data.length == 0) {
+            notifier.warn('Não foram encontrados resultados\nReformule a sua pesquisa.');
+          }
         })
         .catch(function( /*error*/ ) {
           notifier.warning('Erro na pesquisa', 'Pesquisa Avançada');
@@ -87,7 +92,7 @@
     function applyFilterCategories( filter ) {
       $timeout(function() {
         var aCategories = [];
-        BookSearch.setFilterCategories(filter);
+        booksearch.setFilterCategories(filter);
         filter.forEach(function( element/*, index, array*/ ) {
           aCategories.push([
             ['categories', 'contains', element]

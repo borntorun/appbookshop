@@ -39,7 +39,7 @@
         $timeout(function(){
           //console.log('prev');
           $previousState.go();
-        },200);/*10ms cause error? $digest already in progress error in firefox?*/
+        },200);/*10ms cause error? '$digest already in progress error' in firefox?*/
       } else {
         $state.go('logout');
       }

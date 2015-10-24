@@ -12,7 +12,7 @@
     .controller('BookrecordCtrl', BookrecordCtrl);
 
   /* @ngInject */
-  function BookrecordCtrl( $scope, $state, _lodash, bookconfig, bookrecord, notifier, logicform, message ) {
+  function BookrecordCtrl( $scope, $state, $timeout, _lodash, bookconfig, bookrecord, notifier, logicform, message, SignalsService ) {
     /*jshint validthis: true */
     var model = this;
 
@@ -87,6 +87,10 @@
       $scope.$emit('angtty:setval:' + field, model.book[field].length > 1 ? '' : model.book[field][0]);
     };
 
+    model.showSimilarTitles = function( done) {
+      SignalsService.bookrecordtitlechanged.emit(done);
+    };
+
     model.autocompleteEvents = {
       active: false,
       onbeforeopen: function( item/*, data*/ ) {
@@ -103,12 +107,37 @@
       onchange: function( event, data ) {
         if ( isArray(model.book[event.currentTarget.name]) ) {
           var field = model.book[event.currentTarget.name];
-          removeIfExists(field, data);
+
+          //issue #38
+          if ( !data.trim() ) {
+            $scope.$apply(function() {
+              $scope.$emit('angtty:setval:' + event.currentTarget.name, field.length > 1 ? '' : field[0]);
+            });
+            return;
+          }
+          //end issue #38
+
+          //issue #34
+          var aData = data.split(',');
+          //removeIfExists(field, data);
 
           $scope.$apply(function() {
-            field.push(data);
+            aData.forEach(function( item ) {
+              item = item.trim().replace(/\s{2,}/g, ' ');
+              if ( item ) {
+                var aItem = item.split(' ');
+                aItem.forEach(function( word, index ) {
+                  aItem[index] = _.capitalize(word);
+                });
+                item = aItem.join(' ');
+                removeIfExists(field, item);
+                field.push(item);
+              }
+            });
+            //field.push(data);
             $scope.$emit('angtty:setval:' + event.currentTarget.name, field.length > 1 ? '' : field[0]);
           });
+          //end issue #34
         }
         else {
           $scope.$apply(function() {
@@ -184,7 +213,7 @@
 
     function removeIfExists( varray, item ) {
       _lodash.remove(varray, function( val ) {
-        return val === item;
+        return val.trim().toLowerCase() === item.trim().toLowerCase();
       });
     }
 

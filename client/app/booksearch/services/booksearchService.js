@@ -1,14 +1,14 @@
 /**
- * Service appBookShop.bookdetail BookSearch
+ * Service appBookShop.bookdetail booksearch
  * (João Carvalho, 12-03-2015)
  *
  * Description: Serviço para book search
  */
 (function () {
   'use strict';
-  angular.module('appBookShop.booksearch').factory('BookSearch', BookSearch);
+  angular.module('appBookShop.booksearch').factory('booksearch', booksearch);
   /* @ngInject */
-  function BookSearch( httpRequest, Q, SignalsService, notifier) {
+  function booksearch( httpRequest, Q, SignalsService, notifier) {
     var serviceData = {
       inputsearchDefault: '',
       inputsearch: '',

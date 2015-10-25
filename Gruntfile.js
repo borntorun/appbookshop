@@ -57,21 +57,24 @@ module.exports = function( grunt ) {
     },
     //config to debug
     //para evitar concatenar certos files return ''
-    concat: {
-      options: {
-        process: function(src, filepath) {
-          //grunt.log.ok(filepath)
-
-          //para evitar concatenar certos files return ''
-          //if (filepath.indexOf('/app/auth/')>-1){
-          if (filepath.indexOf('/app/')>-1 && filepath.indexOf('.css')===-1){ //não é css
-            //grunt.log.ok(filepath);
-            return '';
-          }
-          return src;
-        }
-      }
-    },
+//    concat: {
+//
+//      options: {
+//        process: function( src, filepath ) {
+//          //grunt.log.ok(filepath)
+//
+//          //para evitar concatenar certos files return ''
+//          //if (filepath.indexOf('/app/auth/')>-1){
+//          if ( filepath.indexOf('/app/') > -1 && filepath.indexOf('.css') === -1 ) { //não é css
+//            //grunt.log.ok(filepath);
+//            return '';
+//          }
+//          grunt.log.ok(filepath);
+//          return src;
+//        }
+//      }
+//
+//    },
     watch: {
       /*
       Inject js files in index.html
@@ -359,7 +362,7 @@ module.exports = function( grunt ) {
     // Performs rewrites based on rev and the useminPrepare configuration
     usemin: {
       //new html: ['<%= yeoman.dist %>/public/{,*/}*.html'],
-      html: ['<%= yeoman.dist %>/index.html','<%= yeoman.dist %>/public/{,*/}*.html'],
+      html: ['<%= yeoman.dist %>/index.html', '<%= yeoman.dist %>/public/{,*/}*.html'],
 
       css: ['<%= yeoman.dist %>/public/{,*/}*.css'],
       js: [
@@ -466,9 +469,9 @@ module.exports = function( grunt ) {
     copy: {
       //debug
       debugappfiles: {
-        files:[
+        files: [
           {
-            expand:true,
+            expand: true,
             cwd: '<%= yeoman.client %>',
             dest: '<%= yeoman.dist %>/public/app/appfiles',
             src: [
@@ -683,15 +686,15 @@ module.exports = function( grunt ) {
         }
       }
     },
-//    uglify: {
-//      options: {
-//        mangle: {
-//          except: [
-//            'ct-ui-router-extras' //problem mangling...?
-//          ]
-//        }
-//      }
-//    },
+    //    uglify: {
+    //      options: {
+    //        mangle: {
+    //          except: [
+    //            'ct-ui-router-extras' //problem mangling...?
+    //          ]
+    //        }
+    //      }
+    //    },
     injector: {
       options: {
 
@@ -780,7 +783,7 @@ module.exports = function( grunt ) {
       dist: {
         options: {
           htmlroot: __dirname,
-          ignore: [/.*dropdown-menu.*/,/.*nav.*\.open/,/.*\[disabled\]/,/.*\[type=.*\]/, /#bookrecordForm.*:before.*/, /#bookrecordForm.*:after.*/],
+          ignore: [/.*dropdown-menu.*/, /.*nav.*\.open/, /.*\[disabled\]/, /.*\[type=.*\]/, /#bookrecordForm.*:before.*/, /#bookrecordForm.*:after.*/],
           ignoreSheets: [/fonts.googleapis/],
           stylesheets: ['/.tmp/app/app.css']
         },
@@ -884,19 +887,19 @@ module.exports = function( grunt ) {
   grunt.registerTask('build', [
     'clean:dist', 'injector:less', 'concurrent:dist', 'injector', 'wiredep',
     /*'copy:debugappfiles',*/ 'useminPrepare', 'autoprefixer',
-    /*'uncss:dist',*/ 'ngtemplates', 'concat',/*'copy:debugbowerfiles',*/ 'ngAnnotate',
+    /*'uncss:dist',*/ 'ngtemplates', 'concat', /*'copy:debugbowerfiles',*/ 'ngAnnotate',
     'copy:dist', /*'cdnify',*/ 'cssmin', 'uglify', 'rev', 'usemin'
   ]);
   grunt.registerTask('build-debugapp', [
     'clean:dist', 'injector:less', 'concurrent:dist', 'injector', 'wiredep',
     'copy:debugappfiles', 'useminPrepare', 'autoprefixer',
-    /*'uncss:dist',*/ 'ngtemplates', 'concat',/*'copy:debugbowerfiles',*/ 'ngAnnotate',
+    /*'uncss:dist',*/ 'ngtemplates', 'concat', /*'copy:debugbowerfiles',*/ 'ngAnnotate',
     'copy:dist', /*'cdnify',*/ 'cssmin', 'uglify', 'rev', 'usemin'
   ]);
   grunt.registerTask('build-debugall', [
     'clean:dist', 'injector:less', 'concurrent:dist', 'injector', 'wiredep',
     'copy:debugappfiles', 'useminPrepare', 'autoprefixer',
-    /*'uncss:dist',*/ 'ngtemplates', 'concat','copy:debugbowerfiles', 'ngAnnotate',
+    /*'uncss:dist',*/ 'ngtemplates', 'concat', 'copy:debugbowerfiles', 'ngAnnotate',
     'copy:dist', /*'cdnify',*/ 'cssmin', 'uglify', 'rev', 'usemin'
   ]);
   grunt.registerTask('buildtest', [

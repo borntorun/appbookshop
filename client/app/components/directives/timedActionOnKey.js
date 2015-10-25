@@ -11,7 +11,77 @@
   angular
     .module('appBookShop.components')
     .directive('timedAction', timedAction)
-    /*.controller('timedActionCtrl', timedActionCtrl)*/;
+    .controller('timedActionCtrl', timedActionCtrl);
+
+
+  /**
+   * Controller
+   * @param $timeout
+   */
+  /* @ngInject */
+  function timedActionCtrl( $timeout ) {
+    /*jshint validthis: true */
+    var model = this;
+
+    /**
+     * Init model variables
+     * @param action {Function} Function to call representing the process to run on the event
+     * @param msTimeout {Number} Miliseconds to wait before call the action
+     */
+    model.init = function init( action, msTimeout ) {
+      model.processRunning = false;
+      model.action = action;
+      model.msTimeout = msTimeout;
+    };
+
+    /**
+     * The event handler
+     * @returns {boolean}
+     */
+    model.eventKeyListener = function( /*e*/ ) {
+      //if action is running delay next call and quit
+      if ( model.processRunning ) {
+        model.delay = true;
+        return true;
+      }
+
+      //if exists a timed action defined before cancel it
+      if ( model.timedOutFunction ) {
+        $timeout.cancel(model.timedOutFunction);
+      }
+
+      //call action after timeout
+      model.timedOutFunction = $timeout(function timedOutFunction() {
+        doAction();
+      }, model.msTimeout);
+
+      return true;
+    };
+
+    /**
+     * Call action
+     */
+    function doAction() {
+      //set process running as true
+      model.processRunning = true;
+      //call action; passes in a reference to a done callback
+      model.action.call(null, doneAction);
+    }
+
+    /**
+     * Callback to be called by the external action
+     * MUST BE CALLED (if not the action will never be called if the event occurs again)
+     */
+    function doneAction() {
+      //set process running as false
+      model.processRunning = false;
+      //if action was delayed call it again
+      if (model.delay === true) {
+        model.delay = false;
+        doAction();
+      }
+    }
+  }
 
   /* @ngInject */
   function timedAction( $timeout ) {
@@ -24,7 +94,7 @@
     */
     var directive = {
       restrict: 'E',
-      controller: timedActionCtrl,
+      controller: 'timedActionCtrl',
       controllerAs: 'model',
       link: link,
       scope: {
@@ -78,72 +148,6 @@
 
     }
 
-    /**
-     * Controller
-     * @param $timeout
-     */
-    function timedActionCtrl( $timeout ) {
-      /*jshint validthis: true */
-      var model = this;
 
-      /**
-       * Init model variables
-       * @param action {Function} Function to call representing the process to run on the event
-       * @param msTimeout {Number} Miliseconds to wait before call the action
-       */
-      model.init = function init( action, msTimeout ) {
-        model.processRunning = false;
-        model.action = action;
-        model.msTimeout = msTimeout;
-      };
-
-      /**
-       * The event handler
-       * @returns {boolean}
-       */
-      model.eventKeyListener = function( /*e*/ ) {
-        //if action is running delay next call and quit
-        if ( model.processRunning ) {
-          model.delay = true;
-          return true;
-        }
-
-        //if exists a timed action defined before cancel it
-        if ( model.timedOutFunction ) {
-          $timeout.cancel(model.timedOutFunction);
-        }
-
-        //call action after timeout
-        model.timedOutFunction = $timeout(function timedOutFunction() {
-          doAction();
-        }, model.msTimeout);
-
-        return true;
-      };
-
-      /**
-       * Call action
-       */
-      function doAction() {
-        //set process running as true
-        model.processRunning = true;
-        //call action; passes in a reference to a done callback
-        model.action.call(null, doneAction);
-      }
-
-      /**
-       * Callback to be called by the external action
-       * MUST BE CALLED (if not the action will never be called if the event occurs again)
-       */
-      function doneAction() {
-        //set process running as false
-        model.processRunning = false;
-        //if action was delayed call it again
-        if (model.delay === true) {
-          model.delay = false;
-          doAction();
-        }
-      }
-    }
   }
 }());

@@ -29,11 +29,6 @@ exports.read = function( req, res ) {
 
 //Simple search
 exports.search = function( req, res ) {
-  //{"$or" : [{"ticket_no" : 725}, {"winner" : true}]}
-  //Book.find((req.params.filter && JSON.parse(req.params.filter)) || {}).limit(req.params.limit || 10).exec(function(err, Books) {
-  //Book.find({"$or" : [{"title" : /Blue/}, {"yearEdition" : 1930}]}).limit(req.params.limit || 100).exec(function(err, Books) {
-  //console.log(require("./book.search.lib").filter(req.params.filter));
-
   Book
     .find(searchLib.filter(req.params.filter), BookFields.storeSearch)
     .limit(bookListLimit(req.params.limit))

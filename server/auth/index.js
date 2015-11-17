@@ -1,13 +1,15 @@
 'use strict'
 
 exports.ensureIsAuthenticated = function( req, res, next ) {
+  console.time('isAuthenticated');
   if ( req.isAuthenticated() ) {
+    console.timeEnd('isAuthenticated');
     return next();
   }
   return res.status(401).json({data: 'not authorized'});
 };
 
-exports.ensureRedirectIsNotAuthenticated = function( req, res, next ) {
+exports.ensureRedirectIfNotAuthenticated = function( req, res, next ) {
   if ( req.isAuthenticated() ) {
     return next();
   } else {

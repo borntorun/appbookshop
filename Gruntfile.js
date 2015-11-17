@@ -76,6 +76,7 @@ module.exports = function( grunt ) {
 //
 //    },
     watch: {
+
       /*
       Inject js files in index.html
       (exclude tests/mocks/app.module.js (main module)
@@ -86,6 +87,7 @@ module.exports = function( grunt ) {
           '<%= yeoman.client %>/{app,components}/**/*.constants.js',
           '<%= yeoman.client %>/{app,components}/**/*.config.js',
           '<%= yeoman.client %>/{app,components}/**/*.js',
+          '!<%= yeoman.client %>/{app,components}/**/*_Spec.js',
           '!<%= yeoman.client %>/{app,components}/**/*.spec.js',
           '!<%= yeoman.client %>/{app,components}/**/*.mock.js',
           '!<%= yeoman.client %>/app/app.module.js'],
@@ -146,12 +148,12 @@ module.exports = function( grunt ) {
           livereload: true
         }
       },
-      testserver: {
-        files: [
-          'server/**/*.{js,json}'
-        ],
-        tasks: ['test:server']
-      },
+//      testserver: {
+//        files: [
+//          'server/**/*.{js,json}'
+//        ],
+//        tasks: ['test:server']
+//      },
       express: {
         files: [
           'server/**/*.{js,json}'
@@ -172,6 +174,14 @@ module.exports = function( grunt ) {
           '<%= yeoman.server %>/**/*.js'],
         tasks: ['hintserver']
       }
+//      ,karmaunitsingle: {
+//        files: [
+//          '<%= yeoman.client %>/{app,components}/**/**.js',
+//          'test/*.js',
+//          'test/**/*_Spec.js'
+//        ],
+//        tasks: ['hintclient','hintserver','karma:unitsingle']
+//      }
     },
     // Make sure code styles are up to par and there are no obvious mistakes
     jshint: {
@@ -578,8 +588,13 @@ module.exports = function( grunt ) {
           limit: 3
         }
       },
-      test: [
-        'jade', 'less', ],
+      test: {
+        tasks: ['jade', 'less', 'hintall' ],
+        options: {
+          logConcurrentOutput: true,
+          limit: 3
+        }
+      },
       debug: {
         tasks: [
           'nodemon', 'node-inspector'
@@ -595,7 +610,11 @@ module.exports = function( grunt ) {
     // Test settings
     karma: {
       unit: {
-        configFile: 'karma.conf.js',
+        configFile: 'test/karma-unit.conf.js',
+        singleRun: false
+      },
+      unitsingle: {
+        configFile: 'test/karma-unit.conf.js',
         singleRun: true
       }
     },
@@ -872,16 +891,17 @@ module.exports = function( grunt ) {
     }
     else if ( target === 'client' ) {
       return grunt.task.run([
-        'clean:server', 'env:all', 'injector:less', 'concurrent:test', 'injector', 'autoprefixer'/*, 'karma'*/
+        /*'clean:server', 'env:all', 'concurrent:test',*/'hintall', 'karma:unit'
+        //'karma:unit','watch:karmaUnit'
       ]);
     }
     else if ( target === 'e2e' ) {
       return grunt.task.run([
-        'clean:server', 'env:all', 'env:test', 'injector:less', 'concurrent:test', 'injector', 'wiredep', 'autoprefixer', 'express:dev', 'protractor'
+        'clean:server', 'env:all', 'env:test', /*'injector:less',*/ 'concurrent:test', 'injector', 'wiredep', 'autoprefixer', 'express:dev', 'protractor'
       ]);
     }
     else grunt.task.run([
-        'test:server', 'test:client'
+        /*'test:server',*/ 'test:client'
       ]);
   });
   grunt.registerTask('build', [
@@ -912,6 +932,6 @@ module.exports = function( grunt ) {
   grunt.registerTask('release', ['releasebuild:default']);
 
   grunt.registerTask('default', [
-    'newer:jshint', 'test'
+    'serve'
   ]);
 };

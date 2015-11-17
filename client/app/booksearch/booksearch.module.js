@@ -11,7 +11,10 @@
     [
       'ui.router'
     ])
-    .directive('bookSearchFormLayout', BookSearchFormLayout);
+    .directive('bookSearchFormLayout', BookSearchFormLayout)
+    .factory('booksearchCache', function($cacheFactory) {
+      return $cacheFactory('booksearchCache');
+    });
 
   /**
    * Directive appBookShop.booksearch BookSearchFormLayout
@@ -21,7 +24,7 @@
    *  responsável por gerir accordion em booksearchLayout.jade consoante o state
    */
   /* @ngInject */
-  function BookSearchFormLayout($rootScope, booksearch, $timeout) {
+  function BookSearchFormLayout($rootScope, $timeout, booksearchCache) {
     var directive = {
       restrict: 'A',
       link: linkfunction
@@ -39,7 +42,7 @@
           filterIsOpen = $('#toggleFilterSearch').attr('aria-expanded')=== 'true',
           advChange = (name === 'main.search.advresults' && !advIsOpen) || (name === 'main.search.featured' && advIsOpen),
           freeChange = (name === 'main.search.results' && !freeIsOpen) || (name === 'main.search.featured' && freeIsOpen),
-          filterChange = filterChange || (!filterIsOpen && booksearch.getFilterCategories().length>0) || (name === 'main.search.featured' && filterIsOpen);
+          filterChange = filterChange || (!filterIsOpen && (booksearchCache.get('categories') || []).length>0) || (name === 'main.search.featured' && filterIsOpen);
 
 
         if (filterChange) {

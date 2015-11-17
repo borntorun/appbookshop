@@ -4,38 +4,36 @@
  *
  * Description: Controla pesquisa livre de livros
  */
-(function () {
+(function() {
   'use strict';
   angular.module('appBookShop.booksearch').controller('BookSearchFreeFormCtrl', BookSearchFreeFormCtrl);
   /* @ngInject */
-  function BookSearchFreeFormCtrl($rootScope, $scope, booksearch, SignalsService ) {
+  function BookSearchFreeFormCtrl( $rootScope, $scope, booksearch, booksearchLastQuery) {
     /*jshint validthis: true */
     var vm = this;
 
+    console.log(booksearch);
     var onstateChangeSuccess = $scope.$on('$stateChangeSuccess', setInputSearch);
 
-    vm.inputsearch = booksearch.getSearchTerm();
-    vm.limit = booksearch.getSearchLimit();
+    if ( booksearchLastQuery.query['free'] ) {
+      var parameters = booksearchLastQuery.emptyIfdash(booksearchLastQuery.query['free'].parameters);
+      vm.inputsearch = parameters[1];
+      vm.limit = parameters[0];
+    }
 
     vm.search = function search() {
-      $rootScope.$state.go('main.search.results',{type: 'free', limit: vm.limit , term:vm.inputsearch});
-      //SignalsService.searched.emit(vm.inputsearch);
+      $rootScope.$state.go('main.search.results', {type: 'free', limit: vm.limit, term: vm.inputsearch});
     };
 
-    function setInputSearch (event, toState, toParams, fromState, fromParams) {
-      /*if (toState.name == 'main.search') {
-        vm.inputsearch = booksearch.getSearchInputDefault();
-        vm.limit = booksearch.getSearchLimit();
-        event.preventDefault();
-      }
-      else*/ if (toState.name == 'main.search.results' && (toState.name !== fromState.name || (toParams.term!==undefined && fromParams.term!==undefined && toParams.term !== fromParams.term)) ) {
+    function setInputSearch( event, toState, toParams, fromState, fromParams ) {
+      if ( toState.name == 'main.search.results' && (toState.name !== fromState.name || (toParams.term !== undefined && fromParams.term !== undefined && toParams.term !== fromParams.term)) ) {
         vm.inputsearch = toParams.term;
         vm.limit = toParams.limit;
         event.preventDefault();
       }
     }
 
-    $scope.$on('$destroy', function(){
+    $scope.$on('$destroy', function() {
       onstateChangeSuccess(); //unregister the listenner 'onstateChangeSuccess'
     });
   }

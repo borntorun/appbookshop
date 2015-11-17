@@ -36,6 +36,7 @@
     function call( defaultOptions, options, thenCallback, catchCallback ) {
       delete options.method;
       options = angular.extend(angular.copy(defaultOptions), options || {});
+      console.time('call-' + options.url);
       return $http(options)
         .then(thenCallback)
         .catch(catchCallback);
@@ -58,15 +59,13 @@
         method: 'GET',
         cache: true
       };
-
       return call(defaultOptions, options, response, throwError);
-
     }
 
     function response( response ) {
-      return response.data;
+      console.timeEnd('call-' + response.config.url);
+      return response/*.data*/;
     }
-
     function throwError( response ) {
       if(response.status==0) {
         response.statusText = 'Network Error (received response empty)';

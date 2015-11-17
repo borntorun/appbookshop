@@ -8,13 +8,13 @@
  */
 (function() {
   'use strict';
+  /*jshint validthis: true */
   angular
     .module('appBookShop.components')
     .directive('enterAsTab', enterAsTab)
     .controller('enterAsTabCtrl', enterAsTabCtrl);
 
   function enterAsTabCtrl( $scope, mutationObserver ) {
-    /*jshint validthis: true */
     var model = this;
     var observer;
 

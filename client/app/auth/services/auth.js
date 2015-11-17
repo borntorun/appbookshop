@@ -126,7 +126,7 @@
         return Q(null);
       }
       return Q.allSettled([httpRequest.post({url: '/auth/logout'}), storage.clear()])
-        .then(function( results ) {
+        .then(function( /*results*/ ) {
           /*results.forEach(function (result) {
             console.log(result.state, result.value, result.reason);
           });*/

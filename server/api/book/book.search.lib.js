@@ -26,16 +26,16 @@ function getRegExpFromString(value) {
 search.filter = function (filter){
   var aValues;
 
-  if (filter) {
+  if (filter && filter.trim()!=='-') {
     aValues = sanitizeInputArray(filter.split(','));
-    return {$text: {$search: '\'' + aValues.join(' ') + '\''} }
+    return {$text: {$search: '\'' + aValues.join(' ') + '\''} };
   }
   return {};
 };
 
 
 function setadvFilter(objFilter, key, value) {
-  if (value && value!=='-') {
+  if (value && value.trim()!=='-') {
     objFilter[key] = {'$in': [getRegExpFromString(sanitizeStringDollar(value))]};
   }
 }

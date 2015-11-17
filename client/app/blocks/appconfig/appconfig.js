@@ -24,6 +24,12 @@
     var promise;
 
     var service = {
+      appEndPoint: {
+        search: {
+          free: '/api/books/search/free',
+          advanced: '/api/books/search/advanced'
+        }
+      },
       getConfig: getConfig,
       urlAbsolute: function() {
         return $state.href($state.current.name, $state.params, {absolute: true});
@@ -31,6 +37,12 @@
     };
     return service;
 
+    /**
+     * Get a 'config' for something from an url
+     * (the config object parameters is configured in core.config)
+     * @param key
+     * @returns {*}
+     */
     function getConfig( key ) {
       if ( config[key] ) {
         return config[key];
@@ -45,10 +57,10 @@
         appconfigHandler.config[key].promisse = promise;
 
         promise
-          .then(function(data){
-            config[key] = data;
+          .then(function(response){
+            return (config[key] = response.data);
             //notifier.log('Loaded appconfig.getConfig:','',key);
-            return data;
+
           })
           .catch(function() {
             notifier.log('Error loading appconfig.getConfig','',key);

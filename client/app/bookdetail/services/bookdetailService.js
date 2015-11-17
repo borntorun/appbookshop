@@ -27,8 +27,8 @@
       var defer = Q.defer();
 
       httpRequest.get({url: '/api/books/store/' + (id || '')})
-        .then(function( data ) {
-          defer.resolve(data);
+        .then(function( response ) {
+          defer.resolve(response.data);
         }).
         catch(function(err){
           defer.reject(err);

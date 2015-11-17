@@ -61,7 +61,7 @@ module.exports = function( app ) {
 
   app.route('/search/free/([0-9]+)/:term?').get(funcIndexHtml);
 
-  app.route('/search/advanced/([0-9]+)/:tit/:aut/:ssub/:col/:cat/:edi').get(funcIndexHtml);
+  app.route('/search/advanced/([0-9]+)/:tit/:aut/:sub/:col/:cat/:edi').get(funcIndexHtml);
 
   app.route('/:area(book|livro)/:reference([\\d]+)/:slug([\\w-]+)?').get(funcIndexHtml);
 
@@ -69,7 +69,7 @@ module.exports = function( app ) {
     .post(auth.ensureIsAuthenticated);
 
   app.route('/admin/:area(book|livro)/:reference(new|[\\d]+)/:slug([\\w-]+)?')
-    .get(auth.ensureRedirectIsNotAuthenticated, funcIndexHtml)
+    .get(auth.ensureRedirectIfNotAuthenticated, funcIndexHtml)
 
   app.route('/message/:term?').get(funcIndexHtml);
 };

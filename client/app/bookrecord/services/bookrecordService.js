@@ -55,9 +55,9 @@
 
     function save() {
       var defer = call({method: httpRequest.post, url: '/api/books/admin/' + book._id || 'new', data: book},
-        function( data ) {
+        function( response ) {
           init();
-          defer.resolve(data);
+          defer.resolve(response.data);
         },
         function(err) {
           reject(defer, err);
@@ -69,7 +69,8 @@
     function edit( id ) {
       clear();
       var defer = call({method: httpRequest.get, url: '/api/books/admin/' + (id || ''), cache: false},
-        function( data ) {
+        function( response ) {
+          var data = response.data;
           for ( var k in data ) {
             if ( data.hasOwnProperty(k) ) {
               book[k] = data[k];

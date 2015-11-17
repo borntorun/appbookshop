@@ -56,8 +56,8 @@
 <div ui-view="auxiliar"></div>
 
 
-<!--<div class="nav navbar-fixed-bottom" style="width:100%">-->
-<!--<div style="width:100%;z-index:999">
+<!--<div class="nav navbar-fixed-bottom" style="width:100%">
+<div style="width:100%;z-index:999">
     <pre>
       &lt;!&ndash; Here's some values to keep an eye on in the sample in order to understand $state and $stateParams &ndash;&gt;
       $state = {{$state.current.name}}
@@ -119,6 +119,8 @@
 <script src="bower_components/ui-router-extras/release/ct-ui-router-extras.js"></script>
 <script src="bower_components/d3/d3.js"></script>
 <script src="bower_components/angular-dynamic-layout/dist/angular-dynamic-layout.js"></script>
+<script src="bower_components/ngInfiniteScroll/build/ng-infinite-scroll.js"></script>
+<script src="bower_components/jquery_appear/jquery.appear.js"></script>
 <!-- endbower -->
 <!-- endbuild -->
 <!--<script src="app/bower_components/ui-router-extras/release/ct-ui-router-extras.js"></script>-->
@@ -163,14 +165,17 @@
 <script src="app/booksearch/controllers/booksearchAdvancedFormCtrl.js"></script>
 <script src="app/booksearch/controllers/booksearchFilterCategoriesCtrl.js"></script>
 <script src="app/booksearch/controllers/booksearchFreeFormCtrl.js"></script>
-<script src="app/booksearch/controllers/booksearchResultCtrl.js"></script>
+<script src="app/booksearch/controllers/booksearchResultsCtrl.js"></script>
+<script src="app/booksearch/services/booksearchLastQuery.js"></script>
 <script src="app/booksearch/services/booksearchService.js"></script>
+<script src="app/components/directives/elementAppear.js"></script>
 <script src="app/components/directives/enterAsTab.js"></script>
 <script src="app/components/directives/formInputTooltip.js"></script>
 <script src="app/components/directives/isbn.js"></script>
 <script src="app/components/directives/leaveFocus.js"></script>
 <script src="app/components/directives/splitArrayText.js"></script>
 <script src="app/components/directives/timedActionOnKey.js"></script>
+<script src="app/components/directives/windowScroll.js"></script>
 <script src="app/components/mixed/logicForm.js"></script>
 <script src="app/components/services/err.js"></script>
 <script src="app/components/services/http.js"></script>

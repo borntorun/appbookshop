@@ -25,8 +25,13 @@
                         //| {{vm.criteria.categories}}
                         span.input-group-addon(id="categoria")
                         //| {{vm.criteria.categories}}
-                        angular-typeaheadjs(angty-options="{{vm.options}}" angty-ttoptions="{{vm.ttoptions}}")
-                            input(placeholder="pesquisar por categoria" ng-model="vm.criteria.categories").typeahead
+                        angular-typeaheadjs(
+                            angty-onchange="vm.autocompleteEvents.onchangeCategories",
+                            angty-options="{{vm.options}}", angty-ttoptions="{{vm.ttoptions}}")
+                            input.typeahead(type="text", placeholder="pesquisar por categoria" ng-model="vm.criteria.categories")
+
+                        //angular-typeaheadjs(angty-options="{{vm.options}}" angty-ttoptions="{{vm.ttoptions}}")
+                        //    input(placeholder="pesquisar por categoria" ng-model="vm.criteria.categories").typeahead
                         //angular-typeaheadjs(
                         //remote="{{vm.urlRemote}}",
                         //prefetch="{{vm.urlPrefetch}}",
@@ -42,7 +47,7 @@
                 .form-group
                     div.checkbox
 
-                        input(type="checkbox",id="firstEdition",name="firstEdition", ng-model="vm.firstEdition",aria-label="1ªs Edições",placeholder="1ªs Edições")
+                        input(type="checkbox",id="firstEdition",name="firstEdition", ng-model="vm.criteria.edition",aria-label="1ªs Edições",placeholder="1ªs Edições")
                         label(for="firstEdition") 1ªs Edições
 
                         //label

@@ -10,10 +10,16 @@
     .module('appBookShop.booksearch')
     .controller('BookSearchFilterCategoriesCtrl', BookSearchFilterCategoriesCtrl);
   /* @ngInject */
-  function BookSearchFilterCategoriesCtrl( $scope, $rootScope, _lodash, booksearch ) {
+  function BookSearchFilterCategoriesCtrl( $scope, $rootScope, _lodash, /*booksearchold*/ booksearchCache) {
     /*jshint validthis: true */
     var vm = this;
-    vm.filtro = booksearch.getFilterCategories();
+
+    /*function getCategoriesFromCache() {
+      var cacheCategories = booksearchCache.get('categories');
+      return cacheCategories? cacheCategories: [];
+    }*/
+
+    vm.filtro = booksearchCache.get('categories') || [];//booksearchold.getFilterCategories();
 
     vm.options = {
       showLog: true,
@@ -27,13 +33,13 @@
     };
     vm.removeCat = function( item ) {
       removeIfExists(item);
-      $rootScope.$broadcast('BookSearchFilterCatChange', vm.filtro);
+      $rootScope.$emit('BookSearchFilterCatChange', vm.filtro);
     };
     vm.onSelected = function( ev, item ) {
       vm.filtro = vm.filtro || [];
       removeIfExists(item.name);
       vm.filtro.push(item.name);
-      $rootScope.$broadcast('BookSearchFilterCatChange', vm.filtro);
+      $rootScope.$emit('BookSearchFilterCatChange', vm.filtro);
     };
     function removeIfExists( item ) {
       _lodash.remove(vm.filtro, function( val ) {

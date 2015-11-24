@@ -7,7 +7,7 @@ module.exports = function() {
     basePath: '../',
 
     // testing framework to use (jasmine/mocha/qunit/...)
-    frameworks: ['mocha', 'chai', 'chai-things'],
+    frameworks: ['mocha', 'chai', 'chai-things', 'sinon-chai'],
 
     // list of files / patterns to load in the browser
     files: [
@@ -83,7 +83,7 @@ module.exports = function() {
 
 
     // enable / disable watching file and executing tests whenever any file changes
-    autoWatch: true,
+    autoWatch: false,
 
     // Start these browsers, currently available:
     // - Chrome
@@ -93,7 +93,7 @@ module.exports = function() {
     // - Safari (only Mac)
     // - PhantomJS
     // - IE (only Windows)
-    browsers: ['PhantomJS'],
+    browsers: ['PhantomJS2'],
 
     // Continuous Integration mode
     // if true, it capture browsers, run tests and exit
@@ -114,7 +114,7 @@ module.exports = function() {
       suppressSkipped: true
     },*/
     plugins: [
-      'karma-phantomjs-launcher',
+      'karma-phantomjs2-launcher',
       'karma-chrome-launcher',
       'karma-mocha',
 //      'karma-spec-reporter',

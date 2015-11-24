@@ -10,21 +10,14 @@
   'use strict';
   angular
     .module('appBookShop.components')
-    .directive('leaveFocus', leaveFocus)
-    /*.controller('leaveFocusCtrl', leaveFocusCtrl)*/;
+    .directive('leaveFocus', leaveFocus);
 
-  /*function leaveFocusCtrl( *//*$scope*//*) {
-    *//*jshint validthis: true *//*
-    //var model = this;
-
-  }*/
 
   /* @ngInject */
   function leaveFocus() {
     /*
     * Private Block
     */
-
     function link( scope, element/*, attrs, ctrl */) {
       //element must be a form
       if ( element[0].tagName !== 'BUTTON' ) {

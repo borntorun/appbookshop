@@ -78,15 +78,15 @@
     }
 
     function setNext(results) {
-//      if (vm.query.next) {
-//        results.push({loadtype: 'next', loadmessage: 'a ler mais livros...', categories:getCategoriesFromCache(), template: 'app/booksearch/jade/booksearchResultInfiniteScroll.html'});
-//      }
+      if (vm.query.next) {
+        results.push({loadtype: 'next', loadmessage: 'a ler mais livros...', categories:getCategoriesFromCache(), template: 'app/booksearch/jade/booksearchResultInfiniteScroll.html'});
+      }
       return results;
     }
     function setPrevious(results) {
-//      if (vm.query.previous) {
-//        results.splice(0, 0,{loadtype: 'previous',loadmessage: 'a ler livros anteriores...',categories:getCategoriesFromCache(),template: 'app/booksearch/jade/booksearchResultInfiniteScroll.html'});
-//      }
+      if (vm.query.previous) {
+        results.splice(0, 0,{loadtype: 'previous',loadmessage: 'a ler livros anteriores...',categories:getCategoriesFromCache(),template: 'app/booksearch/jade/booksearchResultInfiniteScroll.html'});
+      }
       return results;
     }
 
@@ -116,7 +116,7 @@
           $scope.$apply(function(){
             vm.results = data;
             if (vm.query.previous){
-              $scope.$emit('windowScrollY', -1 * 4 * 300);
+              $scope.$emit('booksearchresultsscroll', { windowScrollY: -1 * 4 * 300 });
               /*$timeout(function(){
                 $window.scrollBy(0, -1 * 4 * 300 *//*$window.innerHeight*//* );
 
@@ -158,7 +158,7 @@
             vm.results = data;
             console.log(vm.query,vm.results.length, vm.query.previous? true: false,vm.query.next?true:false);
 
-            $scope.$emit('windowScrollY', 5*300);
+            $scope.$emit('booksearchresultsscroll', {windowScrollY:5*300});
             /*$timeout(function(){
               $window.scrollBy(0, 5*300*//*$window.innerHeight*//*);
 

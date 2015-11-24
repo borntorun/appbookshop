@@ -83,12 +83,6 @@ input.typeahead.searchfiltercat:focus {
 * Book Search Results
 * ********************************
 */
-//teste infinit scroll
-.results-content {
-//  /*height: 790px;*/
-//  overflow: hidden;
-//  background-color: #c5c5c5;
-}
 
 .dynamic-layout-item-parent.ng-enter{
   transition: 0.5s ease-in-out; //tempo que demora a aparecer
@@ -105,46 +99,35 @@ input.typeahead.searchfiltercat:focus {
   opacity:0;
 }
 .dynamic-layout-item-parent {
-  //teste infinit scroll
-//  position: relative!important;
-
 
   float: left!important;
-  //width: 50%;
   #convert-px(to_em, font-size, @fontxs);
   @media (min-width: 768px) {
     #convert-px(to_em, font-size, @fontsm);
-    //width: 32%;
   }
   @media (min-width: 992px) {
     #convert-px(to_em, font-size, @fontmd);
-    //width: 32%;
   }
   @media (min-width: 1200px) {
     #convert-px(to_em, font-size, @fontlg);
-    //width: 24%;
   }
-  @media (min-width: 1600px) {
-    #convert-px(to_em, font-size, @fontlg);
-    //width: 19%;
-  }
+//  @media (min-width: 1600px) {
+//    #convert-px(to_em, font-size, @fontlg);
+//  }
 }
 
 
-.element-item/*dynamic-layout-item*/ {
-  //teste infinit scroll
-//  height:350px;
-
+.element-item {
   float: left;
   margin: 0px;
   box-shadow: 0 1px 1px hsl(0, 0%, 0%);
   #convert-px(to_em, padding, 5, @fontxs);
-  #convert-px(to_em, width, 135, @fontxs);
-  //width: 100%;
 
-  @media (min-width: 768px) {
+  width: 135px;
+  //#convert-px(to_em, width, 135, @fontxs);
+
+  @media (min-width: 352px) {
     #convert-px(to_em, padding, 10, @fontsm);
-    #convert-px(to_em, width, 194, @fontsm);
     #convert-px(to_em, margin, 5, @fontsm);
     box-shadow: 0 1px 6px hsl(0, 0%, 0%);
 
@@ -153,31 +136,45 @@ input.typeahead.searchfiltercat:focus {
     border-top-right-radius: 8px;
     border-top-left-radius: 8px;
   }
-  @media (min-width: 992px) {
-    #convert-px(to_em, width, 200, @fontmd);
+
+  @media (min-width: 480px) {
+    width: 210px;
   }
-  @media (min-width: 1200px) {
-    #convert-px(to_em, width, 182, @fontlg);
+  @media (min-width: 768px) {
+    width: 234px;
   }
-  @media (min-width: 1440px) {
-    //#convert-px(to_em, width, 178, @fontlg);
-    //#convert-px(to_em, width, 188, @fontlg);
-    #convert-px(to_em, width, 240, @fontlg);
-  }
+//  @media (min-width: 768px) {
+//
+//    #convert-px(to_em, width, 194, @fontsm);
+//
+//    #convert-px(to_em, padding, 10, @fontsm);
+//    #convert-px(to_em, margin, 5, @fontsm);
+//    box-shadow: 0 1px 6px hsl(0, 0%, 0%);
+//
+//    border-bottom-right-radius: 0px;
+//    border-bottom-left-radius: 0px;
+//    border-top-right-radius: 8px;
+//    border-top-left-radius: 8px;
+//  }
+//  @media (min-width: 992px) {
+//    #convert-px(to_em, width, 200, @fontmd);
+//
+//    #convert-px(to_em, padding, 10, @fontsm);
+//    #convert-px(to_em, margin, 5, @fontsm);
+//    box-shadow: 0 1px 6px hsl(0, 0%, 0%);
+//
+//    border-bottom-right-radius: 0px;
+//    border-bottom-left-radius: 0px;
+//    border-top-right-radius: 8px;
+//    border-top-left-radius: 8px;
+//  }
+//  @media (min-width: 1200px) {
+//    #convert-px(to_em, width, 182, @fontlg);
+//  }
+//  @media (min-width: 1440px) {
+//    #convert-px(to_em, width, 240, @fontlg);
+//  }
 }
-
-
-.element-item-list/*dynamic-layout-item*/ {
-  float: left;
-  margin: 0px;
-  #convert-px(to_em, padding, 5, @fontxs);
-  #convert-px(to_em, width, 700, @fontxs);
-  #convert-px(to_em, margin, 5, @fontsm);
-
-
-}
-
-
 
 
 
@@ -185,27 +182,47 @@ input.typeahead.searchfiltercat:focus {
   box-shadow: none;
   border: 1px dotted #545454;
 }
-.search-infinite-scroll-previous {
+
+.search-infinite-scroll {
   position: absolute;
-  left: 244px!important;
-  width: 750px!important;
   box-shadow: none;
   border-radius: 0px;
   text-align: center;
+  padding: 0px;
+  //background-color: red;
 }
-.search-infinite-scroll-next {
-  position: absolute;
+.search-infinite-scroll.next {
   margin-top: 150px;
-  left: 244px!important;
-  width: 750px!important;
-  box-shadow: none;
-  border-radius: 0px;
-  text-align: center;
 }
-.search-infinite-scroll-previous img,
-.search-infinite-scroll-next img {
+.search-infinite-scroll.previous {
+  min-height: 65px;
+}
+
+.search-infinite-scroll img {
   height: 40px;
 }
+
+//.search-infinite-scroll-previous {
+//  position: absolute;
+//  //left: 244px!important;
+//  width: 750px!important;
+//  box-shadow: none;
+//  border-radius: 0px;
+//  text-align: center;
+//}
+//.search-infinite-scroll-next {
+//  position: absolute;
+//  margin-top: 150px;
+//  //left: 244px!important;
+//  width: 750px!important;
+//  box-shadow: none;
+//  border-radius: 0px;
+//  text-align: center;
+//}
+//.search-infinite-scroll-previous img,
+//.search-infinite-scroll-next img {
+//  height: 40px;
+//}
 [dynamic-layout]{
   //teste infinit scroll
   position: relative;
@@ -283,18 +300,19 @@ input.typeahead.searchfiltercat:focus {
   margin: auto!important;
   display: block!important;
   box-shadow: 0px 1px 6px hsl(0, 0%, 0%);
-  @media (min-width: 768px) {
-    width:  130px!important;
-    height: 200px!important;
-  }
+//  @media (min-width: 768px) {
+//    width:  130px!important;
+//    height: 200px!important;
+//  }
 }
 
 .dynamic-layout-item img.block-image.nocover {
 
   content: url("/assets/images/covers/noimage.jpg");
-  @media (min-width: 768px) {
-    content: url("/assets/images/covers/noimage768.jpg");
-  }
+
+//  @media (min-width: 992px) {
+//    content: url("/assets/images/covers/noimage768.jpg");
+//  }
 }
 
 .dynamic-layout-item .block-price-icons-triangshadow{
@@ -336,6 +354,10 @@ input.typeahead.searchfiltercat:focus {
     #convert-px(to_em, font-size, @fontlg - 1, @fontlg);
   }
 }
+//end dynamic-layout
+
+
+
 .booksearch .layout-tab {
   padding-top: 10px;
   padding-right: 5px;

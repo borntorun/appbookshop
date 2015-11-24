@@ -21,10 +21,20 @@
       templateUrl: 'app/main/views/main.html',
       controller: 'Main as vm',
       resolve: {
+        bookconfig: ['appconfig', 'Q', function( appconfig, Q ) {
+          return Q.when(appconfig.getConfig('bookconfig'), function (value) {
+            return value.data || value;
+          }, function () {
+            return {};
+          });
+        }]
+      },
+      /*,
+      resolve: {
         bookconfig: ['appconfig', function (appconfig) {
           return appconfig.getConfig('bookconfig');
         }]
-      },
+      },*/
       sticky: true
     };
 

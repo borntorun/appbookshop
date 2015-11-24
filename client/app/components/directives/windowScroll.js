@@ -8,17 +8,15 @@
  *
  */
 
-(function () {
+(function() {
   'use strict';
   /*jshint validthis: true */
   angular
     .module('appBookShop.components')
     .directive('windowScroll', windowScroll);
 
-
-
   /* @ngInject */
-  function windowScroll($window, $timeout) {
+  function windowScroll( $window, $timeout ) {
     /*
     * Private Block for private vars
     */
@@ -27,7 +25,7 @@
     * Public Interface
     */
     var directive = {
-      restrict: 'A',
+      restrict: 'EAC',
       link: link
     };
     return directive;
@@ -38,25 +36,26 @@
     * Private Block interface
     */
 
-    function link(scope, element, attrs, ctrl) {
-      var timeoutValue = attrs.windowScroll || '0';
+    function link( scope, element, attrs, ctrl ) {
+      var eventName = attrs.windowScrollEvent;
+      var timeoutValue = attrs.windowScrollTimeout || '0';
 
-      if (timeoutValue && isNaN(parseInt(timeoutValue))) {
+      if ( !eventName || (timeoutValue && isNaN(parseInt(timeoutValue))) ) {
         return;
       }
 
-
-      var onWindowScroll = scope.$on('windowScrollY', function(event, value){
-        if (typeof value !== 'number') {return;}
-        $timeout(function(){
-          $window.scrollBy(0, value);
+      var onWindowScroll = scope.$on(eventName, function( event, value ) {
+        if ( typeof value !== 'object' || value == null ) {
+          return;
+        }
+        $timeout(function() {
+          $window.scrollBy(value.windowScrollX || 0, value.windowScrollY || 0);
         }, parseInt(timeoutValue));
       });
 
-      scope.$on('$destroy', function(){
+      scope.$on('$destroy', function() {
         onWindowScroll();
       });
-
 
     }
 

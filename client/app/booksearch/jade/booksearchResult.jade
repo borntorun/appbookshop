@@ -1,9 +1,2 @@
-//div(style="width:100%;background-color:#ccc;text-align:center")
-    | a ler anteriores...
-    img(style="height:40px",prefix-event-name="booksearch-prev", src="/assets/images/loading.gif")
-div.results-content(dynamic-layout, window-scroll="150", items="vm.results",filters="vm.filters",rankers="vm.rankers",defaulttemplate="'app/booksearch/jade/booksearchResultItem.html'")
-//pre {{vm.criteria | json}}
-//div(style="width:100%;background-color:#ccc;text-align:center;position:absolute;bottom:0px;")
-    | a ler mais livros...
-    img(style="height:40px",prefix-event-name="booksearch-prev", src="/assets/images/loading.gif")
-
+window-scroll(window-scroll-timeout="150", window-scroll-event="booksearchresultsscroll")
+div(dynamic-layout, items="vm.results",filters="vm.filters",rankers="vm.rankers",defaulttemplate="'app/booksearch/jade/booksearchResultItem.html'")

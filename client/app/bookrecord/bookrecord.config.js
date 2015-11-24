@@ -46,15 +46,16 @@
           templateUrl: 'app/bookrecord/views/bookrecordSimilarTitle.html',
           controller: 'BookrecordSimilarTitleCtrl as model'
         }
-      },
+      }/*,
       resolve: {
-        /*bookconfig: [ 'bookconfig', function( bookconfig ) {
-          return bookconfig;
-        }]*/
-        bookconfig: ['appconfig', function( appconfig ) {
-          return appconfig.getConfig('bookconfig');
+        bookconfig: ['appconfig', 'Q', function( appconfig, Q ) {
+          return Q.when(appconfig.getConfig('bookconfig'), function (value) {
+            return value.data || value;
+          }, function (error) {
+          });
+          //return appconfig.getConfig('bookconfig');
         }]
-      }
+      }*/
     };
     _lodash.forEach(states, function( state, key ) {
       $stateProvider.state(key, state);

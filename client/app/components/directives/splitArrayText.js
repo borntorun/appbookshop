@@ -37,11 +37,11 @@
       var charSplit = element.attr('split-array-text');
 
       function toArray(value) {
-        return value.split(charSplit);
+        return value? value.split(charSplit): [];
       }
 
       function toText(value) {
-        return value.join(charSplit);
+        return value? value.join(charSplit): '';
       }
 
       //ngModel

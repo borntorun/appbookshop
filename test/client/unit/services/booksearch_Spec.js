@@ -1,6 +1,6 @@
-'use strict'
+'use strict';
 
-describe("Unit: 'booksearch' Service", function() {
+describe('Unit: \'booksearch\' Service', function() {
   var booksearch, $httpBackend, $rootScope, $cacheFactory;
   var numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26];
 
@@ -59,7 +59,7 @@ describe("Unit: 'booksearch' Service", function() {
       ])
         .then(function( results ) {
           results.forEach(function( item, index ) {
-            console.log('Index State: ' + index);
+            dump('Index State: ' + index);
             expect(item.state).to.equal('fulfilled');
             expectation(item.value, '/api/books/search/' + type, defaultValues);
           });
@@ -125,14 +125,14 @@ describe("Unit: 'booksearch' Service", function() {
       ])
         .then(function( results ) {
           results.forEach(function( item, index ) {
-            console.log('Index State: ' + index);
+            dump('Index State: ' + index);
             expect(item.state).to.equal('fulfilled');
             expectation(item.value, '/api/books/search/' + type, [25, '-', '-', '-', '-', '-', '1']);
           });
           done();
         })
         .catch(function( error ) {
-          console.log(error);
+          dump(error);
           done(error);
         });
 
@@ -152,14 +152,14 @@ describe("Unit: 'booksearch' Service", function() {
       ])
         .then(function( results ) {
           results.forEach(function( item, index ) {
-            console.log('Index State: ' + index);
+            dump('Index State: ' + index);
             expect(item.state).to.equal('fulfilled');
             expectation(item.value, '/api/books/search/' + type, [25, '-', '-', '-', '-', '-', '0']);
           });
           done();
         })
         .catch(function( error ) {
-          console.log(error);
+          dump(error);
           done(error);
         });
 
@@ -183,14 +183,14 @@ describe("Unit: 'booksearch' Service", function() {
       ])
         .then(function( results ) {
           results.forEach(function( item, index ) {
-            console.log('Index State: ' + index);
+            dump('Index State: ' + index);
             expect(item.state).to.equal('fulfilled');
             expectation(item.value, '/api/books/search/' + type, defaultValues);
           });
           done();
         })
         .catch(function( error ) {
-          console.log(error);
+          dump(error);
           done(error);
         });
 
@@ -224,7 +224,7 @@ describe("Unit: 'booksearch' Service", function() {
         subject: 'h',
         authors: 'o',
         title: '-'}, [15, '-', 'o', 'h', 'n', 'y', '1']);
-      //console.log(query.criteria);
+      //dump(query.criteria);
       expect(query.criteria).to.eql({edition: '1',
         categories: 'y',
         collection: 'n',
@@ -292,7 +292,7 @@ describe("Unit: 'booksearch' Service", function() {
       query.modifyParameter({'from': 'xpto'});
       expect(query.parameters).to.eql([25, '-', 'xpto']);
 
-      var newquery = query.unpaginate();
+      newquery = query.unpaginate();
       expect(query).to.equal(newquery);
       expect(query.parameters).to.eql([25, '-']);
     });
@@ -528,7 +528,7 @@ describe("Unit: 'booksearch' Service", function() {
           done();
         })
         .catch(function( error ) {
-          console.log(error);
+          dump(error);
           done(error);
         });
 
@@ -625,7 +625,7 @@ describe("Unit: 'booksearch' Service", function() {
         })
 
         .catch(function( error ) {
-          //console.log(error);
+          //dump(error);
           done(error);
         });
 
@@ -717,7 +717,7 @@ describe("Unit: 'booksearch' Service", function() {
         .catch(function(error) {
           expect(error.message).to.be.equal('Invalid type for viewport value. Type should be a \'Number\'.');
           done();
-        })
+        });
 
     });
     it('> should not allow set viewport with incorrect value (not multiple of limit)', function( done ) {
@@ -731,7 +731,7 @@ describe("Unit: 'booksearch' Service", function() {
         })
         .catch(function(/*error*/) {
           done();
-        })
+        });
 
     });
     it('> should not allow set viewport with incorrect value (less than limit)', function( done ) {
@@ -745,7 +745,7 @@ describe("Unit: 'booksearch' Service", function() {
         })
         .catch(function(/*error*/) {
           done();
-        })
+        });
 
     });
     it('> should not allow set viewport with incorrect value (equal to limit)', function( done ) {
@@ -759,7 +759,7 @@ describe("Unit: 'booksearch' Service", function() {
         })
         .catch(function(/*error*/) {
           done();
-        })
+        });
 
     });
   });
@@ -855,7 +855,7 @@ describe("Unit: 'booksearch' Service", function() {
           done();
         })
         .catch(function( error ) {
-          //console.log(error);
+          //dump(error);
           done(error);
         });
     });
@@ -920,7 +920,7 @@ describe("Unit: 'booksearch' Service", function() {
           done();
         })
         .catch(function( error ) {
-          //console.log(error);
+          //dump(error);
           done(error);
         });
     });
@@ -978,12 +978,12 @@ describe("Unit: 'booksearch' Service", function() {
   function fakeResponseBase( paginated, pValues ) {
 
     return function internalfakeResponse( method, url, data, headers, params ) {
-      //console.log(url);
+      //dump(url);
       function biggerEqual( from ) {
         return function( value ) {
           var v = typeof value === 'number' ? value : value.title;
           return v > from;
-        }
+        };
       }
 
       var values = pValues;//[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26];
@@ -993,7 +993,7 @@ describe("Unit: 'booksearch' Service", function() {
       var result = values.filter(biggerEqual(from));
       result = result.slice(0, parameters[0]);//index=0 is parameter 'limit'
       return [200, result];
-    }
+    };
   }
 
   function httpBackendVerifyNoOutstanding() {

@@ -12,7 +12,6 @@
     .constant('$', window.$)
     .constant('Q', window.Q)
     .constant('MutationObserver', window.MutationObserver)
-
     .constant('localforageDriver', window.localforageDriver)
     .constant('simpleBasket', window.simplebasket);
 

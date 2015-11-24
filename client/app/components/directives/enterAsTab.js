@@ -14,17 +14,33 @@
     .directive('enterAsTab', enterAsTab)
     .controller('enterAsTabCtrl', enterAsTabCtrl);
 
+  /* @ngInject */
+  function enterAsTab() {
+
+    /*
+    * Public Interface
+    */
+    var directive = {
+      restrict: 'AC',
+      controller: 'enterAsTabCtrl',
+      controllerAs: '_enterAsTab',
+      link: link
+    };
+    return directive;
+    ///////////////
+
+  }
   function enterAsTabCtrl( $scope, mutationObserver ) {
     var model = this;
     var observer;
 
-    $scope.allTabindex = [];
+    model.allTabindex = [];
 
     model.setMutationObserver = function() {
       observer = mutationObserver.apply(
-        $scope.observableElement,
-        $scope.observableConfig,
-        $scope.observableCallback
+        model.observableElement,
+        model.observableConfig,
+        model.observableCallback
       );
     };
     model.setDestroyMutationObserver = function() {
@@ -36,82 +52,67 @@
     };
 
   }
-
-  /* @ngInject */
-  function enterAsTab() {
-    /*
-    * Private Block
-    */
-
-    function link( scope, element, attrs, ctrl ) {
-      //element must be a form
-      if ( element[0].tagName !== 'FORM' ) {
-        return;
-      }
-
-      scope.observableElement = element[0];
-      scope.observableConfig = { attributes: true, childList: true, subtree: true, attributeFilter: ['tabindex', 'visible', 'disabled'] };
-      scope.observableCallback = function( /*mutation*/ ) {
-        findAllItemsWithTabindex();
-      };
-
-      function findAllItemsWithTabindex() {
-        var allTabindex = element.find('input[tabindex], textarea[tabindex], select[tabindex], a[tabindex], button[tabindex], i[tabindex]')
-          .filter(':not([tabindex="-1"])')
-          .filter(':visible')
-          .filter(':not([disabled])');
-        allTabindex.sort(function( first, second ) {
-          var one = parseInt(first.getAttribute('tabindex')),
-            two = parseInt(second.getAttribute('tabindex'));
-          return one > two ? 1 : one < two ? -1 : 0;
-        });
-
-        scope.allTabindex = allTabindex;
-      }
-
-      function getNextItem( el ) {
-        var next = scope.allTabindex.eq(scope.allTabindex.index(el) + 1);
-        if ( next.length === 0 ) {
-          next = scope.allTabindex[0];
-        }
-        return next;
-      }
-
-      element.on('keydown', function( e ) {
-        if ( e.keyCode === 13 ) {
-          if ( e.target.tagName === 'TEXTAREA' ) {
-            return true;
-          }
-
-          if ( scope.allTabindex.length === 0 ) {
-            //no items yet
-            findAllItemsWithTabindex();
-
-            ctrl.setMutationObserver();
-
-            ctrl.setDestroyMutationObserver();
-          }
-          getNextItem(e.target).focus().select();
-
-          return false;
-        }
-        return true;
-      });
+  function link( scope, element, attrs/*, ctrl*/ ) {
+    //element must be a form
+    if ( element[0].tagName !== 'FORM' ) {
+      return;
     }
 
-    /*
-    * Public Interface
-    */
-    var directive = {
-      restrict: 'AC',
-      scope: {
-      },
-      controller: 'enterAsTabCtrl',
-      controllerAs: 'model',
-      link: link
-    };
-    return directive;
-    ///////////////
+    var ctrl = scope._enterAsTab;
 
+    ctrl.observableElement = element[0];
+    ctrl.observableConfig = { attributes: true, childList: true, subtree: true, attributeFilter: ['tabindex', 'visible', 'disabled'] };
+    ctrl.observableCallback = function( /*mutation*/ ) {
+      findAllItemsWithTabindex();
+    };
+
+    function findAllItemsWithTabindex() {
+      var allTabindex = element.find('input[tabindex], textarea[tabindex], select[tabindex], a[tabindex], button[tabindex], i[tabindex]')
+        .filter(':not([tabindex="-1"])')
+        .filter(':visible')
+        .filter(':not([disabled])');
+      allTabindex.sort(function( first, second ) {
+        var one = parseInt(first.getAttribute('tabindex')),
+          two = parseInt(second.getAttribute('tabindex'));
+        return one > two ? 1 : one < two ? -1 : 0;
+      });
+
+      ctrl.allTabindex = allTabindex;
+    }
+
+    function getNextItem( el ) {
+      var next = ctrl.allTabindex.eq(ctrl.allTabindex.index(el) + 1);
+      if ( next.length === 0 ) {
+        next = ctrl.allTabindex[0];
+      }
+      return next;
+    }
+
+    function onKeyDown ( e ) {
+      if ( e.keyCode === 13 ) {
+        if ( e.target.tagName === 'TEXTAREA' ) {
+          return true;
+        }
+
+        if ( ctrl.allTabindex.length === 0 ) {
+          //no items yet
+          findAllItemsWithTabindex();
+
+          ctrl.setMutationObserver();
+
+          ctrl.setDestroyMutationObserver();
+        }
+        getNextItem(e.target).focus().select();
+
+        return false;
+      }
+      return true;
+    }
+
+    element.on('keydown', onKeyDown);
+
+    scope.$on('$destroy', function(){
+      element.off('keydown', onKeyDown);
+    });
   }
 }());

@@ -31,6 +31,7 @@ module.exports = function( grunt ) {
       client: require('./bower.json').appPath || 'client',
       server: 'server',
       dist: 'dist',
+      test: 'test',
       ip: '192.168.40.25',
       port: '12999'
     },
@@ -102,17 +103,6 @@ module.exports = function( grunt ) {
         ],
         tasks: ['injector:css']
       },
-      //mochaTest: {
-      //  files: ['server/**/*.spec.js'],
-      //  tasks: ['env:test', 'mochaTest']
-      //},
-      //      jsTest: {
-      //        files: [
-      //          '<%= yeoman.client %>/{app,components}/**/*.spec.js',
-      //          '<%= yeoman.client %>/{app,components}/**/*.mock.js'
-      //        ],
-      //        tasks: ['newer:jshint:all'/*, 'karma'*/]
-      //      },
       injectLess: {
         files: [
           '<%= yeoman.client %>/{app,components}/**/*.less'],
@@ -148,12 +138,6 @@ module.exports = function( grunt ) {
           livereload: true
         }
       },
-//      testserver: {
-//        files: [
-//          'server/**/*.{js,json}'
-//        ],
-//        tasks: ['test:server']
-//      },
       express: {
         files: [
           'server/**/*.{js,json}'
@@ -166,7 +150,8 @@ module.exports = function( grunt ) {
       },
       jshintclient: {
         files: [
-          '<%= yeoman.client %>/app/**/*.js'],
+          '<%= yeoman.client %>/app/**/*.js',
+          '!<%= yeoman.client %>/bower_components/**/*'],
         tasks: ['hintclient']
       },
       jshintserver: {
@@ -174,14 +159,14 @@ module.exports = function( grunt ) {
           '<%= yeoman.server %>/**/*.js'],
         tasks: ['hintserver']
       }
-//      ,karmaunitsingle: {
-//        files: [
-//          '<%= yeoman.client %>/{app,components}/**/**.js',
-//          'test/*.js',
-//          'test/**/*_Spec.js'
-//        ],
-//        tasks: ['hintclient','hintserver','karma:unitsingle']
-//      }
+      ,karmaunit: {
+        files: [
+          '<%= yeoman.client %>/{app,components}/**/**.js',
+          '<%= yeoman.test %>/client/unit/**/*_Spec.js',
+          '<%= yeoman.test %>/server/unit/**/*_Spec.js'
+        ],
+        tasks: ['hintclient', 'hintserver','karma:unitsingle']
+      }
     },
     // Make sure code styles are up to par and there are no obvious mistakes
     jshint: {
@@ -208,15 +193,15 @@ module.exports = function( grunt ) {
       },
       clientTest: {
         options: {
-          jshintrc: '<%= yeoman.client %>/.jshintrc'
+          jshintrc: '<%= yeoman.test %>/.jshintrc'
         },
-        src: ['<%= yeoman.client %>/**/*.spec.js']
+        src: ['<%= yeoman.test %>/client/unit/**/*_Spec.js']
       },
       serverTest: {
         options: {
-          jshintrc: '<%= yeoman.server %>/.jshintrc-spec'
+          jshintrc: '<%= yeoman.test %>/.jshintrc'
         },
-        src: ['<%= yeoman.server %>/**/*.spec.js']
+        src: ['<%= yeoman.test %>/server/unit/**/*_Spec.js']
       }
       //      ,all: [
       //        '<%= yeoman.client %>/{app,components}/**/*.js',
@@ -611,18 +596,13 @@ module.exports = function( grunt ) {
     karma: {
       unit: {
         configFile: 'test/karma-unit.conf.js',
-        singleRun: false
+        singleRun: false,
+        autoWatch: true
       },
       unitsingle: {
         configFile: 'test/karma-unit.conf.js',
         singleRun: true
       }
-    },
-    mochaTest: {
-      options: {
-        reporter: 'spec'
-      },
-      src: ['server/**/*.spec.js']
     },
     protractor: {
       options: {
@@ -884,15 +864,20 @@ module.exports = function( grunt ) {
     grunt.task.run(['serve']);
   });
   grunt.registerTask('test', function( target ) {
-    if ( target === 'server' ) {
+//    if ( target === 'server' ) {
+//      return grunt.task.run([
+//        'env:all', 'env:test', 'mochaTest'
+//      ]);
+//    }
+    /*else*/ if ( target === 'client' ) {
       return grunt.task.run([
-        'env:all', 'env:test', 'mochaTest'
+        'hintall', 'karma:unitsingle', 'watch:karmaunit'
+
       ]);
     }
-    else if ( target === 'client' ) {
+    else if ( target === 'clientDebug' ) {
       return grunt.task.run([
-        /*'clean:server', 'env:all', 'concurrent:test',*/'hintall', 'karma:unit'
-        //'karma:unit','watch:karmaUnit'
+        'hintall', 'karma:unit'
       ]);
     }
     else if ( target === 'e2e' ) {
@@ -901,7 +886,7 @@ module.exports = function( grunt ) {
       ]);
     }
     else grunt.task.run([
-        /*'test:server',*/ 'test:client'
+        'test:client'
       ]);
   });
   grunt.registerTask('build', [
@@ -934,4 +919,10 @@ module.exports = function( grunt ) {
   grunt.registerTask('default', [
     'serve'
   ]);
+
+  grunt.registerTask('help', function(){
+    grunt.log.ok('grunt test................. test all');
+    grunt.log.ok('grunt test:client.......... test client code - jshint, karma - on watch');
+    grunt.log.ok('grunt test:clientDebug..... test client code (karma non stop - for debug in browser)');
+  });
 };

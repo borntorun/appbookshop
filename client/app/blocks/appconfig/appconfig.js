@@ -35,6 +35,7 @@
         return $state.href($state.current.name, $state.params, {absolute: true});
       }
     };
+
     return service;
 
     /**
@@ -44,6 +45,7 @@
      * @returns {*}
      */
     function getConfig( key ) {
+
       if ( config[key] ) {
         return config[key];
       }
@@ -57,15 +59,16 @@
         appconfigHandler.config[key].promisse = promise;
 
         promise
-          .then(function(response){
-            return (config[key] = response.data);
+          .then(function( response ) {
+            config[key] = response.data;
+            return config[key];
             //notifier.log('Loaded appconfig.getConfig:','',key);
 
           })
           .catch(function() {
-            notifier.log('Error loading appconfig.getConfig','',key);
+            notifier.log('Error loading appconfig.getConfig', '', key);
           })
-          .finally(function(){
+          .finally(function() {
             //notifier.log('Finish loading appconfig.getConfig:','',key);
           });
       }

@@ -10,10 +10,23 @@
   'use strict';
   angular
     .module('appBookShop.components')
-    .directive('forminputTooltip', forminputTooltip)
-    /*.controller('forminputCtrl', forminputCtrl)*/;
+    .directive('forminputTooltip', forminputTooltip);
 
-  var linkingFunction = function( $timeout ) {
+  /* @ngInject */
+  function forminputTooltip( $timeout ) {
+    /*
+    * Public Interface
+    */
+    var directive = {
+      restrict: 'AC',
+      link: linkingFunction($timeout)
+
+    };
+    return directive;
+    ///////////////
+
+  }
+  function linkingFunction ( $timeout ) {
     return function( scope, element, attrs/*, form*/ ) {
 
       //reason to use a timeout: because some elements are included async (like angtypeaheadjs )so
@@ -31,24 +44,5 @@
         }
       }, 50);
     };
-  };
-
-  /* @ngInject */
-  /*function forminputTooltipCtrl( $scope ) {
-  }*/
-
-  /* @ngInject */
-  function forminputTooltip( $timeout ) {
-    /*
-    * Public Interface
-    */
-    var directive = {
-      restrict: 'AC',
-      link: linkingFunction($timeout)
-
-    };
-    return directive;
-    ///////////////
-
   }
 }());

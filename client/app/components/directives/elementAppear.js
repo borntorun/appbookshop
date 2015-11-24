@@ -10,6 +10,7 @@
  *
  * Dependencies: uses 'jquery_appear' plugin
 */
+
 (function () {
   'use strict';
   /*jshint validthis: true */
@@ -21,6 +22,7 @@
   function elementAppearCtrl($scope) {
     var model = this;
 
+    model.eventName = '';
     model.processRunning = false;
 
     model.elementAppearOnOff = function(event) {
@@ -59,9 +61,6 @@
       controller: 'elementAppearCtrl',
       controllerAs: 'model',
       link: link
-//      ,scope:{
-//
-//      }
     };
     return directive;
     ///////////////
@@ -70,14 +69,15 @@
     /*
     * Private Block interface
     */
-
     function link(scope, element, attrs, ctrl) {
 
-      if (!element.appear || !attrs.prefixEventName) {
+      if (!element.appear || !attrs.prefixEventName ) {
         return;
       }
-
-      //element.css('left', ($window.screen.availWidth/2) - element.innerWidth());
+      var resultTest = /[A-Za-z-]+[0-9]*/g.exec(attrs.prefixEventName);
+      if (resultTest == null || resultTest.length === undefined || resultTest[0] !== attrs.prefixEventName){
+        return;
+      }
 
       var on = {status:'-on'};
       var off = {status:'-off'};
@@ -89,23 +89,10 @@
         ctrl.eventName = attrs.prefixEventName;
       }, 100);
 
-
-
       scope.$on('$destroy', function(){
         element.off('appear', on, ctrl.elementAppearOnOff);
         element.off('appear', off,ctrl.elementAppearOnOff);
       });
-
-      /*$window.addEventListener('scroll', function(){
-        console.log($window.pageYOffset);
-      }, false);*/
-      /*element.bind('scroll', _lodash.throttle(function(){
-        if (el.scrollTop + el.offsetHeight >= el.scrollHeight) {
-          console.log('next');
-          //scope.$apply(attrs.infiniteScroll);
-        }
-      },100));*/
-
     }
 
   }

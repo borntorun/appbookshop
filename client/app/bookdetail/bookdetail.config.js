@@ -29,12 +29,12 @@
           templateUrl: 'app/bookdetail/jade/bookdetailPageLayout.html',
           controller: 'BookDetailPageCtrl as vm'
         }
-      },
+      }/*,
       resolve: {
         bookconfig: ['appconfig', function (appconfig) {
           return appconfig.getConfig('bookconfig');
         }]
-      }
+      }*/
     };
     _lodash.forEach(states, function(state, key) {
       $stateProvider.state(key, state);

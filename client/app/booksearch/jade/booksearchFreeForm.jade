@@ -1,10 +1,9 @@
-.col-xs-12(ng-controller="BookSearchFreeFormCtrl as vm")
+.col-xs-12
     form(id="booksearchFreeForm" name="booksearchFreeForm" role="search", ng-submit="vm.search()", ng-model-options="{ debounce: 150 }")
         .form-group
             div.input-group
                 span.input-group-addon(id="pesquisa-livre")
-                input(id="booksearchfreeform-inputsearch" type="text",aria-describedby="pesquisa-livre", placeholder="procurar no título, sub-título, autor, assunto, idioma ou palavras-chave...",data-ng-model="vm.inputsearch").form-control
+                input(id="booksearchfreeform-term" type="text",aria-describedby="pesquisa-livre", placeholder="procurar no título, sub-título, autor, assunto, idioma ou palavras-chave...",data-ng-model="vm.criteria.term").form-control
                 span.input-group-btn.booksearchfreeform
-                    //ui-sref="main.search.results({term:vm.inputsearch})"
                     .button(type="button", ng-click="vm.search()").btn.btn-primary
                         | Procurar

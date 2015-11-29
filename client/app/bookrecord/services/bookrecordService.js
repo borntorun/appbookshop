@@ -92,9 +92,9 @@
     function editNew() {
       init();
       var defer = call({method: httpRequest.get, url: '/api/counters/newbookreference/', cache: false},
-        function( data ) {
-          book.reference = setReference(data.seq);
-          defer.resolve(data);
+        function( response ) {
+          book.reference = setReference(response.data.seq);
+          defer.resolve(book.reference);
         },
         function( err ) {
           reject(defer, err);

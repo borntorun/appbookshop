@@ -45,7 +45,8 @@ module.exports = function( app ) {
 
   app.use('/api/counters', auth.ensureIsAuthenticated, require('./api/counters'));
 
-  app.use('/api/bookconfig', require('./api/bookconfig'));
+  //app.use('/api/bookconfig', require('./api/bookconfig'));
+  app.use('/api/appconfig', require('./api/appconfig'));
 
   app.use('/api/books', require('./api/book'));
 

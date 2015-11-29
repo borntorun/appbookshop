@@ -1,8 +1,16 @@
+/**
+ * Service warp.components err
+ * (João Carvalho, 07-09-2015)
+ * Criado com base em angular design style de John Papa
+ * (https://github.com/johnpapa/angular-styleguide)
+ *
+ * Description: A Custom Error object
+ */
 (function() {
   'use strict';
 
   angular
-    .module('appBookShop.components')
+    .module('warp.components')
     .factory('err', err);
 
   /* @ngInject */

@@ -34,9 +34,14 @@
         var word = aWords[i].trim();
 
         if ( word.length > 2 ) {
-          aPromiseSearch.push(booksearch.searchAdvanced({
-            title: word, authors: '-', subject: '-', collection: '-', categories: '-', edition: '-'
-          }, 15));
+
+          aPromiseSearch.push(booksearch.queryAdvanced({
+            limit: 15, title: word, authors: '-', subject: '-', collection: '-', categories: '-', edition: '-'
+          }).execute());
+
+//          aPromiseSearch.push(booksearch.searchAdvanced({
+//            title: word, authors: '-', subject: '-', collection: '-', categories: '-', edition: '-'
+//          }, 15));
         }
       }
       if (aPromiseSearch.length==0) {

@@ -10,9 +10,9 @@
   /* @ngInject */
   function Main( /*$scope, $rootScope, notifier, bookconfig, $window*/ ) {
 
-    var vm = this;
+    var vmMain = this;
 
-    vm.options = null;//{opcao1: "teste", opcao2: {sub1: true}};
+    vmMain.options = null;//{opcao1: "teste", opcao2: {sub1: true}};
 
     //notifier.info('Activated Main View');
 

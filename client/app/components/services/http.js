@@ -1,5 +1,5 @@
 /**
- * Service appBookShop.components httpRequest
+ * Service warp.components httpRequest
  * (João Carvalho, 07-09-2015)
  * Criado com base em angular design style de John Papa
  * (https://github.com/johnpapa/angular-styleguide)
@@ -9,7 +9,7 @@
 (function() {
   'use strict';
   angular
-    .module('appBookShop.components')
+    .module('warp.components')
     .factory('httpRequest', httpRequest);
 
   /* @ngInject */

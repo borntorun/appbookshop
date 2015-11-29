@@ -1,5 +1,5 @@
 /**
- * Service appBookShop.components isbnIsvalid
+ * Service warp.components isbnIsvalid
  * (João Carvalho, 01-09-2015)
  * Criado com base em angular design style de John Papa
  * (https://github.com/johnpapa/angular-styleguide)
@@ -9,7 +9,7 @@
 (function() {
   'use strict';
   angular
-    .module('appBookShop.components')
+    .module('warp.components')
     .factory('isbnIsvalid', isbnIsvalid);
 
   /* @ngInject */

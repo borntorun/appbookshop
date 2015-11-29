@@ -1,5 +1,5 @@
 /**
- * Directive appBookShop.components splitArrayText
+ * Directive v.components splitArrayText
  * (João Carvalho, 14-09-2015)
  * Criado com base em angular design style de John Papa
  * (https://github.com/johnpapa/angular-styleguide)
@@ -9,7 +9,7 @@
 (function () {
   'use strict';
   angular
-    .module('appBookShop.components')
+    .module('warp.components')
     .directive('splitArrayText', splitArrayText);
 
   /* @ngInject */

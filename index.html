@@ -56,20 +56,18 @@
 <div ui-view="auxiliar"></div>
 
 
-<!--<div class="nav navbar-fixed-bottom" style="width:100%">
-<div style="width:100%;z-index:999">
-    <pre>
-      &lt;!&ndash; Here's some values to keep an eye on in the sample in order to understand $state and $stateParams &ndash;&gt;
-      $state = {{$state.current.name}}
-      $state = {{$state.current}}
-      $stateParams = {{$stateParams}}
-      $state full url = {{ $state.$current.url.source }}
-      {{$state.href($state.current.name, $state.params, {absolute: true})}}
+<!--<div class="nav navbar-fixed-bottom" style="width:100%">-->
+<!--<div style="width:100%;z-index:999">-->
+    <!--<pre>-->
 
-      &lt;!&ndash; $state.$current is not a public api, we are using it to
-           display the full url for learning purposes&ndash;&gt;
-    </pre>
-</div>-->
+      <!--$state = {{$state.current.name}}-->
+      <!--$state = {{$state.current}}-->
+      <!--$stateParams = {{$stateParams}}-->
+      <!--$state full url = {{ $state.$current.url.source }}-->
+      <!--{{$state.href($state.current.name, $state.params, {absolute: true})}}-->
+
+    <!--</pre>-->
+<!--</div>-->
 
 <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
 <script>
@@ -104,7 +102,6 @@
 <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
 <script src="bower_components/moment/moment.js"></script>
 <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
-<script src="bower_components/extras.angular.plus/ngplus-overlay.js"></script>
 <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
 <script src="bower_components/typeahead.js/dist/typeahead.bundle.js"></script>
 <script src="bower_components/js-signals/dist/signals.js"></script>
@@ -140,10 +137,11 @@
 <script src="app/core/core.module.js"></script>
 <script src="app/main/main.module.js"></script>
 <script src="app/navbar/navbar.module.js"></script>
+<script src="app/blocks/notifier/notifier.constants.js"></script>
 <script src="app/components/components.constants.js"></script>
 <script src="app/core/core.constants.js"></script>
-<script src="app/main/main.constants.js"></script>
 <script src="app/auth/auth.config.js"></script>
+<script src="app/blocks/appconfig/appconfig.config.js"></script>
 <script src="app/bookdetail/bookdetail.config.js"></script>
 <script src="app/bookrecord/bookrecord.config.js"></script>
 <script src="app/booksearch/booksearch.config.js"></script>
@@ -153,6 +151,7 @@
 <script src="app/auth/controllers/authlogoutCtrl.js"></script>
 <script src="app/auth/services/auth.js"></script>
 <script src="app/blocks/appconfig/appconfig.js"></script>
+<script src="app/blocks/appconfig/config.js"></script>
 <script src="app/blocks/exception/exception-handler.provider.js"></script>
 <script src="app/blocks/exception/exception.js"></script>
 <script src="app/blocks/message/message.js"></script>
@@ -167,7 +166,6 @@
 <script src="app/booksearch/controllers/booksearchFilterCategoriesCtrl.js"></script>
 <script src="app/booksearch/controllers/booksearchFreeFormCtrl.js"></script>
 <script src="app/booksearch/controllers/booksearchResultsCtrl.js"></script>
-<script src="app/booksearch/services/booksearchLastQuery.js"></script>
 <script src="app/booksearch/services/booksearchService.js"></script>
 <script src="app/components/directives/elementAppear.js"></script>
 <script src="app/components/directives/enterAsTab.js"></script>

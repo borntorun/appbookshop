@@ -1,5 +1,5 @@
 /**
- * Directive appBookShop.components windowScroll
+ * Directive warp.components windowScroll
  * (João Carvalho, 30-10-2015)
  * Criado com base em angular design style de John Papa
  * (https://github.com/johnpapa/angular-styleguide)
@@ -12,7 +12,7 @@
   'use strict';
   /*jshint validthis: true */
   angular
-    .module('appBookShop.components')
+    .module('warp.components')
     .directive('windowScroll', windowScroll);
 
   /* @ngInject */

@@ -5,7 +5,7 @@
   'use strict';
 
   angular
-    .module('appBookShop.components')
+    .module('warp.components')
     .constant('_lodash', window._)
     .constant('$', window.$)
     .constant('Q', window.Q)

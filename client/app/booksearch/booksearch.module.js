@@ -24,7 +24,7 @@
    *  responsável por gerir accordion em booksearchLayout.jade consoante o state
    */
   /* @ngInject */
-  function BookSearchFormLayout($rootScope, $timeout, booksearchCache) {
+  function BookSearchFormLayout( $timeout, booksearchCache) {
     var directive = {
       restrict: 'A',
       link: linkfunction
@@ -79,8 +79,6 @@
         }
 
       }
-
-      setLayout($rootScope.$state.current.name);
 
       scope.$on('$destroy', function () {
         onstateChangeSuccess();

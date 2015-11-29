@@ -8,33 +8,28 @@
   'use strict';
   angular.module('appBookShop.booksearch').controller('BookSearchFreeFormCtrl', BookSearchFreeFormCtrl);
   /* @ngInject */
-  function BookSearchFreeFormCtrl( $rootScope, $scope, booksearch, booksearchLastQuery) {
+  function BookSearchFreeFormCtrl( $rootScope, $scope, _lodash, SignalsService) {
     /*jshint validthis: true */
     var vm = this;
+    vm.criteria = {};
+    vm.search = search;
 
-    console.log(booksearch);
-    var onstateChangeSuccess = $scope.$on('$stateChangeSuccess', setInputSearch);
+    //set listener for changing criteria
+    SignalsService.searchexecuted.listen(setCriteria);
 
-    if ( booksearchLastQuery.query['free'] ) {
-      var parameters = booksearchLastQuery.emptyIfdash(booksearchLastQuery.query['free'].parameters);
-      vm.inputsearch = parameters[1];
-      vm.limit = parameters[0];
+    function search() {
+      $rootScope.$state.go('main.search.results', angular.extend({}, {type: 'free'}, vm.criteria));
     }
 
-    vm.search = function search() {
-      $rootScope.$state.go('main.search.results', {type: 'free', limit: vm.limit, term: vm.inputsearch});
-    };
-
-    function setInputSearch( event, toState, toParams, fromState, fromParams ) {
-      if ( toState.name == 'main.search.results' && (toState.name !== fromState.name || (toParams.term !== undefined && fromParams.term !== undefined && toParams.term !== fromParams.term)) ) {
-        vm.inputsearch = toParams.term;
-        vm.limit = toParams.limit;
-        event.preventDefault();
+    function setCriteria(query){
+      if(query.type === 'free') {
+        vm.criteria = _lodash.clone(query.criteria, true);
       }
     }
 
-    $scope.$on('$destroy', function() {
-      onstateChangeSuccess(); //unregister the listenner 'onstateChangeSuccess'
+    var ondestroy = $scope.$on('$destroy', function() {
+      SignalsService.searchexecuted.unlisten(setCriteria);
+      ondestroy();
     });
   }
 }());

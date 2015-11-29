@@ -4,7 +4,7 @@
  * Criado com base em angular design style de John Papa
  * (https://github.com/johnpapa/angular-styleguide)
  *
- * Description: Manage text items to show in app
+ * Description: Shows message popup to show in app
  */
 (function() {
   'use strict';
@@ -13,78 +13,96 @@
     .factory('message', message);
 
   /* @ngInject */
-  function message(appconfig, modalpopup) {
+  function message(appconfig, messageConfig, modalpopup) {
     /*
     * Private Block
     */
-    var groups = {};
 
-    groups.bookdetail = {
-      title: 'Livros & Livros',
-      notfound: {
-        message: 'Livro não encontrado\n\n%url\n\nVerifique o endereço e tente novamente',
-        title: '',
-        type: 'message'
-      }
-    };
 
-    groups.bookrecord = {
-      title: 'Registo/Edição de Livro',
-      notsaved: {
-        message: 'Livro não registado.\n\nVerifique os seguintes problemas no registo:\n\n%error',
-        title: '',
-        type: 'message'
-      },
-      notfound: {
-        message: 'Livro não encontrado\n\n%url\n\nVerifique o endereço e tente novamente',
-        title: '',
-        type: 'message'
-      },
-      save: {
-        message: 'Pretende gravar as alterações efectuadas?',
-        title: '',
-        type: 'confirm'
-      },
-      clear: {
-        message: 'Pretende limpar o formulário?\n\nPerderá os dados constantes no formulário.\n(o registo na base de dados não será afectado enquanto não efectuar "Gravar")',
-        title: '',
-        type: 'confirm'
-      },
-      reset: {
-        message: 'Desfazer alterações efectuadas?\n\nO registo da base de dados será carregado.\n(perderá as alterações efectuadas no formulário)',
-        title: '',
-        type: 'confirm'
-      }
-    };
+//    var groups = {};
+//
+//    groups.bookdetail = {
+//      title: 'Livros & Livros',
+//      notfound: {
+//        message: 'Livro não encontrado\n\n%url\n\nVerifique o endereço e tente novamente',
+//        title: '',
+//        type: 'message'//will invoke modalpopup['message']
+//      }
+//    };
+//
+//    groups.bookrecord = {
+//      title: 'Registo/Edição de Livro',
+//      notsaved: {
+//        message: 'Livro não registado.\n\nVerifique os seguintes problemas no registo:\n\n%error',
+//        title: '',
+//        type: 'message'
+//      },
+//      notfound: {
+//        message: 'Livro não encontrado\n\n%url\n\nVerifique o endereço e tente novamente',
+//        title: '',
+//        type: 'message'
+//      },
+//      save: {
+//        message: 'Pretende gravar as alterações efectuadas?',
+//        title: '',
+//        type: 'confirm'
+//      },
+//      clear: {
+//        message: 'Pretende limpar o formulário?\n\nPerderá os dados constantes no formulário.\n(o registo na base de dados não será afectado enquanto não efectuar "Gravar")',
+//        title: '',
+//        type: 'confirm'
+//      },
+//      reset: {
+//        message: 'Desfazer alterações efectuadas?\n\nO registo da base de dados será carregado.\n(perderá as alterações efectuadas no formulário)',
+//        title: '',
+//        type: 'confirm'
+//      }
+//    };
 
 
     /*
     * Public Interface
     */
     //is a function
-    function service(group, message, err){
+//    function service(group, message, err){
+//
+//      var theTitle = groups[group][message].title || groups[group].title;
+//      var theMessage = groups[group][message].message;
+//      var theType = groups[group][message].type;
+//      var theVars = {};
+//
+//      if (err) {
+//        theVars.error = err.cause && err.cause.data && err.cause.data.error?  err.cause.data.error : err.cause.statusText;
+//      }
+//      theVars.url = appconfig.urlAbsolute();
+//
+//      theMessage = replaceArgs(theMessage, theVars);
+//
+//      return modalpopup[theType](theMessage,theTitle);
+//    }
 
-      var theTitle = groups[group][message].title || groups[group].title;
-      var theMessage = groups[group][message].message;
-      var theType = groups[group][message].type;
-      var theVars = {};
+    function service ( keyGroup, keyMessage, error) {
+      if(typeof keyGroup === 'string' && typeof keyMessage === 'string') {
+        var group = messageConfig[keyGroup];
 
-      if (err) {
-        theVars.error = err.cause && err.cause.data && err.cause.data.error?  err.cause.data.error : err.cause.statusText;
+        if(group && group[keyMessage] && group[keyMessage].type === 'confirm' || group[keyMessage].type === 'message') {
+          var obj = group[keyMessage];
+          var msg = obj.message || '';
+
+          var vars = {};
+          if (error != null) {
+            vars.error = (error.cause && error.cause.data && error.cause.data.error?  error.cause.data.error :
+              (error.cause && error.cause.statusText? error.cause.statusText : ''));
+          }
+          vars.url = appconfig.urlAbsolute();
+
+          msg = replaceArgs(msg, vars);
+
+          return modalpopup[obj.type](msg, obj.title || group.title || '');
+        }
       }
-      theVars.url = appconfig.urlAbsolute();
-
-      theMessage = replaceArgs(theMessage, theVars);
-
-      return modalpopup[theType](theMessage,theTitle);
-        /*{
-          message: theMessage,
-          title: theTitle*//*,
-          vars: {error: err.cause && err.cause.data && err.cause.data.error?  err.cause.data.error : err.cause.statusText}*//*
-        }*/
-
+      return Q.reject(null);
     }
-
 
 
     return service;

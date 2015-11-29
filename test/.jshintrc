@@ -46,6 +46,7 @@
     "browser": true,
     "element": true,
     "by": true,
-    "sinon": true
+    "sinon": true,
+    "waitsForAndThenRun": true
   }
 }

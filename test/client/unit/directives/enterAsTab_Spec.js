@@ -1,6 +1,6 @@
 'use strict';
 
-describe.only('Unit: \'enterAsTab\' Directive', function() {
+describe('Unit: \'enterAsTab\' Directive', function() {
   var $compile, $scope, $window, $timeout, $, mutationObserver;
   var spymutationObserverApply, spyScopeOn;
 

@@ -12,7 +12,7 @@
     .controller('BookDetailPageCtrl', BookDetailPageCtrl);
 
   /* @ngInject */
-  function BookDetailPageCtrl( $scope,$rootScope, auth, SignalsService, bookdetail, bookconfig, message, $state ) {
+  function BookDetailPageCtrl( $scope,$rootScope, auth, SignalsService, bookdetail, bookConfig, message, $state ) {
     /*jshint validthis: true */
     var vm = this;
 
@@ -31,7 +31,7 @@
       noinformation: false
     };
 
-    vm.bookconfiglabels = bookconfig.labels;
+    vm.bookconfiglabels = bookConfig.labels;
 
     bookdetail.get($rootScope.$stateParams.reference)
       .then(function( data ) {
@@ -74,8 +74,6 @@
         edition: '-'
       });
     };
-
-    //notifier.info(bookconfig);
 
   }
 

@@ -1,7 +1,9 @@
 'use strict';
-var config = require('../../config/environment');
+var config = require('../../../config/environment');
 var Schema = require('mongoose').Schema;
-var BookConfigSchema = new Schema({
+
+var schema = new Schema({
+  language: { type: Schema.Types.String},
   search: { type: Schema.Types.Mixed },
   labels: { type: Schema.Types.Mixed },
   placeholders: { type: Schema.Types.Mixed },
@@ -9,4 +11,5 @@ var BookConfigSchema = new Schema({
 }, {
   collection: 'bookconfig'
 });
-module.exports = config.mongo.library.connection.model('BookConfig', BookConfigSchema);
+
+module.exports = config.mongo.library.connection.model('BookConfig', schema);

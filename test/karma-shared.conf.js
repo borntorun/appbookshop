@@ -45,13 +45,13 @@ module.exports = function() {
 
       'client/app/**/*.jade',
 
-//      '.tmp/app/app.css',
-//      '.tmp/app/**/*.html',
-
+      //      '.tmp/app/app.css',
+      //      '.tmp/app/**/*.html',
 
       'node_modules/chai/chai.js',
       'test/lib/chai-should.js',
-      'test/lib/chai-expect.js'
+      'test/lib/chai-expect.js',
+      'test/lib/libWait.js'
 
     ],
 
@@ -59,15 +59,15 @@ module.exports = function() {
 
     preprocessors: {
       '**/*.jade': 'ng-jade2js'
-//      ,
-//      '**/*.html': 'html2js',
-//      '**/*.coffee': 'coffee'
+      //      ,
+      //      '**/*.html': 'html2js',
+      //      '**/*.coffee': 'coffee'
     },
 
-//    ngHtml2JsPreprocessor: {
-//      stripPrefix: 'client/'
-//    },
-//
+    //    ngHtml2JsPreprocessor: {
+    //      stripPrefix: 'client/'
+    //    },
+    //
     ngJade2JsPreprocessor: {
       stripPrefix: 'client/',
       moduleName: 'jadetemplates'
@@ -79,8 +79,6 @@ module.exports = function() {
     // web server port
     port: 8080,
     hostname: 'localhost',
-
-
 
     // enable / disable watching file and executing tests whenever any file changes
     autoWatch: false,
@@ -99,7 +97,6 @@ module.exports = function() {
     // if true, it capture browsers, run tests and exit
     singleRun: false,
 
-
     // reporter options
     mochaReporter: {
       colors: {
@@ -117,7 +114,7 @@ module.exports = function() {
       'karma-phantomjs2-launcher',
       'karma-chrome-launcher',
       'karma-mocha',
-//      'karma-spec-reporter',
+      //      'karma-spec-reporter',
       'karma-mocha-reporter',
       'karma-chai-plugins',
       'karma-ng-jade2js-preprocessor'

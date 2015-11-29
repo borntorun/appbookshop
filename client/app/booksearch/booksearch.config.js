@@ -7,12 +7,20 @@
 (function() {
   'use strict';
 
-  var core = angular.module('appBookShop.booksearch');
+  var module = angular.module('appBookShop.booksearch');
 
-  core.config(moduleConfig);
+  module.config(moduleConfig);
 
   /* @ngInject */
-  function moduleConfig( $stateProvider, _lodash ) {
+  function moduleConfig( $stateProvider, _lodash, SignalsServiceProvider ) {
+
+    SignalsServiceProvider.config({
+      init: false,
+      signals: {
+        searchexecuted: 'searchexecuted'
+      }
+    });
+
     var states = {};
 
 
@@ -21,22 +29,31 @@
       views: {
         'main-content@main': {
           templateUrl: 'app/booksearch/jade/booksearchMain.html'
+        },
+        'searchfree@main.search': {
+          templateUrl: 'app/booksearch/jade/booksearchFreeForm.html',
+          controller: 'BookSearchFreeFormCtrl as vm'
+        },
+        'searchadvanced@main.search': {
+          templateUrl: 'app/booksearch/jade/booksearchAdvancedForm.html',
+          controller: 'BookSearchAdvancedFormCtrl as vm'
+        },
+        'searchfiltercat@main.search': {
+          templateUrl: 'app/booksearch/jade/booksearchFilterCatForm.html',
+          controller: 'BookSearchFilterCategoriesCtrl as vm'
         }
       },
       deepStateRedirect: {
         default: {
-          state: 'main.search.featured'/*,
-          params: {
-            type: 'free',
-            limit: 25,
-            term: 'nobel'
-          }*/
+          state: 'main.search.featured'
         },
         params: true/*,
         fn: function($dsr$) {
           .....
         }*/
-      }
+      }/*,
+      sticky: true*/
+
     };
 
     states['main.search.featured'] = {
@@ -65,12 +82,12 @@
       params: {
         type: { value: 'advanced', squash: false },
         limit: { value: '25', squash: false },
-        title: { value: '', squash: true },
-        authors: { value: '', squash: true },
-        subject: { value: '', squash: true },
-        collection: { value: '', squash: true },
-        categories: { value: '', squash: true },
-        edition: { value: '', squash: true }
+        title: { value: '',  squash: '-' },
+        authors: { value: '',  squash: '-' },
+        subject: { value: '',  squash: '-' },
+        collection: { value: '',  squash: '-' },
+        categories: { value: '',  squash: '-' },
+        edition: { value: '',  squash: '-' }
 
       },
       templateUrl: 'app/booksearch/jade/booksearchResult.html',

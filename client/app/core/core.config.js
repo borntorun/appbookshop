@@ -62,12 +62,12 @@
   }
 
   /* @ngInject */
-  function configureOtherProviders( exceptionHandlerProvider, appconfigHandlerProvider, SignalsServiceProvider ) {
+  function configureOtherProviders( exceptionHandlerProvider, /*appconfigHandlerProvider,*/ SignalsServiceProvider ) {
     // Configure the common exception handler
     exceptionHandlerProvider.configure(config.appErrorPrefix);
     // Configure the appconfig provider
     // inserir outras confs
-    appconfigHandlerProvider.config.bookconfig = {url: '/api/bookconfig/', message: 'Configuração \'bookconfig\'.', loading: false};
+    //appconfigHandlerProvider.config.bookconfig = {url: '/api/appconfig/book/', message: 'Configuração \'bookconfig\'.', loading: false};
     //
     SignalsServiceProvider.config({
       init: true,

@@ -9,8 +9,7 @@
     /*
      * Our reusable cross app code modules
      */
-    //'blocks.exception', 'blocks.logger', 'blocks.router',
-    'appBookShop.components',
+    'warp.components',
     'blocks.notifier',
     'blocks.exception',
     'blocks.appconfig',
@@ -19,6 +18,6 @@
     /*
      * 3rd Party modules
      */
-    'ngplus'
+    //'ngplus' //this is from extras.angular.plus - https://github.com/AngularPlus/AngularPlus - install with bower
   ]);
 }());

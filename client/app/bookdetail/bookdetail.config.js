@@ -7,9 +7,9 @@
 (function() {
   'use strict';
 
-  var core = angular.module('appBookShop.bookdetail');
+  var module = angular.module('appBookShop.bookdetail');
 
-  core.config(moduleConfig);
+  module.config(moduleConfig);
 
   /* @ngInject */
   function moduleConfig($stateProvider, _lodash) {
@@ -29,17 +29,11 @@
           templateUrl: 'app/bookdetail/jade/bookdetailPageLayout.html',
           controller: 'BookDetailPageCtrl as vm'
         }
-      }/*,
-      resolve: {
-        bookconfig: ['appconfig', function (appconfig) {
-          return appconfig.getConfig('bookconfig');
-        }]
-      }*/
+      }
     };
+
     _lodash.forEach(states, function(state, key) {
       $stateProvider.state(key, state);
     });
-
   }
-
 }());

@@ -7,9 +7,9 @@
 (function() {
   'use strict';
 
-  var core = angular.module('appBookShop.bookrecord');
+  var module = angular.module('appBookShop.bookrecord');
 
-  core.config(moduleConfig);
+  module.config(moduleConfig);
 
   /* @ngInject */
   function moduleConfig( $stateProvider, _lodash, SignalsServiceProvider ) {
@@ -46,16 +46,7 @@
           templateUrl: 'app/bookrecord/views/bookrecordSimilarTitle.html',
           controller: 'BookrecordSimilarTitleCtrl as model'
         }
-      }/*,
-      resolve: {
-        bookconfig: ['appconfig', 'Q', function( appconfig, Q ) {
-          return Q.when(appconfig.getConfig('bookconfig'), function (value) {
-            return value.data || value;
-          }, function (error) {
-          });
-          //return appconfig.getConfig('bookconfig');
-        }]
-      }*/
+      }
     };
     _lodash.forEach(states, function( state, key ) {
       $stateProvider.state(key, state);

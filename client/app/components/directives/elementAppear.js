@@ -1,5 +1,5 @@
 /**
-* Directive appBookShop.components elementAppear
+* Directive warp.components elementAppear
 * (João Carvalho, 30-10-2015)
 * Criado com base em angular design style de John Papa
 * (https://github.com/johnpapa/angular-styleguide)
@@ -15,7 +15,7 @@
   'use strict';
   /*jshint validthis: true */
   angular
-    .module('appBookShop.components')
+    .module('warp.components')
     .directive('elementAppear', elementAppear)
     .controller('elementAppearCtrl', elementAppearCtrl);
 

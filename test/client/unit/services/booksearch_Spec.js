@@ -70,10 +70,10 @@ describe('Unit: \'booksearch\' Service', function() {
         });
     });
     it('> should have search object passing in a limit number', function() {
-      itTestDefault(type, {limit: 25}, [25, '-']);
+      itTestDefault(type, {limit: 25}, defaultValues);
     });
     it('> should have search object passing in a limit number', function() {
-      itTestDefault(type, {limit: 25}, [25, '-']);
+      itTestDefault(type, {limit: 25}, defaultValues);
     });
     it('> should have search object passing in a limit greater then max(50)', function() {
       itTestDefault(type, {limit: 75}, [50, '-']);
@@ -87,7 +87,7 @@ describe('Unit: \'booksearch\' Service', function() {
     });
     it('> should return correct criteria object', function() {
       var query = itTestDefault(type, {limit: 15, term: 'teste'}, [15, 'teste']);
-      expect(query.criteria).to.eql({term: 'teste'});
+      expect(query.criteria).to.eql({limit: 15, term: 'teste'});
     });
   });
 
@@ -225,7 +225,9 @@ describe('Unit: \'booksearch\' Service', function() {
         authors: 'o',
         title: '-'}, [15, '-', 'o', 'h', 'n', 'y', '1']);
       //dump(query.criteria);
-      expect(query.criteria).to.eql({edition: '1',
+      expect(query.criteria).to.eql({
+        limit: 15,
+        edition: '1',
         categories: 'y',
         collection: 'n',
         subject: 'h',
@@ -675,10 +677,8 @@ describe('Unit: \'booksearch\' Service', function() {
   describe('<query>.viewport()', function() {
     var type = 'free';
 
-
     it('> should allow set viewport with correct value (multiple of limit)', function( done ) {
       var query = booksearch['query' + _.capitalize(type)].call(null);
-
 
       Q.fcall(function() {
         return query.setViewport(75);
@@ -686,22 +686,21 @@ describe('Unit: \'booksearch\' Service', function() {
         .then(function() {
           done();
         })
-        .catch(function(error) {
+        .catch(function( error ) {
           done(error);
         });
     });
     it('> should allow set viewport and return query', function( done ) {
       var query = booksearch['query' + _.capitalize(type)].call(null);
 
-
       Q.fcall(function() {
         return query.setViewport(75);
       })
-        .then(function(result) {
+        .then(function( result ) {
           expect(result).to.be.equal(query);
           done();
         })
-        .catch(function(error) {
+        .catch(function( error ) {
           done(error);
         });
     });
@@ -714,7 +713,7 @@ describe('Unit: \'booksearch\' Service', function() {
         .then(function() {
           done(new Error('This message shoul not be reached. An error should had occur.'));
         })
-        .catch(function(error) {
+        .catch(function( error ) {
           expect(error.message).to.be.equal('Invalid type for viewport value. Type should be a \'Number\'.');
           done();
         });
@@ -729,7 +728,7 @@ describe('Unit: \'booksearch\' Service', function() {
         .then(function() {
           done(new Error('An invalid value was set. Must be multiple of limit.'));
         })
-        .catch(function(/*error*/) {
+        .catch(function( /*error*/ ) {
           done();
         });
 
@@ -743,7 +742,7 @@ describe('Unit: \'booksearch\' Service', function() {
         .then(function() {
           done(new Error('An invalid value was set for viewport. Must be greater than limit.'));
         })
-        .catch(function(/*error*/) {
+        .catch(function( /*error*/ ) {
           done();
         });
 
@@ -757,7 +756,7 @@ describe('Unit: \'booksearch\' Service', function() {
         .then(function() {
           done(new Error('An invalid value was set for viewport. Must be greater than limit.'));
         })
-        .catch(function(/*error*/) {
+        .catch(function( /*error*/ ) {
           done();
         });
 
@@ -787,7 +786,7 @@ describe('Unit: \'booksearch\' Service', function() {
 
       //execute the query and get a promise for the results
       runQuery(query, 'execute')
-        .then(function(data){
+        .then(function( data ) {
           expect(data).to.eql([1, 2, 3, 4, 5]);
           expect(query.next).to.not.be.undefined;
           expect(query.previous).to.be.undefined;
@@ -795,61 +794,61 @@ describe('Unit: \'booksearch\' Service', function() {
           return runQuery(query, 'next');
 
         })
-        .then(function(data){
-          expect(data).to.eql([6,7,8,9,10]);
+        .then(function( data ) {
+          expect(data).to.eql([6, 7, 8, 9, 10]);
           expect(query.next).to.not.be.undefined;
           expect(query.previous).to.be.undefined;
 
           return runQuery(query, 'next');
 
         })
-        .then(function(data){
-          expect(data).to.eql([11,12,13,14,15]);
+        .then(function( data ) {
+          expect(data).to.eql([11, 12, 13, 14, 15]);
           expect(query.next).to.not.be.undefined;
           expect(query.previous).to.not.be.undefined;
           return runQuery(query, 'previous');
 
         })
-        .then(function(data){
-          expect(data).to.eql([1,2,3,4,5]);
+        .then(function( data ) {
+          expect(data).to.eql([1, 2, 3, 4, 5]);
           expect(query.next).to.not.be.undefined;
           expect(query.previous).to.be.undefined;
           return runQuery(query, 'next');
         })
-        .then(function(data){
-          expect(data).to.eql([11,12,13,14,15]);
+        .then(function( data ) {
+          expect(data).to.eql([11, 12, 13, 14, 15]);
           expect(query.next).to.not.be.undefined;
           expect(query.previous).to.not.be.undefined;
           return runQuery(query, 'next');
         })
-        .then(function(data){
-          expect(data).to.eql([16,17,18,19,20]);
+        .then(function( data ) {
+          expect(data).to.eql([16, 17, 18, 19, 20]);
           return runQuery(query, 'next');
         })
-        .then(function(data){
-          expect(data).to.eql([21,22,23,24,25]);
+        .then(function( data ) {
+          expect(data).to.eql([21, 22, 23, 24, 25]);
           return runQuery(query, 'next');
         })
-        .then(function(data){
+        .then(function( data ) {
           expect(data).to.eql([26]);
           expect(query.next).to.be.undefined;
           expect(query.previous).to.not.be.undefined;
           return runQuery(query, 'previous');
         })
-        .then(function(data){
-          expect(data).to.eql([16,17,18,19,20]);
+        .then(function( data ) {
+          expect(data).to.eql([16, 17, 18, 19, 20]);
           expect(query.next).to.not.be.undefined;
           expect(query.previous).to.not.be.undefined;
           return runQuery(query, 'previous');
         })
-        .then(function(){
+        .then(function() {
           return runQuery(query, 'previous');
         })
-        .then(function(){
+        .then(function() {
           return runQuery(query, 'previous');
         })
-        .then(function(data){
-          expect(data).to.eql([1,2,3,4,5]);
+        .then(function( data ) {
+          expect(data).to.eql([1, 2, 3, 4, 5]);
           expect(query.next).to.not.be.undefined;
           expect(query.previous).to.be.undefined;
           done();
@@ -862,7 +861,7 @@ describe('Unit: \'booksearch\' Service', function() {
 
     it('> should execute paginate search and move next/previous pages with viewport 6 and limit 3', function( done ) {
 
-      requestSearchHandler.respond(fakeResponse(true, null, [1,2,3,4,5,6,7,8,9,10,11,12]));
+      requestSearchHandler.respond(fakeResponse(true, null, [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]));
 
       //establish a query
       var query = booksearch.queryFree.call(null, {limit: 3});
@@ -874,46 +873,46 @@ describe('Unit: \'booksearch\' Service', function() {
 
       //execute the query and get a promise for the results
       runQuery(query, 'execute')
-        .then(function(data){
+        .then(function( data ) {
           expect(data).to.eql([1, 2, 3]);
           expect(query.next).to.not.be.undefined;
           expect(query.previous).to.be.undefined;
           return runQuery(query, 'next');
         })
-        .then(function(data){
-          expect(data).to.eql([4,5,6]);
+        .then(function( data ) {
+          expect(data).to.eql([4, 5, 6]);
           expect(query.next).to.not.be.undefined;
           expect(query.previous).to.be.undefined;
           return runQuery(query, 'next');
         })
-        .then(function(data){
-          expect(data).to.eql([7,8,9]);
+        .then(function( data ) {
+          expect(data).to.eql([7, 8, 9]);
           expect(query.next).to.not.be.undefined;
           expect(query.previous).to.not.be.undefined;
           return runQuery(query, 'next');
         })
-        .then(function(data){
+        .then(function( data ) {
           expect(data).to.eql([10, 11, 12]);
           expect(query.next).to.not.be.undefined;
           expect(query.previous).to.not.be.undefined;
 
           return runQuery(query, 'next');
         })
-        .then(function(data){
+        .then(function( data ) {
           expect(data).to.eql([]);
           expect(query.next).to.be.undefined;
           expect(query.previous).to.not.be.undefined;
           return runQuery(query, 'previous');
         })
-        .then(function(data){
-          expect(data).to.eql([4,5,6]);
+        .then(function( data ) {
+          expect(data).to.eql([4, 5, 6]);
           expect(query.next).to.not.be.undefined;
           expect(query.previous).to.not.be.undefined;
 
           return runQuery(query, 'previous');
         })
-        .then(function(data){
-          expect(data).to.eql([1,2,3]);
+        .then(function( data ) {
+          expect(data).to.eql([1, 2, 3]);
           expect(query.next).to.not.be.undefined;
           expect(query.previous).to.be.undefined;
 
@@ -1005,7 +1004,8 @@ describe('Unit: \'booksearch\' Service', function() {
 
     //this request is made when calling the app module
     //not nececessary for the tests
-    $httpBackend.when('GET', '/api/bookconfig/').respond(200, '');
+    $httpBackend.when('GET', '/api/appconfig/book/').respond(200, null);
+    $httpBackend.when('GET', '/api/appconfig/message/').respond(200, null);
 
     //this is the definition for the tests
     return $httpBackend.when('GET', /^\/api\/books\/search\/(free|advanced)\/*./);

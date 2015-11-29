@@ -12,7 +12,7 @@
     .controller('BookSearchResultsCtrl', BookSearchResultsCtrl);
 
   /* @ngInject */
-  function BookSearchResultsCtrl($rootScope, $scope, $window, $timeout, _lodash, notifier, SignalsService, auth, booksearch, booksearchCache, booksearchLastQuery) {
+  function BookSearchResultsCtrl($rootScope, $scope, $timeout, _lodash, notifier, SignalsService, auth, bookConfig, booksearch, booksearchCache) {
     /*jshint validthis: true */
     var vm = this;
     vm.results = [];
@@ -20,15 +20,27 @@
     vm.rankers = null;
     vm.isAuthenticated = auth.isAuthenticated();
 
-    var funcSearch = $rootScope.$stateParams.type === 'advanced'? booksearch.queryAdvanced : booksearch.queryFree;
+
 
     vm.criteria = _lodash.clone($rootScope.$stateParams, true);
     delete vm.criteria.type;
+    if (!vm.criteria.limit) {vm.criteria.limit = bookConfig.search.limitDefault;}
+
     //call search and get results
-    //...update the view with the results
+    var funcSearch = $rootScope.$stateParams.type === 'advanced'? booksearch.queryAdvanced : booksearch.queryFree;
     vm.query = funcSearch.call(null, vm.criteria);
 
-    vm.query.setViewport(75).execute()
+    //get the real limit as it can change
+    var limit = vm.query.parameters[0];
+
+    //set viewport
+    var viewport = bookConfig.search.viewportDefault % limit !== 0? limit * 3: bookConfig.search.viewportDefault;
+
+    vm.query = vm.query.setViewport(viewport);
+
+    SignalsService.searchexecuted.emit(vm.query);
+
+    vm.query.execute()
       .then(function( data ) {
         //issue #37
         if ( data.length == 0 ) {
@@ -49,50 +61,8 @@
         notifier.warning('Erro na pesquisa', 'Pesquisa ');
       });
 
-    booksearchLastQuery.query = vm.query;
-
-    function addBottom(data) {
-      return vm.results.concat(data);
-    }
-    function addTop(data) {
-      return data.concat(vm.results);
-    }
-    function removeBottom(results) {
-      results.splice(-1 * vm.query.parameters[0]);
-      return results;
-    }
-    function removeTop(results) {
-      if (vm.query.previous) {
-        results.splice(0, vm.query.parameters[0]);
-      }
-      return results;
-    }
-
-    function removeTopLoader() {
-      if (!vm.results.length) {return;}
-      vm.results.splice(0,vm.results[0].loadtype? 1 : 0);
-    }
-    function removeBottomLoader() {
-      if (!vm.results.length) {return;}
-      vm.results.splice(-1,vm.results[vm.results.length-1].loadtype? 1 : 0);
-    }
-
-    function setNext(results) {
-      if (vm.query.next) {
-        results.push({loadtype: 'next', loadmessage: 'a ler mais livros...', categories:getCategoriesFromCache(), template: 'app/booksearch/jade/booksearchResultInfiniteScroll.html'});
-      }
-      return results;
-    }
-    function setPrevious(results) {
-      if (vm.query.previous) {
-        results.splice(0, 0,{loadtype: 'previous',loadmessage: 'a ler livros anteriores...',categories:getCategoriesFromCache(),template: 'app/booksearch/jade/booksearchResultInfiniteScroll.html'});
-      }
-      return results;
-    }
-
 
     //on event 'booksearch-next-on' call search.next and get results
-    //...update the view with the results
     var onBookSearchNext = $scope.$on('booksearch-next-on', function( event, done ) {
 
       vm.query.next()
@@ -116,7 +86,7 @@
           $scope.$apply(function(){
             vm.results = data;
             if (vm.query.previous){
-              $scope.$emit('booksearchresultsscroll', { windowScrollY: -1 * 4 * 300 });
+              $scope.$emit('booksearchresultsscroll', { windowScrollY: -1 * vm.query.parameters[0] * 48 /* * 4 * 300*/ });
               /*$timeout(function(){
                 $window.scrollBy(0, -1 * 4 * 300 *//*$window.innerHeight*//* );
 
@@ -136,7 +106,6 @@
     });
 
     //on event 'booksearch-next-previous' call search.previous and get results
-    //...update the view with the results
     var onBookSearchPrevious = $scope.$on('booksearch-previous-on', function( event, done ) {
       vm.query.previous()
         .then(function( data ) {
@@ -158,7 +127,7 @@
             vm.results = data;
             console.log(vm.query,vm.results.length, vm.query.previous? true: false,vm.query.next?true:false);
 
-            $scope.$emit('booksearchresultsscroll', {windowScrollY:5*300});
+            $scope.$emit('booksearchresultsscroll', {windowScrollY: vm.query.parameters[0] * 60 /*5*300*/});
             /*$timeout(function(){
               $window.scrollBy(0, 5*300*//*$window.innerHeight*//*);
 
@@ -182,11 +151,55 @@
     //listen for signal loginsucceded
     //...update the view for the 'authenticated' user
     SignalsService.loginsucceded.listen(setAuthentication);
+
     //listen for signal logoutsucceded
     //...update the view for the 'not authenticated' user
     SignalsService.logoutsucceded.listen(setAuthentication);
 
+    $scope.$on('$destroy', function() {
+      //unregister listeners
+      onBookSearchFilterCatChange();
+      onBookSearchNext();
+      onBookSearchPrevious();
 
+    });
+
+    function addBottom(data) {
+      return vm.results.concat(data);
+    }
+    function addTop(data) {
+      return data.concat(vm.results);
+    }
+    function removeBottom(results) {
+      results.splice(-1 * vm.query.parameters[0]);
+      return results;
+    }
+    function removeTop(results) {
+      if (vm.query.previous) {
+        results.splice(0, vm.query.parameters[0]);
+      }
+      return results;
+    }
+    function removeTopLoader() {
+      if (!vm.results.length) {return;}
+      vm.results.splice(0,vm.results[0].loadtype? 1 : 0);
+    }
+    function removeBottomLoader() {
+      if (!vm.results.length) {return;}
+      vm.results.splice(-1,vm.results[vm.results.length-1].loadtype? 1 : 0);
+    }
+    function setNext(results) {
+      if (vm.query.next) {
+        results.push({loadtype: 'next', loadmessage: 'a ler mais livros...', categories:getCategoriesFromCache(), template: 'app/booksearch/jade/booksearchResultInfiniteScroll.html'});
+      }
+      return results;
+    }
+    function setPrevious(results) {
+      if (vm.query.previous) {
+        results.splice(0, 0,{loadtype: 'previous',loadmessage: 'a ler livros anteriores...',categories:getCategoriesFromCache(),template: 'app/booksearch/jade/booksearchResultInfiniteScroll.html'});
+      }
+      return results;
+    }
     //functions to deal with state for authenticated/or not users
     function setAuthentication(){
       vm.isAuthenticated = auth.isAuthenticated();
@@ -195,7 +208,6 @@
         vm.results = aux;
       });
     }
-
     function setAuth(data) {
 
       function itemAuth ( show ) {
@@ -217,7 +229,6 @@
       });
       return data;
     }
-
     function getCategoriesFromCache() {
       var cacheCategories = booksearchCache.get('categories');
       return cacheCategories? cacheCategories: [];
@@ -238,13 +249,7 @@
       }, 1);
     }
 
-    $scope.$on('$destroy', function() {
-      //unregister listeners
-      onBookSearchFilterCatChange();
-      onBookSearchNext();
-      onBookSearchPrevious();
 
-    });
   }
 }());
 

@@ -12,7 +12,7 @@
     .controller('BookrecordCtrl', BookrecordCtrl);
 
   /* @ngInject */
-  function BookrecordCtrl( $scope, $state, $timeout, _lodash, bookconfig, bookrecord, notifier, logicform, message, SignalsService ) {
+  function BookrecordCtrl( $scope, $state, $timeout, _lodash, bookConfig, bookrecord, notifier, logicform, message, SignalsService ) {
     /*jshint validthis: true */
     var model = this;
 
@@ -29,11 +29,11 @@
 
     model.book = bookrecord.book;
 
-    model.labels = bookconfig.labels;
+    model.labels = bookConfig.labels;
 
-    model.placeholders = bookconfig.placeholders;
+    model.placeholders = bookConfig.placeholders;
 
-    model.valMessages = bookconfig.valMessages;
+    model.valMessages = bookConfig.valMessages;
 
     model.anoActual = new Date().getFullYear();
 

@@ -1,5 +1,5 @@
 /**
- * Service appBookShop.components modalpopup
+ * Service warp.components modalpopup
  * (João Carvalho, 27-08-2015)
  * Criado com base em angular design style de John Papa
  * (https://github.com/johnpapa/angular-styleguide)
@@ -10,7 +10,7 @@
   'use strict';
   /*jshint validthis: true */
   angular
-    .module('appBookShop.components')
+    .module('warp.components')
     .provider('modalpopup', modalpopupProvider);
 
   /* @ngInject */
@@ -25,6 +25,18 @@
     this.$get = function( $modal ) {
       $modal_ = $modal;
       return new ModalPopupServiceFactory();
+    };
+
+    /*
+    Private block
+    */
+    //reference to $modal
+    var $modal_;
+    //options to the modal
+    var options = {
+      controller: modalCtrl,
+      controllerAs: 'model'/*,
+        windowClass:"positionModal"*/
     };
 
     /**
@@ -71,16 +83,6 @@
       options.templateUrl = opt.templateUrl;
       return $modal_.open(options).result;
     }
-
-    /*
-    Private Interface of the service
-     */
-    var $modal_;
-    var options = {
-      controller: modalCtrl,
-      controllerAs: 'model'/*,
-        windowClass:"positionModal"*/
-    };
 
     function modalCtrl( /*$scope*/ ) {
       var model = this;

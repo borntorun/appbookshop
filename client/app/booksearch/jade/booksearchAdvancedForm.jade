@@ -1,4 +1,6 @@
-.col-xs-12(ng-controller="BookSearchAdvancedFormCtrl as vm")
+//tirei
+//.col-xs-12(ng-controller="BookSearchAdvancedFormCtrl as vm")
+.col-xs-12
 
     .row
         form(id="booksearchAdvancedForm", name="booksearchAdvancedForm", role="search", novalidate, ng-submit="vm.search(booksearchAdvancedForm)", ng-model-options="{ debounce: 150 }")
@@ -22,27 +24,12 @@
                         input.form-control(type="text" placeholder="pesquisar por colecção", ng-model="vm.criteria.collection")
                 .form-group
                     div.input-group
-                        //| {{vm.criteria.categories}}
                         span.input-group-addon(id="categoria")
-                        //| {{vm.criteria.categories}}
                         angular-typeaheadjs(
-                            angty-onchange="vm.autocompleteEvents.onchangeCategories",
-                            angty-options="{{vm.options}}", angty-ttoptions="{{vm.ttoptions}}")
-                            input.typeahead(type="text", placeholder="pesquisar por categoria" ng-model="vm.criteria.categories")
+                            angty-onchange="vm.selectCategories.autocompleteEvents.onchange",
+                            angty-options="{{vm.selectCategories.options}}", angty-ttoptions="{{vm.selectCategories.ttoptions}}")
+                            input.typeahead(id="selectCategories", type="text", placeholder="pesquisar por categoria" ng-model="vm.criteria.categories")
 
-                        //angular-typeaheadjs(angty-options="{{vm.options}}" angty-ttoptions="{{vm.ttoptions}}")
-                        //    input(placeholder="pesquisar por categoria" ng-model="vm.criteria.categories").typeahead
-                        //angular-typeaheadjs(
-                        //remote="{{vm.urlRemote}}",
-                        //prefetch="{{vm.urlPrefetch}}",
-                        //cssinput="searchadvcat",
-                        //model="vm.criteria.categories",
-                        //clearvalue="false",
-                        //classinput="input-searchcat",
-                        //datasource="categories",
-                        //placeholder="pesquisar por categoria",
-                        //onselected="vm.onSelected",
-                        //onclosed="vm.onClosed")
 
                 .form-group
                     div.checkbox

@@ -4,7 +4,11 @@ var table = require('./tables.model');
 
 exports.getall = function( req, res ) {
   var Model = table(req.params.table)
-  /*getModel(req.params.table)*/
+
+  if (!Model) {
+    return handleError(res, new Error());
+  }
+
   Model.find(function( err, data ) {
     if ( err ) {
       return handleError(res, err);
@@ -16,6 +20,11 @@ exports.getall = function( req, res ) {
 
 exports.search = function( req, res ) {
   var Model = table(req.params.table)
+
+  if (!Model) {
+    return handleError(res, new Error());
+  }
+
   /*getModel(req.params.table)*/
   Model.find(require('../search.lib').filter(req.params.filter))
     .limit(req.params.limit || 100)

@@ -1,5 +1,5 @@
 /**
- * Directive appBookShop.components enterAsTab
+ * Directive warp.components enterAsTab
  * (João Carvalho, 02-09-2015)
  * Criado com base em angular design style de John Papa
  * (https://github.com/johnpapa/angular-styleguide)
@@ -10,7 +10,7 @@
   'use strict';
   /*jshint validthis: true */
   angular
-    .module('appBookShop.components')
+    .module('warp.components')
     .directive('enterAsTab', enterAsTab)
     .controller('enterAsTabCtrl', enterAsTabCtrl);
 

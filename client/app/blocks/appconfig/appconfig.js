@@ -1,5 +1,10 @@
 /**
- * Created by Joao Carvalho on 12-03-2015.
+ * Service blocks.appconfig appconfig
+ * (João Carvalho, 26-11-2015)
+ * Criado com base em angular design style de John Papa
+ * (https://github.com/johnpapa/angular-styleguide)
+ *
+ * Descrição: Sets/Gets app configuration
  */
 (function() {
   'use strict';
@@ -9,8 +14,7 @@
 
   function appconfigHandler() {
     /* jshint validthis:true */
-    this.config = {
-    };
+    this.config = {};
     this.$get = function() {
       return {
         config: this.config
@@ -19,9 +23,8 @@
   }
 
   /* @ngInject */
-  function appconfig( httpRequest, notifier, appconfigHandler, $state ) {
+  function appconfig( Q, httpRequest,  $state, appconfigHandler ) {
     var config = {};
-    var promise;
 
     var service = {
       appEndPoint: {
@@ -39,42 +42,33 @@
     return service;
 
     /**
-     * Get a 'config' for something from an url
-     * (the config object parameters is configured in core.config)
-     * @param key
-     * @returns {*}
+     * Gets a configuration object from remote url
+     * @param {String} key
+     * @returns {defer.promise|*}
      */
     function getConfig( key ) {
+      var defer = Q.defer();
 
       if ( config[key] ) {
-        return config[key];
+        defer.resolve(config[key]);
       }
-      if ( promise == null || promise.$$state.status != 0 /*appconfigHandler.config[key].loading === false*/ ) {
-        //appconfigHandler.config[key].loading = true;
+      else {
 
-        promise = httpRequest.get({
+        httpRequest.get({
           url: appconfigHandler.config[key].url
-        });
-
-        appconfigHandler.config[key].promisse = promise;
-
-        promise
+        })
           .then(function( response ) {
             config[key] = response.data;
-            return config[key];
-            //notifier.log('Loaded appconfig.getConfig:','',key);
-
+            defer.resolve(config[key]);
           })
           .catch(function() {
-            notifier.log('Error loading appconfig.getConfig', '', key);
-          })
-          .finally(function() {
-            //notifier.log('Finish loading appconfig.getConfig:','',key);
+            defer.resolve({});
           });
       }
-      return promise;
-
+      return defer.promise;
     }
+
+
   }
 }());
 

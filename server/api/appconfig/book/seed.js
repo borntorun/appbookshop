@@ -1,17 +1,14 @@
-/**
- * Populate DB with sample data on server start
- * to disable, edit config/environment/index.js, and set `seedDB: false`
- */
-
 'use strict';
-var Book = require('./bookconfig.model');
-//console.log('seeding book config...');
-Book.find({}).remove(function () {
-  Book.create(
+var BookConfig = require('../appconfig.model')('book');
+console.log('seeding book config...');
+BookConfig.find({}).remove(function () {
+  BookConfig.create(
     {
+      language: 'pt',
       search: {
-        limitDefault: 50,
-        limitFeatured: 8
+        limitDefault: 25,
+        limitFeatured: 25,
+        viewportDefault: 75
       },
       placeholders: {
         reference: 'referência',

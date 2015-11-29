@@ -9,8 +9,6 @@
 (function() {
   'use strict';
 
-  angular.module('blocks.message', [
-//    'blocks.appconfig'
-  ]);
+  angular.module('blocks.message', ['blocks.appconfig', 'warp.components']);
 
 }());

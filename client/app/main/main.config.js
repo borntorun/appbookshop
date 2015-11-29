@@ -4,15 +4,34 @@
 (function() {
   'use strict';
 
-  var core = angular.module('appBookShop.main');
+  var module = angular.module('appBookShop.main');
 
-  core.config(moduleConfig);
+//  module
+//    .service('BookconfigInit', BookconfigInit);
+//  /* @ngInject */
+//  function BookconfigInit( Q, appconfig ) {
+//    return {
+//      prepare: function() {
+//        return Q.when(appconfig.getConfig('bookconfig'), function( value ) {
+//          return value.data || value;
+//        }, function() {
+//          return {};
+//        });
+//      }
+//    };
+//  }
+//
+//  var interceptWith = function( initMethod ) {
+//    return [initMethod, function( m ) {
+//      return m.prepare();
+//    }];
+//  };
+
+  module.config(moduleConfig);
 
   /* @ngInject */
-  function moduleConfig($stateProvider, _lodash) {
+  function moduleConfig( $stateProvider, _lodash ) {
     var states = {};
-
-
 
     states['main'] = {
       /* Main view da aplicação */
@@ -20,21 +39,6 @@
       url: '/',
       templateUrl: 'app/main/views/main.html',
       controller: 'Main as vm',
-      resolve: {
-        bookconfig: ['appconfig', 'Q', function( appconfig, Q ) {
-          return Q.when(appconfig.getConfig('bookconfig'), function (value) {
-            return value.data || value;
-          }, function () {
-            return {};
-          });
-        }]
-      },
-      /*,
-      resolve: {
-        bookconfig: ['appconfig', function (appconfig) {
-          return appconfig.getConfig('bookconfig');
-        }]
-      },*/
       sticky: true
     };
 
@@ -43,18 +47,16 @@
       views: {
         'auxiliar': {
           template: '',
-          controller: ['$state', 'notifier', function($state, notifier) {
+          controller: ['$state', 'notifier', function( $state, notifier ) {
             notifier.warning($state.params.term);
-
             $state.go('main.search');
           }]
         }
       }
     };
-
     states['googlelogin'] = {
       /* ATENÇÃO: NÃO COLOCAR / NO INÍCIO ... CHILD VIEW */
-//      url: '', /*QD não tem url  não colocar key */
+      //      url: '', /*QD não tem url  não colocar key */
       views: {
         'auxiliar': {
           template: ' ',
@@ -73,8 +75,7 @@
       }
     };
 
-
-    _lodash.forEach(states, function(state, key) {
+    _lodash.forEach(states, function( state, key ) {
       $stateProvider.state(key, state);
     });
   }

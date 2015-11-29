@@ -22,11 +22,11 @@
       search: {
         free: {
           url: '/api/books/search/free',
-          parameters: ['term']
+          parameters: ['limit', 'term']
         },
         advanced: {
           url: '/api/books/search/advanced',
-          parameters: ['title', 'authors', 'subject', 'collection', 'categories', 'edition']
+          parameters: ['limit', 'title', 'authors', 'subject', 'collection', 'categories', 'edition']
         },
         paginate: {
           parameters: {names: ['from'], keys: ['title']}
@@ -89,7 +89,7 @@
     function BookSearchQuery( type, criteria ) {
       var oldCriteriaEdition;
       var oldParameteresBeforePaginate;
-      var parametersObject = {limit: 0};
+      var parametersObject = {/*limit: 0*/};
       var paginationMng = {
         index: undefined,
         direction: 1
@@ -120,7 +120,7 @@
       }
 
       defaults.search[type].parameters.forEach(function( item, index ) {
-        parametersObject[item] = index + 1;//limit is 0 so we add 1
+        parametersObject[item] = index /*+ 1*/;//limit is 0 so we add 1
       });
 
       /**
@@ -450,6 +450,8 @@
           if ( parKeys && parKeys.length && index < parKeys.length ) {
             key = parKeys[index];
           }
+          console.log('key=',key);
+          console.log('item=',item);
           if ( key && item.hasOwnProperty(key) ) {
             obj[par] = item[key];
             //ex: obj={'from': 'a book title'}
@@ -488,14 +490,15 @@
       function _getParameters( criteria ) {
         var obj = [];
 
-        obj.push(_getLimit(criteria.limit));
+        //obj.push(_getLimit(criteria.limit));
 
         if ( !defaults.search[type] ) {
           throw new Error('Invalid search type');
         }
 
         defaults.search[type].parameters.forEach(function( item ) {
-          obj.push((typeof criteria[item] === 'string' ? criteria[item] : undefined) || '-');
+          //obj.push((typeof criteria[item] === 'string' ? _goodValue(item, criteria[item]) : undefined) || '-');
+          obj.push(_goodValue(item, criteria[item]) || '-');
         });
         return obj;
       }
@@ -530,7 +533,10 @@
           }
           return '-';
         }
-        return value;
+        if ( k === 'from' ) {
+          return value;
+        }
+        return typeof value === 'string'? value: undefined;
       }
     }
 

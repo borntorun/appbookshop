@@ -1,5 +1,5 @@
 /**
- * Service blocks.appconfig appconfig
+ * Service blocks.appconfig appConfig
  * (João Carvalho, 26-11-2015)
  * Criado com base em angular design style de John Papa
  * (https://github.com/johnpapa/angular-styleguide)
@@ -10,7 +10,7 @@
   'use strict';
   angular.module('blocks.appconfig')
     .provider('appconfigHandler', appconfigHandler)
-    .factory('appconfig', appconfig);
+    .factory('appConfig', appConfig);
 
   function appconfigHandler() {
     /* jshint validthis:true */
@@ -23,7 +23,7 @@
   }
 
   /* @ngInject */
-  function appconfig( Q, httpRequest,  $state, appconfigHandler ) {
+  function appConfig( Q, httpRequest,  $state, appconfigHandler ) {
     var config = {};
 
     var service = {

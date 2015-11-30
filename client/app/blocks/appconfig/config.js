@@ -20,10 +20,10 @@
 //  var groups = ['book', 'message'];
 
   /* @ngInject */
-  function run(appconfig, appconfigHandler) {
+  function run(appConfig, appconfigHandler) {
 
     function getConfigKey(k) {
-      appconfig.getConfig(k).then(function(value){
+      appConfig.getConfig(k).then(function(value){
         obj[k] = value;
       });
     }

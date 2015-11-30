@@ -12,7 +12,7 @@
     .controller('BookrecordCtrl', BookrecordCtrl);
 
   /* @ngInject */
-  function BookrecordCtrl( $scope, $state, $timeout, _lodash, bookConfig, bookrecord, notifier, logicform, message, SignalsService ) {
+  function BookrecordCtrl( $scope, $state, _lodash, bookConfig, bookrecord, notifier, logicform, message, SignalsService ) {
     /*jshint validthis: true */
     var model = this;
 

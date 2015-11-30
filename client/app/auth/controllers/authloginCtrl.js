@@ -14,11 +14,9 @@
     .controller('AuthLoginCtrl', AuthLoginCtrl);
 
   /* @ngInject */
-  function AuthLoginCtrl(/*$window,*/ auth, $previousState, SignalsService, notifier) {
+  function AuthLoginCtrl( auth, SignalsService, notifier) {
     /*jshint validthis: true */
     //var model = this;
-
-
 
     auth.loginWithGoogle()
       .then(function() {
@@ -28,10 +26,10 @@
       .catch(function(err){
         notifier.log(err);
         SignalsService.logoutsucceded.emit();
-      })
-      .finally(function(){
-        //$previousState.go();
       });
+//      .finally(function(){
+//        //$previousState.go();
+//      });
 
   }
 }());

@@ -13,7 +13,7 @@
     .factory('message', message);
 
   /* @ngInject */
-  function message(appconfig, messageConfig, modalpopup) {
+  function message(appConfig, messageConfig, modalpopup) {
     /*
     * Private Block
     */
@@ -74,7 +74,7 @@
 //      if (err) {
 //        theVars.error = err.cause && err.cause.data && err.cause.data.error?  err.cause.data.error : err.cause.statusText;
 //      }
-//      theVars.url = appconfig.urlAbsolute();
+//      theVars.url = appConfig.urlAbsolute();
 //
 //      theMessage = replaceArgs(theMessage, theVars);
 //
@@ -94,7 +94,7 @@
             vars.error = (error.cause && error.cause.data && error.cause.data.error?  error.cause.data.error :
               (error.cause && error.cause.statusText? error.cause.statusText : ''));
           }
-          vars.url = appconfig.urlAbsolute();
+          vars.url = appConfig.urlAbsolute();
 
           msg = replaceArgs(msg, vars);
 

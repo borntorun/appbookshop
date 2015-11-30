@@ -7,12 +7,18 @@
 (function() {
   'use strict';
 
-  angular.module('appBookShop.booksearch',
-    [
-      'ui.router'
-    ])
+  angular.module('appBookShop.booksearch', [
+    /*'ui.router'*/
+    'appBookShop.auth',
+    'blocks.notifier',
+    'blocks.appconfig',
+    'warp.components',
+    'jsSignalsServiceModule',
+    'angularTypeaheadjs',
+    'dynamicLayout'
+  ])
     .directive('bookSearchFormLayout', BookSearchFormLayout)
-    .factory('booksearchCache', function($cacheFactory) {
+    .factory('booksearchCache', function( $cacheFactory ) {
       return $cacheFactory('booksearchCache');
     });
 
@@ -24,55 +30,55 @@
    *  responsável por gerir accordion em booksearchLayout.jade consoante o state
    */
   /* @ngInject */
-  function BookSearchFormLayout( $timeout, booksearchCache) {
+  function BookSearchFormLayout( $timeout, booksearchCache ) {
     var directive = {
       restrict: 'A',
       link: linkfunction
     };
     return directive;
     ////////////////
-    function linkfunction(scope/*, element, attrs*/) {
+    function linkfunction( scope/*, element, attrs*/ ) {
       var onstateChangeSuccess = scope.$on('$stateChangeSuccess', changeLayout);
 
-      function setLayout(name) {
+      function setLayout( name ) {
 
         var
-          advIsOpen = $('#toggleAdvSearch').attr('aria-expanded')=== 'true',
-          freeIsOpen = $('#toggleFreeSearch').attr('aria-expanded')=== 'true',
-          filterIsOpen = $('#toggleFilterSearch').attr('aria-expanded')=== 'true',
+          advIsOpen = $('#toggleAdvSearch').attr('aria-expanded') === 'true',
+          freeIsOpen = $('#toggleFreeSearch').attr('aria-expanded') === 'true',
+          filterIsOpen = $('#toggleFilterSearch').attr('aria-expanded') === 'true',
           advChange = (name === 'main.search.advresults' && !advIsOpen) || (name === 'main.search.featured' && advIsOpen),
           freeChange = (name === 'main.search.results' && !freeIsOpen) || (name === 'main.search.featured' && freeIsOpen),
-          filterChange = filterChange || (!filterIsOpen && (booksearchCache.get('categories') || []).length>0) || (name === 'main.search.featured' && filterIsOpen);
+          filterChange = filterChange || (!filterIsOpen && (booksearchCache.get('categories') || []).length > 0) || (name === 'main.search.featured' && filterIsOpen);
 
-
-        if (filterChange) {
+        if ( filterChange ) {
           tabClick('#toggleFilterSearch');
         }
-        if (advChange) {
+        if ( advChange ) {
           tabClick('#toggleAdvSearch');
         }
-        if (freeChange) {
+        if ( freeChange ) {
           tabClick('#toggleFreeSearch');
         }
 
       }
 
-      function tabClick(tab){
-        $timeout(function(){
+      function tabClick( tab ) {
+        $timeout(function() {
           $(tab).click();
-        },200);
+        }, 200);
       }
-      function changeTab(tab) {
-        if ($(tab).attr('aria-expanded')=== 'true') {
+
+      function changeTab( tab ) {
+        if ( $(tab).attr('aria-expanded') === 'true' ) {
           tabClick(tab);
         }
       }
 
-      function changeLayout(event, toState, toParams, fromState, fromParams) {
-        if (fromState.name!=='main.search' && toState.name!==fromState.name) {
+      function changeLayout( event, toState, toParams, fromState, fromParams ) {
+        if ( fromState.name !== 'main.search' && toState.name !== fromState.name ) {
           setLayout(toState.name);
         }
-        if (toState.name == 'main.search.featured') {
+        if ( toState.name == 'main.search.featured' ) {
           changeTab('#toggleAdvSearch');
           changeTab('#toggleFreeSearch');
           changeTab('#toggleFilterSearch');
@@ -80,7 +86,7 @@
 
       }
 
-      scope.$on('$destroy', function () {
+      scope.$on('$destroy', function() {
         onstateChangeSuccess();
       });
 

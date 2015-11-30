@@ -65,7 +65,7 @@
   function configureOtherProviders( exceptionHandlerProvider, /*appconfigHandlerProvider,*/ SignalsServiceProvider ) {
     // Configure the common exception handler
     exceptionHandlerProvider.configure(config.appErrorPrefix);
-    // Configure the appconfig provider
+    // Configure the appConfig provider
     // inserir outras confs
     //appconfigHandlerProvider.config.bookconfig = {url: '/api/appconfig/book/', message: 'Configuração \'bookconfig\'.', loading: false};
     //

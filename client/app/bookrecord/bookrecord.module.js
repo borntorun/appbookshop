@@ -6,5 +6,12 @@
  */
 (function () {
   'use strict';
-  angular.module('appBookShop.bookrecord', []);
+  angular.module('appBookShop.bookrecord', [
+    'blocks.message',
+    'blocks.appconfig',
+    'blocks.notifier',
+    'warp.components',
+    'jsSignalsServiceModule',
+    'angularTypeaheadjs'
+  ]);
 }());

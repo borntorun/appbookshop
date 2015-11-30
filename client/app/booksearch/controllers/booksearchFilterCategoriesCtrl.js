@@ -10,7 +10,7 @@
     .module('appBookShop.booksearch')
     .controller('BookSearchFilterCategoriesCtrl', BookSearchFilterCategoriesCtrl);
   /* @ngInject */
-  function BookSearchFilterCategoriesCtrl( $scope, $rootScope, _lodash, /*booksearchold*/ booksearchCache) {
+  function BookSearchFilterCategoriesCtrl( $rootScope, _lodash, booksearchCache) {
     /*jshint validthis: true */
     var vm = this;
 

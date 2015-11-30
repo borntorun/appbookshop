@@ -84,7 +84,7 @@
   }
 
   /* @ngInject */
-  function timedAction( $timeout ) {
+  function timedAction() {
     /*
     * Private Block
     */

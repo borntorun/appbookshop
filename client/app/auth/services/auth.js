@@ -15,7 +15,7 @@
     .factory('auth', auth);
 
   /* @ngInject */
-  function auth( $, $window, $timeout, Q, httpRequest, SignalsService ) {
+  function auth( $, $window, Q, httpRequest) {
     /*
     * Private Block
     */

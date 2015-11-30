@@ -148,7 +148,7 @@
    * Controller for the directive
    * @param logicForm
    */
-  function logicFormCtrl( /*$scope,*/ logicform ) {
+  function logicFormCtrl( logicform ) {
     this.initialize = function( logicName, formController, elementController ) {
       elementController[formController.$name] = formController;
       elementController[logicName + 'LogicForm'] = logicform.register(logicName, formController);

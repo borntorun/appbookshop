@@ -9,10 +9,10 @@
 //  module
 //    .service('BookconfigInit', BookconfigInit);
 //  /* @ngInject */
-//  function BookconfigInit( Q, appconfig ) {
+//  function BookconfigInit( Q, appConfig ) {
 //    return {
 //      prepare: function() {
-//        return Q.when(appconfig.getConfig('bookconfig'), function( value ) {
+//        return Q.when(appConfig.getConfig('bookconfig'), function( value ) {
 //          return value.data || value;
 //        }, function() {
 //          return {};

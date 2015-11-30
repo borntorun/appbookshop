@@ -4,5 +4,5 @@
 (function() {
   'use strict';
 
-  angular.module('blocks.appconfig', ['blocks.notifier']);
+  angular.module('blocks.appconfig', ['warp.components']);
 }());

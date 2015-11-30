@@ -13,7 +13,7 @@
     .factory('bookrecord', bookrecord);
 
   /* @ngInject */
-  function bookrecord( notifier, $q, Q, httpRequest, _lodash ) {
+  function bookrecord( notifier, Q, httpRequest, _lodash ) {
     var book = {};
     var bookcache = {};
 

@@ -7,5 +7,5 @@
 (function() {
   'use strict';
 
-  angular.module('warp.components', []);
+  angular.module('warp.components', ['ui.bootstrap']);
 }());

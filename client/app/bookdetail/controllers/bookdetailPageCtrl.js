@@ -12,7 +12,7 @@
     .controller('BookDetailPageCtrl', BookDetailPageCtrl);
 
   /* @ngInject */
-  function BookDetailPageCtrl( $scope,$rootScope, auth, SignalsService, bookdetail, bookConfig, message, $state ) {
+  function BookDetailPageCtrl( $scope, $rootScope, $state, auth, SignalsService, bookdetail, bookConfig, message) {
     /*jshint validthis: true */
     var vm = this;
 

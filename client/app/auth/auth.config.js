@@ -14,7 +14,7 @@
   /* @ngInject */
   function configProviders( SignalsServiceProvider ) {
     SignalsServiceProvider.config({
-      init: false,
+      init: true,
       signals: {
         loginsucceded: 'loginsucceded',
         logoutsucceded: 'logoutsucceded'

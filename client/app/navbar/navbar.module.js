@@ -6,5 +6,7 @@
  */
 (function () {
   'use strict';
-  angular.module('appBookShop.navbar', []);
+  angular.module('appBookShop.navbar', [
+    'appBookShop.auth',
+    'ct.ui.router.extras']);
 }());

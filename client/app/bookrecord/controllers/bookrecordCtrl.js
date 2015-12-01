@@ -12,11 +12,13 @@
     .controller('BookrecordCtrl', BookrecordCtrl);
 
   /* @ngInject */
-  function BookrecordCtrl( $scope, $state, _lodash, bookConfig, bookrecord, notifier, logicform, message, SignalsService ) {
+  function BookrecordCtrl( $scope, $stateParams, $state, _lodash, bookConfig, bookrecord, notifier, logicform, message, SignalsService ) {
     /*jshint validthis: true */
     var model = this;
 
-    bookrecord.load($state.params.reference)
+    model.params = $stateParams;
+
+    bookrecord.load($stateParams.reference)
       .then(function( /*data*/ ) {
         emitInitValues();
       })

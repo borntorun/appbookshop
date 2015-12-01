@@ -7,6 +7,7 @@
 (function () {
   'use strict';
   angular.module('appBookShop.bookrecord', [
+    'ui.router',
     'blocks.message',
     'blocks.appconfig',
     'blocks.notifier',

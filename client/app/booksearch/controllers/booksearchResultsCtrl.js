@@ -12,7 +12,7 @@
     .controller('BookSearchResultsCtrl', BookSearchResultsCtrl);
 
   /* @ngInject */
-  function BookSearchResultsCtrl($rootScope, $scope, $timeout, _lodash, notifier, SignalsService, auth, bookConfig, booksearch, booksearchCache) {
+  function BookSearchResultsCtrl( $rootScope, $scope, $stateParams, $timeout, _lodash, notifier, SignalsService, auth, bookConfig, booksearch, booksearchCache) {
     /*jshint validthis: true */
     var vm = this;
     vm.results = [];
@@ -21,13 +21,12 @@
     vm.isAuthenticated = auth.isAuthenticated();
 
 
-
-    vm.criteria = _lodash.clone($rootScope.$stateParams, true);
+    vm.criteria = _lodash.clone($stateParams, true);
     delete vm.criteria.type;
     if (!vm.criteria.limit) {vm.criteria.limit = bookConfig.search.limitDefault;}
 
     //call search and get results
-    var funcSearch = $rootScope.$stateParams.type === 'advanced'? booksearch.queryAdvanced : booksearch.queryFree;
+    var funcSearch = $stateParams.type === 'advanced'? booksearch.queryAdvanced : booksearch.queryFree;
     vm.query = funcSearch.call(null, vm.criteria);
 
     //get the real limit as it can change

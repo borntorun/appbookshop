@@ -9,7 +9,7 @@
   angular.module('appBookShop.booksearch').controller('BookSearchAdvancedFormCtrl', BookSearchAdvancedFormCtrl);
 
   /* @ngInject*/
-  function BookSearchAdvancedFormCtrl( $rootScope, $scope, _lodash, SignalsService ) {
+  function BookSearchAdvancedFormCtrl( $scope, $state, _lodash, SignalsService ) {
     /*jshint validthis: true */
     var vm = this;
 
@@ -51,7 +51,7 @@
     function search() {
       var criteria = _lodash.clone(vm.criteria, true);
       criteria.edition = criteria.edition === true? '1': '-';
-      $rootScope.$state.go('main.search.advresults', angular.extend({}, {type: 'advanced'}, criteria  ));
+      /*$rootScope.*/$state.go('main.search.advresults', angular.extend({}, {type: 'advanced'}, criteria  ));
     }
 
     function empty() {

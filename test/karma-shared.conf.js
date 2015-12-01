@@ -37,6 +37,7 @@ module.exports = function() {
       'client/bower_components/ui-router-extras/release/ct-ui-router-extras.js',
       'client/bower_components/angular-dynamic-layout/dist/angular-dynamic-layout.js',
       'client/bower_components/jquery_appear/jquery.appear.js',
+      'client/bower_components/sprintf/dist/sprintf.min.js',
 
       'client/app/app.module.js',
       'client/app/**/*.module.js',//must be specified like this: because name includes more than one '.'
@@ -51,7 +52,9 @@ module.exports = function() {
       'node_modules/chai/chai.js',
       'test/lib/chai-should.js',
       'test/lib/chai-expect.js',
-      'test/lib/libWait.js'
+      'test/lib/libWait.js',
+      'test/lib/libModule.js',
+      'test/lib/util.js'
 
     ],
 

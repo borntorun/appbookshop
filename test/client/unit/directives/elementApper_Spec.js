@@ -13,7 +13,7 @@ describe('Unit: \'elementAppear\' Directive', function() {
   var spyScopeOn, spyJqueryPluginAppear;
   var objFocus = {};
 
-  beforeEach(module('appBookShop.components'));
+  beforeEach(module('warp.components'));
   /**
    * Inject dependencies before each test
    */

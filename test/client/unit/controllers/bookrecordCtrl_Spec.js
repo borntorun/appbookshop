@@ -1,12 +1,10 @@
 'use strict';
 
-describe(myUtil.title.controller('BookSearchResultsCtrl'), function() {
+describe.only(myUtil.title.controller('BookrecordCtrl'), function() {
   var $controller, $scope, $httpBackend, $cacheFactory, $rootScope, $stateParams;
   var requestSearchHandler;
 
-  beforeEach(module('appBookShop.booksearch'));
-  //beforeEach(module('appBookShop'));
-  //beforeEach(module('jadetemplates'));
+  beforeEach(module('appBookShop.bookrecord'));
 
 
   beforeEach(inject(function( _$rootScope_, _$controller_, _$httpBackend_, _$cacheFactory_ ) {
@@ -15,7 +13,7 @@ describe(myUtil.title.controller('BookSearchResultsCtrl'), function() {
     $scope = _$rootScope_.$new();
     $httpBackend = _$httpBackend_;
     $cacheFactory = _$cacheFactory_;
-    $stateParams = {type: 'free', limit: 5, term: '' };
+    $stateParams = { reference: '1' };
   }));
 
   beforeEach(function() {
@@ -29,19 +27,22 @@ describe(myUtil.title.controller('BookSearchResultsCtrl'), function() {
       {title: 'um'}
     ]);
 
-    var booksearchResultsCtrl = $controller('BookSearchResultsCtrl', {
+    var bookrecordCtrl = $controller('BookrecordCtrl', {
       $scope: $scope,
       $stateParams: $stateParams,
-      bookConfig: getBookConfig()});
+      bookConfig: getBookConfig(),
+      message: {}
+    });
 
     $httpBackend.flush();
     //dump($scope);
 
     waitsForAndThenRun(null, function() {
-      /*for (var k in booksearchResultsCtrl.results[0]){
-        dump('key=' +k, booksearchResultsCtrl.results[0][k]);
+      /*for (var k in bookrecordCtrl){
+        dump('key=' +k, bookrecordCtrl[k]);
+      }
+      dump(bookrecordCtrl.book);*/
 
-      }*/
       dump('>>>>>>>>>>>>>>>>>>>>>>NEED TEST THINGS!<<<<<<<<<<<<<<<<<<<<<<<<<<');
 
       done();
@@ -62,7 +63,7 @@ describe(myUtil.title.controller('BookSearchResultsCtrl'), function() {
     $httpBackend.when('GET', '/api/appconfig/message/').respond(200, null);
 
     //this is the definition for the tests
-    return $httpBackend.when('GET', /^\/api\/books\/search\/(free|advanced)\/*./);
+    return $httpBackend.when('GET', /^\/api\/books\/admin\/*./);
   }
 
   //mocks

@@ -1,4 +1,3 @@
-//.row.dynamic-layout-item.element-item(ng-mouseleave="it.call(false)",ng-mouseenter="it.call(true)", ng-class="{'recentload': it.isnew}")
 .row.dynamic-layout-item.element-item(ng-mouseleave="it.setAuth(false)",ng-mouseenter="it.setAuth(true)", ng-class="{'recentload': it.isnew}")
     div.pull-left.editar-lapis(ng-show="it.isAuthenticated")
         a(ui-sref="main.bookrecord({type:'livro',reference:it.reference,slug:it.slug})", title="Editar", aria-label="Editar")

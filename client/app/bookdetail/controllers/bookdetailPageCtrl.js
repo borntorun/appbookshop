@@ -12,7 +12,7 @@
     .controller('BookDetailPageCtrl', BookDetailPageCtrl);
 
   /* @ngInject */
-  function BookDetailPageCtrl( $scope, $rootScope, $state, auth, SignalsService, bookdetail, bookConfig, message) {
+  function BookDetailPageCtrl( $scope, $stateParams, $state, auth, SignalsService, bookdetail, bookConfig, message) {
     /*jshint validthis: true */
     var vm = this;
 
@@ -33,7 +33,7 @@
 
     vm.bookconfiglabels = bookConfig.labels;
 
-    bookdetail.get($rootScope.$stateParams.reference)
+    bookdetail.get(/*$rootScope.*/$stateParams.reference)
       .then(function( data ) {
         $scope.$apply(function() {
           vm.book = data;
@@ -63,7 +63,7 @@
 
     vm.searchCategoria = function( item ) {
       //TODO: colocar limit
-      $rootScope.$state.go('main.search.advresults', {
+      /*$rootScope.*/$state.go('main.search.advresults', {
         type: 'advanced',
         limit: 25,
         title: '-',

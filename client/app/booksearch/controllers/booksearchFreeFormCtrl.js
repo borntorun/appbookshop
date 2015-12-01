@@ -8,7 +8,7 @@
   'use strict';
   angular.module('appBookShop.booksearch').controller('BookSearchFreeFormCtrl', BookSearchFreeFormCtrl);
   /* @ngInject */
-  function BookSearchFreeFormCtrl( $rootScope, $scope, _lodash, SignalsService) {
+  function BookSearchFreeFormCtrl( $scope, $state, _lodash, SignalsService) {
     /*jshint validthis: true */
     var vm = this;
     vm.criteria = {};
@@ -18,7 +18,7 @@
     SignalsService.searchexecuted.listen(setCriteria);
 
     function search() {
-      $rootScope.$state.go('main.search.results', angular.extend({}, {type: 'free'}, vm.criteria));
+      /*$rootScope.*/$state.go('main.search.results', angular.extend({}, {type: 'free'}, vm.criteria));
     }
 
     function setCriteria(query){

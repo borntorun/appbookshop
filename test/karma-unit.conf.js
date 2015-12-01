@@ -17,7 +17,10 @@ module.exports = function(config) {
     'test/mocha.conf.js',
 
     //test files
-    'test/client/unit/**/*_Spec.js'
+    'test/client/unit/modules/**/*_Spec.js',
+    'test/client/unit/services/**/*_Spec.js',
+    'test/client/unit/directives/**/*_Spec.js',
+    'test/client/unit/controllers/**/*_Spec.js'
   ]);
 
 

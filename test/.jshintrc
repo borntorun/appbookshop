@@ -47,6 +47,9 @@
     "element": true,
     "by": true,
     "sinon": true,
-    "waitsForAndThenRun": true
+    "waitsForAndThenRun": true,
+    "testModule": true,
+    "vsprintf": true,
+    "myUtil": true
   }
 }

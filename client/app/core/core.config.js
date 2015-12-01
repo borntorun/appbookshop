@@ -8,6 +8,7 @@
   Config da library toastr
    */
   core.config(toastrConfig);
+
   /* @ngInject */
   function toastrConfig( toastr ) {
     toastr.options.closeButton = false;
@@ -62,13 +63,12 @@
   }
 
   /* @ngInject */
-  function configureOtherProviders( exceptionHandlerProvider, /*appconfigHandlerProvider,*/ SignalsServiceProvider ) {
+  function configureOtherProviders( exceptionHandlerProvider, SignalsServiceProvider ) {
     // Configure the common exception handler
     exceptionHandlerProvider.configure(config.appErrorPrefix);
     // Configure the appConfig provider
     // inserir outras confs
-    //appconfigHandlerProvider.config.bookconfig = {url: '/api/appconfig/book/', message: 'Configuração \'bookconfig\'.', loading: false};
-    //
+
     SignalsServiceProvider.config({
       init: true,
       signals: {
@@ -138,16 +138,15 @@
 //      });
 //  }
 
-  core.run(run);
+//  core.run(run);
 
   core.run(runStateChangeError);
   /* @ngInject */
-  function run( $rootScope, $state, $stateParams ) {
-    $rootScope.$state = $state;
-    $rootScope.$stateParams = $stateParams;
-    //$rootScope._ = window._;
-    //$rootScope.$ = window.$;
-  }
+//  function run( $rootScope, $state, $stateParams ) {
+//    $rootScope.$state = $state;
+//    $rootScope.$stateParams = $stateParams;
+//
+//  }
 
   /* @ngInject */
   function runStateChangeError($rootScope, err) {

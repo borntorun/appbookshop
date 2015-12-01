@@ -14,7 +14,7 @@ form.enter-as-tab.on-focus(ng-show="model.book.reference", logic-form="bookrecor
             | #&nbsp;{{model.book.reference}}
         .col-xs-12.col-md-11
             label(for="title") {{::model.labels.title}}
-                timed-action(disabled="{{$state.params.reference !== 'new'}}", event="keydown", field="title", action="model.showSimilarTitles", ms-timeout="500")
+                timed-action(disabled="{{model.params.reference !== 'new'}}", event="keydown", field="title", action="model.showSimilarTitles", ms-timeout="500")
                 input.font-major(type="text", tabindex="100", name="title", ng-model="model.book.title", autofocus, required, aria-label="{{::model.placeholders.title}}", placeholder="{{::model.placeholders.title}}")
                 div.tool-tip.bottom(ng-show="bookrecordForm.title.$dirty && bookrecordForm.title.$error.required") {{::model.valMessages.title.required}}
                 input.subtitle(type="text", tabindex="200", name="subtitle", ng-model="model.book.subtitle", aria-label="{{::model.placeholders.subtitle}}", placeholder="{{::model.placeholders.subtitle}}")

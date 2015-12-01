@@ -11,7 +11,7 @@ describe('Unit: \'windowScroll\' Directive', function() {
   var defaultValue = {value:{windowScrollX: 100, windowScrollY: 100}};
 
 
-  beforeEach(module('appBookShop.components'));
+  beforeEach(module('warp.components'));
   /**
    * Inject dependencies before each test
    */

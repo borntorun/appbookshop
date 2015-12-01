@@ -19,7 +19,7 @@ describe('Unit: \'enterAsTab\' Directive', function() {
     '<button id="c5" tabindex="5"/>'
   ];
 
-  beforeEach(module('appBookShop.components'));
+  beforeEach(module('warp.components'));
   /**
    * Inject dependencies before each test
    */

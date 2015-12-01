@@ -1,7 +1,4 @@
-//tirei
-//.col-xs-12(ng-controller="BookSearchAdvancedFormCtrl as vm")
 .col-xs-12
-
     .row
         form(id="booksearchAdvancedForm", name="booksearchAdvancedForm", role="search", novalidate, ng-submit="vm.search(booksearchAdvancedForm)", ng-model-options="{ debounce: 150 }")
             .col-xs-12.col-sm-6
@@ -17,7 +14,8 @@
                     div.input-group
                         span.input-group-addon(id="asunto")
                         input.form-control(type="text" placeholder="pesquisar por assunto", ng-model="vm.criteria.subject")
-            .col-xs-12.col-sm-6.nopaddings
+            .col-xs-12.col-sm-6
+                //.nopaddings
                 .form-group
                     div.input-group
                         span.input-group-addon(id="collection")

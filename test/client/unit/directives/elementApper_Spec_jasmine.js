@@ -5,7 +5,7 @@ describe("Unit: 'elementAppear' Directive", function() {
   var attributeTag = '<div id="elteste" element-appear prefix-event-name="testevent"/></div>';
 
 
-  beforeEach(module('appBookShop.components'));
+  beforeEach(module('warp.components'));
   /**
    * Inject dependencies before each test
    */

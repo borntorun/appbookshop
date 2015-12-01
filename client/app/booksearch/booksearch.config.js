@@ -15,7 +15,7 @@
   function moduleConfig( $stateProvider, _lodash, SignalsServiceProvider ) {
 
     SignalsServiceProvider.config({
-      init: false,
+      init: true,
       signals: {
         searchexecuted: 'searchexecuted'
       }

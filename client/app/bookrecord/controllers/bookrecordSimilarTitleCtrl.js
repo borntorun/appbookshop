@@ -14,13 +14,23 @@
     .controller('BookrecordSimilarTitleCtrl', BookrecordSimilarTitleCtrl);
 
   /* @ngInject */
-  function BookrecordSimilarTitleCtrl( $scope, Q, _lodash, bookrecord, booksearch, SignalsService ) {
+  function BookrecordSimilarTitleCtrl( $scope, $stateParams, Q, _lodash, bookrecord, booksearch, SignalsService ) {
     /*jshint validthis: true */
     var model = this;
 
-    model.book = bookrecord.book;
+    model.mustHide = $stateParams.reference !== 'new';
 
-    SignalsService.bookrecordtitlechanged.listen(function( done ) {
+    if (model.mustHide === false) {
+      model.book = bookrecord.book;
+
+      SignalsService.bookrecordtitlechanged.listen(search);
+
+      $scope.$on('$destroy', function(){
+        SignalsService.bookrecordtitlechanged.unlisten(search);
+      });
+    }
+
+    function search( done ) {
       if ( !model.book.title || !model.book.title.trim() ) {
         model.results = [];
         done.call();
@@ -39,9 +49,9 @@
             limit: 15, title: word, authors: '-', subject: '-', collection: '-', categories: '-', edition: '-'
           }).execute());
 
-//          aPromiseSearch.push(booksearch.searchAdvanced({
-//            title: word, authors: '-', subject: '-', collection: '-', categories: '-', edition: '-'
-//          }, 15));
+          //          aPromiseSearch.push(booksearch.searchAdvanced({
+          //            title: word, authors: '-', subject: '-', collection: '-', categories: '-', edition: '-'
+          //          }, 15));
         }
       }
       if (aPromiseSearch.length==0) {
@@ -82,6 +92,7 @@
           //done is a callback function to call
           done.call();
         });
-    });
+    }
+
   }
 }());

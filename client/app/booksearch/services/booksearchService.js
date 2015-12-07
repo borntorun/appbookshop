@@ -450,8 +450,8 @@
           if ( parKeys && parKeys.length && index < parKeys.length ) {
             key = parKeys[index];
           }
-          console.log('key=',key);
-          console.log('item=',item);
+//          console.log('key=',key);
+//          console.log('item=',item);
           if ( key && item.hasOwnProperty(key) ) {
             obj[par] = item[key];
             //ex: obj={'from': 'a book title'}

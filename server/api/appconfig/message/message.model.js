@@ -4,8 +4,10 @@ var Schema = require('mongoose').Schema;
 
 var schema = new Schema({
   language: { type: Schema.Types.String},
+  config: { type: Schema.Types.Mixed }
+  /*,
   bookdetail: { type: Schema.Types.Mixed },
-  bookrecord: { type: Schema.Types.Mixed }
+  bookrecord: { type: Schema.Types.Mixed }*/
 }, {
   collection: 'messageconfig'
 });

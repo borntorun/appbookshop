@@ -13,9 +13,14 @@
     .factory('bookrecord', bookrecord);
 
   /* @ngInject */
-  function bookrecord( notifier, Q, httpRequest, _lodash ) {
+  function bookrecord( notifier, Q, httpRequest, _lodash, bookrecordCache ) {
     var book = {};
-    var bookcache = {};
+    //var bookcache = {};
+
+    bookrecordCache.remove('bookreset');
+
+    //TODO: this  can not be here
+    bookrecordCache.remove('booktosave');
 
     /*
     * Public Interface
@@ -36,7 +41,7 @@
     */
     function reset() {
       clear();
-      book = angular.extend(book, bookcache);
+      book = angular.extend(book, bookrecordCache.get('bookreset') /*bookcache*/);
     }
 
     //TODO: extract to a util book service (repeated at bookrecordSimilarTitleCtrl)
@@ -54,6 +59,9 @@
     }
 
     function save() {
+
+      bookrecordCache.put('booktosave', angular.copy(book));
+
       var defer = call({method: httpRequest.post, url: '/api/books/admin/' + book._id || 'new', data: book},
         function( response ) {
           init();
@@ -79,7 +87,8 @@
           book.reference = setReference(book.reference);
           book.dateResgistrationLocal = new Date(data.dateResgistration).getTime();
           book.dateUpdateLocal = new Date(data.dateUpdate).getTime();
-          bookcache = angular.copy(book);
+          //bookcache = angular.copy(book);
+          bookrecordCache.put('bookreset', angular.copy(book));
           defer.resolve(data);
         },
         function( err ) {

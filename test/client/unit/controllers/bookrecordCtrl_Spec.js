@@ -30,7 +30,9 @@ describe.only(myUtil.title.controller('BookrecordCtrl'), function() {
     var bookrecordCtrl = $controller('BookrecordCtrl', {
       $scope: $scope,
       $stateParams: $stateParams,
-      bookConfig: getBookConfig(),
+      appConfig: {
+        book:getBookConfig()
+      },
       message: {}
     });
 
@@ -69,10 +71,12 @@ describe.only(myUtil.title.controller('BookrecordCtrl'), function() {
   //mocks
   function getBookConfig() {
     return {
-      search: {
-        limitDefault: 25,
-        limitFeatured: 25,
-        viewportDefault: 75
+      config: {
+        search: {
+          limitDefault: 25,
+          limitFeatured: 25,
+          viewportDefault: 75
+        }
       }
     };
   }

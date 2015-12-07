@@ -12,40 +12,36 @@ module.exports = function( app ) {
 
   // Route to index.html
   var funcIndexHtml = function( req, res ) {
-
-//    console.log('req.isAuthenticated=====', req.isAuthenticated());
-//    console.log('funcIndexHtml req.user======:', req.user);
-//    console.log('funcIndexHtml req.url:', req.url);
-//    console.log('funcIndexHtml req:', req);
-
-    //console.log('funcIndexHtml config.root-------->:', config.root);///home/joao/devel/web/appbookshop
-
     var options = {
       root: config.root
     };
-
-//    console.log('funcIndexHtml req.params:', req.params);
-//    console.log('funcIndexHtml res options:', options);
-
     var ocookie = new Cookies(req, res);
-    console.log('funcIndexHtml req.cookies:', req.cookies);
-//    console.log('funcIndexHtml req.session:', req.session);
-
     var valueToken = req.csrfToken();
-    console.log('funcIndexHtml valueToken------>:', valueToken);
     ocookie.set('XSRF-TOKEN', valueToken, { httpOnly: false });
     res.sendFile('index.html', options);
   };
 
-  var auth = require('./auth');
+
+  //Force redirect to https in production
+  //http://stackoverflow.com/questions/7185074/heroku-nodejs-http-to-https-ssl-forced-redirect
+  var forceSsl = function (req, res, next) {
+    if (req.headers['x-forwarded-proto'] !== 'https') {
+      return res.redirect(['https://', req.get('Host'), req.url].join(''));
+    }
+    return next();
+  };
+  if (config.env === 'production') {
+    app.use(forceSsl);
+  }
 
   app.route('/').get(funcIndexHtml);
 
   app.route('/index.html').get(funcIndexHtml);
 
+  var auth = require('./auth');
+
   app.use('/api/counters', auth.ensureIsAuthenticated, require('./api/counters'));
 
-  //app.use('/api/bookconfig', require('./api/bookconfig'));
   app.use('/api/appconfig', require('./api/appconfig'));
 
   app.use('/api/books', require('./api/book'));
@@ -54,8 +50,7 @@ module.exports = function( app ) {
 
   app.use('/auth/google', require('./auth/google'));
 
-  app.route('/auth/logout').all(auth.ensureIsAuthenticated, auth.logout);
-
+  app.route('/auth/logout').post(/*auth.ensureIsAuthenticated, */auth.logout);
 
   // All undefined asset or api routes should return a 404
   app.route('/:url(api|auth)/*').get(errors[404]);

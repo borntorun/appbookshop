@@ -32,7 +32,10 @@ describe(myUtil.title.controller('BookSearchResultsCtrl'), function() {
     var booksearchResultsCtrl = $controller('BookSearchResultsCtrl', {
       $scope: $scope,
       $stateParams: $stateParams,
-      bookConfig: getBookConfig()});
+      appConfig: {
+        book: getBookConfig()
+      }}
+    );
 
     $httpBackend.flush();
     //dump($scope);
@@ -68,10 +71,12 @@ describe(myUtil.title.controller('BookSearchResultsCtrl'), function() {
   //mocks
   function getBookConfig() {
     return {
-      search: {
-        limitDefault: 25,
-        limitFeatured: 25,
-        viewportDefault: 75
+      config: {
+        search: {
+          limitDefault: 25,
+          limitFeatured: 25,
+          viewportDefault: 75
+        }
       }
     };
   }

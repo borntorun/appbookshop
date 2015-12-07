@@ -29,6 +29,7 @@
 
   module.config(moduleConfig);
 
+
   /* @ngInject */
   function moduleConfig( $stateProvider, _lodash ) {
     var states = {};
@@ -39,6 +40,11 @@
       url: '/',
       templateUrl: 'app/main/views/main.html',
       controller: 'Main as vm',
+      deepStateRedirect: {
+        default: {
+          state: 'main.search'
+        }
+      },
       sticky: true
     };
 
@@ -49,7 +55,7 @@
           template: '',
           controller: ['$state', 'notifier', function( $state, notifier ) {
             notifier.warning($state.params.term);
-            $state.go('main.search');
+            $state.go('main.search', {notify: true});
           }]
         }
       }
@@ -57,20 +63,28 @@
     states['googlelogin'] = {
       /* ATENÇÃO: NÃO COLOCAR / NO INÍCIO ... CHILD VIEW */
       //      url: '', /*QD não tem url  não colocar key */
+      url: '/login/:signal',
       views: {
         'auxiliar': {
           template: ' ',
-          controller: 'AuthLoginCtrl as model'
+          controller: 'AuthenticationLoginCtrl as model',
+          params: {
+            signal: { value: '', squash: true }
+          }
         }
       }
     };
     states['logout'] = {
       /* ATENÇÃO: NÃO COLOCAR / NO INÍCIO ... CHILD VIEW */
       //      url: '', /*QD não tem url  não colocar key */
+      url: '/logout/:signal',
       views: {
         'auxiliar': {
           template: ' ',
-          controller: 'AuthLogoutCtrl as model'
+          controller: 'AuthenticationLogoutCtrl as model',
+          params: {
+            signal: { value: '', squash: true }
+          }
         }
       }
     };

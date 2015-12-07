@@ -6,5 +6,5 @@
  */
 (function () {
   'use strict';
-  angular.module('appBookShop.auth', ['blocks.notifier','warp.components','jsSignalsServiceModule']);
+  angular.module('appBookShop.auth', ['blocks.message', 'blocks.notifier','warp.components','jsSignalsServiceModule']);
 }());

@@ -30,6 +30,16 @@
         'main-content@main': {
           templateUrl: 'app/booksearch/jade/booksearchMain.html'
         },
+        'main-left@main': {
+          template: ''
+        },
+        'main-right@main': {
+          template: ''
+        },
+        'main-content-bottom@main': {
+          template: ''
+        },
+
         'searchfree@main.search': {
           templateUrl: 'app/booksearch/jade/booksearchFreeForm.html',
           controller: 'BookSearchFreeFormCtrl as vm'

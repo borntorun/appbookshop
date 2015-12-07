@@ -29,7 +29,7 @@ nav.navbar.navbar-default.navbar-fixed-top.nav-barra-topo
                         span.caret
                     ul.dropdown-menu.profile(role="menu")
                         li(ng-hide="model.isAuthenticated")
-                            a(ng-click="model.googleAuthenticate()" href="#")
+                            a(ng-click="model.googleAuthenticate()", href="#")
                                 i.fa.fa-google-plus | Entrar conta Google
                         li(ng-show="model.isAuthenticated")
                             span

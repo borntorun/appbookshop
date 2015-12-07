@@ -36,7 +36,7 @@
     function call( defaultOptions, options, thenCallback, catchCallback ) {
       delete options.method;
       options = angular.extend(angular.copy(defaultOptions), options || {});
-      console.time('call-' + options.url);
+      //console.time('call-' + options.url);
       return $http(options)
         .then(thenCallback)
         .catch(catchCallback);
@@ -63,7 +63,7 @@
     }
 
     function response( response ) {
-      console.timeEnd('call-' + response.config.url);
+      //console.timeEnd('call-' + response.config.url);
       return response/*.data*/;
     }
     function throwError( response ) {

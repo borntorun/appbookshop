@@ -1,7 +1,7 @@
 form.enter-as-tab.on-focus(ng-show="model.book.reference", logic-form="bookrecord", id="bookrecordForm", name="bookrecordForm", novalidate, ng-submit="model.submitForm()", ng-model-options="{ debounce: 0 }")
     .row
         .col-xs-12
-            span.bookrecordStore-buttons.hidden.pull-right
+            span.bookrecordStore-buttons.pull-right
                 button.btn.btn-default(tabindex="10000",ng-disabled="model.bookrecordLogicForm.isPristine()", type="button", ng-click="model.clearForm()") Limpar
                 button.btn.btn-default(tabindex="10000",ng-show="model.book._id", ng-disabled="model.bookrecordLogicForm.isPristine()", type="button", ng-click="model.resetForm()") Desfazer
                 button.btn.btn-default(leave-focus, tabindex="9998",ng-disabled="model.bookrecordLogicForm.isInvalid() || model.bookrecordLogicForm.processing()", type="submit", id="submit", ng-click="model.save()") Gravar

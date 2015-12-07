@@ -4,7 +4,7 @@
  *
  * Description: Book Record feature
  */
-(function () {
+(function() {
   'use strict';
   angular.module('appBookShop.bookrecord', [
     'ui.router',
@@ -14,5 +14,8 @@
     'warp.components',
     'jsSignalsServiceModule',
     'angularTypeaheadjs'
-  ]);
+  ])
+    .factory('bookrecordCache', function( $cacheFactory ) {
+      return $cacheFactory('bookrecordCache');
+    });
 }());

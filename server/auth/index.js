@@ -1,9 +1,9 @@
 'use strict'
 
 exports.ensureIsAuthenticated = function( req, res, next ) {
-  console.time('isAuthenticated');
+  //console.time('isAuthenticated');
   if ( req.isAuthenticated() ) {
-    console.timeEnd('isAuthenticated');
+    //console.timeEnd('isAuthenticated');
     return next();
   }
   return res.status(401).json({data: 'not authorized'});

@@ -14,15 +14,15 @@
     .controller('BookrecordStoreCtrl', BookrecordStoreCtrl);
 
   /* @ngInject */
-  function BookrecordStoreCtrl( bookConfig, bookrecord) {
+  function BookrecordStoreCtrl( /*bookConfig*/appConfig, bookrecord) {
     /*jshint validthis: true */
     var model = this;
 
     model.book = bookrecord.book;
 
-    model.labels = bookConfig.labels;
+    model.labels = appConfig.book/*Config*/.labels;
 
-    model.placeholders = bookConfig.placeholders;
+    model.placeholders = appConfig.book/*Config*/.placeholders;
 
   }
 }());

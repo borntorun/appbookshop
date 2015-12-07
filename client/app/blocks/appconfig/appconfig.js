@@ -15,6 +15,7 @@
   function appconfigHandler() {
     /* jshint validthis:true */
     this.config = {};
+
     this.$get = function() {
       return {
         config: this.config
@@ -23,7 +24,7 @@
   }
 
   /* @ngInject */
-  function appConfig( Q, httpRequest,  $state, appconfigHandler ) {
+  function appConfig( Q, httpRequest, $state, appconfigHandler ) {
     var config = {};
 
     var service = {
@@ -33,11 +34,24 @@
           advanced: '/api/books/search/advanced'
         }
       },
-      getConfig: getConfig,
+      //getConfig: getConfig,
       urlAbsolute: function() {
         return $state.href($state.current.name, $state.params, {absolute: true});
       }
     };
+
+
+    function setKey( key ) {
+      var k = key;
+      return getConfig(key).then(function( value ) {
+        service[k] = value;
+      });
+    }
+
+    //novo
+    for ( var k in appconfigHandler.config ) {
+      setKey(k);
+    }
 
     return service;
 
@@ -58,7 +72,7 @@
           url: appconfigHandler.config[key].url
         })
           .then(function( response ) {
-            config[key] = response.data;
+            config[key] = response.data.config;
             defer.resolve(config[key]);
           })
           .catch(function() {
@@ -67,7 +81,6 @@
       }
       return defer.promise;
     }
-
 
   }
 }());

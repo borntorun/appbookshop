@@ -11,16 +11,19 @@
 
   module.config(moduleConfig);
 
+
   /* @ngInject */
   function moduleConfig( $stateProvider, _lodash, SignalsServiceProvider ) {
     var states = {};
 
     ///{ref:[\\d]*}
 
+
+
     states['main.bookrecord'] = {
       /* boorecord view for book */
       /* ATENÇÃO: NÃO COLOCAR / NO INÍCIO ... CHILD VIEW */
-      url: '{area:admin}/{type:book|livro}/{reference}/{slug}',
+      url: '{area:admin}/{type:book|livro}/:reference/:slug',
       params: {
         slug: { value: null, squash: true },
         area: { value: 'admin', squash: false }
@@ -46,11 +49,21 @@
           templateUrl: 'app/bookrecord/views/bookrecordSimilarTitle.html',
           controller: 'BookrecordSimilarTitleCtrl as model'
         }
+      },
+      authorization: {
+        requires: {
+          login: true
+        }
+        /*,
+        requiredPermissions: ['Admin', 'UserManager'],
+        permissionType: 'AtLeastOne'*/
       }
     };
+
     _lodash.forEach(states, function( state, key ) {
       $stateProvider.state(key, state);
     });
+
 
     SignalsServiceProvider.config({
       init: true,
@@ -59,6 +72,11 @@
       }
     });
 
+
+
+
   }
+
+
 
 }());

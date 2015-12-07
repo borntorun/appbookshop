@@ -27,11 +27,11 @@
     "angular-typeaheadjs": "^0",
     "lodash": "~3.9.3",
     "simple-basket": "~0.3.1",
-    "ui-router-extras": "~0.0.14",
     "d3": "~3.5.6",
     "ngInfiniteScroll": "~1.2.1",
     "jquery_appear": "~0.3.6",
-    "angular-dynamic-layout": "git@github.com:borntorun/angular-dynamic-layout.git#master"
+    "angular-dynamic-layout": "git@github.com:borntorun/angular-dynamic-layout.git#master",
+    "ui-router-extras": "0.0.14"
   },
   "devDependencies": {
     "angular-mocks": "~1.4.7",

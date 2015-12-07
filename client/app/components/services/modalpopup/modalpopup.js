@@ -68,6 +68,7 @@
     function confirm( message, title, opt ) {
       opt = opt || {};
       opt.templateUrl = opt.templateUrl || 'assets/templates/html/confirm.html';//'/app/components/services/modalpopup/templates/confirm.html';
+
       return show(message, title, opt);
     }
 
@@ -81,14 +82,25 @@
       options.message = message ? message.replace(/\n/g, '<br/>') : message;
       options.title = title ? title.replace(/\n/g, '<br/>') : title;
       options.templateUrl = opt.templateUrl;
+      options.onconfirm = opt.onconfirm;
+      options.oncancel = opt.oncancel;
       return $modal_.open(options).result;
     }
 
-    function modalCtrl( /*$scope*/ ) {
+    function modalCtrl( $scope ) {
       var model = this;
 
       model.title = options.title;
       model.message = options.message;
+      model.confirm = function() {
+        options.onconfirm && (options.onconfirm.call());
+        $scope.$close();
+      };
+      model.cancel = function() {
+        options.oncancel && (options.oncancel.call());
+        $scope.$dismiss();
+      };
+
     }
 
   }

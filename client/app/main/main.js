@@ -8,7 +8,7 @@
     .module('appBookShop.main')
     .controller('Main', Main);
   /* @ngInject */
-  function Main( /*$scope, $rootScope, notifier, bookconfig, $window*/ ) {
+  function Main( /*$scope, $rootScope, notifier, bookconfig, $window*/ message) {
 
     var vmMain = this;
 

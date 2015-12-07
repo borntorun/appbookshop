@@ -12,7 +12,7 @@
     .controller('BookrecordCtrl', BookrecordCtrl);
 
   /* @ngInject */
-  function BookrecordCtrl( $scope, $stateParams, $state, _lodash, bookConfig, bookrecord, notifier, logicform, message, SignalsService ) {
+  function BookrecordCtrl( $scope, $stateParams, $state, _lodash, appConfig,bookrecord, notifier, logicform, message, SignalsService ) {
     /*jshint validthis: true */
     var model = this;
 
@@ -22,7 +22,7 @@
       .then(function( /*data*/ ) {
         emitInitValues();
       })
-      .catch(function( /*data*/ ) {
+      .catch(function( /*error*/ ) {
         message('bookrecord', 'notfound')
           .finally(function() {
             $state.go('main.search');
@@ -31,11 +31,11 @@
 
     model.book = bookrecord.book;
 
-    model.labels = bookConfig.labels;
+    model.labels = appConfig.book/*Config*/.labels;
 
-    model.placeholders = bookConfig.placeholders;
+    model.placeholders = appConfig.book/*Config*/.placeholders;
 
-    model.valMessages = bookConfig.valMessages;
+    model.valMessages = appConfig.book/*Config*/.valMessages;
 
     model.anoActual = new Date().getFullYear();
 
@@ -46,7 +46,7 @@
           emitInitValues();
           logicform.bookrecord.setPristine();
         });
-      /*.catch(function() {});*/
+
     };
 
     model.clearForm = function() {
@@ -54,12 +54,12 @@
         .then(function() {
           bookrecord.clear();
         });
-      /*.catch(function() {});*/
+
     };
 
     model.save = function() {
       message('bookrecord', 'save')
-        .then(function( /*data*/ ) {
+        .then(function() {
 
           model.bookrecordLogicForm.processing(true);
 
@@ -67,14 +67,19 @@
             .then(function( data ) {
               notifier.info('Livro registado', 'Registo/Edição', data.reference);
 
-              $state.transitionTo($state.current,
+              $state.go($state.current,
                 {area: 'admin', type: $state.params.type, reference: data.reference, slug: data.slug},
                 {reload: true, inherit: false, notify: true}
               );
             })
             .catch(function( err ) {
               notifier.warning('Livro não registado', 'Registo/Edição');
-              message('bookrecord', 'notsaved', err);
+              message('bookrecord', 'notsaved', {error:err})
+                .then(function() {
+                  if ( err.cause.status === 403 ) {
+                    SignalsService.errorforbiddenoccured.emit();
+                  }
+                });
             })
             .finally(function() {
               model.bookrecordLogicForm.processing(false);
@@ -89,7 +94,7 @@
       $scope.$emit('angtty:setval:' + field, model.book[field].length > 1 ? '' : model.book[field][0]);
     };
 
-    model.showSimilarTitles = function( done) {
+    model.showSimilarTitles = function( done ) {
       SignalsService.bookrecordtitlechanged.emit(done);
     };
 
@@ -222,6 +227,11 @@
     function getFirstItemIfOne( vArray ) {
       return (vArray && vArray.length > 0) ? vArray[0] : '';
     }
+
+//    $scope.$on('$destroy', function() {
+//      console.log('destriu record');
+//
+//    });
 
     //////////////
     //util

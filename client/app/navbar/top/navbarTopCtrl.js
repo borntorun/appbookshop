@@ -13,10 +13,10 @@
     .controller('NavBarTopCtrl', NavBarTopCtrl);
 
   /* @ngInject */
-  function NavBarTopCtrl( $scope, $state, $previousState, $timeout, auth, SignalsService) {
+  function NavBarTopCtrl( $scope, $state, $previousState, $timeout, authentication, SignalsService) {
     var model = this;
 
-    model.isAuthenticated = auth.isAuthenticated();
+    model.isAuthenticated = authentication.isAuthenticated();
     model.user = {};
 
 
@@ -35,11 +35,10 @@
       if (model.isAuthenticated === false) {
         $state.go('googlelogin');
 
-
-        $timeout(function(){
-          //console.log('prev');
-          $previousState.go();
-        },200);/*10ms cause error? '$digest already in progress error' in firefox?*/
+//        $timeout(function(){
+//          //console.log('prev');
+//          $previousState.go();
+//        },120);/*10ms cause error? '$digest already in progress error' in firefox?*/
       } else {
         $state.go('logout');
       }
@@ -54,7 +53,7 @@
     function setUser() {
 
       if (model.isAuthenticated) {
-        model.user = angular.extend(model.user, auth.user());
+        model.user = angular.extend(model.user, authentication.user());
       } else {
         model.user = {};
       }

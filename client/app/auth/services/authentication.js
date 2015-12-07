@@ -1,5 +1,5 @@
 /**
- * Service appBookShop.auth auth
+ * Service appBookShop.auth authentication
  * (João Carvalho, 19-09-2015)
  * Criado com base em angular design style de John Papa
  * (https://github.com/johnpapa/angular-styleguide)
@@ -12,16 +12,16 @@
 
   angular
     .module('appBookShop.auth')
-    .factory('auth', auth);
+    .factory('authentication', authentication);
 
   /* @ngInject */
-  function auth( $, $window, Q, httpRequest) {
+  function authentication( $, $window, $timeout, Q, httpRequest, message, SignalsService ) {
     /*
     * Private Block
     */
     var user = null;
     var storage;
-    var refreshAction;
+    var expireSessionTimeout;
 
     /*
     * Public Interface
@@ -40,47 +40,12 @@
       }
     };
 
-    //refresh session featured: abandoned
-    //    SignalsService.loginsucceded.listen(function() {
-    //      setRefreshAction(7500);
-    //    });
-    //    SignalsService.logoutsucceded.listen(function() {
-    //      $timeout.cancel(refreshAction);
-    //    });
-
     return service;
     ///////////////
     //just put functions below this point
     /*
     * Private Block Interface
     */
-
-    //refresh session featured: abandoned
-    //    function refreshSession() {
-    //      console.log('refreshSession');
-    //      //throw new Error('teste');
-    //      //return {time:5000};
-    //
-    //      //se está válido
-    //        //recebe time
-    //        //retorna time
-    //
-    //      //se não está válido
-    //        //retorna erro
-    //    }
-    //    function setRefreshAction(time) {
-    //      console.log('setRefreshAction', time);
-    //      refreshAction = $timeout(refreshSession,time);
-    //
-    //      refreshAction.then(function(data){
-    //        console.log('then', data);
-    //        //setRefreshAction(data.time);
-    //      });
-    //      refreshAction.catch(function(data){
-    //        console.log('catch', data);
-    //        //$state.go('logout');
-    //      });
-    //    }
 
     function errStorage() {
       return Q(null).then(function() {
@@ -94,12 +59,19 @@
       }
 
       return Q(storage.load()
-        .then(function( data ) {
+        .then(function( obj ) {
+
+          if (obj===null){
+            return null;
+          }
+
+          var expireIn = isSessionExpired(obj);
+
+          expireSessionIn(expireIn>0? 0: -1 * expireIn);
+
           //set the user in memory
-          user = data;
-          return data;
-          //refresh session featured: abandoned
-          //if (user!=null) { setRefreshAction(7500);}
+          user = obj;
+          return user;
         }));
     }
 
@@ -107,34 +79,47 @@
       if ( !storage ) {
         return errStorage();
       }
-
-
-
       return Q(storage.save(obj)
         .then(function( data ) {
           //set the user in memory equals to storage
           user = data;
+
+          expireSessionIn(user.expires * 1000);
+
+          return user;
         }));
     }
 
     function isAuthenticated() {
-      return user != null;
+      return user != null/* && !isSessionExpired()*/;
+    }
+
+    function isSessionExpired(obj) {
+      var value = new Date().getTime()-(obj.sessionExpiresAt || 0);
+      return value;
+    }
+
+    function setSessionExpiresAt( obj ) {
+      obj.sessionExpiresAt = new Date().getTime() + (obj.expires * 1000);
+    }
+    function expireSessionIn(miliseconds){
+      expireSessionTimeout = $timeout(function() {
+        SignalsService.logoutisneeded.emit();
+      },miliseconds);
     }
 
     function logout() {
       if ( !storage ) {
         return Q(null);
       }
-      return Q.allSettled([httpRequest.post({url: '/auth/logout'}), storage.clear()])
-        .then(function( /*results*/ ) {
-          /*results.forEach(function (result) {
-            console.log(result.state, result.value, result.reason);
-          });*/
+      return Q.allSettled([
+        httpRequest.post({url: '/auth/logout'}),
+        storage.clear()
+      ])
+        .finally(function() {
+          $timeout.cancel(expireSessionTimeout);
+          //with error or not user set to null
           user = null;
-        })
-        .catch(function( err ) {
-          user = null;
-          throw err;
         });
     }
 
@@ -163,7 +148,7 @@
 
         var domainurl = window.location.protocol + '//' + window.location.hostname + (window.location.port ? ':' + window.location.port : '');
 
-        //console.log(event.data);
+        console.log(event.data);
         //console.log(event.origin);
         //console.log(domainurl);
 
@@ -173,6 +158,7 @@
         }
         else {
           if ( event.data && event.data.user ) {
+            setSessionExpiresAt(event.data.user);
             defer.resolve(saveUser(event.data.user));
           }
           else {

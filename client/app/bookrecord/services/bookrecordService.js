@@ -13,14 +13,11 @@
     .factory('bookrecord', bookrecord);
 
   /* @ngInject */
-  function bookrecord( notifier, Q, httpRequest, _lodash, bookrecordCache ) {
+  function bookrecord( notifier, Q, httpRequest, _lodash, bookrecordCache, SignalsService ) {
     var book = {};
-    //var bookcache = {};
+    var storage = {};
 
     bookrecordCache.remove('bookreset');
-
-    //TODO: this  can not be here
-    bookrecordCache.remove('booktosave');
 
     /*
     * Public Interface
@@ -31,7 +28,10 @@
       save: save,
       clear: clear,
       reset: reset,
-      setReference: setReference
+      setReference: setReference,
+      setStorage: function( key, driver ) {
+        storage[key] = driver;
+      }
     };
     return service;
     ///////////////
@@ -46,10 +46,17 @@
 
     //TODO: extract to a util book service (repeated at bookrecordSimilarTitleCtrl)
     function setReference( ref ) {
-      /*book.reference =*/return _lodash.padLeft(ref, 5, '0');
+      /*book.reference =*/
+      return _lodash.padLeft(ref, 5, '0');
     }
 
     function load( id ) {
+      storage.booktosave.load()
+        .then(function( data ) {
+          //console.log(typeof data);
+          //console.log(data);
+        });
+
       if ( id.toLowerCase() === 'new' ) {
         return editNew();
       }
@@ -59,15 +66,21 @@
     }
 
     function save() {
+      storage.booktosave.save(book)
+        .then(function() {
+        });
 
-      bookrecordCache.put('booktosave', angular.copy(book));
-
-      var defer = call({method: httpRequest.post, url: '/api/books/admin/' + book._id || 'new', data: book},
+      var defer = call({
+          method: httpRequest.post,
+          url: '/api/books/admin/' + book._id || 'new',
+          data: book/*,
+          $403: { fn: SignalsService.errorforbiddenoccured.emit }*/
+        },
         function( response ) {
           init();
           defer.resolve(response.data);
         },
-        function(err) {
+        function( err ) {
           reject(defer, err);
         }
       );
@@ -209,7 +222,7 @@
     }
 
     function handlerError( err ) {
-      notifier.log(err.message, 'Error',err.cause.data);
+      notifier.log(err.message, 'Error', err.cause.data);
 
       return err;
     }

@@ -13,11 +13,15 @@
     .factory('httpRequest', httpRequest);
 
   /* @ngInject */
-  function httpRequest( $http, err ) {
+  function httpRequest( $http, Q, err ) {
     /*
     * Private Block
     */
-
+    var defaultOptions = {
+      cache: true,
+      noError: false,
+      intercept: true
+    };
     /*
     * Public Interface
     */
@@ -33,44 +37,40 @@
     * Private Block Interface
     */
 
-    function call( defaultOptions, options, thenCallback, catchCallback ) {
-      delete options.method;
-      options = angular.extend(angular.copy(defaultOptions), options || {});
-      //console.time('call-' + options.url);
+    function call( options ) {
+      //wtf? delete options.method;
       return $http(options)
-        .then(thenCallback)
-        .catch(catchCallback);
+        .then(response)
+        .catch(throwError);
     }
 
     function post( options ) {
-
-      var defaultOptions = {
-        method: 'POST',
-        cache: true
-      };
-
-      return call(defaultOptions, options, response, throwError);
-
+      return call(angular.extend({}, defaultOptions, options || {}, {method: 'POST'}));
     }
 
     function get( options ) {
-
-      var defaultOptions = {
-        method: 'GET',
-        cache: true
-      };
-      return call(defaultOptions, options, response, throwError);
+      return call(angular.extend({}, defaultOptions, options || {}, {method: 'GET'}));
     }
 
     function response( response ) {
-      //console.timeEnd('call-' + response.config.url);
-      return response/*.data*/;
+      return response;
     }
     function throwError( response ) {
-      if(response.status==0) {
-        response.statusText = 'Network Error (received response empty)';
+      //this one is the last handler for rejection
+      //and will catch a error (if any) or a reject promise (Q.reject) from previous httpinterceptors
+
+      //console.log('http', response);
+//      if(response.status==0) {
+//        response.statusText = 'Network Error (received response empty)';
+//      }
+//      if(config.emitSignalsOnError === true){
+//        var signal = 'http' + response.status;
+//        SignalsService[signal] && (SignalsService[signal].emit());
+//      }
+      if ( response.config.noError !== true) {
+        throw err(response.statusText, response);
       }
-      throw err(response.statusText, response);
+      return Q.reject(response);
     }
   }
 }());

@@ -12,6 +12,7 @@ module.exports = function( app ) {
 
   // Route to index.html
   var funcIndexHtml = function( req, res ) {
+
     var options = {
       root: config.root
     };
@@ -52,8 +53,7 @@ module.exports = function( app ) {
 
   app.route('/auth/logout').post(/*auth.ensureIsAuthenticated, */auth.logout);
 
-  // All undefined asset or api routes should return a 404
-  app.route('/:url(api|auth)/*').get(errors[404]);
+  app.route('/auth/user').get(auth.ensureIsAuthenticated, auth.user);
 
   app.route('/search/free/([0-9]+)/:term?').get(funcIndexHtml);
 
@@ -67,5 +67,18 @@ module.exports = function( app ) {
   app.route('/admin/:area(book|livro)/:reference(new|[\\d]+)/:slug([\\w-]+)?')
     .get(auth.ensureRedirectIfNotAuthenticated, funcIndexHtml)
 
-  app.route('/message/:term?').get(funcIndexHtml);
+  app.route('/message/:term?').get(
+    require('body-parser').json(),
+    require('express-validator')(),
+    function(req, res, next) {
+      req.sanitize('term').escape();
+      next();
+    },
+    funcIndexHtml
+  );
+
+  // All undefined asset or api routes should return a 404
+  //app.route('/:url(api|auth)/*').get(errors[404]);
+  // All undefined asset or api routes should return a 404
+  app.route('*').get(errors[404]);
 };

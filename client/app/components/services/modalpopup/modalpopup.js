@@ -22,8 +22,9 @@
     };
 
     /* @ngInject */
-    this.$get = function( $modal ) {
-      $modal_ = $modal;
+    this.$get = function( _$modal_, _$rootScope_ ) {
+      $modal = _$modal_;
+      $rootScope = _$rootScope_;
       return new ModalPopupServiceFactory();
     };
 
@@ -31,13 +32,14 @@
     Private block
     */
     //reference to $modal
-    var $modal_;
+    var $modal, $rootScope;
     //options to the modal
-    var options = {
-      controller: modalCtrl,
-      controllerAs: 'model'/*,
-        windowClass:"positionModal"*/
-    };
+
+    //    var options = {
+    //      controller: modalCtrl,
+    //      controllerAs: 'model'/*,
+    //        windowClass:"positionModal"*/
+    //    };
 
     /**
      * Service Factory
@@ -79,25 +81,42 @@
     }
 
     function show( message, title, opt ) {
-      options.message = message ? message.replace(/\n/g, '<br/>') : message;
-      options.title = title ? title.replace(/\n/g, '<br/>') : title;
-      options.templateUrl = opt.templateUrl;
-      options.onconfirm = opt.onconfirm;
-      options.oncancel = opt.oncancel;
-      return $modal_.open(options).result;
+
+      var scope = $rootScope.$new();
+      //      options.message = message ? message.replace(/\n/g, '<br/>') : message;
+      //      options.title = title ? title.replace(/\n/g, '<br/>') : title;
+      //      options.templateUrl = opt.templateUrl;
+      //      options.onconfirm = opt.onconfirm;
+      //      options.oncancel = opt.oncancel;
+
+      scope.message = message ? message.replace(/\n/g, '<br/>') : message;
+      scope.title = title ? title.replace(/\n/g, '<br/>') : title;
+      scope.onconfirm = opt.onconfirm;
+      scope.oncancel = opt.cancel;
+
+      return $modal.open({
+        controller: modalCtrl,
+        controllerAs: 'model',
+        templateUrl: opt.templateUrl,
+        scope: scope/*,
+        windowClass:"positionModal"*/
+      }).result;
     }
 
-    function modalCtrl( $scope ) {
+    function modalCtrl( $scope/*,$modalInstance*/ ) {
       var model = this;
 
-      model.title = options.title;
-      model.message = options.message;
+      /*console.log($scope);*/
+      model.title = /*options*/$scope.title;
+      model.message = /*options*/$scope.message;
       model.confirm = function() {
-        options.onconfirm && (options.onconfirm.call());
+        /*options*/
+        $scope.onconfirm && (/*options*/$scope.onconfirm.call());
         $scope.$close();
       };
       model.cancel = function() {
-        options.oncancel && (options.oncancel.call());
+        /*options*/
+        $scope.oncancel && (/*options*/$scope.oncancel.call());
         $scope.$dismiss();
       };
 

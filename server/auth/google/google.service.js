@@ -69,6 +69,8 @@ exports.googleStrategy = function() {
 exports.refresh = function( obj ) {
   //obj is an object {user:...,error:...} data.user is a 'database model' not the req.user
 
+  console.time('google.service.refresh');
+
   var defer = Q.defer();
 
   var opt = extend({}, options.refreshTokenOptions);
@@ -99,6 +101,9 @@ exports.refresh = function( obj ) {
     })
     .catch(function( err ) {
       defer.reject(err);
+    })
+    .finally(function(){
+      console.timeEnd('google.service.refresh');
     });
 
   return defer.promise;
@@ -106,6 +111,8 @@ exports.refresh = function( obj ) {
 }
 
 exports.isValidToken = function( user ) {
+  console.time('google.service.isValidToken');
+
   //user is a 'user database model' not the req.user
   var defer = Q.defer();
 
@@ -128,6 +135,10 @@ exports.isValidToken = function( user ) {
     })
     .catch(function( err ) {
       defer.reject({user: user, error: err});
+    })
+    .finally(function(){
+      console.timeEnd('google.service.isValidToken');
+      console.log(user);
     });
   return defer.promise;
 }

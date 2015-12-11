@@ -11,15 +11,13 @@
 
   module.config(moduleConfig);
 
+  module.run(runConfigStorage);
 
   /* @ngInject */
   function moduleConfig( $stateProvider, _lodash, SignalsServiceProvider ) {
     var states = {};
 
     ///{ref:[\\d]*}
-
-
-
     states['main.bookrecord'] = {
       /* boorecord view for book */
       /* ATENÇÃO: NÃO COLOCAR / NO INÍCIO ... CHILD VIEW */
@@ -64,7 +62,6 @@
       $stateProvider.state(key, state);
     });
 
-
     SignalsServiceProvider.config({
       init: true,
       signals: {
@@ -74,9 +71,15 @@
 
 
 
-
   }
-
-
+  /* @ngInject */
+  function runConfigStorage(localforageDriver, bookrecord){
+    localforageDriver.create(localforageDriver.STORAGE.LOCALSTORAGE, {
+      key: 'booktosave', name: 'bookrecord', storeName: 'appbookshop', description: 'last book to save'
+    })
+      .then(function( driver ) {
+        bookrecord.setStorage('booktosave', driver);
+      });
+  }
 
 }());

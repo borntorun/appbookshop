@@ -42,7 +42,7 @@
     function doneAction() {
       //set process running as false
       model.processRunning = false;
-      console.log('done');
+      //console.log('done');
     }
 
   }

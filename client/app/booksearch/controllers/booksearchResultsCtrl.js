@@ -93,7 +93,7 @@
               },150);*/
             }
 
-            console.log(vm.query,vm.results.length, vm.query.previous? true: false,vm.query.next?true:false);
+            //console.log(vm.query,vm.results.length, vm.query.previous? true: false,vm.query.next?true:false);
           });
 
         })

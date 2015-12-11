@@ -13,7 +13,7 @@
     .factory('authorization', authorization);
 
   /* @ngInject */
-  function authorization( authentication ) {
+  function authorization( Q, authentication ) {
     /*
     * Private Block
     */
@@ -44,7 +44,6 @@
             toState = 'message';
             params = {term: 'Não tem sessão iniciada!<br/>A redireccionar para o início...'};
           }
-
           result.to = {
             state: toState || 'main.search',
             params: params

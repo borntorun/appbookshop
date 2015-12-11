@@ -15,6 +15,14 @@ MessageConfig.find({}).remove(function () {
             type: 'message'
           }
         },
+        authorization:{
+          title: 'Livros & Livros',
+          unauthorized: {
+            message: 'Não possui autorização suficiente ou a sua sessão poderá ter expirado.\nA sua sessão será terminada, sendo que deverá efectuar de novo a entrada com o seu email.',
+            title: '',
+            type: 'message'
+          }
+        },
         bookdetail: {
           title: 'Livros & Livros',
           notfound: {

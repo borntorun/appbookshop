@@ -75,11 +75,13 @@
             .catch(function( err ) {
               notifier.warning('Livro não registado', 'Registo/Edição');
               message('bookrecord', 'notsaved', {error:err})
-                .then(function() {
+                /*.then(function() {
                   if ( err.cause.status === 403 ) {
                     SignalsService.errorforbiddenoccured.emit();
                   }
-                });
+                })*/;
+
+
             })
             .finally(function() {
               model.bookrecordLogicForm.processing(false);

@@ -33,6 +33,7 @@
       loginWithGoogle: loginWithGoogle,
       logout: logout,
       isAuthenticated: isAuthenticated,
+      verifySession: verifySession,
       loadUser: loadUser,
       saveUser: saveUser,
       setStorage: function( driver ) {
@@ -61,13 +62,13 @@
       return Q(storage.load()
         .then(function( obj ) {
 
-          if (obj===null){
+          if ( obj === null ) {
             return null;
           }
 
           var expireIn = isSessionExpired(obj);
 
-          expireSessionIn(expireIn>0? 0: -1 * expireIn);
+          expireSessionIn(expireIn > 0 ? 0 : -1 * expireIn);
 
           //set the user in memory
           user = obj;
@@ -90,22 +91,38 @@
         }));
     }
 
-    function isAuthenticated() {
-      return user != null/* && !isSessionExpired()*/;
+    function verifySession() {
+      var defer = Q.defer();
+
+      httpRequest.get({url: '/auth/user', cache: false, noError: true, intercept: false})
+        .then(function() {
+          defer.resolve(true);
+        })
+        .catch(function() {
+          defer.reject(false);
+          expireSessionIn(0, {params:{signal: 'logoutforced'}});
+        });
+
+      return defer.promise;
     }
 
-    function isSessionExpired(obj) {
-      var value = new Date().getTime()-(obj.sessionExpiresAt || 0);
+    function isAuthenticated() {
+      return user != null;
+    }
+
+    function isSessionExpired( obj ) {
+      var value = new Date().getTime() - (obj.sessionExpiresAt || 0);
       return value;
     }
 
     function setSessionExpiresAt( obj ) {
       obj.sessionExpiresAt = new Date().getTime() + (obj.expires * 1000);
     }
-    function expireSessionIn(miliseconds){
+
+    function expireSessionIn( miliseconds, emitValue ) {
       expireSessionTimeout = $timeout(function() {
-        SignalsService.logoutisneeded.emit();
-      },miliseconds);
+        SignalsService.logoutisneeded.emit(emitValue);
+      }, miliseconds);
     }
 
     function logout() {
@@ -113,7 +130,7 @@
         return Q(null);
       }
       return Q.allSettled([
-        httpRequest.post({url: '/auth/logout'}),
+        httpRequest.post({url: '/auth/logout', $nohttp403: true, noError: true}),
         storage.clear()
       ])
         .finally(function() {
@@ -148,7 +165,7 @@
 
         var domainurl = window.location.protocol + '//' + window.location.hostname + (window.location.port ? ':' + window.location.port : '');
 
-        console.log(event.data);
+        //console.log(event.data);
         //console.log(event.origin);
         //console.log(domainurl);
 

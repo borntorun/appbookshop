@@ -74,15 +74,8 @@
   function configureOtherProviders( exceptionHandlerProvider, SignalsServiceProvider ) {
     // Configure the common exception handler
     exceptionHandlerProvider.configure(config.appErrorPrefix);
-    // Configure the appConfig provider
     // inserir outras confs
 
-    SignalsServiceProvider.config({
-      init: true,
-      signals: {
-        searched: 'searched'
-      }
-    });
   }
 
   core.run(run);

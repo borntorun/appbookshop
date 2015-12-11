@@ -30,6 +30,7 @@
   module.config(moduleConfig);
 
 
+
   /* @ngInject */
   function moduleConfig( $stateProvider, _lodash ) {
     var states = {};

@@ -9,7 +9,7 @@
    */
   auth.config(configProviders);
 
-  auth.run(configureStorage);
+  auth.run(runConfigureStorage);
 
   auth.run(run);
 
@@ -20,7 +20,8 @@
       signals: {
         loginsucceded: 'loginsucceded',
         logoutsucceded: 'logoutsucceded',
-        errorforbiddenoccured: 'errorforbiddenoccured',
+        $http403: '$http403',
+        $http401: '$http401',
         logoutforced: 'logoutforced',
         logoutisneeded: 'logoutisneeded'
       }
@@ -28,7 +29,7 @@
   }
 
   /* @ngInject */
-  function configureStorage( localforageDriver, authentication, notifier, SignalsService ) {
+  function runConfigureStorage( localforageDriver, authentication, notifier, SignalsService ) {
 
     localforageDriver.create(localforageDriver.STORAGE.LOCALSTORAGE, {
       key: 'user', name: 'authentication', storeName: 'appbookshop', description: 'user data'
@@ -49,10 +50,9 @@
   }
 
   /* @ngInject */
-  function run( $rootScope, $state, $timeout, $window, authorization, SignalsService, message ) {
+  function run( $rootScope, $state, $timeout, $window, authorization, authentication, SignalsService, message ) {
     Q.fcall(function() {
       $rootScope.$on('$stateChangeStart', function( e, to, toParams, from/*, fromParams*/ ) {
-
 
         if ( !to.authorization ) return;
 
@@ -66,32 +66,45 @@
           if ( result.to && result.to.state ) {
             $timeout(function() {
               $state.go(result.to.state, result.to.params, {notify: true});
-            }, 100)
-              /*.then(function() {
-                SignalsService.logoutisneeded.emit();
-              })*/;
+            }, 100);
           }
         }
       });
     });
-
+    //    Q.fcall(function() {
+    //      $rootScope.$on('$stateChangeStart', function( e, to, toParams, from/*, fromParams*/ ) {
+    //        if ( /(login)|(logout)/.test(to.name) === false && to.status === undefined ) {
+    //          if ( authentication.isAuthenticated() ) {
+    //            authentication.verifySession()
+    //              .catch(function() {
+    //                e.preventDefault();
+    //              });
+    //          }
+    //        }
+    //      });
+    //    });
     //called when http status error code 403 is received
     //on save a book
-    SignalsService.errorforbiddenoccured.listen(function() {
+    SignalsService.$http403.listen(function() {
       message('authentication', 'forbidden')
         .finally(function() {
           //force logout
           $state.go('logout', {signal: 'logoutforced'}, {location: 'replace'});
         });
     });
+    SignalsService.$http401.listen(function() {
+      message('authorization', 'unauthorized')
+        .then(authentication.verifySession);
+    });
     //action to do after forced logout
     SignalsService.logoutforced.listen(function() {
       $window.location.reload();
     });
 
-    SignalsService.logoutisneeded.listen(function() {
+    SignalsService.logoutisneeded.listen(function(value) {
+      var v = value || {};
       $timeout(function() {
-        $state.go('logout', {}, {location: 'replace'});
+        $state.go('logout', v.params || {}, v.options || {location: 'replace'});
       }, 200);
     });
   }

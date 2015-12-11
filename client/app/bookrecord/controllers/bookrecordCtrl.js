@@ -12,7 +12,7 @@
     .controller('BookrecordCtrl', BookrecordCtrl);
 
   /* @ngInject */
-  function BookrecordCtrl( $scope, $stateParams, $state, _lodash, appConfig,bookrecord, notifier, logicform, message, SignalsService ) {
+  function BookrecordCtrl( $scope, $stateParams, $state, _lodash, appConfig, bookrecord, notifier, logicform, message, SignalsService ) {
     /*jshint validthis: true */
     var model = this;
 
@@ -57,6 +57,23 @@
 
     };
 
+    model.newForm = function() {
+      function go(){
+        $state.go('main.bookrecord',{type:'livro',reference:'new',slug:''},{reload:true});
+      }
+
+      if ( logicform.bookrecord.isPristine() === false ) {
+        message('bookrecord', 'new')
+          .then(function() {
+            go();
+          });
+      }
+      else {
+        go();
+      }
+
+    };
+
     model.save = function() {
       message('bookrecord', 'save')
         .then(function() {
@@ -74,13 +91,12 @@
             })
             .catch(function( err ) {
               notifier.warning('Livro não registado', 'Registo/Edição');
-              message('bookrecord', 'notsaved', {error:err})
+              message('bookrecord', 'notsaved', {error: err})
                 /*.then(function() {
                   if ( err.cause.status === 403 ) {
                     SignalsService.errorforbiddenoccured.emit();
                   }
                 })*/;
-
 
             })
             .finally(function() {
@@ -230,10 +246,10 @@
       return (vArray && vArray.length > 0) ? vArray[0] : '';
     }
 
-//    $scope.$on('$destroy', function() {
-//      console.log('destriu record');
-//
-//    });
+    //    $scope.$on('$destroy', function() {
+    //      console.log('destriu record');
+    //
+    //    });
 
     //////////////
     //util

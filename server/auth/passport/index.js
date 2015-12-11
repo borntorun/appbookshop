@@ -15,34 +15,34 @@ module.exports = function( app ) {
   //   have a database of user records, the complete Google profile is
   //   serialized and deserialized.
   passport.serializeUser(function( req, user, done ) {
-    console.log('serializeUser:>>>\n', user);
+    //console.log('serializeUser:>>>\n', user);
     done(null, user);
   });
 
   passport.deserializeUser(function( req, user, done ) {
 
     //TODO: better solution?
-    console.log(req.url);
+    //console.log(req.url);
     var needToVerifyToken = (req.url.indexOf('/admin/') > -1 || req.url.indexOf('/auth/') > -1);
 
     if ( needToVerifyToken ) {
-      console.log('deserializeUser needToVerifyToken:>>>\n', user);
+      //console.log('deserializeUser needToVerifyToken:>>>\n', user);
       googleProfile
         .getUser(user)
         .then(googleService.isValidToken)
         .catch(googleService.refresh)
         .then(function( result ) {
-          console.log('deserializeUser: result then>>>', result);
+          //console.log('deserializeUser: result then>>>', result);
           user.expires = result.expiresInSeconds;
           done(null, user);
         })
         .catch(function( result ) {
-          console.log('deserializeUser: result catch>>>', result);
+          //console.log('deserializeUser: result catch>>>', result);
           done(null, null);
         });
     }
     else {
-      console.log('deserializeUser:>>>\n', user);
+      //console.log('deserializeUser:>>>\n', user);
       done(null, user);
     }
 

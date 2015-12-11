@@ -56,7 +56,7 @@ exports.googleStrategy = function() {
         }
 
         function returnErrRedirect( err ) {
-          console.log(err);
+          //console.log(err);
           return req.res.redirect('/auth/google/fail');
         }
 
@@ -111,7 +111,7 @@ exports.refresh = function( obj ) {
 }
 
 exports.isValidToken = function( user ) {
-  console.time('google.service.isValidToken');
+  //console.time('google.service.isValidToken');
 
   //user is a 'user database model' not the req.user
   var defer = Q.defer();
@@ -136,9 +136,9 @@ exports.isValidToken = function( user ) {
     .catch(function( err ) {
       defer.reject({user: user, error: err});
     })
-    .finally(function(){
-      console.timeEnd('google.service.isValidToken');
-      console.log(user);
-    });
+    /*.finally(function(){
+      //console.timeEnd('google.service.isValidToken');
+      //console.log(user);
+    })*/;
   return defer.promise;
 }

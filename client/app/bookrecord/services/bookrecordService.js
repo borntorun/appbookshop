@@ -13,7 +13,7 @@
     .factory('bookrecord', bookrecord);
 
   /* @ngInject */
-  function bookrecord( notifier, Q, httpRequest, _lodash, bookrecordCache, SignalsService ) {
+  function bookrecord( notifier, Q, httpRequest, _lodash, bookrecordCache/*, SignalsService*/ ) {
     var book = {};
     var storage = {};
 

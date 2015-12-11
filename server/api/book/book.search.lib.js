@@ -18,7 +18,7 @@ function sanitizeInputArray(aInput) {
 
 function getRegExpFromString(value) {
   var exp = '\\b' + value.trim().replace(/[\t\n ]+/g, ' ') + '\\b';
-  console.log('exp------------------->>>', exp);
+  //console.log('exp------------------->>>', exp);
   return new RegExp(exp, 'i');
 }
 

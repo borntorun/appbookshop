@@ -22,7 +22,7 @@ module.exports = function(table, objects) {
         if ( err ) {return;}
         count(function(err, num) {
           if ( err ) {return;}
-          console.log(table.name + ' seeded: ', num);
+          //console.log(table.name + ' seeded: ', num);
         });
       });
     }

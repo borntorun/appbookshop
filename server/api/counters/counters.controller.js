@@ -9,7 +9,7 @@ exports.get = function( req, res ) {
     if ( !Counter ) {
       return res.send(404);
     }
-    return res.json(200, Counter);
+    return res.status(200).json(Counter);
   });
 };
 

@@ -15,7 +15,7 @@ exports.read = function( req, res ) {
 
 //Simple search
 exports.search = function( req, res ) {
-  console.log(req.params);
+  //console.log(req.params);
   var filter = searchLib.filter(req.params.filter);
 
   searchBook(req, res, filter);
@@ -29,7 +29,7 @@ exports.search = function( req, res ) {
 
 //Advanced search
 exports.advancedSearch = function( req, res ) {
-  console.log(req.params);
+  //console.log(req.params);
   var filter = searchLib.advfilter(req.params);
 
   searchBook(req, res, filter);
@@ -44,7 +44,7 @@ exports.advancedSearch = function( req, res ) {
 function searchBook( req, res, filter ) {
   if ( req.params.loadfrom && req.params.loadfrom !== '-' ) {
     filter.title = {$gt: req.params.loadfrom};
-    console.log(filter);
+    //console.log(filter);
   }
 
   Book
@@ -128,7 +128,7 @@ exports.save = function( req, res ) {
           return handleError(err, res);
         }
 
-        return res.json(200, {
+        return res.status(200).json({
           _id: data._id,
           reference: data.reference,
           title: data.title,
@@ -164,7 +164,7 @@ function bookListResults( req, res ) {
     //    if ( last && last.length > 0 ) {
     //      res.append('loadfrom', last[0].title);
     //    }
-    return res.json(200, Books);
+    return res.status(200).json(Books);
   };
 }
 
@@ -182,7 +182,7 @@ function result( res ) {
     if ( !data ) {
       return res.send(404);
     }
-    return res.json(200, data);
+    return res.status(200).json(data);
   };
 }
 function handleError( err, res, code ) {

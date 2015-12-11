@@ -57,6 +57,11 @@ MessageConfig.find({}).remove(function () {
             message: 'Desfazer alterações efectuadas?\n\nO registo da base de dados será carregado.\n(perderá as alterações efectuadas no formulário)',
             title: '',
             type: 'confirm'
+          },
+          new: {
+            message: 'Registar novo livro?\n\nPerderá as alterações que efectuou no registo actual.',
+            title: '',
+            type: 'confirm'
           }
         }
       }

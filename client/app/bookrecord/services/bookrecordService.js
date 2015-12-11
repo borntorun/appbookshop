@@ -13,11 +13,11 @@
     .factory('bookrecord', bookrecord);
 
   /* @ngInject */
-  function bookrecord( notifier, Q, httpRequest, _lodash, bookrecordCache/*, SignalsService*/ ) {
+  function bookrecord( notifier, Q, httpRequest, _lodash, bookrecordCache, SignalsService ) {
     var book = {};
     var storage = {};
 
-    bookrecordCache.remove('bookreset');
+
 
     /*
     * Public Interface
@@ -39,9 +39,11 @@
     /*
     * Private Block
     */
-    function reset() {
+
+
+    function reset(value) {
       clear();
-      book = angular.extend(book, bookrecordCache.get('bookreset') /*bookcache*/);
+      book = angular.extend(book, value || bookrecordCache.get('bookreset'));
     }
 
     //TODO: extract to a util book service (repeated at bookrecordSimilarTitleCtrl)
@@ -53,8 +55,13 @@
     function load( id ) {
       storage.booktosave.load()
         .then(function( data ) {
-          //console.log(typeof data);
-          //console.log(data);
+          if (data){
+//            console.log(data.url);
+//            console.log(bookrecordCache.get('bookurlactive'));
+            if(data.url === bookrecordCache.get('bookurlactive')) {
+              SignalsService.reloadbooktosaveneeded.emit(data.book);
+            }
+          }
         });
 
       if ( id.toLowerCase() === 'new' ) {
@@ -66,24 +73,25 @@
     }
 
     function save() {
-      storage.booktosave.save(book)
+      storage.booktosave.save({url: bookrecordCache.get('bookurlactive'), book: book})
         .then(function() {
         });
 
-      var defer = call({
-          method: httpRequest.post,
-          url: '/api/books/admin/' + book._id || 'new',
-          data: book/*,
-          $403: { fn: SignalsService.errorforbiddenoccured.emit }*/
-        },
+      var defer = call({method: httpRequest.post, url: '/api/books/admin/' + book._id || 'new',data: book},
         function( response ) {
           init();
           defer.resolve(response.data);
+          storage.booktosave.clear();
         },
         function( err ) {
           reject(defer, err);
         }
       );
+
+//      defer.promise.finally(function(){
+//        console.log('final');
+//      });
+
       return defer.promise;
     }
 
@@ -100,7 +108,6 @@
           book.reference = setReference(book.reference);
           book.dateResgistrationLocal = new Date(data.dateResgistration).getTime();
           book.dateUpdateLocal = new Date(data.dateUpdate).getTime();
-          //bookcache = angular.copy(book);
           bookrecordCache.put('bookreset', angular.copy(book));
           defer.resolve(data);
         },
@@ -110,7 +117,6 @@
       );
       return defer.promise;
     }
-
     function editNew() {
       init();
       var defer = call({method: httpRequest.get, url: '/api/counters/newbookreference/', cache: false},

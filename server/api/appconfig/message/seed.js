@@ -62,6 +62,11 @@ MessageConfig.find({}).remove(function () {
             message: 'Registar novo livro?\n\nPerderá as alterações que efectuou no registo actual.',
             title: '',
             type: 'confirm'
+          },
+          reloadsaved: {
+            message: 'Recuperar as alterações efectuadas anteriormente neste registo?',
+            title: '',
+            type: 'confirm'
           }
         }
       }

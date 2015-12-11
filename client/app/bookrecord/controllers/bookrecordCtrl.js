@@ -12,11 +12,15 @@
     .controller('BookrecordCtrl', BookrecordCtrl);
 
   /* @ngInject */
-  function BookrecordCtrl( $scope, $stateParams, $state, _lodash, appConfig, bookrecord, notifier, logicform, message, SignalsService ) {
+  function BookrecordCtrl( $scope, $stateParams, $state, _lodash, appConfig, bookrecord, bookrecordCache, notifier, logicform, message, SignalsService ) {
     /*jshint validthis: true */
     var model = this;
 
     model.params = $stateParams;
+
+    bookrecordCache.remove('bookreset');
+
+    bookrecordCache.put('bookurlactive', $state.href($state.current.name, $state.params, {absolute: true}));
 
     bookrecord.load($stateParams.reference)
       .then(function( /*data*/ ) {
@@ -28,6 +32,18 @@
             $state.go('main.search');
           });
       });
+
+    function reloadbooktosave(value){
+      message('bookrecord', 'reloadsaved')
+        .then(function() {
+          bookrecord.reset(value);
+          emitInitValues();
+          logicform.bookrecord.setPristine();
+        });
+
+    }
+
+    SignalsService.reloadbooktosaveneeded.listen(reloadbooktosave);
 
     model.book = bookrecord.book;
 
@@ -80,6 +96,7 @@
 
           model.bookrecordLogicForm.processing(true);
 
+
           bookrecord.save()
             .then(function( data ) {
               notifier.info('Livro registado', 'Registo/Edição', data.reference);
@@ -100,6 +117,7 @@
 
             })
             .finally(function() {
+              bookrecordCache.remove('booktosaveurl');
               model.bookrecordLogicForm.processing(false);
             });
         })
@@ -246,10 +264,9 @@
       return (vArray && vArray.length > 0) ? vArray[0] : '';
     }
 
-    //    $scope.$on('$destroy', function() {
-    //      console.log('destriu record');
-    //
-    //    });
+    $scope.$on('$destroy', function() {
+      SignalsService.reloadbooktosaveneeded.unlisten(reloadbooktosave);
+    });
 
     //////////////
     //util

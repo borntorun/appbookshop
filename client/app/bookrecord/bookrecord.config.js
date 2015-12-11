@@ -9,12 +9,12 @@
 
   var module = angular.module('appBookShop.bookrecord');
 
-  module.config(moduleConfig);
+  module.config(config);
 
-  module.run(runConfigStorage);
+  module.run(run);
 
   /* @ngInject */
-  function moduleConfig( $stateProvider, _lodash, SignalsServiceProvider ) {
+  function config( $stateProvider, _lodash, SignalsServiceProvider ) {
     var states = {};
 
     ///{ref:[\\d]*}
@@ -65,7 +65,8 @@
     SignalsServiceProvider.config({
       init: true,
       signals: {
-        bookrecordtitlechanged: 'bookrecordtitlechanged'
+        bookrecordtitlechanged: 'bookrecordtitlechanged',
+        reloadbooktosaveneeded: 'reloadbooktosaveneeded'
       }
     });
 
@@ -73,7 +74,7 @@
 
   }
   /* @ngInject */
-  function runConfigStorage(localforageDriver, bookrecord){
+  function run(localforageDriver, bookrecord){
     localforageDriver.create(localforageDriver.STORAGE.LOCALSTORAGE, {
       key: 'booktosave', name: 'bookrecord', storeName: 'appbookshop', description: 'last book to save'
     })

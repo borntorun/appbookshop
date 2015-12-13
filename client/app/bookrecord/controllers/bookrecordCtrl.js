@@ -12,53 +12,36 @@
     .controller('BookrecordCtrl', BookrecordCtrl);
 
   /* @ngInject */
-  function BookrecordCtrl( $scope, $stateParams, $state, _lodash, appConfig, bookrecord, bookrecordCache, notifier, logicform, message, SignalsService ) {
+  function BookrecordCtrl( $scope, $stateParams, $state, _lodash, localforageDriver, appConfig, Book, bookrecord, notifier, logicform, message, SignalsService ) {
     /*jshint validthis: true */
     var model = this;
 
     model.params = $stateParams;
 
-    bookrecordCache.remove('bookreset');
-
-    bookrecordCache.put('bookurlactive', $state.href($state.current.name, $state.params, {absolute: true}));
-
-    bookrecord.load($stateParams.reference)
-      .then(function( /*data*/ ) {
-        emitInitValues();
-      })
-      .catch(function( /*error*/ ) {
-        message('bookrecord', 'notfound')
-          .finally(function() {
-            $state.go('main.search');
-          });
-      });
-
-    function reloadbooktosave(value){
-      message('bookrecord', 'reloadsaved')
-        .then(function() {
-          bookrecord.reset(value);
-          emitInitValues();
-          logicform.bookrecord.setPristine();
+    if ( Book ) {
+      model.book = Book;
+      emitInitValues();
+    }
+    else {
+      message('bookrecord', 'notfound')
+        .finally(function() {
+          $state.go('main.search');
         });
-
+      return;
     }
 
-    SignalsService.reloadbooktosaveneeded.listen(reloadbooktosave);
+    model.labels = appConfig.book.labels;
 
-    model.book = bookrecord.book;
+    model.placeholders = appConfig.book.placeholders;
 
-    model.labels = appConfig.book/*Config*/.labels;
-
-    model.placeholders = appConfig.book/*Config*/.placeholders;
-
-    model.valMessages = appConfig.book/*Config*/.valMessages;
+    model.valMessages = appConfig.book.valMessages;
 
     model.anoActual = new Date().getFullYear();
 
     model.resetForm = function() {
       message('bookrecord', 'reset')
         .then(function() {
-          bookrecord.reset();
+          bookrecord.reset(model.book);
           emitInitValues();
           logicform.bookrecord.setPristine();
         });
@@ -66,16 +49,17 @@
     };
 
     model.clearForm = function() {
+      console.log(Book);
       message('bookrecord', 'clear')
         .then(function() {
-          bookrecord.clear();
+          bookrecord.clear(Book);
         });
 
     };
 
     model.newForm = function() {
-      function go(){
-        $state.go('main.bookrecord',{type:'livro',reference:'new',slug:''},{reload:true});
+      function go() {
+        $state.go('main.bookrecord', {type: 'livro', reference: 'new', slug: ''}, {reload: true});
       }
 
       if ( logicform.bookrecord.isPristine() === false ) {
@@ -87,7 +71,6 @@
       else {
         go();
       }
-
     };
 
     model.save = function() {
@@ -96,11 +79,12 @@
 
           model.bookrecordLogicForm.processing(true);
 
+          storage.booktosave && (storage.booktosave.save({url: $state.href($state.current.name, $state.params, {absolute: true}), book: model.book}));
 
-          bookrecord.save()
+          bookrecord.save(model.book)
             .then(function( data ) {
               notifier.info('Livro registado', 'Registo/Edição', data.reference);
-
+              storage.booktosave.clear();
               $state.go($state.current,
                 {area: 'admin', type: $state.params.type, reference: data.reference, slug: data.slug},
                 {reload: true, inherit: false, notify: true}
@@ -117,7 +101,7 @@
 
             })
             .finally(function() {
-              bookrecordCache.remove('booktosaveurl');
+              //              bookrecordCache.remove('booktosaveurl');
               model.bookrecordLogicForm.processing(false);
             });
         })
@@ -190,6 +174,27 @@
 
       }
     };
+    var storage = {};
+
+    localforageDriver.create(localforageDriver.STORAGE.LOCALSTORAGE, {
+      key: 'booktosave', name: 'bookrecord', storeName: 'appbookshop', description: 'last book to save'
+    })
+      .then(function( driver ) {
+        storage.booktosave = driver;
+        return storage.booktosave.load();
+      })
+      .then(function( data ) {
+        if ( data ) {
+          if ( data.url === $state.href($state.current.name, $state.params, {absolute: true}) ) {
+            message('bookrecord', 'reloadsaved')
+              .then(function() {
+                bookrecord.reset(model.book, data.book);
+                emitInitValues();
+                logicform.bookrecord.setPristine();
+              });
+          }
+        }
+      });
 
     var autocompleteOptions = {
       showLog: true,
@@ -198,7 +203,7 @@
       emitOnlyIfPresent: true,
       watchInitEvent: true,
       watchSetValEvent: true
-      /*, setSameListenerEventBefore: true*/};
+    };
     var autocompleteTTOptions = {minLength: 3, limit: 20};
 
     model.config = {
@@ -265,7 +270,7 @@
     }
 
     $scope.$on('$destroy', function() {
-      SignalsService.reloadbooktosaveneeded.unlisten(reloadbooktosave);
+
     });
 
     //////////////

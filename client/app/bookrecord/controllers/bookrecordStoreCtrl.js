@@ -14,11 +14,11 @@
     .controller('BookrecordStoreCtrl', BookrecordStoreCtrl);
 
   /* @ngInject */
-  function BookrecordStoreCtrl( /*bookConfig*/appConfig, bookrecord) {
+  function BookrecordStoreCtrl( /*bookConfig*/appConfig, Book/*bookrecord*/) {
     /*jshint validthis: true */
     var model = this;
 
-    model.book = bookrecord.book;
+    model.book = Book/*bookrecord.book*/;
 
     model.labels = appConfig.book/*Config*/.labels;
 

@@ -9,7 +9,7 @@
      * pass to register all of the modules listed
      */
     'ngCookies', 'ngResource', 'ngSanitize', 'ngAnimate', 'ui.router','ct.ui.router.extras', 'ui.bootstrap', 'dynamicLayout',
-    'angularTypeaheadjs', 'jsSignalsServiceModule'/*'testDirective',*/
+    'angularTypeaheadjs', 'jsSignalsServiceModule', 'ui.router.title'/*'testDirective',*/
     /*
      * Everybody has access to these.
      * We could place these under every feature area,

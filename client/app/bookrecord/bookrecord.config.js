@@ -55,7 +55,22 @@
         /*,
         requiredPermissions: ['Admin', 'UserManager'],
         permissionType: 'AtLeastOne'*/
+      },
+      resolve: {
+        Book: ['$stateParams', 'bookrecord', function( $stateParams, bookrecord) {
+          return bookrecord.edit($stateParams.reference)
+            .then(function( data ) {
+              return data;
+            })
+            .catch(function() {
+              return null;
+            });
+        }],
+        $title: ['Book', function( Book ) {
+          return '[Edit:' + ((Book || {}).title || 'novo') + ']';
+        }]
       }
+
     };
 
     _lodash.forEach(states, function( state, key ) {
@@ -70,17 +85,16 @@
       }
     });
 
-
-
   }
+
   /* @ngInject */
-  function run(localforageDriver, bookrecord){
-    localforageDriver.create(localforageDriver.STORAGE.LOCALSTORAGE, {
-      key: 'booktosave', name: 'bookrecord', storeName: 'appbookshop', description: 'last book to save'
-    })
-      .then(function( driver ) {
-        bookrecord.setStorage('booktosave', driver);
-      });
+  function run( localforageDriver, bookrecord ) {
+    //    localforageDriver.create(localforageDriver.STORAGE.LOCALSTORAGE, {
+    //      key: 'booktosave', name: 'bookrecord', storeName: 'appbookshop', description: 'last book to save'
+    //    })
+    //      .then(function( driver ) {
+    //        bookrecord.setStorage('booktosave', driver);
+    //      });
   }
 
 }());

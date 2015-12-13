@@ -11,8 +11,8 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <base href="/">
+    <title ng-bind="$title + ' § Livros & Livros'">§ Livros & Livros</title>
 
-    <title>Livros & Livros</title>
     <style>
         /* This helps the ng-show/ng-hide animations start at the right place. */
         /* Since Angular has this but needs to load, this gives us the class early. */
@@ -117,8 +117,9 @@
 <script src="bower_components/d3/d3.js"></script>
 <script src="bower_components/ngInfiniteScroll/build/ng-infinite-scroll.js"></script>
 <script src="bower_components/jquery_appear/jquery.appear.js"></script>
-<script src="bower_components/angular-dynamic-layout/dist/angular-dynamic-layout.js"></script>
 <script src="bower_components/ui-router-extras/release/ct-ui-router-extras.js"></script>
+<script src="bower_components/angular-ui-router-title/angular-ui-router-title.js"></script>
+<script src="bower_components/angular-dynamic-layout/dist/angular-dynamic-layout.js"></script>
 <!-- endbower -->
 <!-- endbuild -->
 <!--<script src="app/bower_components/ui-router-extras/release/ct-ui-router-extras.js"></script>-->
@@ -193,6 +194,7 @@
 <script src="app/components/services/isbn.js"></script>
 <script src="app/components/services/modalpopup/modalpopup.js"></script>
 <script src="app/components/services/mutationObserver.js"></script>
+<script src="app/components/services/pageTitle.js"></script>
 <script src="app/main/main.js"></script>
 <script src="app/navbar/top/navbarTopCtrl.js"></script>
 <!-- endinjector -->

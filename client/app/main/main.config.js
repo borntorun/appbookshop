@@ -48,7 +48,6 @@
       },
       sticky: true
     };
-
     states['message'] = {
       url: '/message/:term', /*QD não tem url  não colocar key */
       views: {

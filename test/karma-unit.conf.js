@@ -16,6 +16,8 @@ module.exports = function(config) {
     //mocha stuff
     'test/mocha.conf.js',
 
+    //my stuff
+    'test/client/unit/mocks.js',
     //test files
     'test/client/unit/modules/**/*_Spec.js',
     'test/client/unit/services/**/*_Spec.js',

@@ -14,14 +14,14 @@
     .controller('BookrecordSimilarTitleCtrl', BookrecordSimilarTitleCtrl);
 
   /* @ngInject */
-  function BookrecordSimilarTitleCtrl( $scope, $stateParams, Q, _lodash, bookrecord, booksearch, SignalsService ) {
+  function BookrecordSimilarTitleCtrl( $scope, $stateParams, Q, _lodash, Book/*bookrecord*/, booksearch, SignalsService ) {
     /*jshint validthis: true */
     var model = this;
 
     model.mustHide = $stateParams.reference !== 'new';
 
     if (model.mustHide === false) {
-      model.book = bookrecord.book;
+      model.book = Book;//bookrecord.book;
 
       SignalsService.bookrecordtitlechanged.listen(search);
 
@@ -62,9 +62,9 @@
         .then(function( results ) {
           var dataAll = [];
 
-          function removeIfCurrent( item ) {
-            return bookrecord.setReference(item.reference) === model.book.reference;
-          }
+//          function removeIfCurrent( item ) {
+//            return bookrecord.setReference(item.reference) === model.book.reference;
+//          }
 
           for ( var i = 0; i < results.length; i++ ) {
             if ( results[i].state === 'fulfilled' ) {

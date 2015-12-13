@@ -12,7 +12,7 @@
     .controller('BookSearchResultsCtrl', BookSearchResultsCtrl);
 
   /* @ngInject */
-  function BookSearchResultsCtrl( $rootScope, $scope, $stateParams, $timeout, _lodash, notifier, SignalsService, authentication, appConfig, booksearch, booksearchCache) {
+  function BookSearchResultsCtrl( $rootScope, $scope, $stateParams, $timeout, Criteria,_lodash, notifier, SignalsService, authentication, appConfig, booksearch, booksearchCache) {
     /*jshint validthis: true */
     var vm = this;
 
@@ -22,9 +22,11 @@
     vm.isAuthenticated = authentication.isAuthenticated();
 
 
-    vm.criteria = _lodash.clone($stateParams, true);
-    delete vm.criteria.type;
-    if (!vm.criteria.limit) {vm.criteria.limit = appConfig.book/*Config*/.search.limitDefault;}
+//    vm.criteria = _lodash.clone($stateParams, true);
+//    delete vm.criteria.type;
+//    if (!vm.criteria.limit) {vm.criteria.limit = appConfig.book.search.limitDefault;}
+    vm.criteria = Criteria;
+
 
     //call search and get results
     var funcSearch = $stateParams.type === 'advanced'? booksearch.queryAdvanced : booksearch.queryFree;
@@ -34,7 +36,7 @@
     var limit = vm.query.parameters[0];
 
     //set viewport
-    var viewport = appConfig.book/*Config*/.search.viewportDefault % limit !== 0? limit * 3: appConfig.book/*Config*/.search.viewportDefault;
+    var viewport = appConfig.book.search.viewportDefault % limit !== 0? limit * 3: appConfig.book.search.viewportDefault;
 
     vm.query = vm.query.setViewport(viewport);
 

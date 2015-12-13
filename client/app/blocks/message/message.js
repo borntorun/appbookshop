@@ -22,8 +22,6 @@
     * Public Interface
     */
     //is a function
-
-
     function service ( keyGroup, keyMessage, opt) {
       if(typeof keyGroup === 'string' && typeof keyMessage === 'string') {
         var group = appConfig.message/*messageConfig*/[keyGroup];

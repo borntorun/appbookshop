@@ -38,6 +38,7 @@ module.exports = function() {
       'client/bower_components/angular-dynamic-layout/dist/angular-dynamic-layout.js',
       'client/bower_components/jquery_appear/jquery.appear.js',
       'client/bower_components/sprintf/dist/sprintf.min.js',
+      'client/bower_components/angular-ui-router-title/angular-ui-router-title.js',
 
       'client/app/app.module.js',
       'client/app/**/*.module.js',//must be specified like this: because name includes more than one '.'

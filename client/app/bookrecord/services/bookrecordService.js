@@ -13,103 +13,43 @@
     .factory('bookrecord', bookrecord);
 
   /* @ngInject */
-  function bookrecord( notifier, Q, httpRequest, _lodash, bookrecordCache, SignalsService ) {
-    var book = {};
-    var storage = {};
-
-
-
+  function bookrecord( notifier, Q, httpRequest, bookrecordCache ) {
     /*
     * Public Interface
     */
     var service = {
-      book: book,
-      load: load,
+//      get: get,
+      edit: load,
       save: save,
       clear: clear,
-      reset: reset,
-      setReference: setReference,
-      setStorage: function( key, driver ) {
-        storage[key] = driver;
-      }
+      reset: reset
     };
     return service;
-    ///////////////
+    ///////////////////////////////////////////
 
     /*
-    * Private Block
+    * Private Block Interface
     */
+//    function get( id ) {
+//      var defer = call({method: httpRequest.get, url: '/api/books/store/' + (id || '')},
+//        function( response ) {
+//          defer.resolve(response.data);
+//        },
+//        function(err){
+//          defer.reject(err);
+//        });
+//      return defer.promise;
+//    }
 
-
-    function reset(value) {
-      clear();
-      book = angular.extend(book, value || bookrecordCache.get('bookreset'));
+    function load( reference ) {
+      bookrecordCache.remove('bookreset');
+      return reference.toLowerCase() === 'new' ? editNew() : edit(reference);
     }
 
-    //TODO: extract to a util book service (repeated at bookrecordSimilarTitleCtrl)
-    function setReference( ref ) {
-      /*book.reference =*/
-      return _lodash.padLeft(ref, 5, '0');
-    }
-
-    function load( id ) {
-      storage.booktosave.load()
-        .then(function( data ) {
-          if (data){
-//            console.log(data.url);
-//            console.log(bookrecordCache.get('bookurlactive'));
-            if(data.url === bookrecordCache.get('bookurlactive')) {
-              SignalsService.reloadbooktosaveneeded.emit(data.book);
-            }
-          }
-        });
-
-      if ( id.toLowerCase() === 'new' ) {
-        return editNew();
-      }
-      else {
-        return edit(id);
-      }
-    }
-
-    function save() {
-      storage.booktosave.save({url: bookrecordCache.get('bookurlactive'), book: book})
-        .then(function() {
-        });
-
-      var defer = call({method: httpRequest.post, url: '/api/books/admin/' + book._id || 'new',data: book},
+    function save(book) {
+      var defer = call({method: httpRequest.post, url: '/api/books/admin/' + book._id || 'new', data: book},
         function( response ) {
-          init();
           defer.resolve(response.data);
-          storage.booktosave.clear();
-        },
-        function( err ) {
-          reject(defer, err);
-        }
-      );
-
-//      defer.promise.finally(function(){
-//        console.log('final');
-//      });
-
-      return defer.promise;
-    }
-
-    function edit( id ) {
-      clear();
-      var defer = call({method: httpRequest.get, url: '/api/books/admin/' + (id || ''), cache: false},
-        function( response ) {
-          var data = response.data;
-          for ( var k in data ) {
-            if ( data.hasOwnProperty(k) ) {
-              book[k] = data[k];
-            }
-          }
-          book.reference = setReference(book.reference);
-          book.dateResgistrationLocal = new Date(data.dateResgistration).getTime();
-          book.dateUpdateLocal = new Date(data.dateUpdate).getTime();
-          bookrecordCache.put('bookreset', angular.copy(book));
-          defer.resolve(data);
         },
         function( err ) {
           reject(defer, err);
@@ -117,35 +57,52 @@
       );
       return defer.promise;
     }
-    function editNew() {
-      init();
-      var defer = call({method: httpRequest.get, url: '/api/counters/newbookreference/', cache: false},
-        function( response ) {
-          book.reference = setReference(response.data.seq);
-          defer.resolve(book.reference);
-        },
-        function( err ) {
-          reject(defer, err);
-        });
-      return defer.promise;
-    }
 
-    function init() {
+    function clear(book) {
       for ( var k in book ) {
-        if ( book.hasOwnProperty(k) ) {
-          delete book[k];
-        }
-      }
-      book = angular.extend(book, model());
-    }
-
-    function clear() {
-      for ( var k in book ) {
-        if ( k !== '_id' && k !== 'reference' && book.hasOwnProperty(k) ) {
+        if ( book.hasOwnProperty(k) && k !== '_id' && k !== 'reference' ) {
           book[k] = undefined;
         }
       }
-      book = angular.extend(book, model());
+      angular.extend(book || {}, model());
+    }
+
+    function reset( book, value ) {
+      service.clear(book);
+      return angular.extend(book, value || bookrecordCache.get('bookreset'));
+    }
+
+    //Private Block
+    ///////////////////////////////////////////
+    function edit( reference ) {
+      clear();
+      var defer = call({method: httpRequest.get, url: '/api/books/admin/' + (reference || ''), cache: false},
+        function( response ) {
+          var data = response.data;
+          var book=angular.extend({},model(), data);
+          book.dateResgistrationLocal = new Date(data.dateResgistration).getTime();
+          book.dateUpdateLocal = new Date(data.dateUpdate).getTime();
+          bookrecordCache.put('bookreset', angular.copy(book));
+          defer.resolve(book);
+        },
+        function( err ) {
+          reject(defer, err);
+        }
+      );
+      return defer.promise;
+    }
+
+    function editNew() {
+      var book = model();
+      var defer = call({method: httpRequest.get, url: '/api/counters/newbookreference/', cache: false},
+        function( response ) {
+          book.reference = response.data.seq;
+          defer.resolve(book);
+        },
+        function( err ) {
+          reject(defer, err);
+        });
+      return defer.promise;
     }
 
     function model() {

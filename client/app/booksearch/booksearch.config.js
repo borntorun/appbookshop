@@ -66,6 +66,22 @@
 
     };
 
+    var searchCriteria = ['_lodash','$stateParams', 'appConfig', function(_lodash, $stateParams, appConfig){
+      var a = _lodash.clone($stateParams, true);
+      delete a.type;
+      if (!a.limit) {
+        a.limit = appConfig.book.search.limitDefault;
+      }
+      return a;
+    }];
+
+    var title = ['_lodash','Criteria', function(_lodash,Criteria){
+      var a = angular.copy(Criteria);
+      delete a.limit;
+      var s = _lodash.toArray(a).join();
+      return s? '[Pesquisa: ' + s + ']': '';
+    }];
+
     states['main.search.featured'] = {
       url: '',
       params: {
@@ -74,7 +90,11 @@
         term: { value: '', squash: true }
       },
       templateUrl: 'app/booksearch/jade/booksearchResult.html',
-      controller: 'BookSearchResultsCtrl as vm'
+      controller: 'BookSearchResultsCtrl as vm',
+      resolve: {
+        Criteria: searchCriteria,
+        $title: title
+      }
     };
     states['main.search.results'] = {
       url: 'search/:type/:limit/:term',
@@ -84,7 +104,11 @@
         term: { value: '', squash: true }
       },
       templateUrl: 'app/booksearch/jade/booksearchResult.html',
-      controller: 'BookSearchResultsCtrl as vm'
+      controller: 'BookSearchResultsCtrl as vm',
+      resolve: {
+        Criteria: searchCriteria,
+        $title: title
+      }
 
     };
     states['main.search.advresults'] = {
@@ -101,7 +125,11 @@
 
       },
       templateUrl: 'app/booksearch/jade/booksearchResult.html',
-      controller: 'BookSearchResultsCtrl as vm'
+      controller: 'BookSearchResultsCtrl as vm',
+      resolve: {
+        Criteria: searchCriteria,
+        $title: title
+      }
     };
 
 

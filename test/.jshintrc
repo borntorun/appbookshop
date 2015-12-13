@@ -50,6 +50,7 @@
     "waitsForAndThenRun": true,
     "testModule": true,
     "vsprintf": true,
-    "myUtil": true
+    "myUtil": true,
+    "myMocks": true
   }
 }

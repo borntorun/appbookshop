@@ -12,7 +12,8 @@ form.enter-as-tab.on-focus(ng-show="model.book.reference", logic-form="bookrecor
         .col-xs-12.col-md-1.reference
             span Refª.
             br
-            | #&nbsp;{{model.book.reference}}
+            //| #&nbsp;{{model.book.reference}}
+            | #&nbsp;{{("00000" + model.book.reference).slice(-5)}}
         .col-xs-12.col-md-11
             label(for="title") {{::model.labels.title}}
                 timed-action(disabled="{{model.params.reference !== 'new'}}", event="keydown", field="title", action="model.showSimilarTitles", ms-timeout="500")

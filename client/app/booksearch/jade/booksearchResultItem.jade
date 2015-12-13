@@ -28,9 +28,10 @@
                     span.hidden-xs(ng-class="{'hidden': !it.editionISBN}")
                         br
                         | ISBN:{{::it.editionISBN}}
-            div(ng-show="it.images.length==0")
-                a(ui-sref="main.bookdetail({type:'livro',reference:it.reference,slug:it.slug})")
-                    img.block-image.nocover
+            div.text-center
+                a.nocover(ng-show="it.images.length==0",ui-sref="main.bookdetail({type:'livro',reference:it.reference,slug:it.slug})")
+                    //img
+                    //.block-image.nocover
             carousel.carousel(ng-show="it.images.length>0",interval="0")
                 slide(ng-repeat="foto in ::it.images")
                     a(ui-sref="main.bookdetail({type:'livro',reference:it.reference,slug:it.slug})")

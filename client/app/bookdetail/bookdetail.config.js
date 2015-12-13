@@ -9,10 +9,12 @@
 
   var module = angular.module('appBookShop.bookdetail');
 
-  module.config(moduleConfig);
+  module.config(config);
+
+  module.run(run);
 
   /* @ngInject */
-  function moduleConfig($stateProvider, _lodash) {
+  function config( $stateProvider, _lodash ) {
     var states = {};
 
     states['main.bookdetail'] = {
@@ -29,11 +31,42 @@
           templateUrl: 'app/bookdetail/jade/bookdetailPageLayout.html',
           controller: 'BookDetailPageCtrl as vm'
         }
+      },
+      resolve: {
+        //TODO: something like this...a more generice loader
+//        Book: ['loader', function(loader){
+//          return loader('bookdetail', 'get').then(function(data){return data;}).catch(function(){return null;});
+//        }],
+
+        Book: ['$stateParams', 'bookdetail', function($stateParams, bookdetail) {
+          return bookdetail.get($stateParams.reference)
+            .then(function(data){
+              return data;
+            })
+            .catch(function(){return null;});
+        }],
+        $title: ['Book', function(Book) {
+          return '[' + (Book || {}).title + ']';
+        }]
+
       }
     };
 
-    _lodash.forEach(states, function(state, key) {
+    _lodash.forEach(states, function( state, key ) {
       $stateProvider.state(key, state);
     });
+  }
+
+  //TESTE
+  /* @ngInject */
+  function run() {
+//    angular.module('appBookShop.bookdetail')['_invokeQueue']
+//      .forEach(function( value ) {
+//        if (value[0] === '$controllerProvider') {
+//          value[2][1].prototype.$_$setTitle = function $_$setTitle(value) {
+//            console.log(value);
+//          };
+//        }
+//      });
   }
 }());

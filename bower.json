@@ -28,7 +28,6 @@
     "lodash": "~3.9.3",
     "simple-basket": "~0.3.1",
     "d3": "~3.5.6",
-    "ngInfiniteScroll": "~1.2.1",
     "jquery_appear": "~0.3.6",
     "ui-router-extras": "0.0.14",
     "angular-ui-router-title": "~0.0.4",

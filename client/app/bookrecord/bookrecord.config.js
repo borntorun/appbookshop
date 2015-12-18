@@ -43,6 +43,10 @@
           templateUrl: 'app/bookrecord/views/bookrecordStore.html',
           controller: 'BookrecordStoreCtrl as model'
         },
+        'coverupload@main.bookrecord': {
+          templateUrl: 'app/bookrecord/views/bookrecordCoverUpload.html',
+          controller: 'BookrecordCoverUploadCtrl as model'
+        },
         'similartitle@main.bookrecord': {
           templateUrl: 'app/bookrecord/views/bookrecordSimilarTitle.html',
           controller: 'BookrecordSimilarTitleCtrl as model'

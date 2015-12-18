@@ -37,7 +37,7 @@ myMocks.appconfig = {
           postfaceBy: 'Posfácio de',
           graphicalPrint: 'Impressão Gráfica',
           cover: 'Capa',
-          images: 'Imagens',
+          images: 'Imagens/Capa',
           workmanship: 'Acabamento',
           pagesNum: 'NºPág',
           priceInitial: 'Preço Inicial',
@@ -139,7 +139,8 @@ myMocks.appconfig = {
           'priceCost': {'invalid': 'valor inválido'},
           'qt': {'invalid': 'valor inválido'},
           'qtSold': {'invalid': 'valor inválido'},
-          'qtStore': {'invalid': 'valor inválido'}
+          'qtStore': {'invalid': 'valor inválido'},
+          'uploadCover': {'minWidthInvalid': 'Largura da imagem tem de ser superior a 195px'}
         }
       }
     };

@@ -36,6 +36,8 @@ module.exports = function() {
       'client/bower_components/simple-basket/dist/plugins/storage-localforage.js',
       'client/bower_components/ui-router-extras/release/ct-ui-router-extras.js',
       'client/bower_components/angular-dynamic-layout/dist/angular-dynamic-layout.js',
+      'client/bower_components/ng-file-upload/ng-file-upload.js',
+      'client/bower_components/ng-file-upload-shim/ng-file-upload-shim.js',
       'client/bower_components/jquery_appear/jquery.appear.js',
       'client/bower_components/sprintf/dist/sprintf.min.js',
       'client/bower_components/angular-ui-router-title/angular-ui-router-title.js',

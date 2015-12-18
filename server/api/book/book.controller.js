@@ -30,8 +30,9 @@ exports.search = function( req, res ) {
 //Advanced search
 exports.advancedSearch = function( req, res ) {
   //console.log(req.params);
+  console.log(req.params);
   var filter = searchLib.advfilter(req.params);
-
+  console.log(filter);
   searchBook(req, res, filter);
 
   /*Book
@@ -81,7 +82,6 @@ exports.save = function( req, res ) {
   }
 
   function updateArrays( toObj, fromObj ) {
-
     for ( var k in fromObj ) {
       if ( fromObj.hasOwnProperty(k) && util.isArray(fromObj[k]) ) {
         toObj[k].pop();
@@ -118,6 +118,8 @@ exports.save = function( req, res ) {
       delete req.body.dateUpdate;
 
       found = _.merge(found, req.body);
+
+      //TODO: compress images in req.body.images array
 
       updateArrays(found, req.body);
 

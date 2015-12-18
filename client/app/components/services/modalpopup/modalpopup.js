@@ -22,8 +22,8 @@
     };
 
     /* @ngInject */
-    this.$get = function( _$modal_, _$rootScope_ ) {
-      $modal = _$modal_;
+    this.$get = function( _$uibModal_, _$rootScope_ ) {
+      $modal = _$uibModal_;
       $rootScope = _$rootScope_;
       return new ModalPopupServiceFactory();
     };

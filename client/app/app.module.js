@@ -8,8 +8,8 @@
      * Order is not important. Angular makes a
      * pass to register all of the modules listed
      */
-    'ngCookies', 'ngResource', 'ngSanitize', 'ngAnimate', 'ui.router','ct.ui.router.extras', 'ui.bootstrap', 'dynamicLayout',
-    'angularTypeaheadjs', 'jsSignalsServiceModule', 'ui.router.title'/*'testDirective',*/
+    'ngCookies', 'ngResource', 'ngSanitize', 'ui.bootstrap','ngAnimate', 'ui.router','ct.ui.router.extras',  'dynamicLayout',
+    'angularTypeaheadjs', 'jsSignalsServiceModule', 'ui.router.title', 'ngFileUpload'/*, 'slick'*/
     /*
      * Everybody has access to these.
      * We could place these under every feature area,

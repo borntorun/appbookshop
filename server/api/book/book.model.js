@@ -29,7 +29,7 @@ var BookSchema = new Schema({
   postfaceBy: { type: [String] },
   graphicalPrint: { type: String },
   cover: { type: String },
-  images: { type: [String] },
+  images: { type: [Schema.Types.Mixed] },
   workmanship: { type: String },
   pagesNum: { type: String },
   priceInitial: { type: Number },

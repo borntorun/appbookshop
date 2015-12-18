@@ -31,6 +31,8 @@
     <!-- build:css(client) app/vendor.css -->
     <!-- bower:css -->
     <link rel="stylesheet" href="bower_components/toastr/toastr.css" />
+    <link rel="stylesheet" href="bower_components/slick-carousel/slick/slick.css" />
+    <link rel="stylesheet" href="bower_components/slick-carousel/slick/slick-theme.css" />
     <!-- endbower -->
     <!-- endbuild -->
 
@@ -100,10 +102,8 @@
 <script src="bower_components/angular-animate/angular-animate.js"></script>
 <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
 <script src="bower_components/toastr/toastr.js"></script>
-<script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
 <script src="bower_components/moment/moment.js"></script>
 <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
-<script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
 <script src="bower_components/typeahead.js/dist/typeahead.bundle.js"></script>
 <script src="bower_components/js-signals/dist/signals.js"></script>
 <script src="bower_components/angular-jssignals/dist/angular-jssignals.js"></script>
@@ -119,6 +119,12 @@
 <script src="bower_components/ui-router-extras/release/ct-ui-router-extras.js"></script>
 <script src="bower_components/angular-ui-router-title/angular-ui-router-title.js"></script>
 <script src="bower_components/angular-dynamic-layout/dist/angular-dynamic-layout.js"></script>
+<script src="bower_components/ng-file-upload/ng-file-upload.js"></script>
+<script src="bower_components/ng-file-upload-shim/ng-file-upload-shim.js"></script>
+<script src="bower_components/slick-carousel/slick/slick.min.js"></script>
+<script src="bower_components/angular-slick/dist/slick.js"></script>
+<script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+<script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
 <!-- endbower -->
 <!-- endbuild -->
 <!--<script src="app/bower_components/ui-router-extras/release/ct-ui-router-extras.js"></script>-->
@@ -169,9 +175,12 @@
 <script src="app/blocks/notifier/notifier.js"></script>
 <script src="app/bookdetail/controllers/bookdetailPageCtrl.js"></script>
 <script src="app/bookdetail/services/bookdetailService.js"></script>
+<script src="app/bookrecord/controllers/bookrecordCoverUploadCtrl.js"></script>
 <script src="app/bookrecord/controllers/bookrecordCtrl.js"></script>
 <script src="app/bookrecord/controllers/bookrecordSimilarTitleCtrl.js"></script>
 <script src="app/bookrecord/controllers/bookrecordStoreCtrl.js"></script>
+<script src="app/bookrecord/directives/convertImageData.js"></script>
+<script src="app/bookrecord/directives/validateNgfValidators.js"></script>
 <script src="app/bookrecord/services/bookrecordService.js"></script>
 <script src="app/booksearch/controllers/booksearchAdvancedFormCtrl.js"></script>
 <script src="app/booksearch/controllers/booksearchFilterCategoriesCtrl.js"></script>
@@ -179,6 +188,7 @@
 <script src="app/booksearch/controllers/booksearchResultsCtrl.js"></script>
 <script src="app/booksearch/directives/booksearchFormLayout.js"></script>
 <script src="app/booksearch/services/booksearchService.js"></script>
+<script src="app/components/directives/disableAnimate.js"></script>
 <script src="app/components/directives/elementAppear.js"></script>
 <script src="app/components/directives/enterAsTab.js"></script>
 <script src="app/components/directives/formInputTooltip.js"></script>

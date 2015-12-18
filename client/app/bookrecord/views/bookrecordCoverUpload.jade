@@ -1,0 +1,29 @@
+form.enter-as-tab.on-focus(ng-show="model.book.reference",id="bookrecordCoverUploadForm", logic-form="bookrecord", name="bookrecordCoverUploadForm", novalidate, ng-model-options="{ debounce: 0 }")
+    .row
+        .col-sm-12.padding20
+            //must have a child input
+            label(for="uploadCover")
+                input.hidden(name="dummy", ng-model="model.dummy")
+                div.drop-box(name="uploadCover",convert-image-data,ngf-drop,ngf-select,ng-model="files"
+                            ngf-drag-over-class="'dragover'" ngf-multiple="true" ngf-allow-dir="true"
+                            accept="image/*"
+                            ngf-pattern="'image/*'",
+                            ngf-min-width="195", validate-ngf-validators="minWidth")
+                    | Arraste imagem ou clique para carregar
+                div.text-center(ngf-no-file-drop)
+                    .button.btn.btn-default(convert-image-data="{noDropTag: true}", ngf-select, ng-model="files", ngf-multiple="true",
+                    accept="image/*",
+                    ngf-pattern="'image/*'",
+                    ngf-min-width="195") Seleccionar Ficheiro(s)
+                div.tool-tip.bottom(ng-show="model.bookrecordCoverUploadForm.$error.minWidth") {{::model.valMessages.uploadCover.minWidthInvalid}}
+
+
+    uib-carousel(interval="0", disable-animation="true")
+        uib-slide(ng-repeat="it in model.fotos track by $index" active="it.active")
+            img(ng-src="{{it.src}}",style="margin:auto;")
+
+            .btn.btn-default(ng-click="model.remove($index)", aria-label="Remover") x
+            .btn.btn-default(ng-click="model.setCover($index)", aria-label="Definir como principal") Capa
+
+
+//pre {{ bookrecordCoverUploadForm.$error.minWidth | json }}

@@ -2,7 +2,7 @@
 
 var myUtil = {}
 
-function printf(name){
+function printf( name ) {
   return vsprintf('->%s..... [%s]', [name, '%s']);
 }
 
@@ -23,4 +23,27 @@ myUtil.title = {
     return vsprintf(vsprintf('....>should %s', [frase]), vars || []);
   }
 };
+myUtil.config = {
+  module: []
+};
 
+myUtil.config.module.push(
+  function( _$provide_ ) {
+    _$provide_.decorator('$rootScope', [
+      '$delegate', function( $delegate ) {
+        $delegate.safeApply = function( fn ) {
+          var phase = $delegate.$$phase;
+          if ( phase === '$apply' || phase === '$digest' ) {
+            if ( fn && typeof fn === 'function' ) {
+              fn();
+            }
+          }
+          else {
+            $delegate.$apply(fn);
+          }
+        };
+        return $delegate;
+      }
+    ]);
+  }
+);

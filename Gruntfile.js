@@ -484,16 +484,13 @@ module.exports = function( grunt ) {
             src: [
               'bower_components/jquery/dist/jquery.js',
               'bower_components/angular/angular.js',
-              'bower_components/toastr/toastr.js',
-              'bower_components/bootstrap/dist/js/bootstrap.js',
-              'bower_components/moment/moment.js',
-              'bower_components/angular-ui-router/release/angular-ui-router.js',
-              'bower_components/angular-animate/angular-animate.js',
-              'bower_components/angular-sanitize/angular-sanitize.js',
-              'bower_components/extras.angular.plus/ngplus-overlay.js',
-              'bower_components/angular-bootstrap/ui-bootstrap-tpls.js',
               'bower_components/angular-cookies/angular-cookies.js',
               'bower_components/angular-resource/angular-resource.js',
+              'bower_components/angular-animate/angular-animate.js',
+              'bower_components/angular-sanitize/angular-sanitize.js',
+              'bower_components/toastr/toastr.js',
+              'bower_components/moment/moment.js',
+              'bower_components/angular-ui-router/release/angular-ui-router.js',
               'bower_components/typeahead.js/dist/typeahead.bundle.js',
               'bower_components/js-signals/dist/signals.js',
               'bower_components/angular-jssignals/dist/angular-jssignals.js',
@@ -504,9 +501,15 @@ module.exports = function( grunt ) {
               'bower_components/localforage-sessionstoragewrapper/src/localforage-sessionstoragewrapper.js',
               'bower_components/simple-basket/dist/simplebasket.js',
               'bower_components/simple-basket/dist/plugins/storage-localforage.js',
-              'bower_components/ui-router-extras/release/ct-ui-router-extras.js',
               'bower_components/d3/d3.js',
-              'bower_components/angular-dynamic-layout/dist/angular-dynamic-layout.js'
+              'bower_components/jquery_appear/jquery.appear.js',
+              'bower_components/ui-router-extras/release/ct-ui-router-extras.js',
+              'bower_components/angular-ui-router-title/angular-ui-router-title.js',
+              'bower_components/angular-dynamic-layout/dist/angular-dynamic-layout.js',
+              'bower_components/ng-file-upload/ng-file-upload.js',
+              'bower_components/ng-file-upload-shim/ng-file-upload-shim.js',
+              'bower_components/bootstrap/dist/js/bootstrap.js',
+              'bower_components/angular-bootstrap/ui-bootstrap-tpls.js'
             ]
           }
         ]
@@ -920,9 +923,17 @@ module.exports = function( grunt ) {
     'serve'
   ]);
 
-  grunt.registerTask('help', function(){
+  grunt.registerTask('what', function(){
+    grunt.log.ok('grunt serve................ run development');
+    grunt.log.ok('grunt hintall.............. to hint js files');
+    grunt.log.ok('grunt hintclient........... to hint client js files');
+    grunt.log.ok('grunt hintserver........... to hint server js files');
+    grunt.log.ok('grunt build................ to build');
+    grunt.log.ok('grunt build-debugapp....... to build demo/debug version for app files');
+    grunt.log.ok('grunt build-debugall....... to build demo/debug version for all files (app and bower files');
     grunt.log.ok('grunt test................. test all');
     grunt.log.ok('grunt test:client.......... test client code - jshint, karma - on watch');
     grunt.log.ok('grunt test:clientDebug..... test client code (karma non stop - for debug in browser)');
+    grunt.log.ok('grunt release.............. release');
   });
 };

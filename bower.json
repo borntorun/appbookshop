@@ -32,7 +32,6 @@
     "angular-dynamic-layout": "git@github.com:borntorun/angular-dynamic-layout.git#master",
     "ng-file-upload": "~10.1.9",
     "ng-file-upload-shim": "~10.1.9",
-    "angular-slick": "~0.2.1",
     "bootstrap": "~3.3.6",
     "angular-bootstrap": "~0.14.3"
   },

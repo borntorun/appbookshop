@@ -9,16 +9,16 @@
 var seedArray = [];
 
 //seedArray.push('api/bookconfig/seed');
-seedArray.push('api/appconfig/message/seed');
-seedArray.push('api/appconfig/book/seed');
+seedArray.push({file:'api/appconfig/message/seed'});
+seedArray.push({file:'api/appconfig/book/seed'});
 
-seedArray.push('api/category/seed');
-seedArray.push('api/publisher/seed');
-seedArray.push('api/country/seed');
-seedArray.push('api/language/seed');
-seedArray.push('api/keyword/seed');
-seedArray.push('api/author/seed');
-seedArray.push('api/translator/seed');
+seedArray.push({file:'api/category/seed', env: 'development'});
+seedArray.push({file:'api/publisher/seed', env: 'development'});
+seedArray.push({file:'api/country/seed', env: 'development'});
+seedArray.push({file:'api/language/seed', env: 'development'});
+seedArray.push({file:'api/keyword/seed', env: 'development'});
+seedArray.push({file:'api/author/seed', env: 'development'});
+seedArray.push({file:'api/translator/seed', env: 'development'});
 
 module.exports = seedArray;
 

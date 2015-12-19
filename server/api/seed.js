@@ -8,7 +8,6 @@
 
 var seedArray = [];
 
-//seedArray.push('api/bookconfig/seed');
 seedArray.push({file:'api/appconfig/message/seed'});
 seedArray.push({file:'api/appconfig/book/seed'});
 

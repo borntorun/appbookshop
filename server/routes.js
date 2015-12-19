@@ -31,7 +31,7 @@ module.exports = function( app ) {
     }
     return next();
   };
-  if (config.env === 'production') {
+  if (config.env === 'production' || config.env === 'demo') {
     app.use(forceSsl);
   }
 

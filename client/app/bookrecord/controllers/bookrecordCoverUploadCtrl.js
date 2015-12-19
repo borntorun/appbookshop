@@ -43,9 +43,12 @@
       });
     };
 
-    model.book.images.forEach(function( item, index ) {
-      _addFoto(item.resized, index === 0);
-    });
+    if (model.book) {
+      model.book.images.forEach(function( item, index ) {
+        _addFoto(item.resized, index === 0);
+      });
+    }
+
 
     model.update = function( original, resized ) {
       $scope.safeApply(function() {

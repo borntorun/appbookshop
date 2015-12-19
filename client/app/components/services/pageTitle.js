@@ -35,14 +35,18 @@
           return value;
         };
 
-      if ( $rootScope.$$phase == null ) {
+      $rootScope.safeApply(function(){
+        $rootScope.$title = f();
+      });
+
+     /* if ( $rootScope.$$phase == null ) {
         $rootScope.$apply(function() {
           $rootScope.$title = f();
         });
       }
       else {
         $rootScope.$title = f();
-      }
+      }*/
 
     }
 

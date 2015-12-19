@@ -37,6 +37,14 @@
     */
 
     function link( scope, element, attrs, ctrl ) {
+
+      if (attrs.windowScrollTop) {
+        $timeout(function() {
+          $window.scrollTo(0,0);
+        });
+        return;
+      }
+
       var eventName = attrs.windowScrollEvent;
       var timeoutValue = attrs.windowScrollTimeout || '0';
 

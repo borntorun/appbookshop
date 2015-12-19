@@ -12,7 +12,6 @@ router.get('/store/:reference/:slug?', bookCtrl.store);
 var auth = require('../../auth');
 
 router.get('/admin/:reference/:slug?', auth.ensureIsAuthenticated, bookCtrl.edit);
-router.post('/admin/:id', auth.ensureIsAuthenticated, require('body-parser').json(),  require('express-validator')(), bookCtrl.save);
+router.post('/admin/:id', auth.ensureIsAuthenticated, require('body-parser').json({limit: '2mb', extended: true}),  require('express-validator')(), bookCtrl.save);
 
 module.exports = require('../apirouter')(router, bookCtrl, []);
-

@@ -65,16 +65,27 @@ ul.dropdown-menu.profile[role="menu"] {
 */
 
 .carousel-indicators {
-  bottom: -27px;
+  bottom: -30px;
 }
-.carousel-control {
-  display: none;
-}
+//.carousel-control {
+//  display: none;
+//}
 .carousel-indicators li {
-  border: 1px solid hsl(0, 10%, 20%);
-  background-color: #000;
-  background-color: hsla(0, 5%, 7%, 0.16);
+  border: 1px solid hsl(0, 5%, 17%);
 }
+.carousel-indicators .active {
+  background-color: #A09E9E;
+}
+.carousel-control.left {
+  background-image: linear-gradient(to right, rgba(191, 188, 188, 0.5) 0%, rgba(0, 0, 0, 0.0001) 100%);
+}
+.carousel-control.right {
+  background-image: linear-gradient(to right, rgba(0, 0, 0, 0.0001) 0%, rgba(191, 188, 188, 0.5) 100%);
+}
+
+
+
+
 .slide.ng-leave {
   position: relative;
 }
@@ -480,10 +491,10 @@ div label.inline {
 
 //*:not(.on-focus):hover > .tool-tip,
 //antes: .on-focus input:focus + .tool-tip {
-.on-focus input + .tool-tip ,
+.on-focus input + .tool-tip,
+.on-focus div.drop-box.ng-dirty.ng-invalid ~ .tool-tip,
 .on-focus input.ng-dirty.ng-invalid ~ .tool-tip {
   background-color: #FFFFFF;
-
   visibility: visible;
   opacity: 1;
   -webkit-transition: all 400ms ease-in-out;
@@ -508,6 +519,7 @@ div label.inline {
 
 //antes:.on-focus > input:focus + .tool-tip.slideIn {
 .on-focus > input + .tool-tip.slideIn,
+.on-focus > div.drop-box + .tool-tip.slideIn,
 .on-focus > input.ng-dirty.ng-invalid ~ .tool-tip.slideIn {
   z-index: 1;
 }
@@ -522,13 +534,17 @@ div label.inline {
 //*:not(.on-focus):hover > .tool-tip.slideIn.bottom,
 //antes:.on-focus > input:focus + .tool-tip.slideIn.bottom {
 .on-focus > input + .tool-tip.slideIn.bottom,
-.on-focus > input.ng-dirty.ng-invalid ~ .tool-tip.slideIn.bottom {
+.on-focus > div.drop-box + .tool-tip.slideIn.bottom,
+.on-focus > input.ng-dirty.ng-invalid ~ .tool-tip.slideIn.bottom,
+.on-focus > div.drop-box.ng-dirty.ng-invalid ~ .tool-tip.slideIn.bottom {
   top: 115%;
 }
 
 //antes:.on-focus > input:focus + .tool-tip.slideIn.bottom {
 .on-focus > input + .tool-tip.slideIn.bottom,
-.on-focus > input.ng-dirty.ng-invalid ~ .tool-tip.slideIn.bottom {
+.on-focus > div.drop-box + .tool-tip.slideIn.bottom,
+.on-focus > input.ng-dirty.ng-invalid ~ .tool-tip.slideIn.bottom,
+.on-focus > div.drop-box.ng-dirty.ng-invalid ~ .tool-tip.slideIn.bottom{
   top: 100%;
 }
 

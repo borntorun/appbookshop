@@ -1,4 +1,4 @@
-.row.dynamic-layout-item.element-item(ng-mouseleave="it.setAuth(false)",ng-mouseenter="it.setAuth(true)", ng-class="{'recentload': it.isnew}")
+.row.nomargins.dynamic-layout-item.element-item(ng-mouseleave="it.setAuth(false)",ng-mouseenter="it.setAuth(true)", ng-class="{'recentload': it.isnew}")
     div.pull-left.editar-lapis(ng-show="it.isAuthenticated")
         a(ui-sref="main.bookrecord({type:'livro',reference:it.reference,slug:it.slug})", title="Editar", aria-label="Editar")
             h4
@@ -30,10 +30,8 @@
                         | ISBN:{{::it.editionISBN}}
             div.text-center
                 a.nocover(ng-show="it.images.length==0",ui-sref="main.bookdetail({type:'livro',reference:it.reference,slug:it.slug})")
-                    //img
-                    //.block-image.nocover
-            carousel.carousel(ng-show="it.images.length>0",interval="0")
-                slide(ng-repeat="foto in ::it.images")
-                    a(ui-sref="main.bookdetail({type:'livro',reference:it.reference,slug:it.slug})")
-                        img.block-image(ng-src="{{::foto}}")
+
+            div.text-center
+                img.block-image(ng-if="it.images.length", ng-src="{{it.images[0].resized}}",style="margin:auto;")
+
 

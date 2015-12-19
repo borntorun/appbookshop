@@ -13,6 +13,7 @@ var waitsForAndThenRun = function( escapeFunction, runFunction, escapeTime ) {
   var interval = setInterval(function() {
     if ( escapeFunction!=null && escapeFunction() ) {
       clearMe();
+
       runFunction();
     }
   }, 1);
@@ -20,6 +21,7 @@ var waitsForAndThenRun = function( escapeFunction, runFunction, escapeTime ) {
   // at the escapeTime
   var timeOut = setTimeout(function() {
     clearMe();
+
     runFunction();
   }, escapeTime);
   // clear the interval and the timeout
@@ -28,5 +30,3 @@ var waitsForAndThenRun = function( escapeFunction, runFunction, escapeTime ) {
     clearTimeout(timeOut);
   }
 };
-
-

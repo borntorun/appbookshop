@@ -1,11 +1,10 @@
 div.row.panel.panel-default.nomargins.bookdetail(ng-class="{'hidden': !vm.book.reference}")
     div.col-xs-12.col-sm-4.col-md-4.col-lg-4
         div.text-center.blockimage-panel-parent
-            carousel.carousel(interval="0")
-                slide(ng-repeat="foto in vm.book.images")
-                    img.block-image(ng-src="{{::foto}}")
-                    //img.bookdetail-image(ng-src="{{::vm.book.images[0]}}")
-                    //img(ng-src="{{foto}}", style="/*margin:auto;height:160px;width:140px;display: block;*/")
+            uib-carousel(interval="0", disable-animation="true")
+                uib-slide(ng-repeat="foto in vm.book.images track by $index")
+                    img(ng-src="{{foto.resized}}",style="margin:auto;")
+
         div.panel.panel-default.hidden-xs
             div.panel-heading(ng-class="{'hidden': vm.bookflags.nocategories}")
                 | Catalogado em:

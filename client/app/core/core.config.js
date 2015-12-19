@@ -40,12 +40,32 @@
    */
   core.config(configureAngularProviders);
   core.config(configureOtherProviders);
+  core.config([
+    '$provide', function($provide) {
+      return $provide.decorator('$rootScope', [
+        '$delegate', function($delegate) {
+          $delegate.safeApply = function(fn) {
+            var phase = $delegate.$$phase;
+            if (phase === '$apply' || phase === '$digest') {
+              if (fn && typeof fn === 'function') {
+                fn();
+              }
+            } else {
+              $delegate.$apply(fn);
+            }
+          };
+          return $delegate;
+        }
+      ]);
+    }
+  ]);
+
 
 
   /* @ngInject */
   function configureAngularProviders( $httpProvider, $logProvider, $urlRouterProvider, $locationProvider, $animateProvider, $stickyStateProvider ) {
     $httpProvider.useApplyAsync(true);
-    $animateProvider.classNameFilter(/(carousel|dynamic-layout|app-anima)/);//feature do ngAnimate...
+    $animateProvider.classNameFilter(/(xxcarousel|dynamic-layout|app-anima)/);//feature do ngAnimate...
     // turn debugging off/on (no info or warn)
     if ( $logProvider.debugEnabled ) {
       $logProvider.debugEnabled(true);

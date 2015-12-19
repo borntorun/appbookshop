@@ -140,7 +140,10 @@ BookConfig.find({}).remove(function() {
           'qt': {'invalid': 'valor inválido'},
           'qtSold': {'invalid': 'valor inválido'},
           'qtStore': {'invalid': 'valor inválido'},
-          'uploadCover': {'minWidthInvalid': 'Largura da imagem tem de ser superior a 195px'}
+          'uploadCover': {
+            'minWidthInvalid': 'Largura da imagem tem de ser superior a 195px',
+            'maxSizeInvalid': 'Tamanho da imagem não pode exceder os 2Mb'}
+
         }
       }
     }

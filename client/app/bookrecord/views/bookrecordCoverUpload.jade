@@ -8,7 +8,7 @@ form.enter-as-tab.on-focus(ng-show="model.book.reference",id="bookrecordCoverUpl
                             ngf-drag-over-class="'dragover'" ngf-multiple="true" ngf-allow-dir="true"
                             accept="image/*"
                             ngf-pattern="'image/*'",
-                            ngf-min-width="195", validate-ngf-validators="minWidth")
+                            ngf-min-width="195", ngf-max-size="2MB", validate-ngf-validators="'minWidth, maxSize'")
                     | Arraste imagem ou clique para carregar
                 div.text-center(ngf-no-file-drop)
                     .button.btn.btn-default(convert-image-data="{noDropTag: true}", ngf-select, ng-model="files", ngf-multiple="true",
@@ -16,6 +16,7 @@ form.enter-as-tab.on-focus(ng-show="model.book.reference",id="bookrecordCoverUpl
                     ngf-pattern="'image/*'",
                     ngf-min-width="195") Seleccionar Ficheiro(s)
                 div.tool-tip.bottom(ng-show="model.bookrecordCoverUploadForm.$error.minWidth") {{::model.valMessages.uploadCover.minWidthInvalid}}
+                div.tool-tip.bottom(ng-show="model.bookrecordCoverUploadForm.$error.maxSize") {{::model.valMessages.uploadCover.maxSizeInvalid}}
 
 
     uib-carousel(interval="0", disable-animation="true")

@@ -36,10 +36,19 @@
       if ( !attrs.ngfSelect ) {
         return;
       }
+
+      var validators = scope.$eval(attrs.validateNgfValidators);
+      if (typeof validators === 'string') {
+        validators = validators.split(',');
+      }
+
       controllers.$parsers.unshift(function( value ) {
         if ( angular.isArray(value) && value.length == 0 ) {
           $timeout(function() {
-            controllers.$setValidity('minWidth', true);
+            validators.forEach(function(item){
+              controllers.$setValidity(item.trim(), true);
+            });
+
           }, 5000);
         }
         return value;

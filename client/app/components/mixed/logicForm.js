@@ -55,6 +55,7 @@
       if ( !this[name] ) {
         this[name] = createLogicForm(name);//new LogicForm(name, formController);
       }
+      this[name].processing(false);
       this[name].addForm(formController);
 
       return this[name];

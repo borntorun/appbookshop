@@ -688,15 +688,16 @@ module.exports = function( grunt ) {
         }
       }
     },
-    //    uglify: {
-    //      options: {
-    //        mangle: {
-    //          except: [
-    //            'ct-ui-router-extras' //problem mangling...?
-    //          ]
-    //        }
-    //      }
-    //    },
+//    uglify: {
+//      options: {
+//        mangle: {
+//          except: [
+//            //'ct-ui-router-extras' //problem mangling...?
+//            'ui-bootstrap-tpls'
+//          ]
+//        }
+//      }
+//    },
     injector: {
       options: {
 

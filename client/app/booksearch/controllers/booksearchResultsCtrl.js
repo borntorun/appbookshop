@@ -27,7 +27,6 @@
 //    if (!vm.criteria.limit) {vm.criteria.limit = appConfig.book.search.limitDefault;}
     vm.criteria = Criteria;
 
-
     //call search and get results
     var funcSearch = $stateParams.type === 'advanced'? booksearch.queryAdvanced : booksearch.queryFree;
     vm.query = funcSearch.call(null, vm.criteria);
@@ -55,9 +54,12 @@
 
         data = setNext(data);
 
-        $scope.$apply(function(){
+//        $scope.$apply(function(){
+//          vm.results = data;
+//        });
+        $timeout(function(){
           vm.results = data;
-        });
+        },10);
       })
       .catch(function( /*error*/ ) {
         notifier.warning('Erro na pesquisa', 'Pesquisa ');
@@ -85,17 +87,11 @@
 
           data = setPrevious(data);
 
-          $scope.$apply(function(){
+          /*$scope.$apply*/$timeout(function(){
             vm.results = data;
             if (vm.query.previous){
               $scope.$emit('booksearchresultsscroll', { windowScrollY: -1 * vm.query.parameters[0] * 48 /* * 4 * 300*/ });
-              /*$timeout(function(){
-                $window.scrollBy(0, -1 * 4 * 300 *//*$window.innerHeight*//* );
-
-              },150);*/
             }
-
-            //console.log(vm.query,vm.results.length, vm.query.previous? true: false,vm.query.next?true:false);
           });
 
         })
@@ -125,15 +121,12 @@
           data = setNext(data);
           data = setPrevious(data);
 
-          $scope.$apply(function(){
+          /*$scope.$apply*/$timeout(function(){
             vm.results = data;
-            console.log(vm.query,vm.results.length, vm.query.previous? true: false,vm.query.next?true:false);
+            //console.log(vm.query,vm.results.length, vm.query.previous? true: false,vm.query.next?true:false);
 
             $scope.$emit('booksearchresultsscroll', {windowScrollY: vm.query.parameters[0] * 60 /*5*300*/});
-            /*$timeout(function(){
-              $window.scrollBy(0, 5*300*//*$window.innerHeight*//*);
 
-            },150);*/
           });
 
         })
@@ -206,7 +199,7 @@
     function setAuthentication(){
       vm.isAuthenticated = authentication.isAuthenticated();
       var aux = setAuth(vm.results.concat([]));
-      $scope.$apply(function() {
+      $scope.safeApply(function() {
         vm.results = aux;
       });
     }

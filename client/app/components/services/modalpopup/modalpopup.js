@@ -22,9 +22,9 @@
     };
 
     /* @ngInject */
-    this.$get = function( _$uibModal_, _$rootScope_ ) {
-      $modal = _$uibModal_;
-      $rootScope = _$rootScope_;
+    this.$get = function( $uibModal, $rootScope ) {
+      $modal = $uibModal;
+      _$rootScope = $rootScope;
       return new ModalPopupServiceFactory();
     };
 
@@ -32,14 +32,8 @@
     Private block
     */
     //reference to $modal
-    var $modal, $rootScope;
-    //options to the modal
+    var $modal, _$rootScope;
 
-    //    var options = {
-    //      controller: modalCtrl,
-    //      controllerAs: 'model'/*,
-    //        windowClass:"positionModal"*/
-    //    };
 
     /**
      * Service Factory
@@ -69,25 +63,20 @@
      */
     function confirm( message, title, opt ) {
       opt = opt || {};
-      opt.templateUrl = opt.templateUrl || 'assets/templates/html/confirm.html';//'/app/components/services/modalpopup/templates/confirm.html';
+      opt.templateUrl = opt.templateUrl || 'assets/templates/html/confirm.html';
 
       return show(message, title, opt);
     }
 
     function message( message, title, opt ) {
       opt = opt || {};
-      opt.templateUrl = opt.templateUrl || 'assets/templates/html/message.html';//'/app/components/services/modalpopup/templates/message.html';
+      opt.templateUrl = opt.templateUrl || 'assets/templates/html/message.html';
       return show(message, title, opt);
     }
 
     function show( message, title, opt ) {
 
-      var scope = $rootScope.$new();
-      //      options.message = message ? message.replace(/\n/g, '<br/>') : message;
-      //      options.title = title ? title.replace(/\n/g, '<br/>') : title;
-      //      options.templateUrl = opt.templateUrl;
-      //      options.onconfirm = opt.onconfirm;
-      //      options.oncancel = opt.oncancel;
+      var scope = _$rootScope.$new();
 
       scope.message = message ? message.replace(/\n/g, '<br/>') : message;
       scope.title = title ? title.replace(/\n/g, '<br/>') : title;
@@ -103,19 +92,16 @@
       }).result;
     }
 
-    function modalCtrl( $scope/*,$modalInstance*/ ) {
+    function modalCtrl( $scope ) {
       var model = this;
 
-      /*console.log($scope);*/
-      model.title = /*options*/$scope.title;
-      model.message = /*options*/$scope.message;
+      model.title = $scope.title;
+      model.message = $scope.message;
       model.confirm = function() {
-        /*options*/
-        $scope.onconfirm && (/*options*/$scope.onconfirm.call());
+        $scope.onconfirm && ($scope.onconfirm.call());
         $scope.$close();
       };
       model.cancel = function() {
-        /*options*/
         $scope.oncancel && (/*options*/$scope.oncancel.call());
         $scope.$dismiss();
       };

@@ -53,6 +53,11 @@
         "dist/simplebasket.js",
         "dist/plugins/storage-localforage.js"
       ]
+    },
+    "angular-bootstrap": {
+      "main": [
+        "./ui-bootstrap-tpls.js"
+      ]
     }
   },
   "resolutions": {

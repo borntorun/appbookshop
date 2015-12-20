@@ -9,10 +9,10 @@
   module.config(config);
 
   /* @ngInject */
-  function config(appconfigHandlerProvider) {
-    appconfigHandlerProvider.config = {
+  function config(/*appconfigHandlerProvider*/appConfigProvider) {
+    appConfigProvider.config({
       book: {url: '/api/appconfig/book/', message: 'Configuração \'bookconfig\'.', loading: false},
       message: {url: '/api/appconfig/message/', message: 'Configuração \'messageconfig\'.', loading: false}
-    };
+    });
   }
 }());

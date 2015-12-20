@@ -12,7 +12,7 @@
     .controller('BookSearchResultsCtrl', BookSearchResultsCtrl);
 
   /* @ngInject */
-  function BookSearchResultsCtrl( $rootScope, $scope, $stateParams, $timeout, Criteria,_lodash, notifier, SignalsService, authentication, appConfig, booksearch, booksearchCache) {
+  function BookSearchResultsCtrl( $rootScope, $scope, $stateParams, $timeout, Criteria, notifier, SignalsService, authentication, appConfig, booksearch, booksearchCache) {
     /*jshint validthis: true */
     var vm = this;
 
@@ -43,6 +43,7 @@
 
     vm.query.execute()
       .then(function( data ) {
+
         //issue #37
         if ( data.length == 0 ) {
           notifier.warn('Não foram encontrados resultados\nReformule a sua pesquisa.');

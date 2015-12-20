@@ -6,30 +6,28 @@
 
   var module = angular.module('appBookShop.main');
 
-//  module
-//    .service('BookconfigInit', BookconfigInit);
-//  /* @ngInject */
-//  function BookconfigInit( Q, appConfig ) {
-//    return {
-//      prepare: function() {
-//        return Q.when(appConfig.getConfig('bookconfig'), function( value ) {
-//          return value.data || value;
-//        }, function() {
-//          return {};
-//        });
-//      }
-//    };
-//  }
-//
-//  var interceptWith = function( initMethod ) {
-//    return [initMethod, function( m ) {
-//      return m.prepare();
-//    }];
-//  };
+  //  module
+  //    .service('BookconfigInit', BookconfigInit);
+  //  /* @ngInject */
+  //  function BookconfigInit( Q, appConfig ) {
+  //    return {
+  //      prepare: function() {
+  //        return Q.when(appConfig.getConfig('bookconfig'), function( value ) {
+  //          return value.data || value;
+  //        }, function() {
+  //          return {};
+  //        });
+  //      }
+  //    };
+  //  }
+  //
+  //  var interceptWith = function( initMethod ) {
+  //    return [initMethod, function( m ) {
+  //      return m.prepare();
+  //    }];
+  //  };
 
   module.config(moduleConfig);
-
-
 
   /* @ngInject */
   function moduleConfig( $stateProvider, _lodash ) {
@@ -46,7 +44,15 @@
           state: 'main.search'
         }
       },
-      sticky: true
+      sticky: true,
+      resolve: {
+        'dummy':[ '$timeout', function( $timeout ) {
+          return $timeout(function() {
+            return null;
+          }, 300);
+
+        }]
+      }
     };
     states['message'] = {
       url: '/message/:term', /*QD não tem url  não colocar key */

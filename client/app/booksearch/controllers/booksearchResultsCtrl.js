@@ -35,7 +35,7 @@
     var limit = vm.query.parameters[0];
 
     //set viewport
-    var viewport = appConfig.book.search.viewportDefault % limit !== 0? limit * 3: appConfig.book.search.viewportDefault;
+    var viewport = !appConfig.book? 75: (appConfig.book.search.viewportDefault % limit !== 0? limit * 3: appConfig.book.search.viewportDefault);
 
     vm.query = vm.query.setViewport(viewport);
 
@@ -55,14 +55,11 @@
 
         data = setNext(data);
 
-//        $scope.$apply(function(){
-//          vm.results = data;
-//        });
         $timeout(function(){
           vm.results = data;
         },10);
       })
-      .catch(function( /*error*/ ) {
+      .catch(function() {
         notifier.warning('Erro na pesquisa', 'Pesquisa ');
       });
 

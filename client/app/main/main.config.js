@@ -44,7 +44,7 @@
           state: 'main.search'
         }
       },
-      sticky: true,
+      sticky: true/*,
       resolve: {
         'dummy':[ '$timeout', function( $timeout ) {
           return $timeout(function() {
@@ -52,7 +52,7 @@
           }, 300);
 
         }]
-      }
+      }*/
     };
     states['message'] = {
       url: '/message/:term', /*QD não tem url  não colocar key */

@@ -79,6 +79,13 @@
 
           model.bookrecordLogicForm.processing(true);
 
+          //TODO:temp remove this after async image upload is effective
+          if (model.book.images && model.book.images.length) {
+            model.book.images.forEach(function(item, index, items){
+              items[index].original = '';
+            });
+          }
+
           storage.booktosave && (storage.booktosave.save({url: $state.href($state.current.name, $state.params, {absolute: true}), book: model.book}));
 
           bookrecord.save(model.book)

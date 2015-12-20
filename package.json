@@ -1,6 +1,6 @@
 {
   "name": "appBookShop",
-  "version": "0.2.5",
+  "version": "0.2.6",
   "description": "Livraria * Livros * Antigos * Usados",
   "main": "server/app.js",
   "engines": {

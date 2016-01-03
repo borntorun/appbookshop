@@ -43,14 +43,15 @@ exports.advancedSearch = function( req, res ) {
 };
 
 function searchBook( req, res, filter ) {
+  //console.log(filter);
   if ( req.params.loadfrom && req.params.loadfrom !== '-' ) {
     filter.title = {$gt: req.params.loadfrom};
-    //console.log(filter);
+
   }
 
   Book
     .find(filter, BookFields.storeSearch)
-    .sort({reference: -1})
+    .sort({title: 1})
     .limit(bookListLimit(req.params.limit))
     .exec(bookListResults(req, res));
 }

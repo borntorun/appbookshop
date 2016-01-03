@@ -50,7 +50,7 @@ function searchBook( req, res, filter ) {
 
   Book
     .find(filter, BookFields.storeSearch)
-    .sort({title: 1})
+    .sort({reference: -1})
     .limit(bookListLimit(req.params.limit))
     .exec(bookListResults(req, res));
 }

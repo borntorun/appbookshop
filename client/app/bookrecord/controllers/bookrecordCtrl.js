@@ -15,6 +15,16 @@
   function BookrecordCtrl( $scope, $stateParams, $state, _lodash, localforageDriver, appConfig, Book, bookrecord, notifier, logicform, message, SignalsService ) {
     /*jshint validthis: true */
     var model = this;
+    var storage = {};
+    var autocompleteOptions = {
+      showLog: true,
+      clear: false,
+      selectOnAutocomplete: false,
+      emitOnlyIfPresent: true,
+      watchInitEvent: true,
+      watchSetValEvent: true
+    };
+    var autocompleteTTOptions = {minLength: 3, limit: 20};
 
     model.params = $stateParams;
 
@@ -86,7 +96,8 @@
             });
           }
 
-          storage.booktosave && (storage.booktosave.save({url: $state.href($state.current.name, $state.params, {absolute: true}), book: model.book}));
+          saveToStorage();
+
 
           bookrecord.save(model.book)
             .then(function( data ) {
@@ -172,8 +183,18 @@
 
       }
     };
-    var storage = {};
 
+    model.config = {
+      author: {options: autocompleteOptions, ttoptions: autocompleteTTOptions},
+      language: {options: autocompleteOptions, ttoptions: autocompleteTTOptions},
+      country: {options: autocompleteOptions, ttoptions: autocompleteTTOptions},
+      publisher: {options: autocompleteOptions, ttoptions: autocompleteTTOptions},
+      category: {options: autocompleteOptions, ttoptions: autocompleteTTOptions},
+      keyword: {options: autocompleteOptions, ttoptions: autocompleteTTOptions},
+      translator: {options: autocompleteOptions, ttoptions: autocompleteTTOptions}
+    };
+
+    //sets local storage to record cache
     localforageDriver.create(localforageDriver.STORAGE.LOCALSTORAGE, {
       key: 'booktosave', name: 'bookrecord', storeName: 'appbookshop', description: 'last book to save'
     })
@@ -194,25 +215,18 @@
         }
       });
 
-    var autocompleteOptions = {
-      showLog: true,
-      clear: false,
-      selectOnAutocomplete: false,
-      emitOnlyIfPresent: true,
-      watchInitEvent: true,
-      watchSetValEvent: true
-    };
-    var autocompleteTTOptions = {minLength: 3, limit: 20};
+    //listen for session ending
+    SignalsService.logoutisneeded.listen(function() {
+      saveToStorage();
+    }, {priority:10});//runs with 10 priority (default=0)
 
-    model.config = {
-      author: {options: autocompleteOptions, ttoptions: autocompleteTTOptions},
-      language: {options: autocompleteOptions, ttoptions: autocompleteTTOptions},
-      country: {options: autocompleteOptions, ttoptions: autocompleteTTOptions},
-      publisher: {options: autocompleteOptions, ttoptions: autocompleteTTOptions},
-      category: {options: autocompleteOptions, ttoptions: autocompleteTTOptions},
-      keyword: {options: autocompleteOptions, ttoptions: autocompleteTTOptions},
-      translator: {options: autocompleteOptions, ttoptions: autocompleteTTOptions}
-    };
+    //save record to storage
+    function saveToStorage(){
+      storage.booktosave && (storage.booktosave.save({
+        url: $state.href($state.current.name, $state.params, {absolute: true}),
+        book: model.book
+      }));
+    }
 
     function emitInitValues() {
       emitInitArray('authors', 'author', getFirstItemIfOne(model.book.authors));

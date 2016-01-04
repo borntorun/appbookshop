@@ -30,9 +30,8 @@ exports.search = function( req, res ) {
 //Advanced search
 exports.advancedSearch = function( req, res ) {
   //console.log(req.params);
-  console.log(req.params);
   var filter = searchLib.advfilter(req.params);
-  console.log(filter);
+  //console.log(filter);
   searchBook(req, res, filter);
 
   /*Book

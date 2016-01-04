@@ -937,4 +937,5 @@ module.exports = function( grunt ) {
     grunt.log.ok('grunt test:clientDebug..... test client code (karma non stop - for debug in browser)');
     grunt.log.ok('grunt release.............. release');
   });
+  grunt.registerTask('help', ['what']);
 };

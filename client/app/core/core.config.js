@@ -30,8 +30,8 @@
   Config object for module
    */
   var config = {
-    appErrorPrefix: '[Livros & Livros] ', //Configure the exceptionHandler decorator
-    appTitle: 'Livros & Livros',
+    appErrorPrefix: '[Livros & +Livros] ', //Configure the exceptionHandler decorator
+    appTitle: 'Livros & +Livros',
     version: '0.0.1'
   };
   core.value('config', config);

@@ -59,24 +59,24 @@ module.exports = function( grunt ) {
     },
     //config to debug
     //para evitar concatenar certos files return ''
-//    concat: {
-//
-//      options: {
-//        process: function( src, filepath ) {
-//          //grunt.log.ok(filepath)
-//
-//          //para evitar concatenar certos files return ''
-//          //if (filepath.indexOf('/app/auth/')>-1){
-//          if ( filepath.indexOf('/app/') > -1 && filepath.indexOf('.css') === -1 ) { //não é css
-//            //grunt.log.ok(filepath);
-//            return '';
-//          }
-//          grunt.log.ok(filepath);
-//          return src;
-//        }
-//      }
-//
-//    },
+    //    concat: {
+    //
+    //      options: {
+    //        process: function( src, filepath ) {
+    //          //grunt.log.ok(filepath)
+    //
+    //          //para evitar concatenar certos files return ''
+    //          //if (filepath.indexOf('/app/auth/')>-1){
+    //          if ( filepath.indexOf('/app/') > -1 && filepath.indexOf('.css') === -1 ) { //não é css
+    //            //grunt.log.ok(filepath);
+    //            return '';
+    //          }
+    //          grunt.log.ok(filepath);
+    //          return src;
+    //        }
+    //      }
+    //
+    //    },
     watch: {
 
       /*
@@ -159,14 +159,13 @@ module.exports = function( grunt ) {
         files: [
           '<%= yeoman.server %>/**/*.js'],
         tasks: ['hintserver']
-      }
-      ,karmaunit: {
+      }, karmaunit: {
         files: [
           '<%= yeoman.client %>/{app,components}/**/**.js',
           '<%= yeoman.test %>/client/unit/**/*_Spec.js',
           '<%= yeoman.test %>/server/unit/**/*_Spec.js'
         ],
-        tasks: ['hintclient', 'hintserver','karma:unitsingle']
+        tasks: ['hintclient', 'hintserver', 'karma:unitsingle']
       }
     },
     // Make sure code styles are up to par and there are no obvious mistakes
@@ -689,16 +688,16 @@ module.exports = function( grunt ) {
         }
       }
     },
-//    uglify: {
-//      options: {
-//        mangle: {
-//          except: [
-//            //'ct-ui-router-extras' //problem mangling...?
-//            'ui-bootstrap-tpls'
-//          ]
-//        }
-//      }
-//    },
+    //    uglify: {
+    //      options: {
+    //        mangle: {
+    //          except: [
+    //            //'ct-ui-router-extras' //problem mangling...?
+    //            'ui-bootstrap-tpls'
+    //          ]
+    //        }
+    //      }
+    //    },
     injector: {
       options: {
 
@@ -831,6 +830,11 @@ module.exports = function( grunt ) {
         options: {
           type: 'minor'
         }
+      },
+      major: {
+        options: {
+          type: 'major'
+        }
       }
     }
   });
@@ -878,12 +882,13 @@ module.exports = function( grunt ) {
     grunt.task.run(['serve']);
   });
   grunt.registerTask('test', function( target ) {
-//    if ( target === 'server' ) {
-//      return grunt.task.run([
-//        'env:all', 'env:test', 'mochaTest'
-//      ]);
-//    }
-    /*else*/ if ( target === 'client' ) {
+    //    if ( target === 'server' ) {
+    //      return grunt.task.run([
+    //        'env:all', 'env:test', 'mochaTest'
+    //      ]);
+    //    }
+    /*else*/
+    if ( target === 'client' ) {
       return grunt.task.run([
         'hintall', 'karma:unitsingle', 'watch:karmaunit'
 
@@ -907,7 +912,7 @@ module.exports = function( grunt ) {
     'clean:dist', 'injector:less', 'concurrent:dist', 'injector', 'wiredep',
     /*'copy:debugappfiles',*/ 'useminPrepare', 'autoprefixer',
     /*'uncss:dist',*/ 'ngtemplates', 'concat', /*'copy:debugbowerfiles',*/ 'ngAnnotate',
-    'copy:dist', 'replace:version',/*'cdnify',*/ 'cssmin', 'uglify', 'rev', 'usemin'
+    'copy:dist', 'replace:version', /*'cdnify',*/ 'cssmin', 'uglify', 'rev', 'usemin'
   ]);
   grunt.registerTask('build-debugapp', [
     'clean:dist', 'injector:less', 'concurrent:dist', 'injector', 'wiredep',
@@ -928,13 +933,27 @@ module.exports = function( grunt ) {
   grunt.registerTask('run', [
     'nodemon:dev'
   ]);
-  grunt.registerTask('release', ['releasebuild:default']);
+
+  grunt.registerTask('release', function() {
+    grunt.option('releaseType', 'default');
+
+    if ( this.args.length ) {
+      if ( this.args[0] === 'minor' ) {
+        grunt.option('releaseType', 'minor');
+      }
+      else if ( this.args[0] === 'major' ) {
+        grunt.option('releaseType', 'major');
+      }
+    }
+    grunt.task.run('releasebuild:' + grunt.option('releaseType'));
+
+  });
 
   grunt.registerTask('default', [
     'serve'
   ]);
 
-  grunt.registerTask('what', function(){
+  grunt.registerTask('what', function() {
     grunt.log.ok('grunt serve................ run development');
     grunt.log.ok('grunt hintall.............. to hint js files');
     grunt.log.ok('grunt hintclient........... to hint client js files');

@@ -35,11 +35,14 @@ others:
 * localforage
 * toastr
 * bootstrap
+* typeahead.js
+* ng-file-upload
 ...and more...
 
 
 On server:
 
+* express
 * mongoose
 * q
 * request-promise

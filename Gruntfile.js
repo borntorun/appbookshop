@@ -1,6 +1,7 @@
 // Generated on 2015-01-24 using generator-angular-fullstack 2.0.13
 'use strict';
 module.exports = function( grunt ) {
+  var pkgJson = require('./package.json');
   //console.log(__dirname);
   var localConfig;
   try {
@@ -25,7 +26,7 @@ module.exports = function( grunt ) {
   grunt.initConfig({
 
     // Project settings
-    pkg: grunt.file.readJSON('package.json'),
+    //pkg: grunt.file.readJSON('package.json'),
     yeoman: {
       // configurable paths
       client: require('./bower.json').appPath || 'client',
@@ -812,6 +813,15 @@ module.exports = function( grunt ) {
           {from: "-webappdescription-", to: grunt.option("webappdescription")},
           {from: "-webappport-", to: grunt.option("webappport")},
         ]
+      },
+      version: {
+        src: [
+          'dist/index.html'
+        ],
+        overwrite: true,
+        replacements: [
+          {from: "%version%", to: pkgJson.version}
+        ]
       }
     },
     //releasebuild
@@ -897,7 +907,7 @@ module.exports = function( grunt ) {
     'clean:dist', 'injector:less', 'concurrent:dist', 'injector', 'wiredep',
     /*'copy:debugappfiles',*/ 'useminPrepare', 'autoprefixer',
     /*'uncss:dist',*/ 'ngtemplates', 'concat', /*'copy:debugbowerfiles',*/ 'ngAnnotate',
-    'copy:dist', /*'cdnify',*/ 'cssmin', 'uglify', 'rev', 'usemin'
+    'copy:dist', 'replace:version',/*'cdnify',*/ 'cssmin', 'uglify', 'rev', 'usemin'
   ]);
   grunt.registerTask('build-debugapp', [
     'clean:dist', 'injector:less', 'concurrent:dist', 'injector', 'wiredep',

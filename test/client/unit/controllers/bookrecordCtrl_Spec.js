@@ -4,6 +4,8 @@ describe(myUtil.title.controller('BookrecordCtrl'), function() {
   var $controller, $scope, $httpBackend, $cacheFactory, $rootScope, $stateParams;
   var requestSearchHandler;
 
+
+  beforeEach(module('blocks.signals'));
   beforeEach(module('appBookShop.bookrecord'));
 
 

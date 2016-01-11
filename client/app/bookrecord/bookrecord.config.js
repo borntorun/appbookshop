@@ -11,10 +11,8 @@
 
   module.config(config);
 
-  module.run(run);
-
   /* @ngInject */
-  function config( $stateProvider, _lodash, SignalsServiceProvider ) {
+  function config( $stateProvider, _lodash ) {
     var states = {};
 
     ///{ref:[\\d]*}
@@ -80,25 +78,7 @@
     _lodash.forEach(states, function( state, key ) {
       $stateProvider.state(key, state);
     });
-
-    SignalsServiceProvider.config({
-      init: true,
-      signals: {
-        bookrecordtitlechanged: 'bookrecordtitlechanged',
-        reloadbooktosaveneeded: 'reloadbooktosaveneeded'
-      }
-    });
-
   }
 
-  /* @ngInject */
-  function run( localforageDriver, bookrecord ) {
-    //    localforageDriver.create(localforageDriver.STORAGE.LOCALSTORAGE, {
-    //      key: 'booktosave', name: 'bookrecord', storeName: 'appbookshop', description: 'last book to save'
-    //    })
-    //      .then(function( driver ) {
-    //        bookrecord.setStorage('booktosave', driver);
-    //      });
-  }
 
 }());

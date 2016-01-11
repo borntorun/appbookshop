@@ -81,10 +81,11 @@ module.exports = function( app ) {
   /**
    * Authentication
    */
-  //auth with passport(must before routes)
+
   /**
    * Passport
    */
+  //auth with passport(must before routes)
   require('../auth/passport')(app);
 
 
@@ -119,33 +120,5 @@ module.exports = function( app ) {
    */
   require('../routes')(app);
 
-
-
-//  if ( 'production' === env ) {
-//    //routes
-//
-//    app.use(favicon(path.join(config.root, config.appPath, 'favicon.ico')));
-//
-//    app.use(express.static(path.join(config.root, config.appPath)));
-//
-//    //app.set('appPath', config.root + config.appPath);
-//
-//
-//  }
-//
-//  if ( 'development' === env || 'test' === env ) {
-//    /*app.use(require('connect-livereload')({
-//      port: 35729,
-//      src: 'http://192.168.40.25:35729/livereload.js?snipver=1'
-//    }));*/
-//    app.use(express.static(path.join(config.root, '.tmp')));
-//    app.use(express.static(path.join(config.root, 'client')));
-//
-//    //app.use(express.static(path.join(config.root, config.appPath)));
-//
-//    //app.set('appPath', config.appPath);
-//
-//
-//  }
 
 };

@@ -7,26 +7,10 @@
   /*
   Config da library toastr
    */
-  auth.config(configProviders);
 
   auth.run(runConfigureStorage);
 
   auth.run(run);
-
-  /* @ngInject */
-  function configProviders( SignalsServiceProvider ) {
-    SignalsServiceProvider.config({
-      init: true,
-      signals: {
-        loginsucceded: 'loginsucceded',
-        logoutsucceded: 'logoutsucceded',
-        $http403: '$http403',
-        $http401: '$http401',
-        logoutforced: 'logoutforced',
-        logoutisneeded: 'logoutisneeded'
-      }
-    });
-  }
 
   /* @ngInject */
   function runConfigureStorage( localforageDriver, authentication, notifier, SignalsService ) {

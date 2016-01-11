@@ -10,6 +10,7 @@
      * Our reusable cross app code modules
      */
     'warp.components',
+    'blocks.signals',
     'blocks.httpInterceptor',
     'blocks.notifier',
     'blocks.exception',

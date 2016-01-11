@@ -12,14 +12,7 @@
   module.config(moduleConfig);
 
   /* @ngInject */
-  function moduleConfig( $stateProvider, _lodash, SignalsServiceProvider ) {
-
-    SignalsServiceProvider.config({
-      init: true,
-      signals: {
-        searchexecuted: 'searchexecuted'
-      }
-    });
+  function moduleConfig( $stateProvider, _lodash ) {
 
     var states = {};
 

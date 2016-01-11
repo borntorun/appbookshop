@@ -4,7 +4,7 @@
   "description": "Livraria * Livros * Antigos * Usados",
   "main": "server/app.js",
   "engines": {
-    "node": "^0.12.0"
+    "node": "^4.2.0"
   },
   "scripts": {
     "start": "node server/app.js",

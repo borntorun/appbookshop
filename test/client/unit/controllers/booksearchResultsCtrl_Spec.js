@@ -4,6 +4,7 @@ describe(myUtil.title.controller('BookSearchResultsCtrl'), function() {
   var $controller, $scope, $httpBackend, $cacheFactory, $rootScope, $stateParams;
   var requestSearchHandler;
 
+  beforeEach(module('blocks.signals'));
   beforeEach(module('appBookShop.booksearch'));
   //beforeEach(module('appBookShop'));
   //beforeEach(module('jadetemplates'));

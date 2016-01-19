@@ -7,6 +7,7 @@ var bookCtrl = require('./book.controller');
 router.get('/search/advanced/:limit([0-9]+)/:title/:authors/:subject/:collection/:categories/:edition/:loadfrom?', bookCtrl.advancedSearch);
 router.get('/search/free/:limit([0-9]+)/:filter?/:loadfrom?', bookCtrl.search);
 router.get('/store/:reference/:slug?', bookCtrl.store);
+router.get('/count', bookCtrl.count);
 
 
 var auth = require('../../auth');

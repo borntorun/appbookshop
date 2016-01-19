@@ -1,7 +1,5 @@
 
 .container-fluid(id="maincontent")
-    .row
-        .col-xs-12
 
     .row
 
@@ -23,7 +21,10 @@
 
             //ng-include(src="'app/navbar/right/layout.html'")
 
-
+    .row.navbar-fixed-bottom.small(style="z-index:-1;")
+        .col-xs-6
+            | v%_version_%
+        .col-xs-6.text-right(ui-view="main-totalbooks")
 
 //ui dialog comentado
 //include ../../components/books/manager/bookRecordForm

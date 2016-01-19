@@ -815,11 +815,12 @@ module.exports = function( grunt ) {
       },
       version: {
         src: [
+          'dist/**/*app.js',
           'dist/index.html'
         ],
         overwrite: true,
         replacements: [
-          {from: "%version%", to: pkgJson.version}
+          {from: "%_version_%", to: pkgJson.version}
         ]
       }
     },
@@ -912,7 +913,7 @@ module.exports = function( grunt ) {
     'clean:dist', 'injector:less', 'concurrent:dist', 'injector', 'wiredep',
     /*'copy:debugappfiles',*/ 'useminPrepare', 'autoprefixer',
     /*'uncss:dist',*/ 'ngtemplates', 'concat', /*'copy:debugbowerfiles',*/ 'ngAnnotate',
-    'copy:dist', 'replace:version', /*'cdnify',*/ 'cssmin', 'uglify', 'rev', 'usemin'
+    'copy:dist', /*'cdnify',*/ 'cssmin', 'uglify', 'rev', 'replace:version', 'usemin'
   ]);
   grunt.registerTask('build-debugapp', [
     'clean:dist', 'injector:less', 'concurrent:dist', 'injector', 'wiredep',

@@ -37,7 +37,7 @@ others:
 * bootstrap
 * typeahead.js
 * ng-file-upload
-...and more...
+* ...and more...
 
 
 On server:

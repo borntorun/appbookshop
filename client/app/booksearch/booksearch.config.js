@@ -20,6 +20,10 @@
     states['main.search'] = {
       url: '',
       views: {
+        'main-totalbooks@main': {
+          template: 'Nº de Livros: {{vm.total}}',
+          controller: 'BookSearchTotalCtrl as vm'
+        },
         'main-content@main': {
           templateUrl: 'app/booksearch/jade/booksearchMain.html'
         },

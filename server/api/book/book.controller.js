@@ -54,6 +54,10 @@ function searchBook( req, res, filter ) {
     .limit(bookListLimit(req.params.limit))
     .exec(bookListResults(req, res));
 }
+//Get number of books
+exports.count = function( req, res ) {
+  Book.count({}, result(res));
+};
 
 //Get one book
 exports.store = function( req, res ) {
@@ -161,7 +165,7 @@ function bookListResults( req, res ) {
     if ( err ) {
       return handleError(err, res);
     }
-
+//    console.log(Books);
     //    var last = Books.slice(-1);
     //    if ( last && last.length > 0 ) {
     //      res.append('loadfrom', last[0].title);

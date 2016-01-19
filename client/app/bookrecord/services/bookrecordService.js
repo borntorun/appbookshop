@@ -22,7 +22,8 @@
       edit: load,
       save: save,
       clear: clear,
-      reset: reset
+      reset: reset,
+      count: count
     };
     return service;
     ///////////////////////////////////////////
@@ -40,6 +41,18 @@
 //        });
 //      return defer.promise;
 //    }
+
+    function count() {
+      var defer = call({method: httpRequest.get, url: '/api/books/count', cache: false},
+        function( response ) {
+          defer.resolve(response.data);
+        },
+        function( err ) {
+          reject(defer, err);
+        }
+      );
+      return defer.promise;
+    }
 
     function load( reference ) {
       bookrecordCache.remove('bookreset');

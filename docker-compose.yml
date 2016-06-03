@@ -1,0 +1,20 @@
+version: '2'
+
+services:
+  mongodb:
+    image: mongo:3.2.6
+    container_name: mongodb-${APPPROJECTDB}
+    volumes:
+      - ${DEVEL_MONGODBPATH}/data:/data/db
+      - ${DEVEL_MONGODBPATH}/config:/data/configdb
+    networks:
+      devel-network:
+        ipv4_address: 192.168.100.2
+
+networks:
+  devel-network:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 192.168.100.0/28

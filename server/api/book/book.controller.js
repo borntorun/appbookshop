@@ -185,7 +185,7 @@ function result( res ) {
     if ( err ) {
       return handleError(err, res);
     }
-    if ( !data ) {
+    if ( data == null ) {
       return res.send(404);
     }
     return res.status(200).json(data);

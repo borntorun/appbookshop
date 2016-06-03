@@ -1,12 +1,12 @@
 // Generated on 2015-01-24 using generator-angular-fullstack 2.0.13
 'use strict';
-module.exports = function( grunt ) {
+module.exports = function (grunt) {
   var pkgJson = require('./package.json');
   //console.log(__dirname);
   var localConfig;
   try {
     localConfig = require('./server/config/local.env');
-  } catch( e ) {
+  } catch (e) {
     localConfig = {};
   }
   // Load grunt tasks automatically, when needed
@@ -18,13 +18,12 @@ module.exports = function( grunt ) {
     protractor: 'grunt-protractor-runner',
     injector: 'grunt-asset-injector',
     replace: 'grunt-text-replace',
-    releasebuild: 'grunt-release-build'
+    releasebuild: 'grunt-release-build',
   });
   // Time how long tasks take. Can help when optimizing build times
   require('time-grunt')(grunt);
   // Define the configuration for all the tasks
   grunt.initConfig({
-
     // Project settings
     //pkg: grunt.file.readJSON('package.json'),
     yeoman: {
@@ -78,7 +77,10 @@ module.exports = function( grunt ) {
     //
     //    },
     watch: {
-
+      options:{
+        spawn: false,
+        forever: false
+      },
       /*
       Inject js files in index.html
       (exclude tests/mocks/app.module.js (main module)
@@ -171,6 +173,7 @@ module.exports = function( grunt ) {
     // Make sure code styles are up to par and there are no obvious mistakes
     jshint: {
       options: {
+        reporterOutput: '',
         reporter: require('jshint-stylish')
       },
       client: {
@@ -278,8 +281,8 @@ module.exports = function( grunt ) {
           env: {
             PORT: process.env.PORT || '<%= yeoman.port %>'
           },
-          callback: function( nodemon ) {
-            nodemon.on('log', function( event ) {
+          callback: function (nodemon) {
+            nodemon.on('log', function (event) {
               console.log(event.colour);
             });
             console.log('Point to http://' + '<%= yeoman.ip %>' + ':8888/debug?port=5858');
@@ -315,11 +318,9 @@ module.exports = function( grunt ) {
         src: 'index.html',
         ignorePath: '<%= yeoman.client %>/',
         //TODO: analize why json3 and es5-shim are being excluded
-        exclude: [/bootstrap-sass-official/, '/json3/', '/es5-shim/', /bootstrap.css/, /font-awesome.css//*, /ct-ui-router-extras.js/*/ ]
-
+        exclude: [/bootstrap-sass-official/, '/json3/', '/es5-shim/', /bootstrap.css/, /font-awesome.css//*, /ct-ui-router-extras.js/*/]
       }
     },
-
     /*
     Renames files for browser caching purposes
     */
@@ -358,7 +359,6 @@ module.exports = function( grunt ) {
     usemin: {
       //new html: ['<%= yeoman.dist %>/public/{,*/}*.html'],
       html: ['<%= yeoman.dist %>/index.html', '<%= yeoman.dist %>/public/{,*/}*.html'],
-
       css: ['<%= yeoman.dist %>/public/{,*/}*.css'],
       js: [
         '<%= yeoman.dist %>/public/{,*/}*.js',
@@ -568,16 +568,15 @@ module.exports = function( grunt ) {
     },
     // Run some tasks in parallel to speed up the build process
     concurrent: {
-
       server: {
-        tasks: ['jade', 'less', 'hintall' ],
+        tasks: ['jade', 'less', 'hintall'],
         options: {
           logConcurrentOutput: true,
           limit: 3
         }
       },
       test: {
-        tasks: ['jade', 'less', 'hintall' ],
+        tasks: ['jade', 'less', 'hintall'],
         options: {
           logConcurrentOutput: true,
           limit: 3
@@ -699,15 +698,13 @@ module.exports = function( grunt ) {
     //      }
     //    },
     injector: {
-      options: {
-
-      },
+      options: {},
       /*
        Inject application script files into index.html (doesn't include bower)
        */
       scripts: {
         options: {
-          transform: function( filePath ) {
+          transform: function (filePath) {
             filePath = filePath.replace('/client/', '');
             filePath = filePath.replace('/.tmp/', '');
             return '<script src="' + filePath + '"></script>';
@@ -730,13 +727,12 @@ module.exports = function( grunt ) {
           ]
         }
       },
-
       /*
       Inject component less into app.less
       */
       less: {
         options: {
-          transform: function( filePath ) {
+          transform: function (filePath) {
             filePath = filePath.replace('/client/app/', '');
             filePath = filePath.replace('/client/components/', '');
             return '@import \'' + filePath + '\';';
@@ -758,7 +754,7 @@ module.exports = function( grunt ) {
       */
       css: {
         options: {
-          transform: function( filePath ) {
+          transform: function (filePath) {
             console.log(filepath);
             filePath = filePath.replace('/client/', '');
             filePath = filePath.replace('/.tmp/', '');
@@ -777,9 +773,7 @@ module.exports = function( grunt ) {
     },
     // Clean unused css (added João Carvalho)
     //https://github.com/addyosmani/grunt-uncss
-
     //TODO: see pattern matching https://github.com/addyosmani/grunt-uncss/issues/97
-
     // wrapper para
     //https://github.com/giakki/uncss (ver opções aqui)
     uncss: {
@@ -807,10 +801,10 @@ module.exports = function( grunt ) {
           '!<%= yeoman.client %>/bower_components/**'],
         overwrite: true,
         replacements: [
-          {from: "-webappname-", to: grunt.option("webappname")},
-          {from: "-webapptitle-", to: grunt.option("webapptitle")},
-          {from: "-webappdescription-", to: grunt.option("webappdescription")},
-          {from: "-webappport-", to: grunt.option("webappport")},
+          { from: "-webappname-", to: grunt.option("webappname") },
+          { from: "-webapptitle-", to: grunt.option("webapptitle") },
+          { from: "-webappdescription-", to: grunt.option("webappdescription") },
+          { from: "-webappport-", to: grunt.option("webappport") },
         ]
       },
       version: {
@@ -820,7 +814,7 @@ module.exports = function( grunt ) {
         ],
         overwrite: true,
         replacements: [
-          {from: "%_version_%", to: pkgJson.version}
+          { from: "%_version_%", to: pkgJson.version }
         ]
       }
     },
@@ -837,7 +831,16 @@ module.exports = function( grunt ) {
           type: 'major'
         }
       }
-    }
+    },
+
+    //wait: {
+    //  options: {
+    //    after : function() {
+    //      console.log('acabaou');
+    //
+    //    }
+    //  }
+    //}
   });
   // Used for delaying livereload until after server has restarted
   grunt.registerTask('hintclient', [
@@ -849,58 +852,85 @@ module.exports = function( grunt ) {
   grunt.registerTask('hintall', [
     'hintclient', 'hintserver'
   ]);
-
-  grunt.registerTask('wait', function() {
+  grunt.registerTask('wait', function () {
     grunt.log.ok('Waiting for server reload...');
     var done = this.async();
-    setTimeout(function() {
+    setTimeout(function () {
       grunt.log.writeln('Done waiting!');
       done();
     }, 1500);
   });
-  grunt.registerTask('express-keepalive', 'Keep grunt running', function() {
+  grunt.registerTask('express-keepalive', 'Keep grunt running', function () {
     this.async();
   });
-  grunt.registerTask('serve', function( target ) {
-    if ( target === 'dist' ) {
+  grunt.registerTask('startdb', function () {
+    var done = this.async();
+    var exec = require('child_process').exec;
+    exec('./rundbserver', function (err, stdout, stderr) {
+      grunt.log.ok(stdout);
+      if (stderr) {
+        grunt.log.warn(stderr);
+      }
+      if (err) {
+        grunt.log.warn(err);
+      }
+      done();
+    });
+  });
+  grunt.registerTask('stopdb', function () {
+    var done = this.async();
+    var exec = require('child_process').exec;
+    exec('./stopdbserver', function (err, stdout, stderr) {
+      grunt.log.ok(stdout);
+      if (stderr) {
+        grunt.log.warn(stderr);
+      }
+      if (err) {
+        grunt.log.warn(err);
+      }
+      done();
+    });
+  });
+
+  grunt.registerTask('serve', function (target) {
+    if (target === 'dist') {
       return grunt.task.run([
         'build', 'env:all', 'env:prod', 'express:prod', 'wait', /*'open',*/
         'express-keepalive'
       ]);
     }
-    if ( target === 'debug' ) {
+    if (target === 'debug') {
       return grunt.task.run([
         'clean:server', 'env:all', 'injector:less', 'concurrent:server', 'injector', 'wiredep', 'autoprefixer', 'concurrent:debug'
       ]);
     }
     grunt.task.run([
-      'clean:server', 'env:all', /*'injector:less',*/ 'concurrent:server', 'injector', 'wiredep', 'autoprefixer', 'express:dev', 'wait', /*'open',*/
+      'clean:server', 'env:all', /*'injector:less',*/ 'concurrent:server', 'injector', 'wiredep', 'autoprefixer', 'startdb', 'express:dev', 'wait', /*'open',*/
       'watch'
     ]);
   });
-  grunt.registerTask('server', function() {
+  grunt.registerTask('server', function () {
     grunt.log.warn('The `server` task has been deprecated. Use `grunt serve` to start a server.');
     grunt.task.run(['serve']);
   });
-  grunt.registerTask('test', function( target ) {
+  grunt.registerTask('test', function (target) {
     //    if ( target === 'server' ) {
     //      return grunt.task.run([
     //        'env:all', 'env:test', 'mochaTest'
     //      ]);
     //    }
     /*else*/
-    if ( target === 'client' ) {
+    if (target === 'client') {
       return grunt.task.run([
         'hintall', 'karma:unitsingle', 'watch:karmaunit'
-
       ]);
     }
-    else if ( target === 'clientDebug' ) {
+    else if (target === 'clientDebug') {
       return grunt.task.run([
         'hintall', 'karma:unit'
       ]);
     }
-    else if ( target === 'e2e' ) {
+    else if (target === 'e2e') {
       return grunt.task.run([
         'clean:server', 'env:all', 'env:test', /*'injector:less',*/ 'concurrent:test', 'injector', 'wiredep', 'autoprefixer', 'express:dev', 'protractor'
       ]);
@@ -930,31 +960,25 @@ module.exports = function( grunt ) {
   grunt.registerTask('buildtest', [
     'clean:dist', 'injector:less', 'concurrent:dist', 'injector', 'wiredep', 'useminPrepare', 'autoprefixer', 'uncss:dist', 'ngtemplates'
   ]);
-
   grunt.registerTask('run', [
     'nodemon:dev'
   ]);
-
-  grunt.registerTask('release', function() {
+  grunt.registerTask('release', function () {
     grunt.option('releaseType', 'default');
-
-    if ( this.args.length ) {
-      if ( this.args[0] === 'minor' ) {
+    if (this.args.length) {
+      if (this.args[0] === 'minor') {
         grunt.option('releaseType', 'minor');
       }
-      else if ( this.args[0] === 'major' ) {
+      else if (this.args[0] === 'major') {
         grunt.option('releaseType', 'major');
       }
     }
     grunt.task.run('releasebuild:' + grunt.option('releaseType'));
-
   });
-
   grunt.registerTask('default', [
     'serve'
   ]);
-
-  grunt.registerTask('what', function() {
+  grunt.registerTask('what', function () {
     grunt.log.ok('grunt serve................ run development');
     grunt.log.ok('grunt hintall.............. to hint js files');
     grunt.log.ok('grunt hintclient........... to hint client js files');

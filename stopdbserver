@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+export APPPROJECTDB=$(pwd | sed "s|`dirname $(pwd)`\/||g")
+
+docker ps | grep -q "mongodb-${APPPROJECTDB}"
+[[ $? -eq 0 ]] && {
+  echo Stopping "mongodb-${APPPROJECTDB}" container...
+  docker stop "mongodb-${APPPROJECTDB}" >/dev/null
+  [[ $? -eq 0 ]] && echo Stopped.
+} 
+exit 0

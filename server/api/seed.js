@@ -11,6 +11,8 @@ var seedArray = [];
 seedArray.push({file:'api/appconfig/message/seed'});
 seedArray.push({file:'api/appconfig/book/seed'});
 
+seedArray.push({file:'api/counters/seed', env: 'development'});
+//seedArray.push({file:'api/book/seed', env: 'development'});
 seedArray.push({file:'api/category/seed', env: 'development'});
 seedArray.push({file:'api/publisher/seed', env: 'development'});
 seedArray.push({file:'api/country/seed', env: 'development'});

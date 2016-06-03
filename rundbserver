@@ -1,0 +1,20 @@
+#!/bin/bash
+
+export APPPROJECTDB=$(pwd | sed "s|`dirname $(pwd)`\/||g")
+export DEVEL_MONGODBPATH=/home/joao/devel/web/databases/mongo/${APPPROJECTDB}
+
+docker ps | grep -q "mongodb-${APPPROJECTDB}"
+[[ ! $? -eq 0 ]] && {
+	#not running
+	#verify if exists
+	docker ps -a | grep -q "mongodb-${APPPROJECTDB}"
+	[[ $? -eq 0 ]] && {
+		echo Starting "mongodb-${APPPROJECTDB}" container...
+		docker start "mongodb-${APPPROJECTDB}" >/dev/null
+	} || {
+		echo Composing...
+		docker-compose up -d
+	}
+}
+docker ps | grep "mongodb-${APPPROJECTDB}"
+docker inspect "mongodb-${APPPROJECTDB}" | grep -i ipv4

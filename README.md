@@ -1,9 +1,9 @@
 # AppBookShop
 
+### Web application for an online bookshop
+
 A showcase of the work I have done with angular.js and node.js
 A place to experiment and study.
-
-### Web application for an online bookshop
 
 ## Technical info
 
@@ -57,7 +57,11 @@ On server:
 
 ### detailed book info
 
-### shopping basket
+### shopping basket (to do)
+
+### docker
+
+* run mongodb database on a docker container
 
 ### admin area
 

@@ -46,7 +46,7 @@ module.exports = function( app ) {
       config.root + '/server/auth/google/views',
       config.root + '/server/views'
   ]);
-  app.set('view engine', 'jade');
+  app.set('view engine', 'pug');
 
   /**
    * Set static routes

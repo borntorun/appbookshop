@@ -23,7 +23,7 @@
     "express-session": "^1.14.0",
     "express-validator": "^2.20.8",
     "jsonfile": "^2.3.1",
-    "lodash": "^3.3.0",
+    "lodash": "^4.13.1",
     "mongo-sanitize": "^1.0.0",
     "mongoose": "^4.5.4",
     "morgan": "^1.7.0",

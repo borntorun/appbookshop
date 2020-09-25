@@ -178,7 +178,8 @@ module.exports = function (grunt) {
       },
       client: {
         options: {
-          jshintrc: '<%= yeoman.client %>/.jshintrc'
+          jshintrc: '<%= yeoman.client %>/.jshintrc',
+          force: true
         },
         src: [
           '<%= yeoman.client %>/app/**/*.js',
@@ -187,7 +188,8 @@ module.exports = function (grunt) {
       },
       server: {
         options: {
-          jshintrc: '<%= yeoman.server %>/.jshintrc'
+          jshintrc: '<%= yeoman.server %>/.jshintrc',
+          force: true
         },
         src: [
           '<%= yeoman.server %>/**/*.js',

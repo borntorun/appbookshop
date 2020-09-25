@@ -9,7 +9,7 @@
     "development": {
       "redirect_uri": "http://local.host:12999/auth/google/callback",
       "client_id": "552881844129-imd7v6hlrocg5efcebj6nku28nmoge5s.apps.googleusercontent.com",
-      "client_secret": "qGnz7qbQbQx3agCC5QlwwwD8",
+      "client_secret":"RnOKS8wSf3SfgyvS40hPBmQp",
       "scope": ["profile", "email"],
       "access_type": "offline"
     },

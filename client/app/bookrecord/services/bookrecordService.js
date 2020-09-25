@@ -60,7 +60,7 @@
     }
 
     function save(book) {
-      var defer = call({method: httpRequest.post, url: '/api/books/admin/' + book._id || 'new', data: book},
+      var defer = call({method: httpRequest.post, url: '/api/books/admin/' + book.reference /* _id */ || 'new', data: book},
         function( response ) {
           defer.resolve(response.data);
         },

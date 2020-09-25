@@ -3,7 +3,7 @@
 // =================================
 var mongolabUri;
 if (process.env.dbuser && process.env.dbpassword && process.env.dbresource) {
-  mongolabUri = 'mongodb://' +
+  mongolabUri = 'mongodb+srv://' +
     process.env.dbuser + ':' +
     process.env.dbpassword +
     process.env.dbresource;

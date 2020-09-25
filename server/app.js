@@ -18,7 +18,7 @@ var config = require('./config/environment');
 config.mongo.library.connection = require('./config/databases')(config.mongo.library);
 
 //seed database
-require('./config/databases/seed')(require('./api/seed'));
+//x require('./config/databases/seed')(require('./api/seed'));
 
 /**
  * Set response to signals to proper close db connections

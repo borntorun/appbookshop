@@ -7,13 +7,14 @@ var config = require('../environment');
 
 module.exports = function(seedFuncArray) {
 
-  //if (config.seedDB) {
-  seedFuncArray.forEach(function(item){
-    //walk to server - item is the path from there
-    if (!item.env || item.env === config.env) {
-      require('../../' + item.file);
-    }
-  });
-  //}
+  //x
+  // //if (config.seedDB) {
+  // seedFuncArray.forEach(function(item){
+  //   //walk to server - item is the path from there
+  //   if (!item.env || item.env === config.env) {
+  //     require('../../' + item.file);
+  //   }
+  // });
+  // //}
 };
 

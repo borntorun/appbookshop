@@ -15,19 +15,19 @@
       showToasts: true,
 
       error: function(message, title, data) {
-        return write('error', message, title, data, {timeOut: 2500});
+        return write('error', message, title, data, {timeOut: 1500});
       },
       info: function(message, title, data) {
-        return write('info', message, title, data, {timeOut: 2500});
+        return write('info', message, title, data, {timeOut: 1500});
       },
       success: function(message, title, data) {
-        return write('success', message, title, data, {timeOut: 2500});
+        return write('success', message, title, data, {timeOut: 1500});
       },
       warning: function(message, title, data) {
-        return write('warning', message, title, data, {timeOut: 2500});
+        return write('warning', message, title, data, {timeOut: 1500});
       },
       warn: function(message, title, data) {
-        return write('warning', message, title, data, {timeOut: 2500});
+        return write('warning', message, title, data, {timeOut: 1500});
       },
       /*errorx   : error,
       info    : info,

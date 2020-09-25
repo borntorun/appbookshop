@@ -29,7 +29,7 @@
     "jquery_appear": "~0.3.6",
     "ui-router-extras": "0.0.14",
     "angular-ui-router-title": "~0.0.4",
-    "angular-dynamic-layout": "git@github.com:borntorun/angular-dynamic-layout.git#master",
+    "angular-dynamic-layout": "https://github.com/borntorun/angular-dynamic-layout.git#master",
     "ng-file-upload": "~10.1.9",
     "ng-file-upload-shim": "~10.1.9",
     "bootstrap": "~3.3.6",

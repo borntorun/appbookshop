@@ -94,14 +94,14 @@ exports.save = function (req, res) {
       }
     }
   }
-
+  
   if (req.body._id) {
     req.checkBody("_id", "Error in id.").notEmpty().isAlphanumeric();
 
     var id = mongosanitize(req.body._id);
-    // require("mongoose").Types.ObjectId(
-
-    Book.findById(id, function (err, found) {
+    var _ref = mongosanitize(req.body.reference);
+    
+    Book.findOne({'reference': _ref}, function (err, found) {
       if (err) {
         return handleError(err, res);
       }
@@ -185,6 +185,7 @@ function result(res) {
     if (data == null) {
       return res.send(404);
     }
+    console.log(data);
     return res.status(200).json(data);
   };
 }
